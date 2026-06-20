@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentient Partners — AI-First Agency for Ambitious Businesses</title>
+  <meta name="description" content="Sentient Partners builds bespoke, high-leverage AI systems — autonomous agents, revenue automation, and intelligence infrastructure — that give small and mid-market businesses enterprise-grade advantage." />
+
+  <!-- Set theme ASAP to avoid flash -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('sp-theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        fontFamily: {
+          serif: ['Fraunces', 'Georgia', 'serif'],
+          sans: ['Sora', 'system-ui', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+      }},
+    };
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script>document.documentElement.classList.add('js-enabled');</script>
+  <script>
+    window.__revealFallback = window.setTimeout(function () {
+      if (!window.__revealOK) document.documentElement.classList.remove('js-enabled');
+    }, 3000);
+  </script>
+</head>
+
+<body class="font-sans antialiased overflow-x-hidden">
+<div id="cursor-dot" class="cursor-dot"></div>
+<div id="cursor-ring" class="cursor-ring"></div>
+
+  <!-- SCROLL PROGRESS -->
+  <div id="scroll-progress" class="fixed top-0 left-0 z-[80] h-[2px] w-0" style="background: var(--accent-grad);"></div>
+
+  <!-- ============ NAV ============ -->
+  <header id="nav" class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <nav class="mt-4 flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all duration-500" id="nav-inner" style="border-color: var(--border); background: var(--nav-bg);">
+        <a href="#top" class="flex items-center gap-3 group">
+          <img src="assets/img/sentient-mark.png" alt="Sentient Partners" class="h-11 w-11 object-contain drop-shadow-[0_0_12px_rgba(184,212,227,0.25)] transition-transform duration-500 group-hover:rotate-[8deg]" />
+          <span class="font-serif text-xl font-semibold tracking-tight" style="color: var(--heading);">Sentient <span style="color: var(--heading);">Partners</span></span>
+        </a>
+
+        <div class="hidden items-center gap-1 lg:flex">
+          <a href="#solutions" class="nav-link">Solutions</a>
+          <a href="#why" class="nav-link">Why Us</a>
+          <a href="#founder" class="nav-link">Founders</a>
+          <a href="#results" class="nav-link">Results</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+          <a href="book.html" class="hidden md:inline-flex btn-primary cta-magnetic text-sm">Book a Strategy Call</a>
+          <button id="mobile-toggle" class="lg:hidden theme-toggle" aria-label="Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+        </div>
+      </nav>
+
+      <div id="mobile-menu" class="lg:hidden hidden mt-2 rounded-2xl border p-4 backdrop-blur-xl" style="border-color: var(--border); background: var(--nav-bg-scroll);">
+        <div class="flex flex-col gap-1">
+          <a href="#solutions" class="mobile-link">Solutions</a>
+          <a href="#why" class="mobile-link">Why Us</a>
+          <a href="#founder" class="mobile-link">Founders</a>
+          <a href="#results" class="mobile-link">Results</a>
+          <a href="book.html" class="mobile-link mt-2 rounded-full text-center font-semibold" style="background: var(--accent-grad); color:#05121f;">Book a Strategy Call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="relative min-h-screen overflow-hidden">
+      <canvas id="neural-canvas" class="absolute inset-0 h-full w-full"></canvas>
+
+      <!-- 3D platinum monogram (center-right) -->
+      <div id="monogram-mount" aria-hidden="true" class="absolute inset-y-0 right-0 w-1/2 hidden md:block" style="z-index:5; pointer-events:none;"></div>
+
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="pointer-events-none absolute inset-0 hero-grid opacity-[0.18]"></div>
+      <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, var(--vignette) 75%, var(--bg) 100%); opacity:0.7;"></div>
+
+      <div class="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pt-32 pb-20 sm:px-8">
+        <div class="max-w-2xl">
+          <div class="reveal inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium backdrop-blur-md" style="border-color: var(--border); background: var(--bg-glass); color: var(--text-muted);">
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style="background: var(--ice);"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--ice);"></span>
+            </span>
+            AI-First agency · Now booking Q3 implementations
+          </div>
+
+          <h1 class="reveal mt-6 font-serif text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl" style="color: var(--heading);">
+            We build the <span class="grad-text">AI workforce</span><br class="hidden sm:block" />
+            that runs your business <span style="color: var(--text-muted);">while you scale it.</span>
+          </h1>
+
+          <p class="reveal mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl" style="color: var(--text-muted);">
+            Sentient Partners designs and deploys <span style="color: var(--heading); font-weight:500;">autonomous AI systems</span> — revenue engines, operations agents, and intelligence infrastructure — engineered to give ambitious small &amp; mid-market businesses the leverage of an enterprise, without the enterprise overhead.
+          </p>
+
+          <div class="reveal mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a href="book.html" class="btn-primary cta-magnetic">
+              Book Your AI Strategy Call
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#solutions" class="btn-ghost">Explore AI Solutions</a>
+          </div>
+
+          <div class="reveal mt-14 grid max-w-2xl grid-cols-3 gap-6 border-t pt-8" style="border-color: var(--border);">
+            <div>
+              <div class="font-serif text-3xl font-bold sm:text-4xl" style="color: var(--heading);"><span class="counter" data-target="14">0</span>x</div>
+              <div class="mt-1 text-xs uppercase tracking-wider" style="color: var(--text-faint);">Avg. throughput gain</div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl font-bold sm:text-4xl" style="color: var(--heading);"><span class="counter" data-target="73">0</span>%</div>
+              <div class="mt-1 text-xs uppercase tracking-wider" style="color: var(--text-faint);">Cost-to-serve reduction</div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl font-bold sm:text-4xl" style="color: var(--heading);"><span class="counter" data-target="24">0</span>/7</div>
+              <div class="mt-1 text-xs uppercase tracking-wider" style="color: var(--text-faint);">Always-on execution</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-7 left-1/2 z-10 -translate-x-1/2" style="color: var(--text-faint);">
+        <div class="flex flex-col items-center gap-2">
+          <span class="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <div class="flex h-9 w-5 justify-center rounded-full border p-1" style="border-color: var(--border-strong);">
+            <span class="h-2 w-1 animate-scrollcue rounded-full" style="background: var(--cyan);"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRUST BAND ============ -->
+    <section class="relative border-y py-14" style="border-color: var(--border); background: var(--bg-glass-2);">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <p class="text-center text-xs uppercase tracking-[0.25em]" style="color: var(--text-faint);">Engineered on the frontier — the models, infra &amp; tools we build with</p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 font-serif text-xl font-semibold tracking-tight" style="color: var(--text-faint);">
+          <span class="transition-colors hover:text-heading">OpenAI</span>
+          <span class="transition-colors hover:text-heading">Anthropic</span>
+          <span class="transition-colors hover:text-heading">LangChain</span>
+          <span class="transition-colors hover:text-heading">Pinecone</span>
+          <span class="transition-colors hover:text-heading">n8n</span>
+          <span class="transition-colors hover:text-heading">Supabase</span>
+          <span class="transition-colors hover:text-heading">Vercel</span>
+          <span class="transition-colors hover:text-heading">Make</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INTRO ============ -->
+    <section class="relative py-28 sm:py-36">
+      <div class="mx-auto max-w-4xl px-5 text-center sm:px-8">
+        <p class="reveal eyebrow">The Sentient advantage</p>
+        <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
+          Most businesses use AI as a <span style="color: var(--text-faint);">tool.</span><br />
+          Our clients use it as <span class="grad-text">leverage.</span>
+        </h2>
+        <p class="reveal mx-auto mt-7 max-w-2xl text-lg leading-relaxed" style="color: var(--text-muted);">
+          We don't sell chatbots or dashboards. We architect <span style="color: var(--heading);">autonomous systems</span> that generate revenue, execute operations, and compound intelligence — so a 12-person team operates with the output of 120, and the insight of a Fortune 500.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SOLUTIONS — FLIP CARDS ============ -->
+    <section id="solutions" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal eyebrow">High-ticket AI solutions</p>
+          <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
+            Six systems. <span class="grad-text">Maximum leverage.</span>
+          </h2>
+          <p class="reveal mx-auto mt-6 text-lg" style="color: var(--text-muted);">
+            Hover or tap any card to see exactly what's inside — and the outcome it's engineered to deliver.
+          </p>
+        </div>
+
+        <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+          <!-- CARD 1 -->
+          <div class="flip-card reveal">
+            <div class="flip-inner">
+              <!-- FRONT -->
+              <div class="flip-face flip-front">
+                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(184,212,227,0.2), rgba(184,212,227,0.05)); color: var(--cyan); box-shadow: inset 0 0 0 1px rgba(184,212,227,0.2);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Autonomous Revenue Agents</h3>
+                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Always-on AI agents that qualify leads, run outreach, book meetings, and close — across email, SMS, and chat. Your best salesperson, cloned and deployed at infinite scale.</p>
+                <div class="flip-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  Hover to flip · Lead-to-revenue automation
+                </div>
+              </div>
+              <!-- BACK -->
+              <div class="flip-face flip-back">
+                <div>
+                  <span class="eyebrow" style="color: var(--cyan);">Inside the build</span>
+                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Revenue Agents</h3>
+                  <ul class="flip-back-list mt-3">
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Multi-touch sequences across email, LinkedIn, SMS &amp; chat</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Real-time qualification &amp; meeting booking into your calendar</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> CRM-native: zero manual data entry, full pipeline visibility</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Brand-tuned voice, objection handling &amp; human handoff</li>
+                  </ul>
+                </div>
+                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Revenue Agents →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="flip-card reveal">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(199,205,214,0.2), rgba(199,205,214,0.05)); color: var(--violet); box-shadow: inset 0 0 0 1px rgba(199,205,214,0.2);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Intelligence Knowledge Core</h3>
+                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">A private, vector-grounded brain trained on your documents, calls, and data. Answers any question, drafts any asset, and surfaces insights — with citations and zero hallucination risk.</p>
+                <div class="flip-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  Hover to flip · Enterprise-grade RAG
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <div>
+                  <span class="eyebrow" style="color: var(--violet);">Inside the build</span>
+                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Knowledge Core</h3>
+                  <ul class="flip-back-list mt-3">
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Ingests docs, CRM, tickets, transcripts &amp; wikis</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Citations on every answer — no hallucinations</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Role-based access &amp; SOC2-aligned security</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Your data stays yours — deployed in your tenant</li>
+                  </ul>
+                </div>
+                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Knowledge Core →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="flip-card reveal">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(232,237,242,0.2), rgba(232,237,242,0.05)); color: var(--fuchsia); box-shadow: inset 0 0 0 1px rgba(232,237,242,0.2);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                </div>
+                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Operations Autopilot</h3>
+                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">End-to-end automation of the back office — invoicing, onboarding, scheduling, reporting, and approvals. Your tools finally talk to each other, and the busywork disappears.</p>
+                <div class="flip-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  Hover to flip · Workflow automation
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <div>
+                  <span class="eyebrow" style="color: var(--fuchsia);">Inside the build</span>
+                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Ops Autopilot</h3>
+                  <ul class="flip-back-list mt-3">
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> 40+ tool integrations out of the box</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Human-in-the-loop approvals where it matters</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Auto-invoicing, onboarding &amp; reporting</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Full audit log &amp; observability</li>
+                  </ul>
+                </div>
+                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Ops Autopilot →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4 -->
+          <div class="flip-card reveal">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(184,212,227,0.2), rgba(199,205,214,0.05)); color: var(--cyan); box-shadow: inset 0 0 0 1px rgba(184,212,227,0.2);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                </div>
+                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Decision Intelligence</h3>
+                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Predictive models and real-time dashboards that turn raw data into the next best action. Forecast demand, flag churn before it happens, and price with confidence — backed by your own data.</p>
+                <div class="flip-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  Hover to flip · Applied ML &amp; analytics
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <div>
+                  <span class="eyebrow" style="color: var(--cyan);">Inside the build</span>
+                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Decision Intelligence</h3>
+                  <ul class="flip-back-list mt-3">
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Churn, demand &amp; LTV prediction models</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Live executive dashboards &amp; alerts</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Dynamic pricing &amp; forecasting engines</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Trained on your data, explained in plain English</li>
+                  </ul>
+                </div>
+                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Decision Intelligence →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 5 -->
+          <div class="flip-card reveal">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(199,205,214,0.2), rgba(232,237,242,0.05)); color: var(--violet); box-shadow: inset 0 0 0 1px rgba(199,205,214,0.2);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Conversational Commerce</h3>
+                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Voice and chat agents that handle support, sales, and scheduling 24/7 — in your brand voice, across web, phone, and messaging. Resolution in seconds, escalation when needed.</p>
+                <div class="flip-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  Hover to flip · Voice &amp; support agents
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <div>
+                  <span class="eyebrow" style="color: var(--violet);">Inside the build</span>
+                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Conversational Commerce</h3>
+                  <ul class="flip-back-list mt-3">
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Real-time voice &amp; text, 30+ languages</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Trained on your knowledge base &amp; brand voice</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Smart escalation to humans when needed</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Deploys in weeks, integrates with your stack</li>
+                  </ul>
+                </div>
+                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Conversational Commerce →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 6 -->
+          <div class="flip-card reveal">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(232,237,242,0.2), rgba(184,212,227,0.05)); color: var(--fuchsia); box-shadow: inset 0 0 0 1px rgba(232,237,242,0.2);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </div>
+                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Custom AI Products</h3>
+                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Proprietary AI features and full products built into your offering — a defensible moat your competitors can't copy. From internal copilots to customer-facing intelligence.</p>
+                <div class="flip-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  Hover to flip · Bespoke build &amp; IP
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <div>
+                  <span class="eyebrow" style="color: var(--fuchsia);">Inside the build</span>
+                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Custom AI Products</h3>
+                  <ul class="flip-back-list mt-3">
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Full design → build → deploy → scale</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Internal copilots &amp; customer-facing apps</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> You own 100% of the IP &amp; code</li>
+                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> A defensible moat competitors can't copy</li>
+                  </ul>
+                </div>
+                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Custom AI Products →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="reveal mt-14 text-center">
+          <a href="book.html" class="btn-ghost cta-magnetic">
+            Get a custom solution blueprint
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HORIZONTAL PINNED SCROLL SHOWCASE ============ -->
+    <section id="showcase" class="pin-section relative">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 pt-20 text-center">
+        <p class="reveal eyebrow">The Sentient stack</p>
+        <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
+          A system that <span class="grad-text">thinks, acts, and compounds.</span>
+        </h2>
+        <p class="reveal mx-auto mt-6 max-w-2xl text-lg" style="color: var(--text-muted);">Scroll to move through the layers of an autonomous AI operation.</p>
+      </div>
+
+      <div class="pin-track mt-14" id="pin-track">
+        <div class="pin-panel reveal">
+          <div>
+            <span class="eyebrow" style="color: var(--cyan);">Layer 01 · Sense</span>
+            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Every signal, captured</h3>
+            <p class="mt-3" style="color: var(--text-muted);">Email, calls, CRM, docs, web, transactions — your AI ingests the full picture in real time and builds a living model of your business.</p>
+          </div>
+          <div class="font-mono text-xs" style="color: var(--text-faint);">// 312 data sources · 1 unified graph</div>
+        </div>
+        <div class="pin-panel reveal">
+          <div>
+            <span class="eyebrow" style="color: var(--violet);">Layer 02 · Reason</span>
+            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Decisions, with judgment</h3>
+            <p class="mt-3" style="color: var(--text-muted);">Models reason over your data, weigh trade-offs, and propose the next best action — grounded in your rules, your history, and your goals.</p>
+          </div>
+          <div class="font-mono text-xs" style="color: var(--text-faint);">// grounded · cited · auditable</div>
+        </div>
+        <div class="pin-panel reveal">
+          <div>
+            <span class="eyebrow" style="color: var(--fuchsia);">Layer 03 · Act</span>
+            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Execution, autonomous</h3>
+            <p class="mt-3" style="color: var(--text-muted);">Agents execute — send, call, book, file, report — 24/7, with human oversight exactly where you want it. The busywork disappears.</p>
+          </div>
+          <div class="font-mono text-xs" style="color: var(--text-faint);">// 24/7 · human-in-the-loop</div>
+        </div>
+        <div class="pin-panel reveal">
+          <div>
+            <span class="eyebrow" style="color: var(--cyan);">Layer 04 · Learn</span>
+            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Every outcome, fuel</h3>
+            <p class="mt-3" style="color: var(--text-muted);">Every action feeds back as training signal. The system compounds — getting sharper, faster, and more valuable the more you use it.</p>
+          </div>
+          <div class="font-mono text-xs" style="color: var(--text-faint);">// self-improving · compounding</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOUNDER / CREDIBILITY ============ -->
+    <section id="founder" class="relative py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p class="reveal eyebrow">Who's behind Sentient</p>
+            <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
+              Built by operators who ran AI at the <span class="grad-text">highest levels.</span>
+            </h2>
+            <div class="reveal mt-7 space-y-5 text-lg leading-relaxed" style="color: var(--text-muted);">
+              <p>Sentient Partners was founded by a small group of engineers, data scientists, and strategists who spent their careers building AI inside <span style="color: var(--heading); font-weight:500;">Fortune 500</span> technology organizations — at the highest levels, on the hardest problems.</p>
+              <p>We've shipped systems for global finance, healthcare, retail, logistics, and defense — servicing clients across <span style="color: var(--heading); font-weight:500;">every major industry.</span> We know what enterprise-grade AI looks like, what it costs, and how rare it actually is.</p>
+              <p>Now we've taken that exact experience and pointed it at the companies that need it most: <span style="color: var(--heading); font-weight:500;">small and mid-market businesses.</span> Same capability. Same rigor. None of the enterprise overhead. That's the Sentient difference.</p>
+            </div>
+
+            <div class="reveal mt-9 flex flex-wrap gap-3">
+              <div class="rounded-xl border px-4 py-3" style="border-color: var(--border); background: var(--bg-glass-2);">
+                <div class="font-serif text-2xl font-bold" style="color: var(--heading);">Fortune 500</div>
+                <div class="text-xs" style="color: var(--text-faint);">Pedigree</div>
+              </div>
+              <div class="rounded-xl border px-4 py-3" style="border-color: var(--border); background: var(--bg-glass-2);">
+                <div class="font-serif text-2xl font-bold" style="color: var(--heading);">12+</div>
+                <div class="text-xs" style="color: var(--text-faint);">Industries served</div>
+              </div>
+              <div class="rounded-xl border px-4 py-3" style="border-color: var(--border); background: var(--bg-glass-2);">
+                <div class="font-serif text-2xl font-bold" style="color: var(--heading);">$100M+</div>
+                <div class="text-xs" style="color: var(--text-faint);">AI impact delivered</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal relative">
+            <div class="relative overflow-hidden rounded-3xl border p-8" style="border-color: var(--border); background: linear-gradient(160deg, var(--bg-elevated), var(--bg));">
+              <div class="absolute inset-0 hero-grid opacity-[0.12]"></div>
+              <div class="relative">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="h-3 w-3 rounded-full bg-red-400/70"></span>
+                    <span class="h-3 w-3 rounded-full bg-yellow-400/70"></span>
+                    <span class="h-3 w-3 rounded-full bg-green-400/70"></span>
+                  </div>
+                  <span class="font-mono text-xs" style="color: var(--text-faint);">sentient.live</span>
+                </div>
+                <div class="mt-6 space-y-3">
+                  <div class="rounded-xl border p-4" style="border-color: var(--border); background: var(--bg-glass-2);">
+                    <div class="flex items-center justify-between">
+                      <span class="font-mono text-xs" style="color: var(--cyan);">REVENUE AGENT</span>
+                      <span class="flex items-center gap-1.5 text-xs text-green-400"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"></span>active</span>
+                    </div>
+                    <p class="mt-2 text-sm" style="color: var(--text-muted);">Qualified <span class="font-semibold" style="color: var(--heading);">23 leads</span> · Booked <span class="font-semibold" style="color: var(--heading);">7 demos</span> · $48K pipeline today</p>
+                  </div>
+                  <div class="rounded-xl border p-4" style="border-color: var(--border); background: var(--bg-glass-2);">
+                    <div class="flex items-center justify-between">
+                      <span class="font-mono text-xs" style="color: var(--violet);">OPS AUTOPILOT</span>
+                      <span class="flex items-center gap-1.5 text-xs text-green-400"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"></span>active</span>
+                    </div>
+                    <p class="mt-2 text-sm" style="color: var(--text-muted);">Processed <span class="font-semibold" style="color: var(--heading);">142 documents</span> · <span class="font-semibold" style="color: var(--heading);">0 errors</span> · 3.2s avg</p>
+                  </div>
+                  <div class="rounded-xl border p-4" style="border-color: var(--border); background: var(--bg-glass-2);">
+                    <div class="flex items-center justify-between">
+                      <span class="font-mono text-xs" style="color: var(--fuchsia);">KNOWLEDGE CORE</span>
+                      <span class="flex items-center gap-1.5 text-xs text-green-400"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"></span>active</span>
+                    </div>
+                    <p class="mt-2 text-sm" style="color: var(--text-muted);">Answered <span class="font-semibold" style="color: var(--heading);">318 queries</span> · <span class="font-semibold" style="color: var(--heading);">99.4%</span> confidence</p>
+                  </div>
+                </div>
+                <div class="mt-6 flex items-center justify-between border-t pt-4" style="border-color: var(--border);">
+                  <span class="font-mono text-xs" style="color: var(--text-faint);">UPTIME · last 30d</span>
+                  <span class="font-serif text-lg font-bold" style="color: var(--heading);">99.98%</span>
+                </div>
+              </div>
+            </div>
+            <div class="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] blur-2xl" style="background: linear-gradient(135deg, rgba(184,212,227,0.12), transparent, rgba(199,205,214,0.12));"></div>
+          </div>
+        </div>
+
+        <!-- industries marquee -->
+        <div class="reveal mt-20">
+          <p class="text-center text-xs uppercase tracking-[0.25em]" style="color: var(--text-faint);">Industries our team has delivered AI for</p>
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <span class="chip">Finance</span><span class="chip">Healthcare</span><span class="chip">Retail &amp; E-commerce</span><span class="chip">Logistics</span><span class="chip">Manufacturing</span><span class="chip">Real Estate</span><span class="chip">Legal</span><span class="chip">SaaS &amp; Tech</span><span class="chip">Defense</span><span class="chip">Media</span><span class="chip">Insurance</span><span class="chip">Education</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RESULTS ============ -->
+    <section id="results" class="relative py-24 sm:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="relative overflow-hidden rounded-3xl border p-10 sm:p-16" style="border-color: var(--border); background: linear-gradient(135deg, var(--bg-glass), var(--bg-glass-2));">
+          <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full blur-3xl" style="background: rgba(184,212,227,0.12);"></div>
+          <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full blur-3xl" style="background: rgba(232,237,242,0.12);"></div>
+          <div class="relative grid gap-10 lg:grid-cols-4">
+            <div class="lg:col-span-1">
+              <p class="reveal eyebrow">Outcomes</p>
+              <h2 class="reveal mt-4 font-serif text-3xl font-bold leading-tight sm:text-4xl" style="color: var(--heading);">Numbers that<br />moved P&amp;L.</h2>
+            </div>
+            <div class="lg:col-span-3 grid grid-cols-2 gap-8 sm:grid-cols-4">
+              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="312">0</span>%</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Avg. ROI within first year</p></div>
+              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="90">0</span>%</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Manual tasks eliminated</p></div>
+              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="11">0</span>x</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Faster response times</p></div>
+              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="6">0</span>wk</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Avg. time to first value</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY US ============ -->
+    <section id="why" class="relative py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p class="reveal eyebrow">Why Sentient</p>
+            <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
+              An agency built like the <span class="grad-text">systems we ship.</span>
+            </h2>
+            <p class="reveal mt-6 text-lg leading-relaxed" style="color: var(--text-muted);">We're operators and engineers, not a body shop. Every system we build is production-grade, measurable, and owned by you.</p>
+            <div class="mt-10 space-y-6">
+              <div class="reveal flex gap-4">
+                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg" style="background: rgba(184,212,227,0.12); color: var(--cyan); border:1px solid rgba(184,212,227,0.25);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+                <div><h4 class="font-semibold" style="color: var(--heading);">Outcome-bound, not hourly</h4><p class="mt-1 text-sm" style="color: var(--text-muted);">We tie every engagement to a measurable business metric. If it doesn't move the needle, we don't build it.</p></div>
+              </div>
+              <div class="reveal flex gap-4">
+                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg" style="background: rgba(199,205,214,0.12); color: var(--violet); border:1px solid rgba(199,205,214,0.25);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+                <div><h4 class="font-semibold" style="color: var(--heading);">You own everything</h4><p class="mt-1 text-sm" style="color: var(--text-muted);">Code, data, models, and IP — all yours. No lock-in, no proprietary black boxes, no recurring hostage fees.</p></div>
+              </div>
+              <div class="reveal flex gap-4">
+                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg" style="background: rgba(232,237,242,0.12); color: var(--fuchsia); border:1px solid rgba(232,237,242,0.25);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+                <div><h4 class="font-semibold" style="color: var(--heading);">Senior talent, end to end</h4><p class="mt-1 text-sm" style="color: var(--text-muted);">You work directly with the engineers building your system — not an account manager relaying messages to an offshore team.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal relative">
+            <div class="relative overflow-hidden rounded-3xl border p-8" style="border-color: var(--border); background: linear-gradient(160deg, var(--bg-elevated), var(--bg));">
+              <div class="absolute inset-0 hero-grid opacity-[0.12]"></div>
+              <div class="relative text-center py-8">
+                <div class="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-2xl" style="background: var(--accent-grad);">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#05121f" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h3 class="mt-5 font-serif text-2xl font-semibold" style="color: var(--heading);">Senior-only delivery</h3>
+                <p class="mt-2 text-sm" style="color: var(--text-muted);">No juniors learning on your dime. The people who scope it are the people who build it.</p>
+                <a href="book.html" class="btn-primary cta-magnetic mt-6">Talk to a founder</a>
+              </div>
+            </div>
+            <div class="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] blur-2xl" style="background: linear-gradient(135deg, rgba(199,205,214,0.12), transparent, rgba(232,237,242,0.12));"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIAL ============ -->
+    <section class="relative py-24 sm:py-28">
+      <div class="mx-auto max-w-4xl px-5 text-center sm:px-8">
+        <div class="reveal mb-8 flex justify-center gap-1" style="color: var(--cyan);">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <blockquote class="reveal font-serif text-2xl font-medium leading-snug sm:text-4xl sm:leading-tight" style="color: var(--heading);">
+          "Sentient didn't sell us AI. They rebuilt our revenue engine. We closed more deals in the first quarter after launch than the previous two — with the same headcount."
+        </blockquote>
+        <div class="reveal mt-8 flex items-center justify-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-full font-semibold" style="background: var(--accent-grad); color:#05121f;">MR</div>
+          <div class="text-left">
+            <div class="font-semibold" style="color: var(--heading);">Marcus R.</div>
+            <div class="text-sm" style="color: var(--text-muted);">CEO, B2B SaaS · 38 employees</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section id="contact" class="relative py-28 sm:py-36">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="relative overflow-hidden rounded-[2rem] border px-6 py-16 text-center sm:px-16 sm:py-24" style="border-color: var(--border);">
+          <canvas id="cta-canvas" class="absolute inset-0 h-full w-full"></canvas>
+          <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, var(--vignette) 100%);"></div>
+          <div class="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full blur-3xl" style="background: rgba(184,212,227,0.25);"></div>
+          <div class="relative">
+            <div class="reveal mx-auto inline-flex max-w-fit items-center gap-2 rounded-full border px-4 py-1.5 text-xs backdrop-blur-md" style="border-color: var(--border); background: var(--bg-glass); color: var(--text-muted);">
+              <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style="background: var(--ice);"></span><span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--ice);"></span></span>
+              Limited Q3 implementation slots
+            </div>
+            <h2 class="reveal mx-auto mt-6 max-w-3xl font-serif text-3xl font-bold leading-tight tracking-tight sm:text-6xl" style="color: var(--heading);">
+              Let's build your <span class="grad-text">unfair advantage.</span>
+            </h2>
+            <p class="reveal mx-auto mt-6 max-w-xl text-lg" style="color: var(--text-muted);">Book a 30-minute strategy call. We'll map your highest-leverage AI opportunities — no commitment, no fluff.</p>
+            <div class="reveal mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a href="book.html" class="btn-primary cta-magnetic">Book Your Strategy Call</a>
+              <a href="tel:+14155042757" class="btn-ghost">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                (415) 504-2757
+              </a>
+            </div>
+            <p class="reveal mt-6 text-xs" style="color: var(--text-faint);">No commitment · NDA available · Senior team on every call</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="relative border-t py-16" style="border-color: var(--border); background: var(--bg-glass-2);">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="grid gap-10 md:grid-cols-4">
+        <div class="md:col-span-2">
+          <a href="#top" class="flex items-center gap-3">
+            <img src="assets/img/sentient-mark-navy.png" alt="Sentient Partners" class="h-11 w-11 object-contain" />
+            <span class="font-serif text-xl font-semibold tracking-tight" style="color: var(--heading);">Sentient <span style="color: var(--heading);">Partners</span></span>
+          </a>
+          <p class="mt-4 max-w-sm text-sm leading-relaxed" style="color: var(--text-muted);">An AI-first agency engineering autonomous systems that give ambitious businesses enterprise-grade leverage.</p>
+
+          <div class="mt-6 space-y-2 text-sm">
+            <a href="tel:+14155042757" class="flex items-center gap-2 transition-colors hover:opacity-80" style="color: var(--text-muted);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              (415) 504-2757
+            </a>
+            <a href="mailto:hello@sentientpartners.ai" class="flex items-center gap-2 transition-colors hover:opacity-80" style="color: var(--text-muted);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              hello@sentientpartners.ai
+            </a>
+          </div>
+        </div>
+        <div>
+          <h5 class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-faint);">Solutions</h5>
+          <ul class="mt-4 space-y-2 text-sm" style="color: var(--text-muted);">
+            <li><a href="#solutions" class="transition-colors hover:text-heading">Revenue Agents</a></li>
+            <li><a href="#solutions" class="transition-colors hover:text-heading">Knowledge Core</a></li>
+            <li><a href="#solutions" class="transition-colors hover:text-heading">Ops Autopilot</a></li>
+            <li><a href="#solutions" class="transition-colors hover:text-heading">Custom AI Products</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-faint);">Company</h5>
+          <ul class="mt-4 space-y-2 text-sm" style="color: var(--text-muted);">
+            <li><a href="#founder" class="transition-colors hover:text-heading">Founders</a></li>
+            <li><a href="#why" class="transition-colors hover:text-heading">Why Sentient</a></li>
+            <li><a href="book.html" class="transition-colors hover:text-heading">Book a Call</a></li>
+            <li><a href="mailto:hello@sentientpartners.ai" class="transition-colors hover:text-heading">Email Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- social -->
+      <div class="mt-12 flex flex-col items-center justify-between gap-6 border-t pt-8 sm:flex-row" style="border-color: var(--border);">
+        <div class="flex items-center gap-3">
+          <a href="#" aria-label="LinkedIn" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 17V10.3H6.07V17h2.27zM7.2 9.3a1.32 1.32 0 1 0 0-2.64 1.32 1.32 0 0 0 0 2.64zM18 17v-3.7c0-2-1.07-2.9-2.5-2.9-1.15 0-1.66.63-1.95 1.08V10.3H11.3V17h2.27v-3.57c0-.28.02-.56.1-.76.22-.56.73-1.14 1.58-1.14 1.12 0 1.57.85 1.57 2.1V17H18z"/></svg></a>
+          <a href="#" aria-label="X" class="social-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="Instagram" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="Facebook" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z"/></svg></a>
+        </div>
+        <p class="text-xs" style="color: var(--text-faint);">© <span id="year">2026</span> Sentient Partners. All rights reserved. · <span class="font-mono">Engineered for the AI era.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ AI ASSISTANT WIDGET ============ -->
+  <button id="ai-fab" class="ai-fab" aria-label="Open AI assistant">
+    <span class="pulse-ring"></span>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+  </button>
+
+  <div id="ai-panel" class="ai-panel" role="dialog" aria-label="AI assistant">
+    <div class="ai-header">
+      <div class="flex h-9 w-9 items-center justify-center rounded-full" style="background: var(--accent-grad); color:#05121f;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <div class="flex-1">
+        <div class="font-semibold text-sm" style="color: var(--heading);">Sentient Assistant</div>
+        <div class="flex items-center gap-1.5 text-xs" style="color: var(--text-muted);"><span class="ai-status-dot"></span> Online · typically replies instantly</div>
+      </div>
+      <button id="ai-close" class="theme-toggle" style="width:2rem;height:2rem;" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="ai-messages" class="ai-messages"></div>
+    <div class="ai-input-row">
+      <button id="ai-voice" class="ai-voice-btn" aria-label="Voice input" title="Voice input">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v3"/></svg>
+      </button>
+      <input id="ai-input" class="ai-input" type="text" placeholder="Ask about our AI solutions..." />
+      <button id="ai-send" class="ai-send-btn" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.min.js"></script>
+  <script src="js/hero-canvas.js"></script>
+  <script src="js/three-monogram.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/ai-assistant.js"></script>
+</body>
+</html>
