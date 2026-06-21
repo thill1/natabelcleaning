@@ -278,10 +278,31 @@
         },
       });
 
-      // 3D platinum monogram (hero center-right)
-      if (window.SPMonogram) {
-        window.SPMonogram.create('#monogram-mount', { scale: 0.95 });
-      }
+    }
+  } catch (e) {
+    // A canvas error must never break the page.
+    if (window.console) console.warn('Neural field skipped:', e);
+  }
+
+  /* ---------- 3D Platinum Monogram (independent of NeuralField) ---------- */
+  try {
+    if (window.SPMonogram) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const mount = document.querySelector('#monogram-mount');
+          if (!mount) { console.warn('[SPMonogram] mount #monogram-mount not found'); return; }
+          const W = mount.clientWidth, H = mount.clientHeight;
+          if (W < 2 || H < 2) { console.warn('[SPMonogram] mount too small:', W, '×', H, '(viewport may be < md breakpoint)'); return; }
+          try {
+            window.SPMonogram.create('#monogram-mount', { scale: 0.95 });
+            console.log('[SPMonogram] created successfully');
+          } catch (err) {
+            console.error('[SPMonogram] failed to create:', err);
+          }
+        });
+      });
+    } else {
+      console.warn('[SPMonogram] window.SPMonogram not available — Three.js may not have loaded');
     }
   } catch (e) {
     // A canvas error must never break the page.
