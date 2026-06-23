@@ -1,644 +1,591 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentient Partners — AI-First Agency for Ambitious Businesses</title>
-  <meta name="description" content="Sentient Partners builds bespoke, high-leverage AI systems — autonomous agents, revenue automation, and intelligence infrastructure — that give small and mid-market businesses enterprise-grade advantage." />
-
-  <!-- Set theme ASAP to avoid flash -->
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem('sp-theme');
-        if (saved) document.documentElement.setAttribute('data-theme', saved);
-      } catch (e) {}
-    })();
-  </script>
+  <title>Sacramento Cleaning Service | Natabel Cleaning Services — Residential &amp; Commercial</title>
+  <meta name="description" content="Natabel Cleaning Services — Sacramento's premium residential & commercial cleaning company. Recurring office cleaning, janitorial service, house cleaning, deep cleaning, move-in/move-out. Founder-led by Fatima Patalano. Free estimates, flexible scheduling. Serving Sacramento, Roseville, Folsom, Elk Grove & surrounding communities." />
+  <link rel="canonical" href="https://www.natabelcleaning.com/" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Natabel Cleaning — The Art of Clean in Sacramento" />
+  <meta property="og:description" content="Premium residential & commercial cleaning throughout Sacramento. Free estimates, flexible scheduling, recurring plans. Founder-led by Fatima Patalano." />
+  <meta property="og:url" content="https://www.natabelcleaning.com/" />
+  <meta property="og:site_name" content="Natabel Cleaning Services" />
+  <meta property="og:image" content="https://www.natabelcleaning.com/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/logo.svg" />
+  <meta name="theme-color" content="#0B3D2E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: { extend: {
-        fontFamily: {
-          serif: ['Fraunces', 'Georgia', 'serif'],
-          sans: ['Sora', 'system-ui', 'sans-serif'],
-          mono: ['JetBrains Mono', 'monospace'],
-        },
-      }},
-    };
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
-
-  <script>document.documentElement.classList.add('js-enabled');</script>
-  <script>
-    window.__revealFallback = window.setTimeout(function () {
-      if (!window.__revealOK) document.documentElement.classList.remove('js-enabled');
-    }, 3000);
-  </script>
+  <script src="js/config.js"></script>
 </head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div data-partial="header"></div>
+  <div data-partial="mobile-menu"></div>
 
-<body class="font-sans antialiased overflow-x-hidden">
-<div id="cursor-dot" class="cursor-dot"></div>
-<div id="cursor-ring" class="cursor-ring"></div>
+  <main id="main">
 
-  <!-- SCROLL PROGRESS -->
-  <div id="scroll-progress" class="fixed top-0 left-0 z-[80] h-[2px] w-0" style="background: var(--accent-grad);"></div>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="hero-grid-deco" aria-hidden="true"></div>
+      <div class="container container-wide">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <span class="pill reveal"><span class="dot-live"></span> Sacramento · Founder-led · Licensed &amp; insured</span>
+            <h1 class="reveal d1">The art of clean,<br /><span class="accent">elevating Sacramento</span><br /><span class="brass">homes &amp; businesses.</span></h1>
+            <p class="lead-lg reveal d2">Founded by <strong style="color:var(--ink);">Fatima Patalano</strong>, Natabel Cleaning Services brings meticulous, hotel-grade standards to residential and commercial cleaning across the Sacramento area — from recurring office janitorial to deep house cleaning and move-in/move-out turnovers.</p>
+            <div class="hero-ctas reveal d2">
+              <a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Free Estimate</a>
+              <a href="commercial.html" class="btn btn-emerald btn-lg" data-magnetic><i data-lucide="building-2"></i> Schedule a Walkthrough</a>
+              <a href="book-online.html" class="btn btn-outline btn-lg">Book Residential</a>
+            </div>
+            <div class="hero-trust reveal d3">
+              <span class="t-item"><i data-lucide="map-pin"></i> Local to Sacramento</span>
+              <span class="t-item"><i data-lucide="shield-check"></i> Licensed &amp; insured</span>
+              <span class="t-item"><i data-lucide="repeat"></i> Recurring plans</span>
+              <span class="t-item"><i data-lucide="clock"></i> Flexible scheduling</span>
+              <span class="t-item"><i data-lucide="badge-check"></i> Free estimates</span>
+            </div>
+          </div>
 
-  <!-- ============ NAV ============ -->
-  <header id="nav" class="fixed top-0 inset-x-0 z-50">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <nav class="mt-4 flex items-center justify-between rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all duration-500" id="nav-inner" style="border-color: var(--border); background: var(--nav-bg);">
-        <a href="#top" class="flex items-center gap-3 group">
-          <img src="assets/img/sentient-mark.png" alt="Sentient Partners" class="h-11 w-11 object-contain drop-shadow-[0_0_12px_rgba(184,212,227,0.25)] transition-transform duration-500 group-hover:rotate-[8deg]" />
-          <span class="font-serif text-xl font-semibold tracking-tight" style="color: var(--heading);">Sentient <span style="color: var(--heading);">Partners</span></span>
-        </a>
-
-        <div class="hidden items-center gap-1 lg:flex">
-          <a href="#solutions" class="nav-link">Solutions</a>
-          <a href="#why" class="nav-link">Why Us</a>
-          <a href="#founder" class="nav-link">Founders</a>
-          <a href="#results" class="nav-link">Results</a>
+          <div class="hero-visual reveal d2">
+            <div class="hero-card">
+              <div class="hero-card-top">
+                <h3>Your free estimate in 90 seconds</h3>
+                <span class="pill pill-brass">No obligation</span>
+              </div>
+              <div class="hero-card-body">
+                <a href="free-estimate.html?service=commercial" class="opt">
+                  <span class="opt-ic"><i data-lucide="building-2"></i></span>
+                  <span><strong>Commercial Cleaning</strong><small>Offices, retail, medical, gyms</small></span>
+                </a>
+                <a href="free-estimate.html?service=residential" class="opt">
+                  <span class="opt-ic brass"><i data-lucide="home"></i></span>
+                  <span><strong>Residential Cleaning</strong><small>Houses, apartments, condos</small></span>
+                </a>
+                <a href="free-estimate.html?service=move" class="opt">
+                  <span class="opt-ic"><i data-lucide="move-3d"></i></span>
+                  <span><strong>Move-In / Move-Out</strong><small>Deep turnovers, fresh starts</small></span>
+                </a>
+                <a href="free-estimate.html?service=recurring" class="opt">
+                  <span class="opt-ic brass"><i data-lucide="repeat"></i></span>
+                  <span><strong>Recurring Cleaning Plan</strong><small>Weekly · biweekly · monthly</small></span>
+                </a>
+              </div>
+              <div class="hero-card-foot">
+                <a href="free-estimate.html" class="btn btn-brass btn-block btn-lg" data-magnetic>Start My Free Estimate</a>
+              </div>
+            </div>
+            <div class="hero-badge b1"><span class="stars">★★★★★</span><span>Google-rated</span></div>
+            <div class="hero-badge b2"><i data-lucide="shield-check" style="color:var(--emerald);width:18px;height:18px;"></i> Licensed &amp; insured</div>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="flex items-center gap-2">
-          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-            <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-          </button>
-          <a href="book.html" class="hidden md:inline-flex btn-primary cta-magnetic text-sm">Book a Strategy Call</a>
-          <button id="mobile-toggle" class="lg:hidden theme-toggle" aria-label="Menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-          </button>
-        </div>
-      </nav>
-
-      <div id="mobile-menu" class="lg:hidden hidden mt-2 rounded-2xl border p-4 backdrop-blur-xl" style="border-color: var(--border); background: var(--nav-bg-scroll);">
-        <div class="flex flex-col gap-1">
-          <a href="#solutions" class="mobile-link">Solutions</a>
-          <a href="#why" class="mobile-link">Why Us</a>
-          <a href="#founder" class="mobile-link">Founders</a>
-          <a href="#results" class="mobile-link">Results</a>
-          <a href="book.html" class="mobile-link mt-2 rounded-full text-center font-semibold" style="background: var(--accent-grad); color:#05121f;">Book a Strategy Call</a>
-        </div>
+    <!-- ===================== MARQUEE ===================== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">Residential cleaning <span class="star">✦</span></span>
+        <span class="marquee-item">Office janitorial <span class="star">✦</span></span>
+        <span class="marquee-item">Deep cleaning <span class="star">✦</span></span>
+        <span class="marquee-item">Recurring plans <span class="star">✦</span></span>
+        <span class="marquee-item">Move-in / move-out <span class="star">✦</span></span>
+        <span class="marquee-item">Property management <span class="star">✦</span></span>
+        <span class="marquee-item">Residential cleaning <span class="star">✦</span></span>
+        <span class="marquee-item">Office janitorial <span class="star">✦</span></span>
+        <span class="marquee-item">Deep cleaning <span class="star">✦</span></span>
+        <span class="marquee-item">Recurring plans <span class="star">✦</span></span>
+        <span class="marquee-item">Move-in / move-out <span class="star">✦</span></span>
+        <span class="marquee-item">Property management <span class="star">✦</span></span>
       </div>
     </div>
-  </header>
 
-  <main id="top">
-
-    <!-- ============ HERO ============ -->
-    <section class="relative min-h-screen overflow-hidden">
-      <canvas id="neural-canvas" class="absolute inset-0 h-full w-full"></canvas>
-
-      <!-- 3D platinum monogram (center-right) -->
-      <div id="monogram-mount" aria-hidden="true" class="absolute inset-y-0 right-0 w-1/2 hidden md:block" style="z-index:5; pointer-events:none;"></div>
-
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-      <div class="pointer-events-none absolute inset-0 hero-grid opacity-[0.18]"></div>
-      <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, var(--vignette) 75%, var(--bg) 100%); opacity:0.7;"></div>
-
-      <div class="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pt-32 pb-20 sm:px-8">
-        <div class="max-w-2xl">
-          <div class="reveal inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium backdrop-blur-md" style="border-color: var(--border); background: var(--bg-glass); color: var(--text-muted);">
-            <span class="relative flex h-2 w-2">
-              <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style="background: var(--ice);"></span>
-              <span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--ice);"></span>
-            </span>
-            AI-First agency · Now booking Q3 implementations
-          </div>
-
-          <h1 class="reveal mt-6 font-serif text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl" style="color: var(--heading);">
-            We build the <span class="grad-text">AI workforce</span><br class="hidden sm:block" />
-            that runs your business <span style="color: var(--text-muted);">while you scale it.</span>
-          </h1>
-
-          <p class="reveal mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl" style="color: var(--text-muted);">
-            Sentient Partners designs and deploys <span style="color: var(--heading); font-weight:500;">autonomous AI systems</span> — revenue engines, operations agents, and intelligence infrastructure — engineered to give ambitious small &amp; mid-market businesses the leverage of an enterprise, without the enterprise overhead.
-          </p>
-
-          <div class="reveal mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a href="book.html" class="btn-primary cta-magnetic">
-              Book Your AI Strategy Call
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-            <a href="#solutions" class="btn-ghost">Explore AI Solutions</a>
-          </div>
-
-          <div class="reveal mt-14 grid max-w-2xl grid-cols-3 gap-6 border-t pt-8" style="border-color: var(--border);">
-            <div>
-              <div class="font-serif text-3xl font-bold sm:text-4xl" style="color: var(--heading);"><span class="counter" data-target="14">0</span>x</div>
-              <div class="mt-1 text-xs uppercase tracking-wider" style="color: var(--text-faint);">Avg. throughput gain</div>
-            </div>
-            <div>
-              <div class="font-serif text-3xl font-bold sm:text-4xl" style="color: var(--heading);"><span class="counter" data-target="73">0</span>%</div>
-              <div class="mt-1 text-xs uppercase tracking-wider" style="color: var(--text-faint);">Cost-to-serve reduction</div>
-            </div>
-            <div>
-              <div class="font-serif text-3xl font-bold sm:text-4xl" style="color: var(--heading);"><span class="counter" data-target="24">0</span>/7</div>
-              <div class="mt-1 text-xs uppercase tracking-wider" style="color: var(--text-faint);">Always-on execution</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="absolute bottom-7 left-1/2 z-10 -translate-x-1/2" style="color: var(--text-faint);">
-        <div class="flex flex-col items-center gap-2">
-          <span class="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-          <div class="flex h-9 w-5 justify-center rounded-full border p-1" style="border-color: var(--border-strong);">
-            <span class="h-2 w-1 animate-scrollcue rounded-full" style="background: var(--cyan);"></span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ TRUST BAND ============ -->
-    <section class="relative border-y py-14" style="border-color: var(--border); background: var(--bg-glass-2);">
-      <div class="mx-auto max-w-7xl px-5 sm:px-8">
-        <p class="text-center text-xs uppercase tracking-[0.25em]" style="color: var(--text-faint);">Engineered on the frontier — the models, infra &amp; tools we build with</p>
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 font-serif text-xl font-semibold tracking-tight" style="color: var(--text-faint);">
-          <span class="transition-colors hover:text-heading">OpenAI</span>
-          <span class="transition-colors hover:text-heading">Anthropic</span>
-          <span class="transition-colors hover:text-heading">LangChain</span>
-          <span class="transition-colors hover:text-heading">Pinecone</span>
-          <span class="transition-colors hover:text-heading">n8n</span>
-          <span class="transition-colors hover:text-heading">Supabase</span>
-          <span class="transition-colors hover:text-heading">Vercel</span>
-          <span class="transition-colors hover:text-heading">Make</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ INTRO ============ -->
-    <section class="relative py-28 sm:py-36">
-      <div class="mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <p class="reveal eyebrow">The Sentient advantage</p>
-        <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
-          Most businesses use AI as a <span style="color: var(--text-faint);">tool.</span><br />
-          Our clients use it as <span class="grad-text">leverage.</span>
-        </h2>
-        <p class="reveal mx-auto mt-7 max-w-2xl text-lg leading-relaxed" style="color: var(--text-muted);">
-          We don't sell chatbots or dashboards. We architect <span style="color: var(--heading);">autonomous systems</span> that generate revenue, execute operations, and compound intelligence — so a 12-person team operates with the output of 120, and the insight of a Fortune 500.
-        </p>
-      </div>
-    </section>
-
-    <!-- ============ SOLUTIONS — FLIP CARDS ============ -->
-    <section id="solutions" class="relative py-20 sm:py-28">
-      <div class="mx-auto max-w-7xl px-5 sm:px-8">
-        <div class="mx-auto max-w-3xl text-center">
-          <p class="reveal eyebrow">High-ticket AI solutions</p>
-          <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
-            Six systems. <span class="grad-text">Maximum leverage.</span>
-          </h2>
-          <p class="reveal mx-auto mt-6 text-lg" style="color: var(--text-muted);">
-            Hover or tap any card to see exactly what's inside — and the outcome it's engineered to deliver.
-          </p>
+    <!-- ===================== QUOTE FUNNEL ===================== -->
+    <section class="section funnel" id="estimate">
+      <div class="container">
+        <div class="section-head text-center reveal" style="margin-bottom:40px;">
+          <span class="h-eyebrow center">Free Estimate · 90 Seconds</span>
+          <h2>Tell us about your space.<br /><span class="serif-italic">We'll handle the rest.</span></h2>
+          <p class="lead mx-auto">No pressure. No obligation. Just a clear cleaning estimate for your home or business — built step-by-step so we can quote accurately the first time.</p>
         </div>
 
-        <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-          <!-- CARD 1 -->
-          <div class="flip-card reveal">
-            <div class="flip-inner">
-              <!-- FRONT -->
-              <div class="flip-face flip-front">
-                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(184,212,227,0.2), rgba(184,212,227,0.05)); color: var(--cyan); box-shadow: inset 0 0 0 1px rgba(184,212,227,0.2);">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                </div>
-                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Autonomous Revenue Agents</h3>
-                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Always-on AI agents that qualify leads, run outreach, book meetings, and close — across email, SMS, and chat. Your best salesperson, cloned and deployed at infinite scale.</p>
-                <div class="flip-hint">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  Hover to flip · Lead-to-revenue automation
-                </div>
-              </div>
-              <!-- BACK -->
-              <div class="flip-face flip-back">
-                <div>
-                  <span class="eyebrow" style="color: var(--cyan);">Inside the build</span>
-                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Revenue Agents</h3>
-                  <ul class="flip-back-list mt-3">
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Multi-touch sequences across email, LinkedIn, SMS &amp; chat</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Real-time qualification &amp; meeting booking into your calendar</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> CRM-native: zero manual data entry, full pipeline visibility</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Brand-tuned voice, objection handling &amp; human handoff</li>
-                  </ul>
-                </div>
-                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Revenue Agents →</a>
-              </div>
-            </div>
+        <div class="funnel-card reveal d1" data-funnel>
+          <div class="funnel-progress">
+            <div class="meta"><span class="step-label">Step 1 · Service Type</span><span class="step-count">1 of 7</span></div>
+            <div class="bar"><span></span></div>
           </div>
 
-          <!-- CARD 2 -->
-          <div class="flip-card reveal">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(199,205,214,0.2), rgba(199,205,214,0.05)); color: var(--violet); box-shadow: inset 0 0 0 1px rgba(199,205,214,0.2);">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                </div>
-                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Intelligence Knowledge Core</h3>
-                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">A private, vector-grounded brain trained on your documents, calls, and data. Answers any question, drafts any asset, and surfaces insights — with citations and zero hallucination risk.</p>
-                <div class="flip-hint">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  Hover to flip · Enterprise-grade RAG
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div>
-                  <span class="eyebrow" style="color: var(--violet);">Inside the build</span>
-                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Knowledge Core</h3>
-                  <ul class="flip-back-list mt-3">
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Ingests docs, CRM, tickets, transcripts &amp; wikis</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Citations on every answer — no hallucinations</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Role-based access &amp; SOC2-aligned security</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Your data stays yours — deployed in your tenant</li>
-                  </ul>
-                </div>
-                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Knowledge Core →</a>
-              </div>
-            </div>
-          </div>
+          <form data-lead-source="Homepage Funnel" novalidate>
+            <input type="hidden" name="form_type" value="free_estimate" />
 
-          <!-- CARD 3 -->
-          <div class="flip-card reveal">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(232,237,242,0.2), rgba(232,237,242,0.05)); color: var(--fuchsia); box-shadow: inset 0 0 0 1px rgba(232,237,242,0.2);">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                </div>
-                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Operations Autopilot</h3>
-                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">End-to-end automation of the back office — invoicing, onboarding, scheduling, reporting, and approvals. Your tools finally talk to each other, and the busywork disappears.</p>
-                <div class="flip-hint">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  Hover to flip · Workflow automation
-                </div>
+            <div class="funnel-step active">
+              <h3>What kind of cleaning do you need?</h3>
+              <p class="step-desc">Choose the service that best fits — you can refine details later.</p>
+              <div class="choice-group cols-3">
+                <label class="choice"><input type="radio" name="service_type" value="residential" /><span class="choice-ic"><i data-lucide="home"></i></span><strong>Residential Cleaning</strong><small>House, apartment, condo</small></label>
+                <label class="choice"><input type="radio" name="service_type" value="commercial" /><span class="choice-ic"><i data-lucide="building-2"></i></span><strong>Commercial Cleaning</strong><small>Office, retail, medical</small></label>
+                <label class="choice"><input type="radio" name="service_type" value="move_in_out" /><span class="choice-ic"><i data-lucide="move-3d"></i></span><strong>Move-In / Move-Out</strong><small>Tenant &amp; turnover</small></label>
+                <label class="choice"><input type="radio" name="service_type" value="deep_cleaning" /><span class="choice-ic"><i data-lucide="sparkles"></i></span><strong>Deep Cleaning</strong><small>Top-to-bottom detail</small></label>
+                <label class="choice"><input type="radio" name="service_type" value="recurring" /><span class="choice-ic"><i data-lucide="repeat"></i></span><strong>Recurring Cleaning</strong><small>Weekly / biweekly / monthly</small></label>
+                <label class="choice"><input type="radio" name="service_type" value="property_management" /><span class="choice-ic"><i data-lucide="key-round"></i></span><strong>Property Management</strong><small>Rental turnover &amp; upkeep</small></label>
               </div>
-              <div class="flip-face flip-back">
-                <div>
-                  <span class="eyebrow" style="color: var(--fuchsia);">Inside the build</span>
-                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Ops Autopilot</h3>
-                  <ul class="flip-back-list mt-3">
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> 40+ tool integrations out of the box</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Human-in-the-loop approvals where it matters</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Auto-invoicing, onboarding &amp; reporting</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Full audit log &amp; observability</li>
-                  </ul>
-                </div>
-                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Ops Autopilot →</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- CARD 4 -->
-          <div class="flip-card reveal">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(184,212,227,0.2), rgba(199,205,214,0.05)); color: var(--cyan); box-shadow: inset 0 0 0 1px rgba(184,212,227,0.2);">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-                </div>
-                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Decision Intelligence</h3>
-                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Predictive models and real-time dashboards that turn raw data into the next best action. Forecast demand, flag churn before it happens, and price with confidence — backed by your own data.</p>
-                <div class="flip-hint">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  Hover to flip · Applied ML &amp; analytics
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div>
-                  <span class="eyebrow" style="color: var(--cyan);">Inside the build</span>
-                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Decision Intelligence</h3>
-                  <ul class="flip-back-list mt-3">
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Churn, demand &amp; LTV prediction models</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Live executive dashboards &amp; alerts</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Dynamic pricing &amp; forecasting engines</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Trained on your data, explained in plain English</li>
-                  </ul>
-                </div>
-                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Decision Intelligence →</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- CARD 5 -->
-          <div class="flip-card reveal">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(199,205,214,0.2), rgba(232,237,242,0.05)); color: var(--violet); box-shadow: inset 0 0 0 1px rgba(199,205,214,0.2);">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
-                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Conversational Commerce</h3>
-                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Voice and chat agents that handle support, sales, and scheduling 24/7 — in your brand voice, across web, phone, and messaging. Resolution in seconds, escalation when needed.</p>
-                <div class="flip-hint">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  Hover to flip · Voice &amp; support agents
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div>
-                  <span class="eyebrow" style="color: var(--violet);">Inside the build</span>
-                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Conversational Commerce</h3>
-                  <ul class="flip-back-list mt-3">
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Real-time voice &amp; text, 30+ languages</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Trained on your knowledge base &amp; brand voice</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Smart escalation to humans when needed</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Deploys in weeks, integrates with your stack</li>
-                  </ul>
-                </div>
-                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Conversational Commerce →</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- CARD 6 -->
-          <div class="flip-card reveal">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="flip-icon" style="background: linear-gradient(135deg, rgba(232,237,242,0.2), rgba(184,212,227,0.05)); color: var(--fuchsia); box-shadow: inset 0 0 0 1px rgba(232,237,242,0.2);">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                </div>
-                <h3 class="font-serif text-xl font-semibold" style="color: var(--heading);">Custom AI Products</h3>
-                <p class="mt-3 text-sm leading-relaxed" style="color: var(--text-muted);">Proprietary AI features and full products built into your offering — a defensible moat your competitors can't copy. From internal copilots to customer-facing intelligence.</p>
-                <div class="flip-hint">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                  Hover to flip · Bespoke build &amp; IP
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div>
-                  <span class="eyebrow" style="color: var(--fuchsia);">Inside the build</span>
-                  <h3 class="font-serif text-lg font-semibold mt-2" style="color: var(--heading);">Custom AI Products</h3>
-                  <ul class="flip-back-list mt-3">
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Full design → build → deploy → scale</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Internal copilots &amp; customer-facing apps</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> You own 100% of the IP &amp; code</li>
-                    <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--fuchsia)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> A defensible moat competitors can't copy</li>
-                  </ul>
-                </div>
-                <a href="book.html" class="btn-primary cta-magnetic mt-4 text-sm">Explore Custom AI Products →</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="reveal mt-14 text-center">
-          <a href="book.html" class="btn-ghost cta-magnetic">
-            Get a custom solution blueprint
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ HORIZONTAL PINNED SCROLL SHOWCASE ============ -->
-    <section id="showcase" class="pin-section relative">
-      <div class="mx-auto max-w-7xl px-5 sm:px-8 pt-20 text-center">
-        <p class="reveal eyebrow">The Sentient stack</p>
-        <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
-          A system that <span class="grad-text">thinks, acts, and compounds.</span>
-        </h2>
-        <p class="reveal mx-auto mt-6 max-w-2xl text-lg" style="color: var(--text-muted);">Scroll to move through the layers of an autonomous AI operation.</p>
-      </div>
-
-      <div class="pin-track mt-14" id="pin-track">
-        <div class="pin-panel reveal">
-          <div>
-            <span class="eyebrow" style="color: var(--cyan);">Layer 01 · Sense</span>
-            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Every signal, captured</h3>
-            <p class="mt-3" style="color: var(--text-muted);">Email, calls, CRM, docs, web, transactions — your AI ingests the full picture in real time and builds a living model of your business.</p>
-          </div>
-          <div class="font-mono text-xs" style="color: var(--text-faint);">// 312 data sources · 1 unified graph</div>
-        </div>
-        <div class="pin-panel reveal">
-          <div>
-            <span class="eyebrow" style="color: var(--violet);">Layer 02 · Reason</span>
-            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Decisions, with judgment</h3>
-            <p class="mt-3" style="color: var(--text-muted);">Models reason over your data, weigh trade-offs, and propose the next best action — grounded in your rules, your history, and your goals.</p>
-          </div>
-          <div class="font-mono text-xs" style="color: var(--text-faint);">// grounded · cited · auditable</div>
-        </div>
-        <div class="pin-panel reveal">
-          <div>
-            <span class="eyebrow" style="color: var(--fuchsia);">Layer 03 · Act</span>
-            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Execution, autonomous</h3>
-            <p class="mt-3" style="color: var(--text-muted);">Agents execute — send, call, book, file, report — 24/7, with human oversight exactly where you want it. The busywork disappears.</p>
-          </div>
-          <div class="font-mono text-xs" style="color: var(--text-faint);">// 24/7 · human-in-the-loop</div>
-        </div>
-        <div class="pin-panel reveal">
-          <div>
-            <span class="eyebrow" style="color: var(--cyan);">Layer 04 · Learn</span>
-            <h3 class="font-serif text-2xl font-semibold mt-3" style="color: var(--heading);">Every outcome, fuel</h3>
-            <p class="mt-3" style="color: var(--text-muted);">Every action feeds back as training signal. The system compounds — getting sharper, faster, and more valuable the more you use it.</p>
-          </div>
-          <div class="font-mono text-xs" style="color: var(--text-faint);">// self-improving · compounding</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FOUNDER / CREDIBILITY ============ -->
-    <section id="founder" class="relative py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-5 sm:px-8">
-        <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p class="reveal eyebrow">Who's behind Sentient</p>
-            <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
-              Built by operators who ran AI at the <span class="grad-text">highest levels.</span>
-            </h2>
-            <div class="reveal mt-7 space-y-5 text-lg leading-relaxed" style="color: var(--text-muted);">
-              <p>Sentient Partners was founded by a small group of engineers, data scientists, and strategists who spent their careers building AI inside <span style="color: var(--heading); font-weight:500;">Fortune 500</span> technology organizations — at the highest levels, on the hardest problems.</p>
-              <p>We've shipped systems for global finance, healthcare, retail, logistics, and defense — servicing clients across <span style="color: var(--heading); font-weight:500;">every major industry.</span> We know what enterprise-grade AI looks like, what it costs, and how rare it actually is.</p>
-              <p>Now we've taken that exact experience and pointed it at the companies that need it most: <span style="color: var(--heading); font-weight:500;">small and mid-market businesses.</span> Same capability. Same rigor. None of the enterprise overhead. That's the Sentient difference.</p>
+              <div class="funnel-nav"><span></span><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
             </div>
 
-            <div class="reveal mt-9 flex flex-wrap gap-3">
-              <div class="rounded-xl border px-4 py-3" style="border-color: var(--border); background: var(--bg-glass-2);">
-                <div class="font-serif text-2xl font-bold" style="color: var(--heading);">Fortune 500</div>
-                <div class="text-xs" style="color: var(--text-faint);">Pedigree</div>
-              </div>
-              <div class="rounded-xl border px-4 py-3" style="border-color: var(--border); background: var(--bg-glass-2);">
-                <div class="font-serif text-2xl font-bold" style="color: var(--heading);">12+</div>
-                <div class="text-xs" style="color: var(--text-faint);">Industries served</div>
-              </div>
-              <div class="rounded-xl border px-4 py-3" style="border-color: var(--border); background: var(--bg-glass-2);">
-                <div class="font-serif text-2xl font-bold" style="color: var(--heading);">$100M+</div>
-                <div class="text-xs" style="color: var(--text-faint);">AI impact delivered</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="reveal relative">
-            <div class="relative overflow-hidden rounded-3xl border p-8" style="border-color: var(--border); background: linear-gradient(160deg, var(--bg-elevated), var(--bg));">
-              <div class="absolute inset-0 hero-grid opacity-[0.12]"></div>
-              <div class="relative">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-2">
-                    <span class="h-3 w-3 rounded-full bg-red-400/70"></span>
-                    <span class="h-3 w-3 rounded-full bg-yellow-400/70"></span>
-                    <span class="h-3 w-3 rounded-full bg-green-400/70"></span>
-                  </div>
-                  <span class="font-mono text-xs" style="color: var(--text-faint);">sentient.live</span>
-                </div>
-                <div class="mt-6 space-y-3">
-                  <div class="rounded-xl border p-4" style="border-color: var(--border); background: var(--bg-glass-2);">
-                    <div class="flex items-center justify-between">
-                      <span class="font-mono text-xs" style="color: var(--cyan);">REVENUE AGENT</span>
-                      <span class="flex items-center gap-1.5 text-xs text-green-400"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"></span>active</span>
-                    </div>
-                    <p class="mt-2 text-sm" style="color: var(--text-muted);">Qualified <span class="font-semibold" style="color: var(--heading);">23 leads</span> · Booked <span class="font-semibold" style="color: var(--heading);">7 demos</span> · $48K pipeline today</p>
-                  </div>
-                  <div class="rounded-xl border p-4" style="border-color: var(--border); background: var(--bg-glass-2);">
-                    <div class="flex items-center justify-between">
-                      <span class="font-mono text-xs" style="color: var(--violet);">OPS AUTOPILOT</span>
-                      <span class="flex items-center gap-1.5 text-xs text-green-400"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"></span>active</span>
-                    </div>
-                    <p class="mt-2 text-sm" style="color: var(--text-muted);">Processed <span class="font-semibold" style="color: var(--heading);">142 documents</span> · <span class="font-semibold" style="color: var(--heading);">0 errors</span> · 3.2s avg</p>
-                  </div>
-                  <div class="rounded-xl border p-4" style="border-color: var(--border); background: var(--bg-glass-2);">
-                    <div class="flex items-center justify-between">
-                      <span class="font-mono text-xs" style="color: var(--fuchsia);">KNOWLEDGE CORE</span>
-                      <span class="flex items-center gap-1.5 text-xs text-green-400"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"></span>active</span>
-                    </div>
-                    <p class="mt-2 text-sm" style="color: var(--text-muted);">Answered <span class="font-semibold" style="color: var(--heading);">318 queries</span> · <span class="font-semibold" style="color: var(--heading);">99.4%</span> confidence</p>
-                  </div>
-                </div>
-                <div class="mt-6 flex items-center justify-between border-t pt-4" style="border-color: var(--border);">
-                  <span class="font-mono text-xs" style="color: var(--text-faint);">UPTIME · last 30d</span>
-                  <span class="font-serif text-lg font-bold" style="color: var(--heading);">99.98%</span>
+            <div class="funnel-step">
+              <h3>What kind of property is it?</h3>
+              <p class="step-desc">We tailor equipment, products, and team size to your space.</p>
+              <div data-prop="residential">
+                <div class="choice-group cols-4">
+                  <label class="choice"><input type="radio" name="property_type" value="house" /><strong>House</strong><small>Single-family</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="apartment" /><strong>Apartment</strong><small>Multi-unit</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="condo" /><strong>Condo</strong><small>Condominium</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="townhome" /><strong>Townhome</strong><small>Attached</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="rental" /><strong>Rental property</strong><small>Income property</small></label>
                 </div>
               </div>
+              <div data-prop="commercial" style="display:none;">
+                <div class="choice-group cols-4">
+                  <label class="choice"><input type="radio" name="property_type" value="office" /><strong>Office</strong><small>Suite / building</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="retail" /><strong>Retail space</strong><small>Storefront</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="medical" /><strong>Medical office</strong><small>Clinic / dental</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="gym" /><strong>Gym / fitness</strong><small>Studio / club</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="church" /><strong>Church / community</strong><small>Place of worship</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="property_mgmt" /><strong>Property mgmt</strong><small>Multi-tenant</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="commercial_building" /><strong>Commercial building</strong><small>Multi-floor</small></label>
+                  <label class="choice"><input type="radio" name="property_type" value="other" /><strong>Other</strong><small>Tell us in notes</small></label>
+                </div>
+              </div>
+              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
             </div>
-            <div class="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] blur-2xl" style="background: linear-gradient(135deg, rgba(184,212,227,0.12), transparent, rgba(199,205,214,0.12));"></div>
-          </div>
-        </div>
 
-        <!-- industries marquee -->
-        <div class="reveal mt-20">
-          <p class="text-center text-xs uppercase tracking-[0.25em]" style="color: var(--text-faint);">Industries our team has delivered AI for</p>
-          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-            <span class="chip">Finance</span><span class="chip">Healthcare</span><span class="chip">Retail &amp; E-commerce</span><span class="chip">Logistics</span><span class="chip">Manufacturing</span><span class="chip">Real Estate</span><span class="chip">Legal</span><span class="chip">SaaS &amp; Tech</span><span class="chip">Defense</span><span class="chip">Media</span><span class="chip">Insurance</span><span class="chip">Education</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ RESULTS ============ -->
-    <section id="results" class="relative py-24 sm:py-28">
-      <div class="mx-auto max-w-7xl px-5 sm:px-8">
-        <div class="relative overflow-hidden rounded-3xl border p-10 sm:p-16" style="border-color: var(--border); background: linear-gradient(135deg, var(--bg-glass), var(--bg-glass-2));">
-          <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full blur-3xl" style="background: rgba(184,212,227,0.12);"></div>
-          <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full blur-3xl" style="background: rgba(232,237,242,0.12);"></div>
-          <div class="relative grid gap-10 lg:grid-cols-4">
-            <div class="lg:col-span-1">
-              <p class="reveal eyebrow">Outcomes</p>
-              <h2 class="reveal mt-4 font-serif text-3xl font-bold leading-tight sm:text-4xl" style="color: var(--heading);">Numbers that<br />moved P&amp;L.</h2>
+            <div class="funnel-step">
+              <h3>How often do you need cleaning?</h3>
+              <p class="step-desc">Recurring plans lock in your rate and your team. You can change or pause anytime.</p>
+              <div class="choice-group cols-4">
+                <label class="choice"><input type="radio" name="frequency" value="one_time" /><strong>One-time</strong><small>Single clean</small></label>
+                <label class="choice"><input type="radio" name="frequency" value="weekly" /><strong>Weekly</strong><small>Every 7 days</small></label>
+                <label class="choice"><input type="radio" name="frequency" value="biweekly" /><strong>Biweekly</strong><small>Every 14 days</small></label>
+                <label class="choice"><input type="radio" name="frequency" value="monthly" /><strong>Monthly</strong><small>Every 30 days</small></label>
+                <label class="choice"><input type="radio" name="frequency" value="custom" /><strong>Custom</strong><small>Tell us your cadence</small></label>
+              </div>
+              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
             </div>
-            <div class="lg:col-span-3 grid grid-cols-2 gap-8 sm:grid-cols-4">
-              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="312">0</span>%</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Avg. ROI within first year</p></div>
-              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="90">0</span>%</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Manual tasks eliminated</p></div>
-              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="11">0</span>x</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Faster response times</p></div>
-              <div class="reveal"><div class="font-serif text-4xl font-bold sm:text-5xl" style="color: var(--heading);"><span class="counter" data-target="6">0</span>wk</div><p class="mt-2 text-sm" style="color: var(--text-muted);">Avg. time to first value</p></div>
+
+            <div class="funnel-step">
+              <h3>Property details</h3>
+              <p class="step-desc">A few specifics help us build an accurate quote.</p>
+              <div data-size="residential">
+                <div class="field-row">
+                  <div class="field"><label>Bedrooms <span class="req">*</span></label><select name="bedrooms"><option value="">Select…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+                  <div class="field"><label>Bathrooms <span class="req">*</span></label><select name="bathrooms"><option value="">Select…</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option></select></div>
+                </div>
+                <div class="field"><label>Approximate square footage</label><input type="text" name="square_footage" placeholder="e.g. 1,800 sq ft" /></div>
+              </div>
+              <div data-size="commercial" style="display:none;">
+                <div class="field-row">
+                  <div class="field"><label>Approx. square footage</label><input type="text" name="commercial_sqft" placeholder="e.g. 4,500 sq ft" /></div>
+                  <div class="field"><label>Number of restrooms</label><input type="number" name="restrooms" min="0" placeholder="e.g. 3" /></div>
+                </div>
+                <div class="field-row">
+                  <div class="field"><label>Desired cleaning days</label><input type="text" name="cleaning_days" placeholder="e.g. Mon/Wed/Fri" /></div>
+                  <div class="field"><label>Preferred cleaning time</label><select name="cleaning_time"><option value="">Select…</option><option>Business hours</option><option>After hours</option><option>Either</option></select></div>
+                </div>
+              </div>
+              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
+            </div>
+
+            <div class="funnel-step">
+              <h3>Where is the property?</h3>
+              <p class="step-desc">We serve Sacramento and surrounding communities.</p>
+              <div class="field-row">
+                <div class="field"><label>ZIP code <span class="req">*</span></label><input type="text" name="zip" inputmode="numeric" pattern="[0-9]{5}" placeholder="e.g. 95814" /><div class="field-error">Please enter a 5-digit ZIP.</div></div>
+                <div class="field"><label>City</label><input type="text" name="city" placeholder="e.g. Sacramento" /></div>
+              </div>
+              <div class="field"><label>Service address <span class="muted" style="font-weight:400;">(optional)</span></label><input type="text" name="address" placeholder="Street address (optional)" /></div>
+              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
+            </div>
+
+            <div class="funnel-step">
+              <h3>Where should we send your estimate?</h3>
+              <p class="step-desc">We'll reach out within one business hour. No spam, ever.</p>
+              <div class="field-row">
+                <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" /><div class="field-error">Please enter your name.</div></div>
+                <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(916) 555-0148" /><div class="field-error">Please enter a valid phone number.</div></div>
+              </div>
+              <div class="field-row">
+                <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@example.com" /><div class="field-error">Please enter a valid email.</div></div>
+                <div class="field"><label>Preferred contact</label><select name="preferred_contact"><option value="">Select…</option><option>Phone call</option><option>Text message</option><option>Email</option></select></div>
+              </div>
+              <div class="field"><label>Notes / special requests <span class="muted" style="font-weight:400;">(optional)</span></label><textarea name="notes" placeholder="Pets, allergies, focus areas, access instructions, etc."></textarea></div>
+              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Review request <i data-lucide="arrow-right"></i></button></div>
+            </div>
+
+            <div class="funnel-step">
+              <h3>You're almost done</h3>
+              <p class="step-desc">Submit your request and we'll send a personalized cleaning estimate within one business hour.</p>
+              <div class="card" style="background:var(--emerald-tint);border-color:var(--emerald-line);">
+                <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No pressure.</strong> Just a clear, honest estimate.</p></div>
+                <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No obligation.</strong> Decide on your timeline.</p></div>
+                <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Local team.</strong> Founded and run from Sacramento.</p></div>
+              </div>
+              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="submit" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="send"></i> Submit My Free Estimate Request</button></div>
+            </div>
+          </form>
+
+          <div class="funnel-success">
+            <div class="check-circle"><i data-lucide="check"></i></div>
+            <h2 style="margin-bottom:10px;">Request received — thank you!</h2>
+            <p data-summary style="color:var(--muted);max-width:54ch;margin-inline:auto;"></p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+              <a href="free-estimate.html" class="btn btn-emerald">Submit another request</a>
+              <a href="tel:+19165550148" class="btn btn-outline">Need it sooner? Call us</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ WHY US ============ -->
-    <section id="why" class="relative py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-5 sm:px-8">
-        <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p class="reveal eyebrow">Why Sentient</p>
-            <h2 class="reveal mt-5 font-serif text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style="color: var(--heading);">
-              An agency built like the <span class="grad-text">systems we ship.</span>
-            </h2>
-            <p class="reveal mt-6 text-lg leading-relaxed" style="color: var(--text-muted);">We're operators and engineers, not a body shop. Every system we build is production-grade, measurable, and owned by you.</p>
-            <div class="mt-10 space-y-6">
-              <div class="reveal flex gap-4">
-                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg" style="background: rgba(184,212,227,0.12); color: var(--cyan); border:1px solid rgba(184,212,227,0.25);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
-                <div><h4 class="font-semibold" style="color: var(--heading);">Outcome-bound, not hourly</h4><p class="mt-1 text-sm" style="color: var(--text-muted);">We tie every engagement to a measurable business metric. If it doesn't move the needle, we don't build it.</p></div>
-              </div>
-              <div class="reveal flex gap-4">
-                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg" style="background: rgba(199,205,214,0.12); color: var(--violet); border:1px solid rgba(199,205,214,0.25);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
-                <div><h4 class="font-semibold" style="color: var(--heading);">You own everything</h4><p class="mt-1 text-sm" style="color: var(--text-muted);">Code, data, models, and IP — all yours. No lock-in, no proprietary black boxes, no recurring hostage fees.</p></div>
-              </div>
-              <div class="reveal flex gap-4">
-                <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg" style="background: rgba(232,237,242,0.12); color: var(--fuchsia); border:1px solid rgba(232,237,242,0.25);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
-                <div><h4 class="font-semibold" style="color: var(--heading);">Senior talent, end to end</h4><p class="mt-1 text-sm" style="color: var(--text-muted);">You work directly with the engineers building your system — not an account manager relaying messages to an offshore team.</p></div>
-              </div>
+    <!-- ===================== COMMERCIAL PRIORITY ===================== -->
+    <section class="section bg-cream" id="commercial">
+      <div class="container">
+        <div class="split">
+          <div class="reveal">
+            <span class="h-eyebrow">Commercial Priority</span>
+            <h2>Recurring commercial cleaning,<br /><span class="serif-italic">engineered for Sacramento businesses.</span></h2>
+            <p class="lead">We help Sacramento businesses maintain clean, professional, healthy spaces — through recurring cleaning plans, custom scopes of work, reliable after-hours availability, and walkthrough-based quotes that reflect exactly what your property needs.</p>
+            <div class="feat-list">
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Custom scopes of work</strong> built around your facility, traffic, and standards.</p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>After-hours availability</strong> so your business keeps running uninterrupted.</p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Walkthrough-based pricing</strong> — no surprise fees, no inflated estimates.</p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Dedicated, accountable teams</strong> with consistent crew and communication.</p></div>
+            </div>
+            <div class="flex flex-wrap gap-12">
+              <a href="commercial.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="building-2"></i> Schedule a Walkthrough</a>
+              <a href="free-estimate.html?service=commercial" class="btn btn-outline btn-lg">Request a Recurring Quote</a>
             </div>
           </div>
-
-          <div class="reveal relative">
-            <div class="relative overflow-hidden rounded-3xl border p-8" style="border-color: var(--border); background: linear-gradient(160deg, var(--bg-elevated), var(--bg));">
-              <div class="absolute inset-0 hero-grid opacity-[0.12]"></div>
-              <div class="relative text-center py-8">
-                <div class="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-2xl" style="background: var(--accent-grad);">
-                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#05121f" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+          <div class="reveal d1">
+            <div class="split-media" data-parallax="0.06" style="background:linear-gradient(150deg,var(--emerald),var(--emerald-deep));min-height:460px;">
+              <div style="padding:40px;color:var(--ivory);position:relative;z-index:1;">
+                <h3 style="color:var(--ivory);font-size:1.4rem;margin-bottom:20px;">Commercial services include:</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;">
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Office cleaning</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Janitorial service</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Restroom sanitation</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Breakroom &amp; kitchen</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Trash removal</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Dusting &amp; surfaces</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Floor care</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Lobby &amp; reception</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Retail cleaning</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Property management</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Commercial move-in/out</span>
+                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Post-construction</span>
                 </div>
-                <h3 class="mt-5 font-serif text-2xl font-semibold" style="color: var(--heading);">Senior-only delivery</h3>
-                <p class="mt-2 text-sm" style="color: var(--text-muted);">No juniors learning on your dime. The people who scope it are the people who build it.</p>
-                <a href="book.html" class="btn-primary cta-magnetic mt-6">Talk to a founder</a>
               </div>
             </div>
-            <div class="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] blur-2xl" style="background: linear-gradient(135deg, rgba(199,205,214,0.12), transparent, rgba(232,237,242,0.12));"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ TESTIMONIAL ============ -->
-    <section class="relative py-24 sm:py-28">
-      <div class="mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <div class="reveal mb-8 flex justify-center gap-1" style="color: var(--cyan);">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-        </div>
-        <blockquote class="reveal font-serif text-2xl font-medium leading-snug sm:text-4xl sm:leading-tight" style="color: var(--heading);">
-          "Sentient didn't sell us AI. They rebuilt our revenue engine. We closed more deals in the first quarter after launch than the previous two — with the same headcount."
-        </blockquote>
-        <div class="reveal mt-8 flex items-center justify-center gap-3">
-          <div class="flex h-11 w-11 items-center justify-center rounded-full font-semibold" style="background: var(--accent-grad); color:#05121f;">MR</div>
-          <div class="text-left">
-            <div class="font-semibold" style="color: var(--heading);">Marcus R.</div>
-            <div class="text-sm" style="color: var(--text-muted);">CEO, B2B SaaS · 38 employees</div>
+    <!-- ===================== BEFORE / AFTER SIGNATURE ===================== -->
+    <section class="section">
+      <div class="container">
+        <div class="split">
+          <div class="reveal">
+            <span class="h-eyebrow">The Natabel Difference</span>
+            <h2>See the difference.<br /><span class="serif-italic">Drag to reveal.</span></h2>
+            <p class="lead">Every Natabel clean is held to hotel-grade standards. Slide the handle to see the kind of transformation our teams deliver — baseboards to ceiling fans, grout to glass.</p>
+            <div class="feat-list">
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Meticulous detail</strong> — the corners most cleaners miss.</p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Professional-grade products</strong> and equipment, every visit.</p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Photo-documented</strong> commercial cleans for accountability.</p></div>
+            </div>
+            <a href="free-estimate.html" class="btn btn-emerald btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Free Estimate</a>
+          </div>
+          <div class="reveal d1">
+            <div class="ba-slider" aria-label="Before and after cleaning comparison. Drag to compare.">
+              <div class="ph-grad ba-img" style="filter:saturate(.4) brightness(.78);">BEFORE · Kitchen</div>
+              <div class="ba-after-wrap"><div class="ph-grad ba-img">AFTER · Kitchen</div></div>
+              <span class="ba-label ba-label-before">Before</span>
+              <span class="ba-label ba-label-after">After</span>
+              <div class="ba-handle"></div>
+            </div>
+            <p class="muted" style="text-align:center;font-size:.84rem;margin-top:14px;"><em>Placeholder — replace with a real before/after photo.</em></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ FINAL CTA ============ -->
-    <section id="contact" class="relative py-28 sm:py-36">
-      <div class="mx-auto max-w-7xl px-5 sm:px-8">
-        <div class="relative overflow-hidden rounded-[2rem] border px-6 py-16 text-center sm:px-16 sm:py-24" style="border-color: var(--border);">
-          <canvas id="cta-canvas" class="absolute inset-0 h-full w-full"></canvas>
-          <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, var(--vignette) 100%);"></div>
-          <div class="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full blur-3xl" style="background: rgba(184,212,227,0.25);"></div>
-          <div class="relative">
-            <div class="reveal mx-auto inline-flex max-w-fit items-center gap-2 rounded-full border px-4 py-1.5 text-xs backdrop-blur-md" style="border-color: var(--border); background: var(--bg-glass); color: var(--text-muted);">
-              <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style="background: var(--ice);"></span><span class="relative inline-flex h-2 w-2 rounded-full" style="background: var(--ice);"></span></span>
-              Limited Q3 implementation slots
+    <!-- ===================== RESIDENTIAL ===================== -->
+    <section class="section bg-soft" id="residential-section">
+      <div class="container">
+        <div class="split">
+          <div class="split-media reveal" data-parallax="0.06" style="order:2;background:linear-gradient(150deg,var(--brass-deep),var(--brass));min-height:460px;">
+            <div style="padding:40px;color:var(--ivory);position:relative;z-index:1;">
+              <h3 style="color:var(--ivory);font-size:1.4rem;margin-bottom:20px;">Residential services include:</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;">
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Standard house cleaning</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Deep cleaning</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Weekly recurring</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Biweekly recurring</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Monthly cleaning</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Move-in cleaning</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Move-out cleaning</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Apartment cleaning</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Condo cleaning</span>
+                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Rental turnover</span>
+              </div>
             </div>
-            <h2 class="reveal mx-auto mt-6 max-w-3xl font-serif text-3xl font-bold leading-tight tracking-tight sm:text-6xl" style="color: var(--heading);">
-              Let's build your <span class="grad-text">unfair advantage.</span>
-            </h2>
-            <p class="reveal mx-auto mt-6 max-w-xl text-lg" style="color: var(--text-muted);">Book a 30-minute strategy call. We'll map your highest-leverage AI opportunities — no commitment, no fluff.</p>
-            <div class="reveal mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a href="book.html" class="btn-primary cta-magnetic">Book Your Strategy Call</a>
-              <a href="tel:+14155042757" class="btn-ghost">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                (415) 504-2757
-              </a>
+          </div>
+          <div class="reveal d1" style="order:1;">
+            <span class="h-eyebrow">Residential</span>
+            <h2>Residential cleaning<br /><span class="serif-italic">for Sacramento homes.</span></h2>
+            <p class="lead">Trustworthy, thorough, and genuinely friendly. Whether you want a recurring team that learns your home or a one-time deep clean before guests arrive, we make it easy to come home to a spotless space.</p>
+            <div class="feat-list">
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Consistent, vetted teams</strong> — the same faces, every visit.</p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Flexible scheduling</strong> that works around your life, not against it.</p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Customizable checklists</strong> so your priorities lead the cleaning.</p></div>
             </div>
-            <p class="reveal mt-6 text-xs" style="color: var(--text-faint);">No commitment · NDA available · Senior team on every call</p>
+            <a href="residential.html" class="btn btn-emerald btn-lg" data-magnetic><i data-lucide="home"></i> Book Residential Cleaning</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICE PORTFOLIO ===================== -->
+    <section class="section" id="services">
+      <div class="container container-wide">
+        <div class="section-head text-center reveal" style="margin-bottom:48px;">
+          <span class="h-eyebrow center">Full Service Portfolio</span>
+          <h2>Every cleaning service<br /><span class="serif-italic">your home or business needs.</span></h2>
+          <p class="lead mx-auto">From nightly office janitorial to one-time move-out deep cleans — one trusted local partner for all of it.</p>
+        </div>
+        <div class="grid-services">
+          <div class="card reveal"><div class="card-icon"><i data-lucide="building-2"></i></div><h3>Commercial Cleaning</h3><p>Professional recurring cleaning that keeps your business looking its best for staff and clients.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="briefcase"></i></div><h3>Office Cleaning</h3><p>Daily, weekly, or nightly office cleaning with consistent crews and detailed checklists.</p><div class="card-links"><a href="office-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d2"><div class="card-icon"><i data-lucide="file-text"></i></div><h3>Janitorial Services</h3><p>Contracted janitorial service for offices, medical, retail, and commercial facilities.</p><div class="card-links"><a href="janitorial-services.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="home"></i></div><h3>Residential Cleaning</h3><p>Recurring or one-time house cleaning from a team that treats your home like their own.</p><div class="card-links"><a href="residential.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal"><div class="card-icon"><i data-lucide="sparkles"></i></div><h3>Deep Cleaning</h3><p>Top-to-bottom detail cleaning that reaches every corner, baseboard, and appliance.</p><div class="card-links"><a href="deep-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="move-3d"></i></div><h3>Move-In / Move-Out</h3><p>Tenant-ready turnover cleans that help you get your deposit back or start fresh.</p><div class="card-links"><a href="move-in-out.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d2"><div class="card-icon"><i data-lucide="repeat"></i></div><h3>Recurring Plans</h3><p>Weekly, biweekly, or monthly — lock in your team, your rate, and your peace of mind.</p><div class="card-links"><a href="recurring-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="key-round"></i></div><h3>Property Management</h3><p>Reliable turnover and maintenance cleaning for property managers and landlords.</p><div class="card-links"><a href="property-management.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal"><div class="card-icon"><i data-lucide="door-open"></i></div><h3>Rental Turnover</h3><p>Fast, photo-documented turnover cleans that get units rent-ready on schedule.</p><div class="card-links"><a href="property-management.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="hammer"></i></div><h3>Post-Construction</h3><p>Dust, debris, and detail cleaning after renovations, builds, and tenant improvements.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d2"><div class="card-icon"><i data-lucide="shopping-bag"></i></div><h3>Retail Cleaning</h3><p>Customer-facing retail cleaning that keeps your storefront polished and welcoming.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="droplets"></i></div><h3>Restroom Sanitation</h3><p>Full restroom disinfection, restocking, and detailing for offices and public spaces.</p><div class="card-links"><a href="janitorial-services.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RECURRING PLANS ===================== -->
+    <section class="section bg-cream" id="recurring">
+      <div class="container">
+        <div class="section-head text-center reveal" style="margin-bottom:48px;">
+          <span class="h-eyebrow center">Recurring Revenue · Reliable Service</span>
+          <h2>Cleaning plans<br /><span class="serif-italic">built around your schedule.</span></h2>
+          <p class="lead mx-auto">Ideal for offices, commercial properties, busy households, property managers, and professional spaces. Lock in your team, your rate, and your rhythm.</p>
+        </div>
+        <div class="grid-3">
+          <div class="plan-card reveal">
+            <h3>Weekly Cleaning</h3><p class="plan-sub">Best for busy homes &amp; high-traffic offices</p>
+            <ul><li><i data-lucide="check"></i> Same cleaning team every week</li><li><i data-lucide="check"></i> Priority scheduling</li><li><i data-lucide="check"></i> Locked-in rate</li><li><i data-lucide="check"></i> Customizable checklist</li></ul>
+            <a href="recurring-cleaning.html" class="btn btn-outline btn-block">Choose Weekly</a>
+          </div>
+          <div class="plan-card featured reveal d1">
+            <h3>Biweekly Cleaning</h3><p class="plan-sub">Our most popular plan</p>
+            <ul><li><i data-lucide="check"></i> Perfect balance of value &amp; upkeep</li><li><i data-lucide="check"></i> Consistent, vetted team</li><li><i data-lucide="check"></i> Preferred rate</li><li><i data-lucide="check"></i> Easy pause &amp; reschedule</li></ul>
+            <a href="recurring-cleaning.html" class="btn btn-brass btn-block">Choose Biweekly</a>
+          </div>
+          <div class="plan-card reveal d2">
+            <h3>Monthly Cleaning</h3><p class="plan-sub">Maintenance that keeps things tidy</p>
+            <ul><li><i data-lucide="check"></i> Ideal for lower-traffic spaces</li><li><i data-lucide="check"></i> Predictable monthly visit</li><li><i data-lucide="check"></i> Reliable crew</li><li><i data-lucide="check"></i> Easy to upgrade</li></ul>
+            <a href="recurring-cleaning.html" class="btn btn-outline btn-block">Choose Monthly</a>
+          </div>
+        </div>
+
+        <div class="reveal d1" style="margin-top:40px;">
+          <div class="card" style="background:linear-gradient(135deg,var(--ink),var(--emerald-deep));color:var(--ivory);border-color:transparent;">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;">
+              <div>
+                <h3 style="color:var(--ivory);margin-bottom:6px;">Commercial recurring options</h3>
+                <p style="margin:0;color:rgba(247,243,235,.82);">Nightly · 2× per week · weekly · custom schedule — built around your facility's traffic and standards.</p>
+              </div>
+              <a href="free-estimate.html?service=commercial" class="btn btn-brass btn-lg" data-magnetic>Build My Cleaning Plan</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HOW IT WORKS ===================== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head text-center reveal" style="margin-bottom:48px;">
+          <span class="h-eyebrow center">Simple, Start-to-Finish</span>
+          <h2>How it works</h2>
+        </div>
+        <div class="grid-2" style="gap:56px;">
+          <div class="reveal">
+            <h3 style="font-size:1.2rem;margin-bottom:24px;color:var(--emerald);">For homes</h3>
+            <div class="steps">
+              <div class="step"><div class="step-num">1</div><h3>Request a Free Estimate</h3><p>Tell us about your home and what matters most to you.</p></div>
+              <div class="step"><div class="step-num">2</div><h3>Choose Your Cleaning Plan</h3><p>Pick a one-time clean or recurring schedule that fits your life.</p></div>
+              <div class="step"><div class="step-num">3</div><h3>Enjoy a Cleaner Space</h3><p>A consistent, vetted team keeps your home spotless — every time.</p></div>
+            </div>
+            <a href="residential.html" class="btn btn-emerald" style="margin-top:24px;" data-magnetic>Book Residential Cleaning</a>
+          </div>
+          <div class="reveal d1">
+            <h3 style="font-size:1.2rem;margin-bottom:24px;color:var(--emerald);">For businesses</h3>
+            <div class="steps">
+              <div class="step"><div class="step-num">1</div><h3>Schedule a Walkthrough</h3><p>We visit your facility, learn your standards, and assess the space.</p></div>
+              <div class="step"><div class="step-num">2</div><h3>Receive a Custom Scope of Work</h3><p>A transparent, fixed proposal based on your actual needs — not a template.</p></div>
+              <div class="step"><div class="step-num">3</div><h3>Start Recurring Service</h3><p>A dedicated crew delivers consistent results, on schedule, every time.</p></div>
+            </div>
+            <a href="commercial.html" class="btn btn-brass" style="margin-top:24px;" data-magnetic>Schedule a Walkthrough</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRUST / STATS ===================== -->
+    <section class="section bg-emerald">
+      <div class="container">
+        <div class="section-head text-center reveal" style="margin-bottom:48px;">
+          <span class="h-eyebrow center">Why Sacramento Chooses Natabel</span>
+          <h2>A local, founder-led company<br /><span class="serif-italic">you can build a relationship with.</span></h2>
+        </div>
+        <div class="stats-strip reveal d1" style="margin-bottom:48px;">
+          <div class="stat"><div class="num" data-count="4.9"></div><div class="lbl">Google rating</div></div>
+          <div class="stat"><div class="num" data-count="127" data-suffix="+"></div><div class="lbl">5-star reviews</div></div>
+          <div class="stat"><div class="num" data-count="4" data-suffix=" yrs"></div><div class="lbl">Serving Sacramento</div></div>
+          <div class="stat"><div class="num" data-count="340" data-suffix="+"></div><div class="lbl">Clients served</div></div>
+        </div>
+        <div class="grid-4 reveal d2">
+          <div class="card" style="background:rgba(247,243,235,.05);border-color:rgba(247,243,235,.10);"><div class="card-icon brass"><i data-lucide="user-round"></i></div><h3 style="color:var(--ivory);font-size:1.05rem;">Founder-Led</h3><p style="color:rgba(247,243,235,.72);">Run by Fatima Patalano — you talk to the owner, not a call center.</p></div>
+          <div class="card" style="background:rgba(247,243,235,.05);border-color:rgba(247,243,235,.10);"><div class="card-icon"><i data-lucide="map-pin"></i></div><h3 style="color:var(--ivory);font-size:1.05rem;">Sacramento Local</h3><p style="color:rgba(247,243,235,.72);">Born and based here. We know the neighborhoods we serve.</p></div>
+          <div class="card" style="background:rgba(247,243,235,.05);border-color:rgba(247,243,235,.10);"><div class="card-icon brass"><i data-lucide="clock"></i></div><h3 style="color:var(--ivory);font-size:1.05rem;">Flexible Scheduling</h3><p style="color:rgba(247,243,235,.72);">Business hours, after-hours, weekends — we work around you.</p></div>
+          <div class="card" style="background:rgba(247,243,235,.05);border-color:rgba(247,243,235,.10);"><div class="card-icon"><i data-lucide="shield-check"></i></div><h3 style="color:var(--ivory);font-size:1.05rem;">Licensed &amp; Insured</h3><p style="color:rgba(247,243,235,.72);">Bonded, insured, and background-checked teams. Total peace of mind.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section class="section" id="reviews">
+      <div class="container container-wide">
+        <div class="section-head text-center reveal" style="margin-bottom:48px;">
+          <span class="h-eyebrow center">From Sacramento Homes &amp; Businesses</span>
+          <h2>What our clients say</h2>
+          <p class="lead mx-auto">Real words from the offices, homes, and properties we clean every week. <em>(Placeholder testimonials — replace with verified reviews.)</em></p>
+        </div>
+        <div class="grid-3">
+          <div class="review-card reveal"><div class="review-stars">★★★★★</div><p class="review-body">"Natabel has been cleaning our 8,000 sq ft office weekly for over a year. They're reliable, thorough, and our staff has absolutely noticed the difference. Fatima is responsive and professional."</p><div class="review-author"><span class="review-avatar">DK</span><span><strong>Dana K.</strong><small>Office Manager · Midtown Sacramento</small></span></div></div>
+          <div class="review-card reveal d1"><div class="review-stars">★★★★★</div><p class="review-body">"I manage 14 rental units across Elk Grove and Folsom. Turnovers used to be my biggest headache — now I just call Natabel. Photo-documented cleans, on-time every time."</p><div class="review-author"><span class="review-avatar">MR</span><span><strong>Marcus R.</strong><small>Property Manager · Elk Grove</small></span></div></div>
+          <div class="review-card reveal d2"><div class="review-stars">★★★★★</div><p class="review-body">"We have a biweekly cleaning and it's genuinely changed our weekends. Coming home to a clean house on a Friday is the best feeling. They remember every little thing we asked for."</p><div class="review-author"><span class="review-avatar">SP</span><span><strong>Sofia P.</strong><small>Homeowner · Land Park</small></span></div></div>
+          <div class="review-card reveal"><div class="review-stars">★★★★★</div><p class="review-body">"Used them for a move-out clean in Natomas. Got my full deposit back for the first time ever. The place looked better than when I moved in. Worth every penny."</p><div class="review-author"><span class="review-avatar">JT</span><span><strong>James T.</strong><small>Move-Out Customer · Natomas</small></span></div></div>
+          <div class="review-card reveal d1"><div class="review-stars">★★★★★</div><p class="review-body">"Third month of weekly cleans and I'm a customer for life. Same two cleaners every time, they know my dog by name, and the house has never been more consistently clean."</p><div class="review-author"><span class="review-avatar">AL</span><span><strong>Aisha L.</strong><small>Recurring Customer · East Sacramento</small></span></div></div>
+          <div class="review-card reveal d2"><div class="review-stars">★★★★★</div><p class="review-body">"Our retail store in Roseville gets cleaned nightly by Natabel. Floors sparkle, restrooms are always stocked, and they handle after-hours access seamlessly. A genuinely premium operation."</p><div class="review-author"><span class="review-avatar">BC</span><span><strong>Brian C.</strong><small>Commercial Client · Roseville</small></span></div></div>
+        </div>
+        <div class="text-center reveal" style="margin-top:36px;"><a href="reviews.html" class="btn btn-outline">Read all reviews</a></div>
+      </div>
+    </section>
+
+    <!-- ===================== GALLERY ===================== -->
+    <section class="section bg-soft">
+      <div class="container container-wide">
+        <div class="section-head text-center reveal" style="margin-bottom:48px;">
+          <span class="h-eyebrow center">Recent Work</span>
+          <h2>Before &amp; after</h2>
+          <p class="lead mx-auto">A sample of spaces we've transformed. <em>(Placeholder gallery — swap in real photos.)</em></p>
+        </div>
+        <div class="gallery">
+          <div class="gallery-item reveal"><div class="ph-grad">Kitchen · 1200 × 900</div><span class="ba-badge">AFTER</span><span class="gallery-tag">Kitchen cleaning</span></div>
+          <div class="gallery-item reveal d1"><div class="ph-grad">Bathroom · 1200 × 900</div><span class="ba-badge">AFTER</span><span class="gallery-tag">Bathroom cleaning</span></div>
+          <div class="gallery-item reveal d2"><div class="ph-grad">Office · 1200 × 900</div><span class="ba-badge">AFTER</span><span class="gallery-tag">Office cleaning</span></div>
+          <div class="gallery-item reveal"><div class="ph-grad">Breakroom · 1200 × 900</div><span class="ba-badge">AFTER</span><span class="gallery-tag">Breakroom cleaning</span></div>
+          <div class="gallery-item reveal d1"><div class="ph-grad">Move-out · 1200 × 900</div><span class="ba-badge">AFTER</span><span class="gallery-tag">Move-out cleaning</span></div>
+          <div class="gallery-item reveal d2"><div class="ph-grad">Lobby · 1200 × 900</div><span class="ba-badge">AFTER</span><span class="gallery-tag">Commercial lobby</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICE AREAS ===================== -->
+    <section class="section" id="areas">
+      <div class="container container-wide">
+        <div class="section-head text-center reveal" style="margin-bottom:48px;">
+          <span class="h-eyebrow center">Local Coverage</span>
+          <h2>Serving Sacramento<br /><span class="serif-italic">and surrounding communities.</span></h2>
+          <p class="lead mx-auto">Based in Sacramento, we clean homes and businesses across the greater metro area. If you don't see your neighborhood listed, just ask — we're always expanding.</p>
+        </div>
+        <div class="area-grid reveal d1">
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Sacramento</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Roseville</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Rocklin</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Folsom</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Elk Grove</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Davis</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Rancho Cordova</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Carmichael</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Citrus Heights</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Fair Oaks</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Orangevale</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> West Sacramento</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Natomas</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Midtown Sacramento</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> East Sacramento</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Land Park</a>
+          <a class="area-chip" href="service-areas.html"><i data-lucide="map-pin"></i> Arden-Arcade</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section class="section bg-soft" id="faq">
+      <div class="container" style="max-width:880px;">
+        <div class="section-head text-center reveal" style="margin-bottom:40px;">
+          <span class="h-eyebrow center">Frequently Asked</span>
+          <h2>Questions, answered</h2>
+        </div>
+        <div class="faq-group reveal d1">
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you offer free estimates? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Yes — every estimate is free, with no obligation. Use our 90-second estimate funnel, request a commercial walkthrough, or just call us. You'll get a clear, honest quote within one business hour.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you clean both homes and businesses? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Absolutely. We serve residential clients (houses, apartments, condos, rentals) and commercial clients (offices, retail, medical, gyms, property managers). Residential and commercial teams are trained for their specific environments.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you offer recurring commercial cleaning? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Yes — recurring commercial cleaning is a core part of what we do. We offer nightly, twice-weekly, weekly, and custom schedules, all backed by a dedicated crew and a custom scope of work.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you offer janitorial contracts? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">We do. Our janitorial contracts are flexible — month-to-month or annual — and cover restrooms, breakrooms, trash, floors, dusting, and sanitization on a schedule that fits your facility.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I schedule a commercial walkthrough? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Yes, and we recommend it. A walkthrough lets us see your space, understand your standards, and quote accurately. Use the "Schedule a Commercial Walkthrough" button anywhere on the site, or call us directly.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you offer after-hours commercial cleaning? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Yes. Most of our commercial clients prefer after-hours cleaning so their business runs uninterrupted. We handle access logistics, keys, and alarm procedures professionally.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you bring your own supplies? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Yes — our teams arrive fully equipped with professional-grade supplies and equipment. If you prefer specific products (hypoallergenic, eco-friendly, or your own brand), just let us know and we'll accommodate.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">What is included in a deep cleaning? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Our deep clean covers everything in a standard clean, plus baseboards, blinds, inside appliances (where accessible), detailed bathroom scrubbing, light fixtures, ceiling fans, and hard-to-reach areas. A full checklist is provided with your quote.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you offer move-in and move-out cleaning? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Yes — move-in/move-out cleaning is one of our specialties. We clean empty units top-to-bottom, including inside cabinets, appliances, and closets, so you get your deposit back or start fresh in a spotless space.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">What areas do you serve? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Sacramento, Roseville, Rocklin, Folsom, Elk Grove, Davis, Rancho Cordova, Carmichael, Citrus Heights, Fair Oaks, Orangevale, West Sacramento, Natomas, Midtown, East Sacramento, Land Park, Arden-Arcade, and surrounding communities.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I customize my cleaning checklist? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Absolutely. Every recurring plan starts with a customizable checklist. Tell us your priorities — pet areas, allergy concerns, skip rooms, focus rooms — and we'll build the cleaning around you.</div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">How quickly can I get a quote? <i data-lucide="chevron-down" class="chev"></i></button><div class="faq-a"><div class="faq-a-inner">Most quotes come back within one business hour during normal hours. For commercial walkthroughs, we'll schedule a visit within 1–3 business days depending on location.</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FINAL CTA ===================== -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-banner reveal">
+          <div class="section-head" style="max-width:680px;">
+            <h2>Ready for a cleaner<br /><span class="serif-italic" style="color:var(--brass-bright);">home or workplace?</span></h2>
+            <p>Free estimates, flexible scheduling, and a local team that actually shows up. Get started in under two minutes — or call us right now.</p>
+          </div>
+          <div class="btn-row" style="margin-top:30px;">
+            <a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get Free Estimate</a>
+            <a href="commercial.html" class="btn btn-ivory btn-lg"><i data-lucide="building-2"></i> Schedule Walkthrough</a>
+            <a href="book-online.html" class="btn btn-ghost-light btn-lg"><i data-lucide="calendar-check"></i> Book Residential</a>
+            <a href="tel:+19165550148" class="btn btn-ghost-light btn-lg"><i data-lucide="phone"></i> Call Now</a>
           </div>
         </div>
       </div>
@@ -646,100 +593,60 @@
 
   </main>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="relative border-t py-16" style="border-color: var(--border); background: var(--bg-glass-2);">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <div class="grid gap-10 md:grid-cols-4">
-        <div class="md:col-span-2">
-          <a href="#top" class="flex items-center gap-3">
-            <img src="assets/img/sentient-mark-navy.png" alt="Sentient Partners" class="h-11 w-11 object-contain" />
-            <span class="font-serif text-xl font-semibold tracking-tight" style="color: var(--heading);">Sentient <span style="color: var(--heading);">Partners</span></span>
-          </a>
-          <p class="mt-4 max-w-sm text-sm leading-relaxed" style="color: var(--text-muted);">An AI-first agency engineering autonomous systems that give ambitious businesses enterprise-grade leverage.</p>
+  <div data-partial="footer"></div>
+  <div data-partial="mobile-cta"></div>
 
-          <div class="mt-6 space-y-2 text-sm">
-            <a href="tel:+14155042757" class="flex items-center gap-2 transition-colors hover:opacity-80" style="color: var(--text-muted);">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              (415) 504-2757
-            </a>
-            <a href="mailto:hello@sentientpartners.ai" class="flex items-center gap-2 transition-colors hover:opacity-80" style="color: var(--text-muted);">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
-              hello@sentientpartners.ai
-            </a>
-          </div>
-        </div>
-        <div>
-          <h5 class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-faint);">Solutions</h5>
-          <ul class="mt-4 space-y-2 text-sm" style="color: var(--text-muted);">
-            <li><a href="#solutions" class="transition-colors hover:text-heading">Revenue Agents</a></li>
-            <li><a href="#solutions" class="transition-colors hover:text-heading">Knowledge Core</a></li>
-            <li><a href="#solutions" class="transition-colors hover:text-heading">Ops Autopilot</a></li>
-            <li><a href="#solutions" class="transition-colors hover:text-heading">Custom AI Products</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5 class="text-xs font-semibold uppercase tracking-wider" style="color: var(--text-faint);">Company</h5>
-          <ul class="mt-4 space-y-2 text-sm" style="color: var(--text-muted);">
-            <li><a href="#founder" class="transition-colors hover:text-heading">Founders</a></li>
-            <li><a href="#why" class="transition-colors hover:text-heading">Why Sentient</a></li>
-            <li><a href="book.html" class="transition-colors hover:text-heading">Book a Call</a></li>
-            <li><a href="mailto:hello@sentientpartners.ai" class="transition-colors hover:text-heading">Email Us</a></li>
-          </ul>
-        </div>
-      </div>
+  <script type="application/json" id="page-schema">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://www.natabelcleaning.com/#business",
+        "name": "Natabel Cleaning Services",
+        "description": "Premium residential and commercial cleaning services in Sacramento and surrounding communities. Recurring office cleaning, janitorial service, house cleaning, deep cleaning, and move-in/move-out cleaning.",
+        "url": "https://www.natabelcleaning.com/",
+        "telephone": "+19165550148",
+        "email": "hello@natabelcleaning.com",
+        "image": "https://www.natabelcleaning.com/assets/og-image.jpg",
+        "priceRange": "$$",
+        "address": { "@type": "PostalAddress", "addressLocality": "Sacramento", "addressRegion": "CA", "postalCode": "95814", "addressCountry": "US" },
+        "geo": { "@type": "GeoCoordinates", "latitude": 38.5816, "longitude": -121.4944 },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "18:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "16:00" }
+        ],
+        "areaServed": ["Sacramento","Roseville","Rocklin","Folsom","Elk Grove","Davis","Rancho Cordova","Carmichael","Citrus Heights","Fair Oaks","Orangevale","West Sacramento","Natomas","Midtown Sacramento","East Sacramento","Land Park","Arden-Arcade"],
+        "founder": { "@type": "Person", "name": "Fatima Patalano" },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "127" }
+      },
+      { "@type": "CleaningService", "name": "Natabel Cleaning Services", "parentOrganization": { "@id": "https://www.natabelcleaning.com/#business" }, "areaServed": "Sacramento, CA and surrounding communities" },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Do you offer free estimates?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — every estimate is free, with no obligation. You'll get a clear, honest quote within one business hour." } },
+          { "@type": "Question", "name": "Do you clean both homes and businesses?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We serve residential and commercial clients with teams trained for their specific environments." } },
+          { "@type": "Question", "name": "Do you offer recurring commercial cleaning?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — nightly, twice-weekly, weekly, and custom schedules, backed by a dedicated crew and custom scope of work." } },
+          { "@type": "Question", "name": "Can I schedule a commercial walkthrough?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. A walkthrough lets us see your space and quote accurately." } },
+          { "@type": "Question", "name": "Do you offer after-hours commercial cleaning?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Most commercial clients prefer after-hours cleaning. We handle access logistics professionally." } },
+          { "@type": "Question", "name": "What areas do you serve?", "acceptedAnswer": { "@type": "Answer", "text": "Sacramento, Roseville, Rocklin, Folsom, Elk Grove, Davis, Rancho Cordova, Carmichael, Citrus Heights, Fair Oaks, Orangevale, West Sacramento, Natomas, Midtown, East Sacramento, Land Park, Arden-Arcade, and surrounding communities." } }
+        ]
+      },
+      { "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.natabelcleaning.com/" } ] }
+    ]
+  }
+  </script>
 
-      <!-- social -->
-      <div class="mt-12 flex flex-col items-center justify-between gap-6 border-t pt-8 sm:flex-row" style="border-color: var(--border);">
-        <div class="flex items-center gap-3">
-          <a href="#" aria-label="LinkedIn" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 17V10.3H6.07V17h2.27zM7.2 9.3a1.32 1.32 0 1 0 0-2.64 1.32 1.32 0 0 0 0 2.64zM18 17v-3.7c0-2-1.07-2.9-2.5-2.9-1.15 0-1.66.63-1.95 1.08V10.3H11.3V17h2.27v-3.57c0-.28.02-.56.1-.76.22-.56.73-1.14 1.58-1.14 1.12 0 1.57.85 1.57 2.1V17H18z"/></svg></a>
-          <a href="#" aria-label="X" class="social-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="#" aria-label="Instagram" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-          <a href="#" aria-label="Facebook" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z"/></svg></a>
-        </div>
-        <p class="text-xs" style="color: var(--text-faint);">© <span id="year">2026</span> Sentient Partners. All rights reserved. · <span class="font-mono">Engineered for the AI era.</span></p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ============ AI ASSISTANT WIDGET ============ -->
-  <button id="ai-fab" class="ai-fab" aria-label="Open AI assistant">
-    <span class="pulse-ring"></span>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-  </button>
-
-  <div id="ai-panel" class="ai-panel" role="dialog" aria-label="AI assistant">
-    <div class="ai-header">
-      <div class="flex h-9 w-9 items-center justify-center rounded-full" style="background: var(--accent-grad); color:#05121f;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-      </div>
-      <div class="flex-1">
-        <div class="font-semibold text-sm" style="color: var(--heading);">Sentient Assistant</div>
-        <div class="flex items-center gap-1.5 text-xs" style="color: var(--text-muted);"><span class="ai-status-dot"></span> Online · typically replies instantly</div>
-      </div>
-      <button id="ai-close" class="theme-toggle" style="width:2rem;height:2rem;" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <div id="ai-messages" class="ai-messages"></div>
-    <div class="ai-input-row">
-      <button id="ai-voice" class="ai-voice-btn" aria-label="Voice input" title="Voice input">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v3"/></svg>
-      </button>
-      <input id="ai-input" class="ai-input" type="text" placeholder="Ask about our AI solutions..." />
-      <button id="ai-send" class="ai-send-btn" aria-label="Send">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- ============ SCRIPTS ============ -->
+  <!-- Vendor libs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="js/hero-canvas.js"></script>
-  <script src="js/three-monogram.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- App scripts -->
+  <script src="js/partials.js"></script>
+  <script src="js/leads.js"></script>
+  <script src="js/funnel.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/ai-assistant.js"></script>
+  <script src="js/motion.js" defer></script>
 </body>
 </html>

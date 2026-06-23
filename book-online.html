@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Cleaning Online | Sacramento | Natabel Cleaning Services</title>
+  <meta name="description" content="Book residential cleaning, schedule a commercial walkthrough, or request a free estimate online. Preferred date and time, confirmation step, and SMS/email reminders. Sacramento and surrounding communities." />
+  <link rel="canonical" href="https://www.natabelcleaning.com/book-online.html" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Book Cleaning Online — Natabel, Sacramento" />
+  <meta property="og:description" content="Residential booking, commercial walkthroughs, free estimates. Preferred date & time." />
+  <meta property="og:url" content="https://www.natabelcleaning.com/book-online.html" />
+  <meta property="og:image" content="https://www.natabelcleaning.com/assets/og-image.jpg" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <meta name="theme-color" content="#0B3D2E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="js/config.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div data-partial="header"></div>
+  <div data-partial="mobile-menu"></div>
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs reveal"><a href="index.html">Home</a><span class="sep">/</span><span>Book Online</span></div>
+        <span class="pill reveal" style="margin-bottom:16px;">Book in Under 2 Minutes</span>
+        <h1 class="reveal">Book your<br /><span class="serif-italic">cleaning online.</span></h1>
+        <p class="lead reveal">Residential booking, commercial walkthrough scheduling, or a free estimate — pick what you need and pick a time. We'll confirm by text and email.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container-tight">
+        <div class="form-card reveal">
+          <div class="form-head">
+            <h2>Request a booking</h2>
+            <p>Choose your service type, preferred date, and time. We'll confirm within one business hour.</p>
+          </div>
+          <div class="form-body">
+            <form id="bookingForm" data-lead-source="Book Online Page" novalidate>
+              <input type="hidden" name="form_type" value="booking" />
+              <div class="field">
+                <label>What would you like to book? <span class="req">*</span></label>
+                <div class="choice-group cols-3">
+                  <label class="choice"><input type="radio" name="booking_type" value="residential" /><strong>Residential Cleaning</strong><small>House, apartment, condo</small></label>
+                  <label class="choice"><input type="radio" name="booking_type" value="commercial_walkthrough" /><strong>Commercial Walkthrough</strong><small>On-site quote visit</small></label>
+                  <label class="choice"><input type="radio" name="booking_type" value="free_estimate" /><strong>Free Estimate</strong><small>Quick phone/email quote</small></label>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field"><label>Preferred date <span class="req">*</span></label><input type="date" name="preferred_date" /><div class="field-error">Please pick a date.</div></div>
+                <div class="field"><label>Preferred time <span class="req">*</span></label><select name="preferred_time"><option value="">Select…</option><option>Morning (7a–11a)</option><option>Midday (11a–2p)</option><option>Afternoon (2p–6p)</option><option>After hours (commercial)</option></select><div class="field-error">Please pick a time.</div></div>
+              </div>
+              <div class="field-row">
+                <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" /><div class="field-error">Please enter your name.</div></div>
+                <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(916) 555-0148" /><div class="field-error">Please enter a valid phone number.</div></div>
+              </div>
+              <div class="field-row">
+                <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@example.com" /><div class="field-error">Please enter a valid email.</div></div>
+                <div class="field"><label>ZIP code <span class="req">*</span></label><input type="text" name="zip" inputmode="numeric" pattern="[0-9]{5}" placeholder="e.g. 95814" /><div class="field-error">Please enter a 5-digit ZIP.</div></div>
+              </div>
+              <div class="field"><label>Service address</label><input type="text" name="address" placeholder="Street address (optional)" /></div>
+              <div class="field"><label>Notes <span class="muted" style="font-weight:400;">(optional)</span></label><textarea name="notes" placeholder="Bedrooms/baths, sq ft, pets, focus areas, access instructions, etc."></textarea></div>
+              <button type="submit" class="btn btn-brass btn-lg btn-block" data-magnetic><i data-lucide="calendar-check"></i> Request Booking</button>
+              <p class="muted" style="font-size:.82rem;text-align:center;margin-top:14px;"><i data-lucide="bell" style="width:14px;height:14px;vertical-align:-2px;"></i> Confirmation + SMS/email reminders sent automatically. <em>(Placeholder — connect to your calendar/CRM in config.js.)</em></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div data-partial="footer"></div>
+  <div data-partial="mobile-cta"></div>
+  <script type="application/json" id="page-schema">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Book Online","url":"https://www.natabelcleaning.com/book-online.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Book Online","item":"https://www.natabelcleaning.com/book-online.html"}]}]}</script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/leads.js"></script>
+  <script src="js/funnel.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/motion.js" defer></script>
+</body>
+</html>
