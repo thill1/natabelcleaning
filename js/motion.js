@@ -64,13 +64,6 @@
           }
         );
       });
-      gsap.fromTo(orphanReveals,
-        { y: 28, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', stagger: 0.06,
-          scrollTrigger: { trigger: orphanReveals[0], start: 'top 90%' }
-        }
-      );
     }
 
     // Parallax on elements with [data-parallax]

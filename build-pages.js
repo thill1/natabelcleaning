@@ -38,6 +38,7 @@ const HEAD = (p) => `<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
   <script src="js/config.js"></script>
 </head>
 <body>

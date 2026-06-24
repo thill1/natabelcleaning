@@ -21,3 +21,12 @@ yarn-error.log*
 dist/
 build/
 .cache/
+
+# Dev tooling
+.superpowers/
+
+# Screenshots (dev artifacts)
+screenshot-*.png
+
+# Docs (internal)
+docs/
