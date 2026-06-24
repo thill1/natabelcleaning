@@ -190,68 +190,127 @@
     });
   }
 
-  /* ---------- 7. Enhanced sparkle on hero ---------- */
+  /* ---------- 7. Sparkle stars on hero ---------- */
   function bootSparkle() {
     if (reduce) return;
     const hero = document.querySelector('.hero');
     if (!hero) return;
 
-    // Subtle warm vignette behind sparkles for contrast against light bg
-    const vignette = document.createElement('div');
-    vignette.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 50% 40%,rgba(176,135,85,.04) 0%,transparent 70%);';
-    hero.appendChild(vignette);
-
     const layer = document.createElement('div');
     layer.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
+    layer.setAttribute('aria-hidden', 'true');
     hero.appendChild(layer);
 
-    const count = window.innerWidth < 760 ? 12 : 24;
-    const colors = ['#CBA874', '#B08755', '#FFFFFF', '#DCEEE7'];
+    const isMobile = window.innerWidth < 760;
+    const count = isMobile ? 18 : 36;
+
+    // Mix of sizes: tiny accent dots, small stars, medium stars, large feature stars
+    const sizeProfile = [
+      { min: 6, max: 10, weight: 4 },   // tiny
+      { min: 12, max: 18, weight: 3 },   // small
+      { min: 20, max: 30, weight: 2 },   // medium
+      { min: 34, max: 48, weight: 1 },   // large (sparse)
+    ];
+
+    // Build weighted pool
+    const pool = [];
+    sizeProfile.forEach(p => { for (let i = 0; i < p.weight; i++) pool.push(p); });
 
     for (let i = 0; i < count; i++) {
-      const s = document.createElement('span');
-      const size = 4 + Math.random() * 6;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const isGold = color === '#CBA874' || color === '#B08755';
-      s.style.cssText = `position:absolute;width:${size}px;height:${size}px;border-radius:50%;background:${color};left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:0;${isGold ? 'box-shadow:0 0 6px 2px rgba(203,168,116,0.35);' : ''}`;
+      const profile = pool[Math.floor(Math.random() * pool.length)];
+      const size = profile.min + Math.random() * (profile.max - profile.min);
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+
+      // Star shape via CSS cross (+ optional ::after for 4-point burst)
+      const s = document.createElement('i');
+      s.className = 'sparkle-star';
+
+      // Decide color tier
+      const colorRoll = Math.random();
+      let color, glowColor, opacity;
+      if (colorRoll < 0.35) {
+        // Gold/brass — primary accent
+        color = '#BFA26A';
+        glowColor = 'rgba(191,162,106,0.5)';
+        opacity = 0.7 + Math.random() * 0.3;
+      } else if (colorRoll < 0.55) {
+        // White — clean sparkle
+        color = '#FFFFFF';
+        glowColor = 'rgba(255,255,255,0.6)';
+        opacity = 0.6 + Math.random() * 0.4;
+      } else if (colorRoll < 0.75) {
+        // Emerald — subtle brand color
+        color = '#5EAD92';
+        glowColor = 'rgba(94,173,146,0.4)';
+        opacity = 0.5 + Math.random() * 0.3;
+      } else {
+        // Pale champagne — soft warm
+        color = '#E8DCC8';
+        glowColor = 'rgba(232,220,200,0.35)';
+        opacity = 0.5 + Math.random() * 0.3;
+      }
+
+      // Random variant: some are diamond-rotated, some thick-armed
+      const variants = [];
+      if (Math.random() < 0.3) variants.push('diamond');
+      if (Math.random() < 0.25) variants.push('thick');
+      if (variants.length) s.className += ' ' + variants.join(' ');
+
+      s.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;color:${color};opacity:0;box-shadow:0 0 ${Math.round(size*0.6)}px ${Math.round(size*0.2)}px ${glowColor};`;
+
       layer.appendChild(s);
 
-      // Vary animation types for visual richness
-      const animType = Math.random();
-      const dur = 2000 + Math.random() * 3000;
-      const delay = Math.random() * 5000;
+      // Pick animation style
+      const animRoll = Math.random();
+      const dur = 2200 + Math.random() * 3500;
+      const delay = Math.random() * 6000;
 
-      if (animType < 0.5) {
-        // Twinkle: quick bright flash
-        const anim = () => {
+      if (animRoll < 0.35) {
+        // Classic twinkle: flash bright then fade
+        const twinkle = () => {
           s.animate([
-            { opacity: 0, transform: 'scale(.5)' },
-            { opacity: 0.95, transform: 'scale(1.2)' },
-            { opacity: 0, transform: 'scale(.5)' },
-          ], { duration: dur, delay: Math.random() * 3000, easing: 'ease-in-out' }).onfinish = anim;
+            { opacity: 0, transform: 'scale(0.3)', filter: 'blur(1px)' },
+            { opacity: opacity, transform: 'scale(1)', filter: 'blur(0px)' },
+            { opacity: opacity * 0.4, transform: 'scale(1.1)', filter: 'blur(0px)' },
+            { opacity: 0, transform: 'scale(0.3)', filter: 'blur(1px)' },
+          ], { duration: dur, delay: Math.random() * 4000, easing: 'ease-in-out' }).onfinish = twinkle;
         };
-        anim();
-      } else if (animType < 0.8) {
-        // Gentle pulse with slight upward drift
-        const driftY = -8 - Math.random() * 16;
-        const anim = () => {
+        twinkle();
+      } else if (animRoll < 0.6) {
+        // Slow rotate + pulse: elegant feel
+        const startAngle = Math.floor(Math.random() * 360);
+        const spin = () => {
           s.animate([
-            { opacity: 0, transform: 'scale(.6) translateY(0)' },
-            { opacity: 0.85, transform: 'scale(1) translateY(' + driftY * 0.5 + 'px)' },
-            { opacity: 0, transform: 'scale(.4) translateY(' + driftY + 'px)' },
-          ], { duration: dur * 1.4, delay, easing: 'ease-in-out' }).onfinish = anim;
+            { opacity: 0, transform: `rotate(${startAngle}deg) scale(0.2)`, filter: 'blur(1px)' },
+            { opacity: opacity, transform: `rotate(${startAngle + 90}deg) scale(1)`, filter: 'blur(0px)' },
+            { opacity: opacity * 0.5, transform: `rotate(${startAngle + 180}deg) scale(0.8)`, filter: 'blur(0px)' },
+            { opacity: 0, transform: `rotate(${startAngle + 360}deg) scale(0.2)`, filter: 'blur(1px)' },
+          ], { duration: dur * 1.6, delay, easing: 'ease-in-out' }).onfinish = spin;
         };
-        anim();
+        spin();
+      } else if (animRoll < 0.8) {
+        // Float upward gently while fading
+        const driftY = -12 - Math.random() * 20;
+        const float = () => {
+          s.animate([
+            { opacity: 0, transform: 'translateY(0) scale(0.4)' },
+            { opacity: opacity * 0.9, transform: `translateY(${driftY * 0.4}px) scale(1)`, offset: 0.4 },
+            { opacity: 0, transform: `translateY(${driftY}px) scale(0.3)` },
+          ], { duration: dur * 1.8, delay: Math.random() * 3000, easing: 'ease-out' }).onfinish = float;
+        };
+        float();
       } else {
-        // Slow steady glow with brightness pulse
-        const anim = () => {
+        // Quick flash — like a camera glint
+        const glint = () => {
           s.animate([
-            { opacity: 0, transform: 'scale(.4)', filter: 'brightness(1)' },
-            { opacity: 1, transform: 'scale(1)', filter: 'brightness(1.4)' },
-            { opacity: 0, transform: 'scale(.4)', filter: 'brightness(1)' },
-          ], { duration: dur * 1.8, delay: Math.random() * 2000, easing: 'ease-in-out' }).onfinish = anim;
+            { opacity: 0, transform: 'scale(0.1)', filter: 'blur(2px)' },
+            { opacity: 1, transform: 'scale(1.3)', filter: 'blur(0px)' },
+            { opacity: 1, transform: 'scale(1.3)', filter: 'blur(0px)', offset: 0.3 },
+            { opacity: 0, transform: 'scale(0.1)', filter: 'blur(2px)' },
+          ], { duration: 800 + Math.random() * 600, delay: Math.random() * 8000, easing: 'ease-in-out' }).onfinish = glint;
         };
-        anim();
+        glint();
       }
     }
   }
