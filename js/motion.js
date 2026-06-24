@@ -45,8 +45,8 @@
       );
     });
 
-    // Handle any reveals outside .section elements
-    const orphanReveals = gsap.utils.toArray('.reveal').filter(el => !el.closest('.section'));
+    // Handle any reveals outside .section elements (exclude hero — it has its own intro animation)
+    const orphanReveals = gsap.utils.toArray('.reveal').filter(el => !el.closest('.section') && !el.closest('.hero'));
     if (orphanReveals.length) {
       gsap.fromTo(orphanReveals,
         { y: 28, opacity: 0 },
