@@ -45,9 +45,25 @@
       );
     });
 
-    // Handle any reveals outside .section elements (exclude hero — it has its own intro animation)
+    // Handle any reveals outside .section elements (exclude hero — those animate on load)
     const orphanReveals = gsap.utils.toArray('.reveal').filter(el => !el.closest('.section') && !el.closest('.hero'));
     if (orphanReveals.length) {
+      // Group orphans by their closest common parent to batch efficiently
+      const parentMap = new Map();
+      orphanReveals.forEach(el => {
+        const parent = el.parentElement;
+        if (!parentMap.has(parent)) parentMap.set(parent, []);
+        parentMap.get(parent).push(el);
+      });
+      parentMap.forEach((children, parent) => {
+        gsap.fromTo(children,
+          { y: 28, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', stagger: 0.06,
+            scrollTrigger: { trigger: parent, start: 'top 90%', toggleActions: 'play none none reverse' }
+          }
+        );
+      });
       gsap.fromTo(orphanReveals,
         { y: 28, opacity: 0 },
         {
@@ -70,13 +86,17 @@
 
       // Hero headline: fade/blur intro on load
       const heroH1 = document.querySelector('.hero h1');
-      if (heroH1 && !reduce) {
-        gsap.from(heroH1, { y: 26, opacity: 0, filter: 'blur(8px)', duration: 1.2, ease: 'power3.out', delay: 0.15 });
-      }
-      // Hero visual drift
-      const heroVisual = document.querySelector('.hero-visual');
-      if (heroVisual) {
-        gsap.from(heroVisual, { opacity: 0, y: 40, duration: 1.1, ease: 'power3.out', delay: 0.25 });
+      const heroReveals = document.querySelectorAll('.hero .reveal');
+      if (heroReveals.length && !reduce) {
+        const heroTl = gsap.timeline({ delay: 0.1 });
+        heroReveals.forEach(el => {
+          const d = el.classList.contains('d1') ? 0.1 : el.classList.contains('d2') ? 0.2 : el.classList.contains('d3') ? 0.3 : 0;
+          heroTl.fromTo(el,
+            { y: 24, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+            d
+          );
+        });
       }
     }
 
@@ -202,113 +222,138 @@
     hero.appendChild(layer);
 
     const isMobile = window.innerWidth < 760;
-    const count = isMobile ? 18 : 36;
+    const count = isMobile ? 16 : 32;
 
-    // Mix of sizes: tiny accent dots, small stars, medium stars, large feature stars
-    const sizeProfile = [
-      { min: 6, max: 10, weight: 4 },   // tiny
-      { min: 12, max: 18, weight: 3 },   // small
-      { min: 20, max: 30, weight: 2 },   // medium
-      { min: 34, max: 48, weight: 1 },   // large (sparse)
+    // SVG star path generator — returns an SVG string for an N-pointed star
+    function starSVG(points, outerR, innerR) {
+      const size = outerR * 2 + 4;
+      const cx = size / 2, cy = size / 2;
+      let d = '';
+      for (let i = 0; i < points * 2; i++) {
+        const r = i % 2 === 0 ? outerR : innerR;
+        const angle = (Math.PI / points) * i - Math.PI / 2;
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        d += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2);
+      }
+      d += 'Z';
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><path d="${d}" fill="currentColor"/></svg>`;
+    }
+
+    // 4-point star (classic sparkle)
+    function fourPointSVG(size) {
+      const cx = size / 2, cy = size / 2;
+      const outer = size / 2;
+      const inner = size * 0.12;
+      const mid = size * 0.22;
+      let d = '';
+      const pts = [
+        [cx, cy - outer],     // top
+        [cx + mid, cy - mid],  // inner top-right
+        [cx + outer, cy],      // right
+        [cx + mid, cy + mid],  // inner bottom-right
+        [cx, cy + outer],      // bottom
+        [cx - mid, cy + mid],  // inner bottom-left
+        [cx - outer, cy],      // left
+        [cx - mid, cy - mid],  // inner top-left
+      ];
+      pts.forEach((p, i) => { d += (i === 0 ? 'M' : 'L') + p[0].toFixed(2) + ',' + p[1].toFixed(2); });
+      d += 'Z';
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><path d="${d}" fill="currentColor"/></svg>`;
+    }
+
+    // Size tiers weighted by frequency
+    const sizes = [
+      { min: 8, max: 14, w: 3 },   // tiny
+      { min: 16, max: 24, w: 3 },   // small
+      { min: 28, max: 40, w: 2 },   // medium
+      { min: 44, max: 64, w: 1 },   // large feature
     ];
-
-    // Build weighted pool
     const pool = [];
-    sizeProfile.forEach(p => { for (let i = 0; i < p.weight; i++) pool.push(p); });
+    sizes.forEach(s => { for (let i = 0; i < s.w; i++) pool.push(s); });
 
     for (let i = 0; i < count; i++) {
       const profile = pool[Math.floor(Math.random() * pool.length)];
-      const size = profile.min + Math.random() * (profile.max - profile.min);
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
+      const size = Math.round(profile.min + Math.random() * (profile.max - profile.min));
 
-      // Star shape via CSS cross (+ optional ::after for 4-point burst)
-      const s = document.createElement('i');
-      s.className = 'sparkle-star';
-
-      // Decide color tier
-      const colorRoll = Math.random();
-      let color, glowColor, opacity;
-      if (colorRoll < 0.35) {
-        // Gold/brass — primary accent
-        color = '#BFA26A';
-        glowColor = 'rgba(191,162,106,0.5)';
-        opacity = 0.7 + Math.random() * 0.3;
-      } else if (colorRoll < 0.55) {
-        // White — clean sparkle
-        color = '#FFFFFF';
-        glowColor = 'rgba(255,255,255,0.6)';
-        opacity = 0.6 + Math.random() * 0.4;
-      } else if (colorRoll < 0.75) {
-        // Emerald — subtle brand color
-        color = '#5EAD92';
-        glowColor = 'rgba(94,173,146,0.4)';
-        opacity = 0.5 + Math.random() * 0.3;
+      // Pick star type: mostly 4-point, some 6-point for variety
+      const typeRoll = Math.random();
+      let svg;
+      if (typeRoll < 0.65) {
+        svg = fourPointSVG(size);
+      } else if (typeRoll < 0.85) {
+        svg = starSVG(6, size / 2, size * 0.18);
       } else {
-        // Pale champagne — soft warm
-        color = '#E8DCC8';
-        glowColor = 'rgba(232,220,200,0.35)';
-        opacity = 0.5 + Math.random() * 0.3;
+        svg = starSVG(4, size / 2, size * 0.25);
       }
 
-      // Random variant: some are diamond-rotated, some thick-armed
-      const variants = [];
-      if (Math.random() < 0.3) variants.push('diamond');
-      if (Math.random() < 0.25) variants.push('thick');
-      if (variants.length) s.className += ' ' + variants.join(' ');
+      // Color
+      const colorRoll = Math.random();
+      let color, glow;
+      if (colorRoll < 0.3) {
+        color = '#BFA26A'; glow = '0 0 ' + Math.round(size * 0.5) + 'px ' + Math.round(size * 0.15) + 'px rgba(191,162,106,0.45)';
+      } else if (colorRoll < 0.5) {
+        color = '#D4AF37'; glow = '0 0 ' + Math.round(size * 0.4) + 'px ' + Math.round(size * 0.12) + 'px rgba(212,175,55,0.4)';
+      } else if (colorRoll < 0.7) {
+        color = '#FFFFFF'; glow = '0 0 ' + Math.round(size * 0.4) + 'px ' + Math.round(size * 0.1) + 'px rgba(255,255,255,0.5)';
+      } else if (colorRoll < 0.85) {
+        color = '#78C9A0'; glow = '0 0 ' + Math.round(size * 0.35) + 'px ' + Math.round(size * 0.1) + 'px rgba(120,201,160,0.35)';
+      } else {
+        color = '#E0D4C0'; glow = '0 0 ' + Math.round(size * 0.3) + 'px rgba(224,212,192,0.3)';
+      }
 
-      s.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;color:${color};opacity:0;box-shadow:0 0 ${Math.round(size*0.6)}px ${Math.round(size*0.2)}px ${glowColor};`;
-
+      const s = document.createElement('span');
+      s.style.cssText = `position:absolute;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:0;pointer-events:none;color:${color};filter:drop-shadow(${glow});`;
+      s.innerHTML = svg;
       layer.appendChild(s);
 
-      // Pick animation style
+      // Pick animation
       const animRoll = Math.random();
-      const dur = 2200 + Math.random() * 3500;
-      const delay = Math.random() * 6000;
+      const dur = 2400 + Math.random() * 3200;
+      const delay = Math.random() * 7000;
 
-      if (animRoll < 0.35) {
-        // Classic twinkle: flash bright then fade
+      if (animRoll < 0.4) {
+        // Classic twinkle
         const twinkle = () => {
           s.animate([
-            { opacity: 0, transform: 'scale(0.3)', filter: 'blur(1px)' },
-            { opacity: opacity, transform: 'scale(1)', filter: 'blur(0px)' },
-            { opacity: opacity * 0.4, transform: 'scale(1.1)', filter: 'blur(0px)' },
-            { opacity: 0, transform: 'scale(0.3)', filter: 'blur(1px)' },
+            { opacity: 0, transform: 'scale(0.3) rotate(0deg)' },
+            { opacity: 0.9, transform: 'scale(1) rotate(15deg)' },
+            { opacity: 0.3, transform: 'scale(1.15) rotate(25deg)' },
+            { opacity: 0, transform: 'scale(0.3) rotate(45deg)' },
           ], { duration: dur, delay: Math.random() * 4000, easing: 'ease-in-out' }).onfinish = twinkle;
         };
         twinkle();
-      } else if (animRoll < 0.6) {
-        // Slow rotate + pulse: elegant feel
-        const startAngle = Math.floor(Math.random() * 360);
+      } else if (animRoll < 0.65) {
+        // Slow full rotation with fade
         const spin = () => {
           s.animate([
-            { opacity: 0, transform: `rotate(${startAngle}deg) scale(0.2)`, filter: 'blur(1px)' },
-            { opacity: opacity, transform: `rotate(${startAngle + 90}deg) scale(1)`, filter: 'blur(0px)' },
-            { opacity: opacity * 0.5, transform: `rotate(${startAngle + 180}deg) scale(0.8)`, filter: 'blur(0px)' },
-            { opacity: 0, transform: `rotate(${startAngle + 360}deg) scale(0.2)`, filter: 'blur(1px)' },
-          ], { duration: dur * 1.6, delay, easing: 'ease-in-out' }).onfinish = spin;
+            { opacity: 0, transform: 'rotate(0deg) scale(0.2)' },
+            { opacity: 0.85, transform: 'rotate(90deg) scale(1)', offset: 0.3 },
+            { opacity: 0.85, transform: 'rotate(180deg) scale(1)', offset: 0.6 },
+            { opacity: 0, transform: 'rotate(360deg) scale(0.2)' },
+          ], { duration: dur * 2, delay, easing: 'ease-in-out' }).onfinish = spin;
         };
         spin();
-      } else if (animRoll < 0.8) {
-        // Float upward gently while fading
-        const driftY = -12 - Math.random() * 20;
+      } else if (animRoll < 0.82) {
+        // Float upward
+        const drift = -10 - Math.random() * 18;
         const float = () => {
           s.animate([
-            { opacity: 0, transform: 'translateY(0) scale(0.4)' },
-            { opacity: opacity * 0.9, transform: `translateY(${driftY * 0.4}px) scale(1)`, offset: 0.4 },
-            { opacity: 0, transform: `translateY(${driftY}px) scale(0.3)` },
-          ], { duration: dur * 1.8, delay: Math.random() * 3000, easing: 'ease-out' }).onfinish = float;
+            { opacity: 0, transform: 'translateY(0) scale(0.3)' },
+            { opacity: 0.8, transform: `translateY(${drift * 0.5}px) scale(1)`, offset: 0.35 },
+            { opacity: 0, transform: `translateY(${drift}px) scale(0.2)` },
+          ], { duration: dur * 1.6, delay: Math.random() * 3000, easing: 'ease-out' }).onfinish = float;
         };
         float();
       } else {
-        // Quick flash — like a camera glint
+        // Quick glint flash
         const glint = () => {
           s.animate([
-            { opacity: 0, transform: 'scale(0.1)', filter: 'blur(2px)' },
-            { opacity: 1, transform: 'scale(1.3)', filter: 'blur(0px)' },
-            { opacity: 1, transform: 'scale(1.3)', filter: 'blur(0px)', offset: 0.3 },
-            { opacity: 0, transform: 'scale(0.1)', filter: 'blur(2px)' },
-          ], { duration: 800 + Math.random() * 600, delay: Math.random() * 8000, easing: 'ease-in-out' }).onfinish = glint;
+            { opacity: 0, transform: 'scale(0.1)', filter: 'drop-shadow(0 0 0 transparent)' },
+            { opacity: 1, transform: 'scale(1.4)', offset: 0.2 },
+            { opacity: 1, transform: 'scale(1.4)', offset: 0.35 },
+            { opacity: 0, transform: 'scale(0.1)', filter: 'drop-shadow(0 0 0 transparent)' },
+          ], { duration: 700 + Math.random() * 500, delay: Math.random() * 9000, easing: 'ease-in-out' }).onfinish = glint;
         };
         glint();
       }

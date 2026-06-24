@@ -266,15 +266,6 @@ body { padding-bottom: 76px; }
 .hero-badge.b2 { bottom: 32px; right: -16px; }
 @media (max-width: 1020px){ .hero-badge { display: none; } }
 
-/* ---------- Sparkle stars ---------- */
-.sparkle-star { position: absolute; pointer-events: none; display: block; }
-.sparkle-star::before, .sparkle-star::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: currentColor; border-radius: 2px; }
-.sparkle-star::before { width: 2px; height: 100%; }
-.sparkle-star::after { width: 100%; height: 2px; }
-.sparkle-star.diamond { transform: rotate(45deg); }
-.sparkle-star.thick::before { height: 100%; width: 3px; border-radius: 3px; }
-.sparkle-star.thick::after { width: 100%; height: 3px; border-radius: 3px; }
-
 /* ---------- Marquee strip ---------- */
 .marquee { overflow: hidden; padding: 22px 0; background: var(--emerald); color: var(--ivory); border-block: 1px solid var(--emerald-deep); }
 .marquee-track { display: flex; gap: 56px; white-space: nowrap; animation: marquee 38s linear infinite; will-change: transform; width: max-content; }
