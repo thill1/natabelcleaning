@@ -249,12 +249,12 @@ body { padding-bottom: 76px; }
 .hero-trust .t-item svg, .hero-trust .t-item .i { width: 17px; height: 17px; color: var(--emerald-bright); flex-shrink: 0; }
 
 .hero-visual { position: relative; }
-.hero-card { background: var(--ivory); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); border: 1px solid var(--border); overflow: hidden; }
+.hero-card { background: #ffffff; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); border: 1px solid rgba(11,61,46,.08); overflow: hidden; }
 .hero-card-top { background: linear-gradient(135deg, var(--emerald), var(--emerald-deep)); padding: 24px 28px; color: var(--ivory); display: flex; align-items: center; justify-content: space-between; }
 .hero-card-top h3 { color: var(--ivory); margin: 0; font-size: 1.18rem; }
 .hero-card-body { padding: 26px 28px; }
-.hero-card-body .opt { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: 16px; border: 1.5px solid var(--border); margin-bottom: 12px; transition: all .3s var(--ease); cursor: pointer; background: var(--paper); }
-.hero-card-body .opt:hover { border-color: var(--emerald); transform: translateX(4px); background: #fff; box-shadow: var(--shadow-sm); }
+.hero-card-body .opt { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: 16px; border: 1.5px solid rgba(11,61,46,.08); margin-bottom: 12px; transition: all .3s var(--ease); cursor: pointer; background: #FAFAF7; }
+.hero-card-body .opt:hover { border-color: var(--emerald); transform: translateX(4px); background: #F3F8F5; box-shadow: 0 2px 12px rgba(11,61,46,.08); }
 .hero-card-body .opt-ic { width: 42px; height: 42px; border-radius: 12px; background: var(--emerald-soft); color: var(--emerald); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .hero-card-body .opt-ic.brass, .hero-card-body .opt-ic.amber { background: var(--brass-soft); color: var(--brass-deep); }
 .hero-card-body .opt strong { color: var(--ink); font-size: 1rem; display: block; }
