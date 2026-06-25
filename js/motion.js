@@ -27,44 +27,50 @@
     if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
 
     if (reduce) {
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+      document.querySelectorAll('[data-reveal], .reveal').forEach(el => {
+        el.classList.add('is-in', 'in');
+      });
       return;
     }
 
-    // Batch reveals grouped by .section containers (performance: ~10 triggers vs 50+)
-    const sections = gsap.utils.toArray('.section');
-    sections.forEach(section => {
-      const reveals = section.querySelectorAll('.reveal');
+    // CSS-first reveals: hero animates on load, others on scroll.
+    // We add .is-in (and legacy .in) — the transition lives in CSS.
+    const heroReveals = document.querySelectorAll('.hero [data-reveal]');
+    heroReveals.forEach(el => {
+      const delay = parseInt(el.dataset.revealDelay || '0', 10);
+      setTimeout(() => el.classList.add('is-in'), 80 + delay * 90);
+    });
+
+    // Non-hero [data-reveal] via ScrollTrigger
+    if (window.ScrollTrigger) {
+      gsap.utils.toArray('[data-reveal]').forEach(el => {
+        if (el.closest('.hero')) return;
+        gsap.fromTo(el,
+          { y: 28, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+    } else {
+      document.querySelectorAll('[data-reveal]:not(.hero [data-reveal])').forEach(el => el.classList.add('is-in'));
+    }
+
+    // Legacy .reveal support for generated pages
+    const legacySections = gsap.utils.toArray('.section');
+    legacySections.forEach(section => {
+      const reveals = section.querySelectorAll('.reveal:not(.is-in):not(.in)');
       if (!reveals.length) return;
       gsap.fromTo(reveals,
         { y: 28, opacity: 0 },
         {
           y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', stagger: 0.08,
-          scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none none' }
+          scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none none' },
+          onComplete: function () { reveals.forEach(r => r.classList.add('in')); }
         }
       );
     });
-
-    // Handle any reveals outside .section elements (exclude hero — those animate on load)
-    const orphanReveals = gsap.utils.toArray('.reveal').filter(el => !el.closest('.section') && !el.closest('.hero'));
-    if (orphanReveals.length) {
-      // Group orphans by their closest common parent to batch efficiently
-      const parentMap = new Map();
-      orphanReveals.forEach(el => {
-        const parent = el.parentElement;
-        if (!parentMap.has(parent)) parentMap.set(parent, []);
-        parentMap.get(parent).push(el);
-      });
-      parentMap.forEach((children, parent) => {
-        gsap.fromTo(children,
-          { y: 28, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', stagger: 0.06,
-            scrollTrigger: { trigger: parent, start: 'top 90%', toggleActions: 'play none none reverse' }
-          }
-        );
-      });
-    }
 
     // Parallax on elements with [data-parallax]
     if (window.ScrollTrigger) {
@@ -76,43 +82,6 @@
           scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.2 },
         });
       });
-
-      // Hero headline: fade intro on load
-      const heroReveals = document.querySelectorAll('.hero .reveal');
-      if (heroReveals.length && !reduce) {
-        const heroTl = gsap.timeline({ delay: 0.08 });
-        heroReveals.forEach(el => {
-          const d = el.classList.contains('d1') ? 0.08 : el.classList.contains('d2') ? 0.18 : el.classList.contains('d3') ? 0.28 : 0;
-          heroTl.fromTo(el,
-            { y: 32, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1, ease: 'power3.out' },
-            d
-          );
-        });
-        const heroPhoto = document.querySelector('.hero-photo');
-        if (heroPhoto) {
-          heroTl.fromTo(heroPhoto,
-            { y: 40, opacity: 0, scale: 0.96 },
-            { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' },
-            0.15
-          );
-        }
-        document.querySelectorAll('.hero-float').forEach((el, i) => {
-          heroTl.fromTo(el,
-            { y: 20, opacity: 0, scale: 0.9 },
-            { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.4)' },
-            0.5 + i * 0.12
-          );
-        });
-        const heroEstimate = document.querySelector('.hero-estimate');
-        if (heroEstimate) {
-          heroTl.fromTo(heroEstimate,
-            { y: 24, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
-            0.65
-          );
-        }
-      }
     }
 
     // Animated counters
@@ -251,16 +220,19 @@
     }
 
     if (window.gsap && window.ScrollTrigger && !reduce) {
-      window.gsap.to(scene, {
-        y: -24,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.2,
-        },
-      });
+      const heroSection = document.querySelector('.hero-v2');
+      if (heroSection) {
+        window.gsap.to(scene, {
+          y: -24,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroSection,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1.2,
+          },
+        });
+      }
     }
   }
 

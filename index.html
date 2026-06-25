@@ -25,6 +25,7 @@
 
   <link rel="stylesheet" href="css/styles.css" />
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+  <script>document.documentElement.classList.add('js-ready');</script>
   <script src="js/config.js"></script>
 </head>
 <body>
@@ -35,118 +36,105 @@
   <main id="main">
 
     <!-- ===================== HERO ===================== -->
-    <section class="hero">
+    <section class="hero hero-v2">
       <div class="hero-bg" aria-hidden="true">
-        <div class="hero-orbs">
-          <span class="orb orb-1"></span>
-          <span class="orb orb-2"></span>
-          <span class="orb orb-3"></span>
-          <span class="orb orb-4"></span>
-        </div>
         <div class="hero-grid-deco"></div>
         <div class="hero-noise"></div>
-        <div class="hero-vignette"></div>
         <div class="hero-leaks" aria-hidden="true">
           <span class="hero-leak hero-leak-a"></span>
           <span class="hero-leak hero-leak-b"></span>
-          <span class="hero-leak hero-leak-c"></span>
         </div>
+        <canvas class="hero-ambient-canvas" id="heroAmbient"></canvas>
       </div>
 
-      <div class="container container-wide">
-        <div class="hero-inner">
-          <div class="hero-copy">
-            <div class="hero-kicker reveal">
-              <span class="pill pill-hero"><span class="dot-live"></span> Sacramento · Founder-led</span>
-              <span class="hero-kicker-line"></span>
-              <span class="hero-kicker-tag">Licensed &amp; insured</span>
+      <div class="container container-wide hero-inner">
+        <div class="hero-copy">
+          <div class="hero-kicker" data-reveal>
+            <span class="pill pill-hero"><span class="dot-live"></span> Sacramento · Founder-led</span>
+            <span class="hero-kicker-tag">Licensed &amp; insured</span>
+          </div>
+          <h1 data-reveal data-reveal-delay="1">
+            <span class="hero-line">The art of clean,</span>
+            <span class="hero-line accent">elevating <em>Sacramento</em></span>
+            <span class="hero-line brass">homes &amp; businesses.</span>
+          </h1>
+          <p class="lead-lg hero-sub" data-reveal data-reveal-delay="2">Hotel-grade standards for every space we touch — recurring office janitorial, residential deep cleans, and move-in/move-out turnovers across the Sacramento area.</p>
+          <div class="hero-ctas" data-reveal data-reveal-delay="2">
+            <a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Free Estimate</a>
+            <a href="commercial.html" class="btn btn-emerald btn-lg" data-magnetic><i data-lucide="building-2"></i> Schedule a Walkthrough</a>
+          </div>
+          <div class="hero-metrics" data-reveal data-reveal-delay="3">
+            <div class="hero-metric">
+              <span class="hero-metric-val"><span data-rating>4.9</span><small>★</small></span>
+              <span class="hero-metric-lbl">Google · <span data-review-count>127</span>+ reviews</span>
             </div>
-            <h1 class="reveal d1">
-              <span class="hero-line">The art of clean,</span>
-              <span class="hero-line accent">elevating <em>Sacramento</em></span>
-              <span class="hero-line brass">homes &amp; businesses.</span>
-            </h1>
-            <p class="lead-lg hero-sub reveal d2">Hotel-grade standards for every space we touch — recurring office janitorial, residential deep cleans, and move-in/move-out turnovers across the Sacramento area.</p>
-            <div class="hero-ctas reveal d2">
-              <a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Free Estimate</a>
-              <a href="commercial.html" class="btn btn-emerald btn-lg" data-magnetic><i data-lucide="building-2"></i> Schedule a Walkthrough</a>
+            <div class="hero-metric">
+              <span class="hero-metric-val" data-clients>340+</span>
+              <span class="hero-metric-lbl">Clients served</span>
             </div>
-            <div class="hero-metrics reveal d3">
-              <div class="hero-metric">
-                <span class="hero-metric-val"><span data-rating>4.9</span><small>★</small></span>
-                <span class="hero-metric-lbl">Google · <span data-review-count>127</span>+ reviews</span>
-              </div>
-              <div class="hero-metric">
-                <span class="hero-metric-val" data-clients>340+</span>
-                <span class="hero-metric-lbl">Clients served</span>
-              </div>
-              <div class="hero-metric">
-                <span class="hero-metric-val">90s</span>
-                <span class="hero-metric-lbl">Free estimate</span>
-              </div>
+            <div class="hero-metric">
+              <span class="hero-metric-val">90s</span>
+              <span class="hero-metric-lbl">Free estimate</span>
             </div>
           </div>
+        </div>
 
-          <div class="hero-stage reveal d2">
-            <div class="hero-scene" id="heroScene">
-              <div class="hero-scene-ring" aria-hidden="true"></div>
-              <figure class="hero-photo">
-                <img
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=960&q=85&auto=format&fit=crop"
-                  srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=640&q=85&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=960&q=85&auto=format&fit=crop 960w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85&auto=format&fit=crop 1200w"
-                  sizes="(max-width: 1020px) 100vw, 520px"
-                  width="960"
-                  height="720"
-                  alt="Sunlit, impeccably clean modern home interior in Sacramento"
-                  fetchpriority="high"
-                  decoding="async"
-                />
-                <div class="hero-photo-overlay"></div>
-                <div class="hero-photo-shine" id="heroShine"></div>
-              </figure>
+        <div class="hero-stage" data-reveal data-reveal-delay="2">
+          <figure class="hero-photo" id="heroPhoto">
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1100&q=85&auto=format&fit=crop"
+              srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=720&q=85&auto=format&fit=crop 720w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1100&q=85&auto=format&fit=crop 1100w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=85&auto=format&fit=crop 1400w"
+              sizes="(max-width: 1020px) 92vw, 560px"
+              width="1100"
+              height="1375"
+              alt="Sunlit, impeccably clean modern home interior in Sacramento"
+              fetchpriority="high"
+              decoding="async"
+            />
+            <div class="hero-photo-overlay"></div>
+            <div class="hero-photo-shine" id="heroShine"></div>
+          </figure>
 
-              <div class="hero-float hero-float-rating">
-                <span class="hero-float-stars">★★★★★</span>
-                <span class="hero-float-text"><strong><span data-rating>4.9</span></strong> on Google</span>
-              </div>
-
-              <div class="hero-float hero-float-shield">
-                <i data-lucide="shield-check"></i>
-                <span>Licensed &amp;<br />insured</span>
-              </div>
-
-              <aside class="hero-estimate hero-card">
-                <div class="hero-card-top">
-                  <div>
-                    <p class="hero-card-eyebrow">Start here</p>
-                    <h3>Free estimate in 90 seconds</h3>
-                  </div>
-                  <span class="pill pill-brass">No obligation</span>
-                </div>
-                <div class="hero-card-body hero-card-grid">
-                  <a href="free-estimate.html?service=commercial" class="opt">
-                    <span class="opt-ic"><i data-lucide="building-2"></i></span>
-                    <span><strong>Commercial</strong><small>Offices &amp; retail</small></span>
-                  </a>
-                  <a href="free-estimate.html?service=residential" class="opt">
-                    <span class="opt-ic brass"><i data-lucide="home"></i></span>
-                    <span><strong>Residential</strong><small>Houses &amp; condos</small></span>
-                  </a>
-                  <a href="free-estimate.html?service=move" class="opt">
-                    <span class="opt-ic"><i data-lucide="move-3d"></i></span>
-                    <span><strong>Move-In / Out</strong><small>Turnover cleans</small></span>
-                  </a>
-                  <a href="free-estimate.html?service=recurring" class="opt">
-                    <span class="opt-ic brass"><i data-lucide="repeat"></i></span>
-                    <span><strong>Recurring</strong><small>Weekly · biweekly</small></span>
-                  </a>
-                </div>
-                <div class="hero-card-foot">
-                  <a href="free-estimate.html" class="btn btn-brass btn-block btn-lg" data-magnetic>Start My Free Estimate</a>
-                </div>
-              </aside>
-            </div>
+          <div class="hero-float hero-float-rating" data-reveal data-reveal-delay="4">
+            <span class="hero-float-stars">★★★★★</span>
+            <span class="hero-float-text"><strong><span data-rating>4.9</span></strong> on Google</span>
           </div>
+
+          <div class="hero-float hero-float-shield" data-reveal data-reveal-delay="4">
+            <i data-lucide="shield-check"></i>
+            <span>Licensed &amp;<br />insured</span>
+          </div>
+
+          <aside class="hero-estimate hero-card" data-reveal data-reveal-delay="5">
+            <div class="hero-card-top">
+              <div>
+                <p class="hero-card-eyebrow">Start here</p>
+                <h3>Free estimate in 90 seconds</h3>
+              </div>
+              <span class="pill pill-brass">No obligation</span>
+            </div>
+            <div class="hero-card-body hero-card-grid">
+              <a href="free-estimate.html?service=commercial" class="opt">
+                <span class="opt-ic"><i data-lucide="building-2"></i></span>
+                <span><strong>Commercial</strong><small>Offices &amp; retail</small></span>
+              </a>
+              <a href="free-estimate.html?service=residential" class="opt">
+                <span class="opt-ic brass"><i data-lucide="home"></i></span>
+                <span><strong>Residential</strong><small>Houses &amp; condos</small></span>
+              </a>
+              <a href="free-estimate.html?service=move" class="opt">
+                <span class="opt-ic"><i data-lucide="move-3d"></i></span>
+                <span><strong>Move-In / Out</strong><small>Turnover cleans</small></span>
+              </a>
+              <a href="free-estimate.html?service=recurring" class="opt">
+                <span class="opt-ic brass"><i data-lucide="repeat"></i></span>
+                <span><strong>Recurring</strong><small>Weekly · biweekly</small></span>
+              </a>
+            </div>
+            <div class="hero-card-foot">
+              <a href="free-estimate.html" class="btn btn-brass btn-block btn-lg" data-magnetic>Start My Free Estimate</a>
+            </div>
+          </aside>
         </div>
       </div>
 
@@ -585,6 +573,7 @@
   <script src="js/leads.js"></script>
   <script src="js/funnel.js"></script>
   <script src="js/ui.js"></script>
+  <script src="js/sparkles.js"></script>
   <script src="js/page-hero.js"></script>
   <script src="js/main.js"></script>
   <script src="js/motion.js" defer></script>
