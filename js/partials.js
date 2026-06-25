@@ -83,6 +83,41 @@
     <a href="book-online.html" aria-label="Book online"><i data-lucide="calendar-check"></i><span>Book</span></a>
   </nav>`;
 
+  const R = window.PCC.reviews;
+  const promoBar = `
+  <div class="promo-bar" role="region" aria-label="Promotion">
+    <div class="container container-wide promo-inner">
+      <p><i data-lucide="sparkles"></i> <strong>Free estimates in 90 seconds</strong> — no obligation. <span class="promo-hide-sm">Sacramento homes &amp; businesses.</span></p>
+      <div class="promo-actions">
+        <a href="free-estimate.html" class="btn btn-brass btn-sm">Get My Estimate</a>
+        <button type="button" class="promo-close" aria-label="Dismiss promotion"><i data-lucide="x"></i></button>
+      </div>
+    </div>
+  </div>`;
+
+  const floatCta = `
+  <aside class="float-cta" aria-label="Quick actions">
+    <a href="free-estimate.html" class="float-cta-main btn btn-brass" data-magnetic>
+      <i data-lucide="sparkles"></i>
+      <span>Free Estimate</span>
+    </a>
+    <a href="${PHONE_HREF}" class="float-cta-phone" aria-label="Call ${PHONE_DISPLAY}">
+      <i data-lucide="phone"></i>
+    </a>
+  </aside>`;
+
+  const trustRibbon = `
+  <section class="trust-ribbon" aria-label="Trust indicators">
+    <div class="container container-wide">
+      <div class="trust-ribbon-grid">
+        <div class="tr-item"><span class="tr-num"><span data-rating>${R.googleRating}</span>★</span><span class="tr-lbl">Google rating · <span data-review-count>${R.reviewCount}</span>+ reviews</span></div>
+        <div class="tr-item"><span class="tr-num" data-clients>${R.clientsServed}</span><span class="tr-lbl">Clients served across Sacramento</span></div>
+        <div class="tr-item"><span class="tr-num">${R.yearsInBusiness}+</span><span class="tr-lbl">Years founder-led &amp; local</span></div>
+        <div class="tr-item"><span class="tr-num"><i data-lucide="shield-check"></i></span><span class="tr-lbl">Licensed, insured &amp; background-checked</span></div>
+      </div>
+    </div>
+  </section>`;
+
   const year = new Date().getFullYear();
   const footer = `
   <footer class="site-footer">
@@ -149,6 +184,25 @@
   inject('[data-partial="mobile-menu"]', mobileMenu);
   inject('[data-partial="mobile-cta"]', mobileCtaBar);
   inject('[data-partial="footer"]', footer);
+  inject('[data-partial="trust-ribbon"]', trustRibbon);
+
+  /* Shared estimate funnel (single source: funnel-template.js) */
+  const funnelTpl = window.PCC.templates && window.PCC.templates.estimateFunnelCard;
+  document.querySelectorAll('[data-partial="estimate-funnel"]').forEach(el => {
+    if (!funnelTpl) return;
+    const source = el.dataset.leadSource || 'Website Estimate Funnel';
+    let html = funnelTpl(source);
+    const reveal = el.dataset.funnelReveal;
+    if (reveal !== undefined) {
+      html = html.replace('class="funnel-card"', `class="funnel-card reveal${reveal ? ' ' + reveal : ''}"`);
+    }
+    el.innerHTML = html;
+  });
+
+  document.querySelectorAll('[data-partial="header"]').forEach(el => {
+    if (!document.querySelector('.promo-bar')) el.insertAdjacentHTML('beforebegin', promoBar);
+  });
+  if (!document.querySelector('.float-cta')) document.body.insertAdjacentHTML('beforeend', floatCta);
 
   /* Page-specific JSON-LD schema injection */
   const schemaEl = document.getElementById('page-schema');

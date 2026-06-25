@@ -1,0 +1,140 @@
+/* =========================================================================
+   NATABEL — Shared estimate funnel markup (single source of truth)
+   Injected by partials.js into [data-partial="estimate-funnel"]
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  function estimateFunnelCard(leadSource) {
+    const source = leadSource || 'Website Estimate Funnel';
+    return `
+<div class="funnel-card" data-funnel>
+  <div class="funnel-progress">
+    <div class="meta"><span class="step-label">Step 1 · Service Type</span><span class="step-count">1 of 7</span></div>
+    <div class="bar"><span></span></div>
+  </div>
+  <form data-lead-source="${source}" novalidate>
+    <input type="hidden" name="form_type" value="free_estimate" />
+    <div class="funnel-step active">
+      <h3>What kind of cleaning do you need?</h3>
+      <p class="step-desc">Choose the service that best fits — you can refine details later.</p>
+      <div class="choice-group cols-3">
+        <label class="choice"><input type="radio" name="service_type" value="residential" /><span class="choice-ic"><i data-lucide="home"></i></span><strong>Residential Cleaning</strong><small>House, apartment, condo</small></label>
+        <label class="choice"><input type="radio" name="service_type" value="commercial" /><span class="choice-ic"><i data-lucide="building-2"></i></span><strong>Commercial Cleaning</strong><small>Office, retail, medical</small></label>
+        <label class="choice"><input type="radio" name="service_type" value="move_in_out" /><span class="choice-ic"><i data-lucide="move-3d"></i></span><strong>Move-In / Move-Out</strong><small>Tenant &amp; turnover</small></label>
+        <label class="choice"><input type="radio" name="service_type" value="deep_cleaning" /><span class="choice-ic"><i data-lucide="sparkles"></i></span><strong>Deep Cleaning</strong><small>Top-to-bottom detail</small></label>
+        <label class="choice"><input type="radio" name="service_type" value="recurring" /><span class="choice-ic"><i data-lucide="repeat"></i></span><strong>Recurring Cleaning</strong><small>Weekly / biweekly / monthly</small></label>
+        <label class="choice"><input type="radio" name="service_type" value="property_management" /><span class="choice-ic"><i data-lucide="key-round"></i></span><strong>Property Management</strong><small>Rental turnover &amp; upkeep</small></label>
+      </div>
+      <div class="funnel-nav"><span></span><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
+    </div>
+    <div class="funnel-step">
+      <h3>What kind of property is it?</h3>
+      <p class="step-desc">We tailor equipment, products, and team size to your space.</p>
+      <div data-prop="residential">
+        <div class="choice-group cols-4">
+          <label class="choice"><input type="radio" name="property_type" value="house" /><strong>House</strong><small>Single-family</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="apartment" /><strong>Apartment</strong><small>Multi-unit</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="condo" /><strong>Condo</strong><small>Condominium</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="townhome" /><strong>Townhome</strong><small>Attached</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="rental" /><strong>Rental property</strong><small>Income property</small></label>
+        </div>
+      </div>
+      <div data-prop="commercial" style="display:none;">
+        <div class="choice-group cols-4">
+          <label class="choice"><input type="radio" name="property_type" value="office" /><strong>Office</strong><small>Suite / building</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="retail" /><strong>Retail space</strong><small>Storefront</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="medical" /><strong>Medical office</strong><small>Clinic / dental</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="gym" /><strong>Gym / fitness</strong><small>Studio / club</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="church" /><strong>Church / community</strong><small>Place of worship</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="property_mgmt" /><strong>Property mgmt</strong><small>Multi-tenant</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="commercial_building" /><strong>Commercial building</strong><small>Multi-floor</small></label>
+          <label class="choice"><input type="radio" name="property_type" value="other" /><strong>Other</strong><small>Tell us in notes</small></label>
+        </div>
+      </div>
+      <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
+    </div>
+    <div class="funnel-step">
+      <h3>How often do you need cleaning?</h3>
+      <p class="step-desc">Recurring plans lock in your rate and your team. You can change or pause anytime.</p>
+      <div class="choice-group cols-4">
+        <label class="choice"><input type="radio" name="frequency" value="one_time" /><strong>One-time</strong><small>Single clean</small></label>
+        <label class="choice"><input type="radio" name="frequency" value="weekly" /><strong>Weekly</strong><small>Every 7 days</small></label>
+        <label class="choice"><input type="radio" name="frequency" value="biweekly" /><strong>Biweekly</strong><small>Every 14 days</small></label>
+        <label class="choice"><input type="radio" name="frequency" value="monthly" /><strong>Monthly</strong><small>Every 30 days</small></label>
+        <label class="choice"><input type="radio" name="frequency" value="custom" /><strong>Custom</strong><small>Tell us your cadence</small></label>
+      </div>
+      <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
+    </div>
+    <div class="funnel-step">
+      <h3>Property details</h3>
+      <p class="step-desc">A few specifics help us build an accurate quote.</p>
+      <div data-size="residential">
+        <div class="field-row">
+          <div class="field"><label>Bedrooms <span class="req">*</span></label><select name="bedrooms"><option value="">Select…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+          <div class="field"><label>Bathrooms <span class="req">*</span></label><select name="bathrooms"><option value="">Select…</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option></select></div>
+        </div>
+        <div class="field"><label>Approximate square footage</label><input type="text" name="square_footage" placeholder="e.g. 1,800 sq ft" /></div>
+      </div>
+      <div data-size="commercial" style="display:none;">
+        <div class="field-row">
+          <div class="field"><label>Approx. square footage</label><input type="text" name="commercial_sqft" placeholder="e.g. 4,500 sq ft" /></div>
+          <div class="field"><label>Number of restrooms</label><input type="number" name="restrooms" min="0" placeholder="e.g. 3" /></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Desired cleaning days</label><input type="text" name="cleaning_days" placeholder="e.g. Mon/Wed/Fri" /></div>
+          <div class="field"><label>Preferred cleaning time</label><select name="cleaning_time"><option value="">Select…</option><option>Business hours</option><option>After hours</option><option>Either</option></select></div>
+        </div>
+      </div>
+      <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
+    </div>
+    <div class="funnel-step">
+      <h3>Where is the property?</h3>
+      <p class="step-desc">We serve Sacramento and surrounding communities.</p>
+      <div class="field-row">
+        <div class="field"><label>ZIP code <span class="req">*</span></label><input type="text" name="zip" inputmode="numeric" pattern="[0-9]{5}" placeholder="e.g. 95814" /><div class="field-error">Please enter a 5-digit ZIP.</div></div>
+        <div class="field"><label>City</label><input type="text" name="city" placeholder="e.g. Sacramento" /></div>
+      </div>
+      <div class="field"><label>Service address <span class="muted" style="font-weight:400;">(optional)</span></label><input type="text" name="address" placeholder="Street address (optional)" /></div>
+      <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
+    </div>
+    <div class="funnel-step">
+      <h3>Where should we send your estimate?</h3>
+      <p class="step-desc">We'll reach out within one business hour. No spam, ever.</p>
+      <div class="field-row">
+        <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" /><div class="field-error">Please enter your name.</div></div>
+        <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(916) 555-0148" /><div class="field-error">Please enter a valid phone number.</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@example.com" /><div class="field-error">Please enter a valid email.</div></div>
+        <div class="field"><label>Preferred contact</label><select name="preferred_contact"><option value="">Select…</option><option>Phone call</option><option>Text message</option><option>Email</option></select></div>
+      </div>
+      <div class="field"><label>Notes / special requests <span class="muted" style="font-weight:400;">(optional)</span></label><textarea name="notes" placeholder="Pets, allergies, focus areas, access instructions, etc."></textarea></div>
+      <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Review request <i data-lucide="arrow-right"></i></button></div>
+    </div>
+    <div class="funnel-step">
+      <h3>You're almost done</h3>
+      <p class="step-desc">Submit your request and we'll send a personalized cleaning estimate within one business hour.</p>
+      <div class="card" style="background:var(--emerald-tint);border-color:var(--emerald-line);">
+        <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No pressure.</strong> Just a clear, honest estimate.</p></div>
+        <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No obligation.</strong> Decide on your timeline.</p></div>
+        <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Local team.</strong> Founded and run from Sacramento.</p></div>
+      </div>
+      <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="submit" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="send"></i> Submit My Free Estimate Request</button></div>
+    </div>
+  </form>
+  <div class="funnel-success">
+    <div class="check-circle"><i data-lucide="check"></i></div>
+    <h2 style="margin-bottom:10px;">Request received — thank you!</h2>
+    <p data-summary style="color:var(--muted);max-width:54ch;margin-inline:auto;"></p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+      <a href="free-estimate.html" class="btn btn-emerald">Submit another request</a>
+      <a href="tel:+19165550148" class="btn btn-outline">Need it sooner? Call us</a>
+    </div>
+  </div>
+</div>`;
+  }
+
+  window.PCC = window.PCC || {};
+  window.PCC.templates = { estimateFunnelCard };
+})();

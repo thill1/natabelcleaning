@@ -1,5 +1,5 @@
 /* =========================================================================
-   PATALANO CLEANING CO. — Lead capture & routing
+   NATABEL CLEANING SERVICES — Lead capture & routing
    Single handler for all forms: validates → tracks → routes → confirms.
    Routes to: Jobber / Housecall Pro / GoHighLevel / webhook / Google Sheet.
    See config.js `PCC.leads` to configure the endpoint.
@@ -7,7 +7,11 @@
 (function () {
   'use strict';
   if (!window.PCC) return;
-  const cfg = window.PCC.leads;
+  const raw = window.PCC.leads;
+  const endpoint = (raw.endpoint || '').trim();
+  const cfg = endpoint && !endpoint.includes('YOUR_')
+    ? { ...raw, endpoint, demoMode: false }
+    : raw;
   const ev = window.PCC.events;
 
   function notice(form, msg, type) {
@@ -46,7 +50,6 @@
 
   function validate(form, requiredMap) {
     let ok = true;
-    const firstInvalid = null;
     Object.keys(requiredMap).forEach(name => {
       const input = form.querySelector(`[name="${name}"]`);
       if (!input) return;
@@ -56,6 +59,18 @@
       if (val && rule === 'email' && !isEmail(val)) bad = true;
       if (val && rule === 'phone' && !isPhone(val)) bad = true;
       markInvalid(input.closest('.field'), bad);
+      if (bad) ok = false;
+    });
+    return ok;
+  }
+
+  function validateChoices(form, names) {
+    let ok = true;
+    names.forEach(name => {
+      const checked = form.querySelector(`input[name="${name}"]:checked`);
+      const field = form.querySelector(`input[name="${name}"]`)?.closest('.field');
+      const bad = !checked;
+      if (field) field.classList.toggle('invalid', bad);
       if (bad) ok = false;
     });
     return ok;
@@ -74,7 +89,10 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      return { ok: res.ok, status: res.status };
+      let body = null;
+      try { body = await res.json(); } catch (_) { /* non-JSON response */ }
+      const ok = res.ok && (!body || body.ok !== false);
+      return { ok, status: res.status, body };
     } catch (e) {
       console.warn('[PCC lead] routing error', e);
       return { ok: false, error: e };
@@ -102,7 +120,9 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!validate(form, requiredMap)) {
+      const choicesOk = opts.choices ? validateChoices(form, opts.choices) : true;
+      const fieldsOk = validate(form, requiredMap);
+      if (!choicesOk || !fieldsOk) {
         notice(form, 'Please complete the highlighted fields and try again.', 'error');
         return;
       }
@@ -149,6 +169,7 @@
       booking.dataset.bound = '1';
       bind(booking, {
         required: { name: 'text', phone: 'phone', email: 'email', zip: 'text', preferred_date: 'text', preferred_time: 'text' },
+        choices: ['booking_type'],
         event: ev.bookingFormSubmit,
         successMsg: "Booking request received! We'll confirm your date and time within one business hour.",
       });

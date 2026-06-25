@@ -1,5 +1,5 @@
 /* =========================================================================
-   PATALANO CLEANING CO. — Multi-step Free Estimate funnel
+   NATABEL CLEANING SERVICES — Multi-step Free Estimate funnel
    7 steps: service → property → frequency → size → location → contact → submit
    Branches residential vs commercial property options.
    ========================================================================= */
@@ -124,4 +124,35 @@
 
   /* init */
   show(0);
+
+  /* Pre-select service from ?service= query param */
+  const SERVICE_MAP = {
+    commercial: 'commercial',
+    residential: 'residential',
+    move: 'move_in_out',
+    move_in_out: 'move_in_out',
+    deep: 'deep_cleaning',
+    deep_cleaning: 'deep_cleaning',
+    recurring: 'recurring',
+    property_management: 'property_management',
+  };
+
+  function prefillFromUrl() {
+    const key = new URLSearchParams(window.location.search).get('service');
+    const value = key ? SERVICE_MAP[key] : null;
+    if (!value) return;
+    const input = steps[0].querySelector(`input[name="service_type"][value="${value}"]`);
+    if (!input) return;
+    input.checked = true;
+    state.service_type = value;
+    const label = input.closest('.choice')?.querySelector('strong');
+    if (label) state.service_type_label = label.textContent;
+    syncChoice(steps[0]);
+    refreshPropertyStep();
+    refreshSizeStep();
+    if (/free-estimate\.html$/i.test(window.location.pathname.split('/').pop() || '')) {
+      setTimeout(() => show(1), 280);
+    }
+  }
+  prefillFromUrl();
 })();

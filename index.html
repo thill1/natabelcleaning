@@ -18,9 +18,10 @@
   <link rel="apple-touch-icon" href="assets/logo.svg" />
   <meta name="theme-color" content="#0B3D2E" />
 
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -35,59 +36,124 @@
 
     <!-- ===================== HERO ===================== -->
     <section class="hero">
-      <div class="hero-grid-deco" aria-hidden="true"></div>
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-orbs">
+          <span class="orb orb-1"></span>
+          <span class="orb orb-2"></span>
+          <span class="orb orb-3"></span>
+          <span class="orb orb-4"></span>
+        </div>
+        <div class="hero-grid-deco"></div>
+        <div class="hero-noise"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-leaks" aria-hidden="true">
+          <span class="hero-leak hero-leak-a"></span>
+          <span class="hero-leak hero-leak-b"></span>
+          <span class="hero-leak hero-leak-c"></span>
+        </div>
+      </div>
+
       <div class="container container-wide">
         <div class="hero-inner">
           <div class="hero-copy">
-            <span class="pill reveal"><span class="dot-live"></span> Sacramento · Founder-led · Licensed &amp; insured</span>
-            <h1 class="reveal d1">The art of clean,<br /><span class="accent">elevating Sacramento</span><br /><span class="brass">homes &amp; businesses.</span></h1>
-            <p class="lead-lg reveal d2">Founded by <strong style="color:var(--ink);">Fatima Patalano</strong>, Natabel Cleaning Services brings meticulous, hotel-grade standards to residential and commercial cleaning across the Sacramento area — from recurring office janitorial to deep house cleaning and move-in/move-out turnovers.</p>
+            <div class="hero-kicker reveal">
+              <span class="pill pill-hero"><span class="dot-live"></span> Sacramento · Founder-led</span>
+              <span class="hero-kicker-line"></span>
+              <span class="hero-kicker-tag">Licensed &amp; insured</span>
+            </div>
+            <h1 class="reveal d1">
+              <span class="hero-line">The art of clean,</span>
+              <span class="hero-line accent">elevating <em>Sacramento</em></span>
+              <span class="hero-line brass">homes &amp; businesses.</span>
+            </h1>
+            <p class="lead-lg hero-sub reveal d2">Hotel-grade standards for every space we touch — recurring office janitorial, residential deep cleans, and move-in/move-out turnovers across the Sacramento area.</p>
             <div class="hero-ctas reveal d2">
               <a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Free Estimate</a>
               <a href="commercial.html" class="btn btn-emerald btn-lg" data-magnetic><i data-lucide="building-2"></i> Schedule a Walkthrough</a>
-              <a href="book-online.html" class="btn btn-outline btn-lg">Book Residential</a>
             </div>
-            <div class="hero-trust reveal d3">
-              <span class="t-item"><i data-lucide="map-pin"></i> Local to Sacramento</span>
-              <span class="t-item"><i data-lucide="shield-check"></i> Licensed &amp; insured</span>
-              <span class="t-item"><i data-lucide="repeat"></i> Recurring plans</span>
-              <span class="t-item"><i data-lucide="clock"></i> Flexible scheduling</span>
-              <span class="t-item"><i data-lucide="badge-check"></i> Free estimates</span>
+            <div class="hero-metrics reveal d3">
+              <div class="hero-metric">
+                <span class="hero-metric-val"><span data-rating>4.9</span><small>★</small></span>
+                <span class="hero-metric-lbl">Google · <span data-review-count>127</span>+ reviews</span>
+              </div>
+              <div class="hero-metric">
+                <span class="hero-metric-val" data-clients>340+</span>
+                <span class="hero-metric-lbl">Clients served</span>
+              </div>
+              <div class="hero-metric">
+                <span class="hero-metric-val">90s</span>
+                <span class="hero-metric-lbl">Free estimate</span>
+              </div>
             </div>
           </div>
 
-          <div class="hero-visual reveal d2">
-            <div class="hero-card">
-              <div class="hero-card-top">
-                <h3>Your free estimate in 90 seconds</h3>
-                <span class="pill pill-brass">No obligation</span>
+          <div class="hero-stage reveal d2">
+            <div class="hero-scene" id="heroScene">
+              <div class="hero-scene-ring" aria-hidden="true"></div>
+              <figure class="hero-photo">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=960&q=85&auto=format&fit=crop"
+                  srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=640&q=85&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=960&q=85&auto=format&fit=crop 960w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85&auto=format&fit=crop 1200w"
+                  sizes="(max-width: 1020px) 100vw, 520px"
+                  width="960"
+                  height="720"
+                  alt="Sunlit, impeccably clean modern home interior in Sacramento"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+                <div class="hero-photo-overlay"></div>
+                <div class="hero-photo-shine" id="heroShine"></div>
+              </figure>
+
+              <div class="hero-float hero-float-rating">
+                <span class="hero-float-stars">★★★★★</span>
+                <span class="hero-float-text"><strong><span data-rating>4.9</span></strong> on Google</span>
               </div>
-              <div class="hero-card-body">
-                <a href="free-estimate.html?service=commercial" class="opt">
-                  <span class="opt-ic"><i data-lucide="building-2"></i></span>
-                  <span><strong>Commercial Cleaning</strong><small>Offices, retail, medical, gyms</small></span>
-                </a>
-                <a href="free-estimate.html?service=residential" class="opt">
-                  <span class="opt-ic brass"><i data-lucide="home"></i></span>
-                  <span><strong>Residential Cleaning</strong><small>Houses, apartments, condos</small></span>
-                </a>
-                <a href="free-estimate.html?service=move" class="opt">
-                  <span class="opt-ic"><i data-lucide="move-3d"></i></span>
-                  <span><strong>Move-In / Move-Out</strong><small>Deep turnovers, fresh starts</small></span>
-                </a>
-                <a href="free-estimate.html?service=recurring" class="opt">
-                  <span class="opt-ic brass"><i data-lucide="repeat"></i></span>
-                  <span><strong>Recurring Cleaning Plan</strong><small>Weekly · biweekly · monthly</small></span>
-                </a>
+
+              <div class="hero-float hero-float-shield">
+                <i data-lucide="shield-check"></i>
+                <span>Licensed &amp;<br />insured</span>
               </div>
-              <div class="hero-card-foot">
-                <a href="free-estimate.html" class="btn btn-brass btn-block btn-lg" data-magnetic>Start My Free Estimate</a>
-              </div>
+
+              <aside class="hero-estimate hero-card">
+                <div class="hero-card-top">
+                  <div>
+                    <p class="hero-card-eyebrow">Start here</p>
+                    <h3>Free estimate in 90 seconds</h3>
+                  </div>
+                  <span class="pill pill-brass">No obligation</span>
+                </div>
+                <div class="hero-card-body hero-card-grid">
+                  <a href="free-estimate.html?service=commercial" class="opt">
+                    <span class="opt-ic"><i data-lucide="building-2"></i></span>
+                    <span><strong>Commercial</strong><small>Offices &amp; retail</small></span>
+                  </a>
+                  <a href="free-estimate.html?service=residential" class="opt">
+                    <span class="opt-ic brass"><i data-lucide="home"></i></span>
+                    <span><strong>Residential</strong><small>Houses &amp; condos</small></span>
+                  </a>
+                  <a href="free-estimate.html?service=move" class="opt">
+                    <span class="opt-ic"><i data-lucide="move-3d"></i></span>
+                    <span><strong>Move-In / Out</strong><small>Turnover cleans</small></span>
+                  </a>
+                  <a href="free-estimate.html?service=recurring" class="opt">
+                    <span class="opt-ic brass"><i data-lucide="repeat"></i></span>
+                    <span><strong>Recurring</strong><small>Weekly · biweekly</small></span>
+                  </a>
+                </div>
+                <div class="hero-card-foot">
+                  <a href="free-estimate.html" class="btn btn-brass btn-block btn-lg" data-magnetic>Start My Free Estimate</a>
+                </div>
+              </aside>
             </div>
-            <div class="hero-badge b1"><span class="stars">★★★★★</span><span>Google-rated</span></div>
-            <div class="hero-badge b2"><i data-lucide="shield-check" style="color:var(--emerald);width:18px;height:18px;"></i> Licensed &amp; insured</div>
           </div>
         </div>
+      </div>
+
+      <div class="hero-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 32C240 64 480 0 720 32s480 32 720 0V64H0V32z" fill="var(--emerald)"/>
+        </svg>
       </div>
     </section>
 
@@ -109,6 +175,8 @@
       </div>
     </div>
 
+    <div data-partial="trust-ribbon"></div>
+
     <!-- ===================== QUOTE FUNNEL ===================== -->
     <section class="section funnel" id="estimate">
       <div class="container">
@@ -118,140 +186,7 @@
           <p class="lead mx-auto">No pressure. No obligation. Just a clear cleaning estimate for your home or business — built step-by-step so we can quote accurately the first time.</p>
         </div>
 
-        <div class="funnel-card reveal d1" data-funnel>
-          <div class="funnel-progress">
-            <div class="meta"><span class="step-label">Step 1 · Service Type</span><span class="step-count">1 of 7</span></div>
-            <div class="bar"><span></span></div>
-          </div>
-
-          <form data-lead-source="Homepage Funnel" novalidate>
-            <input type="hidden" name="form_type" value="free_estimate" />
-
-            <div class="funnel-step active">
-              <h3>What kind of cleaning do you need?</h3>
-              <p class="step-desc">Choose the service that best fits — you can refine details later.</p>
-              <div class="choice-group cols-3">
-                <label class="choice"><input type="radio" name="service_type" value="residential" /><span class="choice-ic"><i data-lucide="home"></i></span><strong>Residential Cleaning</strong><small>House, apartment, condo</small></label>
-                <label class="choice"><input type="radio" name="service_type" value="commercial" /><span class="choice-ic"><i data-lucide="building-2"></i></span><strong>Commercial Cleaning</strong><small>Office, retail, medical</small></label>
-                <label class="choice"><input type="radio" name="service_type" value="move_in_out" /><span class="choice-ic"><i data-lucide="move-3d"></i></span><strong>Move-In / Move-Out</strong><small>Tenant &amp; turnover</small></label>
-                <label class="choice"><input type="radio" name="service_type" value="deep_cleaning" /><span class="choice-ic"><i data-lucide="sparkles"></i></span><strong>Deep Cleaning</strong><small>Top-to-bottom detail</small></label>
-                <label class="choice"><input type="radio" name="service_type" value="recurring" /><span class="choice-ic"><i data-lucide="repeat"></i></span><strong>Recurring Cleaning</strong><small>Weekly / biweekly / monthly</small></label>
-                <label class="choice"><input type="radio" name="service_type" value="property_management" /><span class="choice-ic"><i data-lucide="key-round"></i></span><strong>Property Management</strong><small>Rental turnover &amp; upkeep</small></label>
-              </div>
-              <div class="funnel-nav"><span></span><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
-            </div>
-
-            <div class="funnel-step">
-              <h3>What kind of property is it?</h3>
-              <p class="step-desc">We tailor equipment, products, and team size to your space.</p>
-              <div data-prop="residential">
-                <div class="choice-group cols-4">
-                  <label class="choice"><input type="radio" name="property_type" value="house" /><strong>House</strong><small>Single-family</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="apartment" /><strong>Apartment</strong><small>Multi-unit</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="condo" /><strong>Condo</strong><small>Condominium</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="townhome" /><strong>Townhome</strong><small>Attached</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="rental" /><strong>Rental property</strong><small>Income property</small></label>
-                </div>
-              </div>
-              <div data-prop="commercial" style="display:none;">
-                <div class="choice-group cols-4">
-                  <label class="choice"><input type="radio" name="property_type" value="office" /><strong>Office</strong><small>Suite / building</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="retail" /><strong>Retail space</strong><small>Storefront</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="medical" /><strong>Medical office</strong><small>Clinic / dental</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="gym" /><strong>Gym / fitness</strong><small>Studio / club</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="church" /><strong>Church / community</strong><small>Place of worship</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="property_mgmt" /><strong>Property mgmt</strong><small>Multi-tenant</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="commercial_building" /><strong>Commercial building</strong><small>Multi-floor</small></label>
-                  <label class="choice"><input type="radio" name="property_type" value="other" /><strong>Other</strong><small>Tell us in notes</small></label>
-                </div>
-              </div>
-              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
-            </div>
-
-            <div class="funnel-step">
-              <h3>How often do you need cleaning?</h3>
-              <p class="step-desc">Recurring plans lock in your rate and your team. You can change or pause anytime.</p>
-              <div class="choice-group cols-4">
-                <label class="choice"><input type="radio" name="frequency" value="one_time" /><strong>One-time</strong><small>Single clean</small></label>
-                <label class="choice"><input type="radio" name="frequency" value="weekly" /><strong>Weekly</strong><small>Every 7 days</small></label>
-                <label class="choice"><input type="radio" name="frequency" value="biweekly" /><strong>Biweekly</strong><small>Every 14 days</small></label>
-                <label class="choice"><input type="radio" name="frequency" value="monthly" /><strong>Monthly</strong><small>Every 30 days</small></label>
-                <label class="choice"><input type="radio" name="frequency" value="custom" /><strong>Custom</strong><small>Tell us your cadence</small></label>
-              </div>
-              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
-            </div>
-
-            <div class="funnel-step">
-              <h3>Property details</h3>
-              <p class="step-desc">A few specifics help us build an accurate quote.</p>
-              <div data-size="residential">
-                <div class="field-row">
-                  <div class="field"><label>Bedrooms <span class="req">*</span></label><select name="bedrooms"><option value="">Select…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
-                  <div class="field"><label>Bathrooms <span class="req">*</span></label><select name="bathrooms"><option value="">Select…</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option></select></div>
-                </div>
-                <div class="field"><label>Approximate square footage</label><input type="text" name="square_footage" placeholder="e.g. 1,800 sq ft" /></div>
-              </div>
-              <div data-size="commercial" style="display:none;">
-                <div class="field-row">
-                  <div class="field"><label>Approx. square footage</label><input type="text" name="commercial_sqft" placeholder="e.g. 4,500 sq ft" /></div>
-                  <div class="field"><label>Number of restrooms</label><input type="number" name="restrooms" min="0" placeholder="e.g. 3" /></div>
-                </div>
-                <div class="field-row">
-                  <div class="field"><label>Desired cleaning days</label><input type="text" name="cleaning_days" placeholder="e.g. Mon/Wed/Fri" /></div>
-                  <div class="field"><label>Preferred cleaning time</label><select name="cleaning_time"><option value="">Select…</option><option>Business hours</option><option>After hours</option><option>Either</option></select></div>
-                </div>
-              </div>
-              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
-            </div>
-
-            <div class="funnel-step">
-              <h3>Where is the property?</h3>
-              <p class="step-desc">We serve Sacramento and surrounding communities.</p>
-              <div class="field-row">
-                <div class="field"><label>ZIP code <span class="req">*</span></label><input type="text" name="zip" inputmode="numeric" pattern="[0-9]{5}" placeholder="e.g. 95814" /><div class="field-error">Please enter a 5-digit ZIP.</div></div>
-                <div class="field"><label>City</label><input type="text" name="city" placeholder="e.g. Sacramento" /></div>
-              </div>
-              <div class="field"><label>Service address <span class="muted" style="font-weight:400;">(optional)</span></label><input type="text" name="address" placeholder="Street address (optional)" /></div>
-              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
-            </div>
-
-            <div class="funnel-step">
-              <h3>Where should we send your estimate?</h3>
-              <p class="step-desc">We'll reach out within one business hour. No spam, ever.</p>
-              <div class="field-row">
-                <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" /><div class="field-error">Please enter your name.</div></div>
-                <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(916) 555-0148" /><div class="field-error">Please enter a valid phone number.</div></div>
-              </div>
-              <div class="field-row">
-                <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@example.com" /><div class="field-error">Please enter a valid email.</div></div>
-                <div class="field"><label>Preferred contact</label><select name="preferred_contact"><option value="">Select…</option><option>Phone call</option><option>Text message</option><option>Email</option></select></div>
-              </div>
-              <div class="field"><label>Notes / special requests <span class="muted" style="font-weight:400;">(optional)</span></label><textarea name="notes" placeholder="Pets, allergies, focus areas, access instructions, etc."></textarea></div>
-              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Review request <i data-lucide="arrow-right"></i></button></div>
-            </div>
-
-            <div class="funnel-step">
-              <h3>You're almost done</h3>
-              <p class="step-desc">Submit your request and we'll send a personalized cleaning estimate within one business hour.</p>
-              <div class="card" style="background:var(--emerald-tint);border-color:var(--emerald-line);">
-                <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No pressure.</strong> Just a clear, honest estimate.</p></div>
-                <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No obligation.</strong> Decide on your timeline.</p></div>
-                <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Local team.</strong> Founded and run from Sacramento.</p></div>
-              </div>
-              <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="submit" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="send"></i> Submit My Free Estimate Request</button></div>
-            </div>
-          </form>
-
-          <div class="funnel-success">
-            <div class="check-circle"><i data-lucide="check"></i></div>
-            <h2 style="margin-bottom:10px;">Request received — thank you!</h2>
-            <p data-summary style="color:var(--muted);max-width:54ch;margin-inline:auto;"></p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
-              <a href="free-estimate.html" class="btn btn-emerald">Submit another request</a>
-              <a href="tel:+19165550148" class="btn btn-outline">Need it sooner? Call us</a>
-            </div>
-          </div>
-        </div>
+        <div data-partial="estimate-funnel" data-lead-source="Homepage Funnel" data-funnel-reveal="d1"></div>
       </div>
     </section>
 
@@ -275,22 +210,22 @@
             </div>
           </div>
           <div class="reveal d1">
-            <div class="split-media" data-parallax="0.06" style="background:linear-gradient(150deg,var(--emerald),var(--emerald-deep));min-height:460px;">
-              <div style="padding:40px;color:var(--ivory);position:relative;z-index:1;">
-                <h3 style="color:var(--ivory);font-size:1.4rem;margin-bottom:20px;">Commercial services include:</h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;">
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Office cleaning</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Janitorial service</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Restroom sanitation</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Breakroom &amp; kitchen</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Trash removal</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Dusting &amp; surfaces</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Floor care</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Lobby &amp; reception</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Retail cleaning</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Property management</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Commercial move-in/out</span>
-                  <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;color:var(--brass-bright);"></i> Post-construction</span>
+            <div class="visual-panel emerald" data-parallax="0.06">
+              <div class="visual-panel-inner">
+                <h3>Commercial services include:</h3>
+                <div class="visual-panel-grid">
+                  <span><i data-lucide="check"></i> Office cleaning</span>
+                  <span><i data-lucide="check"></i> Janitorial service</span>
+                  <span><i data-lucide="check"></i> Restroom sanitation</span>
+                  <span><i data-lucide="check"></i> Breakroom &amp; kitchen</span>
+                  <span><i data-lucide="check"></i> Trash removal</span>
+                  <span><i data-lucide="check"></i> Dusting &amp; surfaces</span>
+                  <span><i data-lucide="check"></i> Floor care</span>
+                  <span><i data-lucide="check"></i> Lobby &amp; reception</span>
+                  <span><i data-lucide="check"></i> Retail cleaning</span>
+                  <span><i data-lucide="check"></i> Property management</span>
+                  <span><i data-lucide="check"></i> Commercial move-in/out</span>
+                  <span><i data-lucide="check"></i> Post-construction</span>
                 </div>
               </div>
             </div>
@@ -316,13 +251,13 @@
           </div>
           <div class="reveal d1">
             <div class="ba-slider" aria-label="Before and after cleaning comparison. Drag to compare.">
-              <div class="ph-grad ba-img" style="filter:saturate(.4) brightness(.78);">BEFORE · Kitchen</div>
-              <div class="ba-after-wrap"><div class="ph-grad ba-img">AFTER · Kitchen</div></div>
+              <div class="ba-dirty ba-img">Before · Kitchen</div>
+              <div class="ba-after-wrap"><div class="ba-clean ba-img">After · Kitchen</div></div>
               <span class="ba-label ba-label-before">Before</span>
               <span class="ba-label ba-label-after">After</span>
               <div class="ba-handle"></div>
             </div>
-            <p class="muted" style="text-align:center;font-size:.84rem;margin-top:14px;"><em>Placeholder — replace with a real before/after photo.</em></p>
+            <p class="muted" style="text-align:center;font-size:.84rem;margin-top:14px;">Drag the handle — every Natabel clean meets hotel-grade standards.</p>
           </div>
         </div>
       </div>
@@ -332,20 +267,20 @@
     <section class="section bg-soft" id="residential-section">
       <div class="container">
         <div class="split">
-          <div class="split-media reveal" data-parallax="0.06" style="order:2;background:linear-gradient(150deg,var(--brass-deep),var(--brass));min-height:460px;">
-            <div style="padding:40px;color:var(--ivory);position:relative;z-index:1;">
-              <h3 style="color:var(--ivory);font-size:1.4rem;margin-bottom:20px;">Residential services include:</h3>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;">
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Standard house cleaning</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Deep cleaning</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Weekly recurring</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Biweekly recurring</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Monthly cleaning</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Move-in cleaning</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Move-out cleaning</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Apartment cleaning</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Condo cleaning</span>
-                <span style="display:flex;align-items:center;gap:9px;font-size:.92rem;"><i data-lucide="check" style="width:16px;height:16px;"></i> Rental turnover</span>
+          <div class="visual-panel brass reveal" data-parallax="0.06" style="order:2;">
+            <div class="visual-panel-inner">
+              <h3>Residential services include:</h3>
+              <div class="visual-panel-grid">
+                <span><i data-lucide="check"></i> Standard house cleaning</span>
+                <span><i data-lucide="check"></i> Deep cleaning</span>
+                <span><i data-lucide="check"></i> Weekly recurring</span>
+                <span><i data-lucide="check"></i> Biweekly recurring</span>
+                <span><i data-lucide="check"></i> Monthly cleaning</span>
+                <span><i data-lucide="check"></i> Move-in cleaning</span>
+                <span><i data-lucide="check"></i> Move-out cleaning</span>
+                <span><i data-lucide="check"></i> Apartment cleaning</span>
+                <span><i data-lucide="check"></i> Condo cleaning</span>
+                <span><i data-lucide="check"></i> Rental turnover</span>
               </div>
             </div>
           </div>
@@ -373,18 +308,18 @@
           <p class="lead mx-auto">From nightly office janitorial to one-time move-out deep cleans — one trusted local partner for all of it.</p>
         </div>
         <div class="grid-services">
-          <div class="card reveal"><div class="card-icon"><i data-lucide="building-2"></i></div><h3>Commercial Cleaning</h3><p>Professional recurring cleaning that keeps your business looking its best for staff and clients.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="briefcase"></i></div><h3>Office Cleaning</h3><p>Daily, weekly, or nightly office cleaning with consistent crews and detailed checklists.</p><div class="card-links"><a href="office-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d2"><div class="card-icon"><i data-lucide="file-text"></i></div><h3>Janitorial Services</h3><p>Contracted janitorial service for offices, medical, retail, and commercial facilities.</p><div class="card-links"><a href="janitorial-services.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="home"></i></div><h3>Residential Cleaning</h3><p>Recurring or one-time house cleaning from a team that treats your home like their own.</p><div class="card-links"><a href="residential.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal"><div class="card-icon"><i data-lucide="sparkles"></i></div><h3>Deep Cleaning</h3><p>Top-to-bottom detail cleaning that reaches every corner, baseboard, and appliance.</p><div class="card-links"><a href="deep-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="move-3d"></i></div><h3>Move-In / Move-Out</h3><p>Tenant-ready turnover cleans that help you get your deposit back or start fresh.</p><div class="card-links"><a href="move-in-out.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d2"><div class="card-icon"><i data-lucide="repeat"></i></div><h3>Recurring Plans</h3><p>Weekly, biweekly, or monthly — lock in your team, your rate, and your peace of mind.</p><div class="card-links"><a href="recurring-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="key-round"></i></div><h3>Property Management</h3><p>Reliable turnover and maintenance cleaning for property managers and landlords.</p><div class="card-links"><a href="property-management.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal"><div class="card-icon"><i data-lucide="door-open"></i></div><h3>Rental Turnover</h3><p>Fast, photo-documented turnover cleans that get units rent-ready on schedule.</p><div class="card-links"><a href="property-management.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="hammer"></i></div><h3>Post-Construction</h3><p>Dust, debris, and detail cleaning after renovations, builds, and tenant improvements.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d2"><div class="card-icon"><i data-lucide="shopping-bag"></i></div><h3>Retail Cleaning</h3><p>Customer-facing retail cleaning that keeps your storefront polished and welcoming.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
-          <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="droplets"></i></div><h3>Restroom Sanitation</h3><p>Full restroom disinfection, restocking, and detailing for offices and public spaces.</p><div class="card-links"><a href="janitorial-services.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal"><div class="card-icon"><i data-lucide="building-2"></i></div><h3>Commercial Cleaning</h3><p>Professional recurring cleaning that keeps your business looking its best for staff and clients.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d1"><div class="card-icon brass"><i data-lucide="briefcase"></i></div><h3>Office Cleaning</h3><p>Daily, weekly, or nightly office cleaning with consistent crews and detailed checklists.</p><div class="card-links"><a href="office-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d2"><div class="card-icon"><i data-lucide="file-text"></i></div><h3>Janitorial Services</h3><p>Contracted janitorial service for offices, medical, retail, and commercial facilities.</p><div class="card-links"><a href="janitorial-services.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d3"><div class="card-icon brass"><i data-lucide="home"></i></div><h3>Residential Cleaning</h3><p>Recurring or one-time house cleaning from a team that treats your home like their own.</p><div class="card-links"><a href="residential.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal"><div class="card-icon"><i data-lucide="sparkles"></i></div><h3>Deep Cleaning</h3><p>Top-to-bottom detail cleaning that reaches every corner, baseboard, and appliance.</p><div class="card-links"><a href="deep-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d1"><div class="card-icon brass"><i data-lucide="move-3d"></i></div><h3>Move-In / Move-Out</h3><p>Tenant-ready turnover cleans that help you get your deposit back or start fresh.</p><div class="card-links"><a href="move-in-out.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d2"><div class="card-icon"><i data-lucide="repeat"></i></div><h3>Recurring Plans</h3><p>Weekly, biweekly, or monthly — lock in your team, your rate, and your peace of mind.</p><div class="card-links"><a href="recurring-cleaning.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d3"><div class="card-icon brass"><i data-lucide="key-round"></i></div><h3>Property Management</h3><p>Reliable turnover and maintenance cleaning for property managers and landlords.</p><div class="card-links"><a href="property-management.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal"><div class="card-icon"><i data-lucide="door-open"></i></div><h3>Rental Turnover</h3><p>Fast, photo-documented turnover cleans that get units rent-ready on schedule.</p><div class="card-links"><a href="property-management.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d1"><div class="card-icon brass"><i data-lucide="hammer"></i></div><h3>Post-Construction</h3><p>Dust, debris, and detail cleaning after renovations, builds, and tenant improvements.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d2"><div class="card-icon"><i data-lucide="shopping-bag"></i></div><h3>Retail Cleaning</h3><p>Customer-facing retail cleaning that keeps your storefront polished and welcoming.</p><div class="card-links"><a href="commercial.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
+          <div class="card card-premium reveal d3"><div class="card-icon brass"><i data-lucide="droplets"></i></div><h3>Restroom Sanitation</h3><p>Full restroom disinfection, restocking, and detailing for offices and public spaces.</p><div class="card-links"><a href="janitorial-services.html">Learn more →</a><a href="free-estimate.html" class="btn btn-brass btn-sm">Get Estimate</a></div></div>
         </div>
       </div>
     </section>
@@ -641,12 +576,16 @@
   <!-- Vendor libs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
 
   <!-- App scripts -->
+  <script src="js/hero-ambient.js"></script>
+  <script src="js/funnel-template.js"></script>
   <script src="js/partials.js"></script>
   <script src="js/leads.js"></script>
   <script src="js/funnel.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/page-hero.js"></script>
   <script src="js/main.js"></script>
   <script src="js/motion.js" defer></script>
 </body>

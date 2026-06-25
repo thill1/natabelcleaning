@@ -1,5 +1,5 @@
 /* =========================================================================
-   PATALANO CLEANING CO. — Core site interactions
+   NATABEL CLEANING SERVICES — Core site interactions
    Header scroll, mobile menu, reveal-on-scroll, FAQ accordion, phone tracking
    ========================================================================= */
 (function () {

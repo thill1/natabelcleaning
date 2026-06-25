@@ -77,19 +77,41 @@
         });
       });
 
-      // Hero headline: fade/blur intro on load
-      const heroH1 = document.querySelector('.hero h1');
+      // Hero headline: fade intro on load
       const heroReveals = document.querySelectorAll('.hero .reveal');
       if (heroReveals.length && !reduce) {
-        const heroTl = gsap.timeline({ delay: 0.1 });
+        const heroTl = gsap.timeline({ delay: 0.08 });
         heroReveals.forEach(el => {
-          const d = el.classList.contains('d1') ? 0.1 : el.classList.contains('d2') ? 0.2 : el.classList.contains('d3') ? 0.3 : 0;
+          const d = el.classList.contains('d1') ? 0.08 : el.classList.contains('d2') ? 0.18 : el.classList.contains('d3') ? 0.28 : 0;
           heroTl.fromTo(el,
-            { y: 24, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+            { y: 32, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1, ease: 'power3.out' },
             d
           );
         });
+        const heroPhoto = document.querySelector('.hero-photo');
+        if (heroPhoto) {
+          heroTl.fromTo(heroPhoto,
+            { y: 40, opacity: 0, scale: 0.96 },
+            { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' },
+            0.15
+          );
+        }
+        document.querySelectorAll('.hero-float').forEach((el, i) => {
+          heroTl.fromTo(el,
+            { y: 20, opacity: 0, scale: 0.9 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.4)' },
+            0.5 + i * 0.12
+          );
+        });
+        const heroEstimate = document.querySelector('.hero-estimate');
+        if (heroEstimate) {
+          heroTl.fromTo(heroEstimate,
+            { y: 24, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+            0.65
+          );
+        }
       }
     }
 
@@ -203,153 +225,49 @@
     });
   }
 
-  /* ---------- 7. Sparkle stars on hero ---------- */
+  /* ---------- 7. Hero scene parallax & shine ---------- */
+  function bootHeroStage() {
+    const scene = document.getElementById('heroScene');
+    const shine = document.getElementById('heroShine');
+    if (!scene || reduce) return;
+
+    if (canHover) {
+      scene.addEventListener('mousemove', (e) => {
+        const r = scene.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        scene.style.transform = `rotateY(${px * 4}deg) rotateX(${-py * 3}deg)`;
+        if (shine) {
+          const sx = ((e.clientX - r.left) / r.width) * 100;
+          const sy = ((e.clientY - r.top) / r.height) * 100;
+          shine.style.background = `radial-gradient(circle 280px at ${sx}% ${sy}%, rgba(255,255,255,.4), transparent 65%)`;
+          shine.style.opacity = '1';
+        }
+      }, { passive: true });
+      scene.addEventListener('mouseleave', () => {
+        scene.style.transform = '';
+        if (shine) shine.style.opacity = '';
+      });
+    }
+
+    if (window.gsap && window.ScrollTrigger && !reduce) {
+      window.gsap.to(scene, {
+        y: -24,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2,
+        },
+      });
+    }
+  }
+
+  /* ---------- 8. Hero ambient (replaces legacy sparkles) ---------- */
   function bootSparkle() {
-    if (reduce) return;
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    const layer = document.createElement('div');
-    layer.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
-    layer.setAttribute('aria-hidden', 'true');
-    hero.appendChild(layer);
-
-    const isMobile = window.innerWidth < 760;
-    const count = isMobile ? 16 : 32;
-
-    // SVG star path generator — returns an SVG string for an N-pointed star
-    function starSVG(points, outerR, innerR) {
-      const size = outerR * 2 + 4;
-      const cx = size / 2, cy = size / 2;
-      let d = '';
-      for (let i = 0; i < points * 2; i++) {
-        const r = i % 2 === 0 ? outerR : innerR;
-        const angle = (Math.PI / points) * i - Math.PI / 2;
-        const x = cx + Math.cos(angle) * r;
-        const y = cy + Math.sin(angle) * r;
-        d += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2);
-      }
-      d += 'Z';
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><path d="${d}" fill="currentColor"/></svg>`;
-    }
-
-    // 4-point star (classic sparkle)
-    function fourPointSVG(size) {
-      const cx = size / 2, cy = size / 2;
-      const outer = size / 2;
-      const inner = size * 0.12;
-      const mid = size * 0.22;
-      let d = '';
-      const pts = [
-        [cx, cy - outer],     // top
-        [cx + mid, cy - mid],  // inner top-right
-        [cx + outer, cy],      // right
-        [cx + mid, cy + mid],  // inner bottom-right
-        [cx, cy + outer],      // bottom
-        [cx - mid, cy + mid],  // inner bottom-left
-        [cx - outer, cy],      // left
-        [cx - mid, cy - mid],  // inner top-left
-      ];
-      pts.forEach((p, i) => { d += (i === 0 ? 'M' : 'L') + p[0].toFixed(2) + ',' + p[1].toFixed(2); });
-      d += 'Z';
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><path d="${d}" fill="currentColor"/></svg>`;
-    }
-
-    // Size tiers weighted by frequency
-    const sizes = [
-      { min: 8, max: 14, w: 3 },   // tiny
-      { min: 16, max: 24, w: 3 },   // small
-      { min: 28, max: 40, w: 2 },   // medium
-      { min: 44, max: 64, w: 1 },   // large feature
-    ];
-    const pool = [];
-    sizes.forEach(s => { for (let i = 0; i < s.w; i++) pool.push(s); });
-
-    for (let i = 0; i < count; i++) {
-      const profile = pool[Math.floor(Math.random() * pool.length)];
-      const size = Math.round(profile.min + Math.random() * (profile.max - profile.min));
-
-      // Pick star type: mostly 4-point, some 6-point for variety
-      const typeRoll = Math.random();
-      let svg;
-      if (typeRoll < 0.65) {
-        svg = fourPointSVG(size);
-      } else if (typeRoll < 0.85) {
-        svg = starSVG(6, size / 2, size * 0.18);
-      } else {
-        svg = starSVG(4, size / 2, size * 0.25);
-      }
-
-      // Color
-      const colorRoll = Math.random();
-      let color, glow;
-      if (colorRoll < 0.3) {
-        color = '#BFA26A'; glow = '0 0 ' + Math.round(size * 0.5) + 'px ' + Math.round(size * 0.15) + 'px rgba(191,162,106,0.45)';
-      } else if (colorRoll < 0.5) {
-        color = '#D4AF37'; glow = '0 0 ' + Math.round(size * 0.4) + 'px ' + Math.round(size * 0.12) + 'px rgba(212,175,55,0.4)';
-      } else if (colorRoll < 0.7) {
-        color = '#FFFFFF'; glow = '0 0 ' + Math.round(size * 0.4) + 'px ' + Math.round(size * 0.1) + 'px rgba(255,255,255,0.5)';
-      } else if (colorRoll < 0.85) {
-        color = '#78C9A0'; glow = '0 0 ' + Math.round(size * 0.35) + 'px ' + Math.round(size * 0.1) + 'px rgba(120,201,160,0.35)';
-      } else {
-        color = '#E0D4C0'; glow = '0 0 ' + Math.round(size * 0.3) + 'px rgba(224,212,192,0.3)';
-      }
-
-      const s = document.createElement('span');
-      s.style.cssText = `position:absolute;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:0;pointer-events:none;color:${color};filter:drop-shadow(${glow});`;
-      s.innerHTML = svg;
-      layer.appendChild(s);
-
-      // Pick animation
-      const animRoll = Math.random();
-      const dur = 2400 + Math.random() * 3200;
-      const delay = Math.random() * 7000;
-
-      if (animRoll < 0.4) {
-        // Classic twinkle
-        const twinkle = () => {
-          s.animate([
-            { opacity: 0, transform: 'scale(0.3) rotate(0deg)' },
-            { opacity: 0.9, transform: 'scale(1) rotate(15deg)' },
-            { opacity: 0.3, transform: 'scale(1.15) rotate(25deg)' },
-            { opacity: 0, transform: 'scale(0.3) rotate(45deg)' },
-          ], { duration: dur, delay: Math.random() * 4000, easing: 'ease-in-out' }).onfinish = twinkle;
-        };
-        twinkle();
-      } else if (animRoll < 0.65) {
-        // Slow full rotation with fade
-        const spin = () => {
-          s.animate([
-            { opacity: 0, transform: 'rotate(0deg) scale(0.2)' },
-            { opacity: 0.85, transform: 'rotate(90deg) scale(1)', offset: 0.3 },
-            { opacity: 0.85, transform: 'rotate(180deg) scale(1)', offset: 0.6 },
-            { opacity: 0, transform: 'rotate(360deg) scale(0.2)' },
-          ], { duration: dur * 2, delay, easing: 'ease-in-out' }).onfinish = spin;
-        };
-        spin();
-      } else if (animRoll < 0.82) {
-        // Float upward
-        const drift = -10 - Math.random() * 18;
-        const float = () => {
-          s.animate([
-            { opacity: 0, transform: 'translateY(0) scale(0.3)' },
-            { opacity: 0.8, transform: `translateY(${drift * 0.5}px) scale(1)`, offset: 0.35 },
-            { opacity: 0, transform: `translateY(${drift}px) scale(0.2)` },
-          ], { duration: dur * 1.6, delay: Math.random() * 3000, easing: 'ease-out' }).onfinish = float;
-        };
-        float();
-      } else {
-        // Quick glint flash
-        const glint = () => {
-          s.animate([
-            { opacity: 0, transform: 'scale(0.1)', filter: 'drop-shadow(0 0 0 transparent)' },
-            { opacity: 1, transform: 'scale(1.4)', offset: 0.2 },
-            { opacity: 1, transform: 'scale(1.4)', offset: 0.35 },
-            { opacity: 0, transform: 'scale(0.1)', filter: 'drop-shadow(0 0 0 transparent)' },
-          ], { duration: 700 + Math.random() * 500, delay: Math.random() * 9000, easing: 'ease-in-out' }).onfinish = glint;
-        };
-        glint();
-      }
+    if (window.NatabelHeroAmbient && window.NatabelHeroAmbient.boot) {
+      window.NatabelHeroAmbient.boot();
     }
   }
 
@@ -361,6 +279,7 @@
     bootCursor();
     bootMagnetic();
     bootBeforeAfter();
+    bootHeroStage();
     bootSparkle();
     // Re-init Lucide after partials inject icons
     setTimeout(bootLucide, 200);
