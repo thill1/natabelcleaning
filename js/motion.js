@@ -41,36 +41,61 @@
       setTimeout(() => el.classList.add('is-in'), 80 + delay * 90);
     });
 
-    // Non-hero [data-reveal] via ScrollTrigger
+    // Non-hero [data-reveal] via ScrollTrigger (CSS class toggle, no fromTo)
     if (window.ScrollTrigger) {
       gsap.utils.toArray('[data-reveal]').forEach(el => {
         if (el.closest('.hero')) return;
-        gsap.fromTo(el,
-          { y: 28, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
-          }
-        );
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.95 && r.bottom > 0) {
+          setTimeout(() => el.classList.add('is-in'), 100);
+        } else {
+          ScrollTrigger.create({
+            trigger: el,
+            start: 'top 88%',
+            onEnter: () => el.classList.add('is-in')
+          });
+        }
       });
     } else {
       document.querySelectorAll('[data-reveal]:not(.hero [data-reveal])').forEach(el => el.classList.add('is-in'));
     }
 
-    // Legacy .reveal support for generated pages
-    const legacySections = gsap.utils.toArray('.section');
-    legacySections.forEach(section => {
-      const reveals = section.querySelectorAll('.reveal:not(.is-in):not(.in)');
-      if (!reveals.length) return;
-      gsap.fromTo(reveals,
-        { y: 28, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', stagger: 0.08,
-          scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none none' },
-          onComplete: function () { reveals.forEach(r => r.classList.add('in')); }
-        }
-      );
+    // Legacy .reveal support — robust CSS-class approach (no GSAP fromTo that can freeze)
+    const allReveals = gsap.utils.toArray('.reveal:not(.is-in):not(.in)');
+    const inViewOnLoad = [];
+    const belowFold = [];
+    allReveals.forEach(el => {
+      if (el.closest('.hero')) return; // hero uses [data-reveal] path above
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.95 && r.bottom > 0) inViewOnLoad.push(el);
+      else belowFold.push(el);
     });
+
+    // In-viewport reveals: animate via CSS class with staggered delays
+    inViewOnLoad.forEach((el, i) => {
+      setTimeout(() => el.classList.add('in'), 100 + i * 60);
+    });
+
+    // Below-fold reveals via ScrollTrigger (CSS class toggle, no fromTo)
+    if (window.ScrollTrigger && belowFold.length) {
+      const parentMap = new Map();
+      belowFold.forEach(el => {
+        const parent = el.closest('.section') || el.parentElement;
+        if (!parentMap.has(parent)) parentMap.set(parent, []);
+        parentMap.get(parent).push(el);
+      });
+      parentMap.forEach((children, parent) => {
+        ScrollTrigger.create({
+          trigger: parent,
+          start: 'top 85%',
+          onEnter: () => {
+            children.forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 70));
+          }
+        });
+      });
+    } else if (belowFold.length) {
+      belowFold.forEach(el => el.classList.add('in'));
+    }
 
     // Parallax on elements with [data-parallax]
     if (window.ScrollTrigger) {
@@ -256,6 +281,12 @@
     // Re-init Lucide after partials inject icons
     setTimeout(bootLucide, 200);
     setTimeout(bootMagnetic, 250); // pick up dynamically-injected buttons
+    // Failsafe: if anything left .reveal hidden after 2.5s, reveal it
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.in), [data-reveal]:not(.is-in)').forEach(el => {
+        if (!el.closest('.hero')) { el.classList.add('in', 'is-in'); }
+      });
+    }, 2500);
     // Refresh ScrollTrigger after fonts/layout settle
     window.addEventListener('load', () => {
       if (window.ScrollTrigger) window.ScrollTrigger.refresh();

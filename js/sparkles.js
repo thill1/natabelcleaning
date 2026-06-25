@@ -32,18 +32,24 @@
   /* ---------- 1. Section accent stars — subtle, fixed in key sections ---------- */
   function placeSectionStars() {
     const targets = document.querySelectorAll(
-      '.section-head, .cta-banner, .page-hero-copy, .hero-copy, .trust-ribbon, .funnel-card .funnel-progress'
+      '.section-head, .cta-banner, .page-hero-copy, .hero-copy, .trust-ribbon, .funnel-card .funnel-progress, .form-head, .split, .grid-4'
     );
-    const count = canHover ? 2 : 1;
     targets.forEach(scope => {
       if (scope.querySelector('.natabel-star')) return;
+      // Fewer stars in copy-heavy areas to avoid overlapping text
+      const isCopy = scope.classList.contains('page-hero-copy') || scope.classList.contains('hero-copy');
+      const isHead = scope.classList.contains('section-head');
+      const count = isCopy ? 1 : (isHead ? 1 : 2);
       for (let i = 0; i < count; i++) {
         const star = el('span', 'natabel-star');
+        // Place in upper region / corners to avoid text overlap
+        const sx = isCopy ? (3 + Math.random() * 12) : (5 + Math.random() * 90);
+        const sy = isCopy ? (2 + Math.random() * 10) : (8 + Math.random() * 80);
         star.innerHTML = STAR_SVG;
-        star.style.setProperty('--sx', (5 + Math.random() * 90) + '%');
-        star.style.setProperty('--sy', (8 + Math.random() * 80) + '%');
+        star.style.setProperty('--sx', sx + '%');
+        star.style.setProperty('--sy', sy + '%');
         star.style.setProperty('--sd', (Math.random() * 6).toFixed(2) + 's');
-        star.style.setProperty('--ss', (0.7 + Math.random() * 0.5).toFixed(2));
+        star.style.setProperty('--ss', (0.6 + Math.random() * 0.4).toFixed(2));
         scope.style.position = scope.style.position || 'relative';
         scope.appendChild(star);
       }

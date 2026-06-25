@@ -87,7 +87,7 @@
   const promoBar = `
   <div class="promo-bar" role="region" aria-label="Promotion">
     <div class="container container-wide promo-inner">
-      <p><i data-lucide="sparkles"></i> <strong>Free estimates in 90 seconds</strong> — no obligation. <span class="promo-hide-sm">Sacramento homes &amp; businesses.</span></p>
+      <p><i data-lucide="sparkles"></i> <strong>Free estimates in 90 seconds</strong> <span class="promo-hide-sm">— no obligation. Sacramento homes &amp; businesses.</span></p>
       <div class="promo-actions">
         <a href="free-estimate.html" class="btn btn-brass btn-sm">Get My Estimate</a>
         <button type="button" class="promo-close" aria-label="Dismiss promotion"><i data-lucide="x"></i></button>
