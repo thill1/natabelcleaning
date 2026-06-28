@@ -38,7 +38,7 @@
   <main id="main">
 
     <!-- ===================== HERO ===================== -->
-    <section class="hero hero-v2">
+    <section class="hero hero-v2 hero-centered">
       <div class="hero-bg" aria-hidden="true">
         <canvas class="hero-ambient-canvas" id="heroAmbient"></canvas>
       </div>
@@ -47,7 +47,7 @@
         <div class="hero-copy">
           <div class="hero-logo-featured" data-reveal>
             <a href="index.html" class="hero-logo-link" aria-label="Natabel Pristine Cleaning — home">
-              <img src="assets/logo-wordmark.png" alt="Natabel Pristine Cleaning" class="hero-logo-img" width="360" height="173" fetchpriority="high" />
+              <img src="assets/logo-wordmark.png" alt="Natabel Pristine Cleaning" class="hero-logo-img" width="480" height="230" fetchpriority="high" />
             </a>
           </div>
           <div class="hero-kicker" data-reveal data-reveal-delay="1">
@@ -64,76 +64,56 @@
             <a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="droplets"></i> Get a Free Estimate</a>
             <a href="commercial.html" class="btn btn-outline-light btn-lg" data-magnetic><i data-lucide="building-2"></i> Commercial Walkthrough</a>
           </div>
-          <div class="hero-metrics" data-reveal data-reveal-delay="4">
-            <div class="hero-metric">
-              <span class="hero-metric-val"><span data-rating>4.9</span><small>★</small></span>
-              <span class="hero-metric-lbl">Google · <span data-review-count>127</span>+ reviews</span>
-            </div>
-            <div class="hero-metric">
-              <span class="hero-metric-val" data-clients>340+</span>
-              <span class="hero-metric-lbl">Homes &amp; businesses served</span>
-            </div>
-            <div class="hero-metric">
-              <span class="hero-metric-val">90s</span>
-              <span class="hero-metric-lbl">Free estimate</span>
-            </div>
+          <div class="hero-trust-pills" data-reveal data-reveal-delay="4">
+            <span class="hero-trust-pill"><span class="hero-float-stars">★★★★★</span> <strong><span data-rating>4.9</span></strong> on Google</span>
+            <span class="hero-trust-pill"><i data-lucide="shield-check"></i> Licensed &amp; insured</span>
           </div>
         </div>
 
-        <div class="hero-stage" data-reveal data-reveal-delay="2">
-          <figure class="hero-photo" id="heroPhoto">
-            <img
-              src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1100&q=85&auto=format&fit=crop&crop=faces,focalpoint&fp-y=0.38"
-              srcset="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=720&q=85&auto=format&fit=crop&crop=faces,focalpoint&fp-y=0.38 720w, https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1100&q=85&auto=format&fit=crop&crop=faces,focalpoint&fp-y=0.38 1100w, https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1400&q=85&auto=format&fit=crop&crop=faces,focalpoint&fp-y=0.38 1400w"
-              sizes="(max-width: 1020px) 92vw, 560px"
-              width="1100"
-              height="1375"
-              alt="Professional cleaner delivering meticulous care — Natabel Pristine Cleaning, Sacramento"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </figure>
-
-          <div class="hero-float hero-float-rating" data-reveal data-reveal-delay="4">
-            <span class="hero-float-stars">★★★★★</span>
-            <span class="hero-float-text"><strong><span data-rating>4.9</span></strong> on Google</span>
+        <aside class="hero-estimate hero-card" data-reveal data-reveal-delay="4">
+          <div class="hero-card-top">
+            <div>
+              <p class="hero-card-eyebrow">Start here</p>
+              <h3>Your free estimate in 90 seconds</h3>
+            </div>
+            <span class="pill pill-brass">No obligation</span>
           </div>
-
-          <div class="hero-float hero-float-shield" data-reveal data-reveal-delay="4">
-            <i data-lucide="shield-check"></i>
-            <span>Licensed &amp;<br />insured</span>
+          <div class="hero-card-body hero-card-grid">
+            <a href="free-estimate.html?service=commercial" class="opt">
+              <span class="opt-ic"><i data-lucide="building-2"></i></span>
+              <span><strong>Commercial</strong><small>Offices &amp; facilities</small></span>
+            </a>
+            <a href="free-estimate.html?service=residential" class="opt">
+              <span class="opt-ic brass"><i data-lucide="home"></i></span>
+              <span><strong>Residential</strong><small>Houses &amp; condos</small></span>
+            </a>
+            <a href="free-estimate.html?service=move" class="opt">
+              <span class="opt-ic"><i data-lucide="move-3d"></i></span>
+              <span><strong>Move-In / Out</strong><small>Turnover cleans</small></span>
+            </a>
+            <a href="free-estimate.html?service=recurring" class="opt">
+              <span class="opt-ic brass"><i data-lucide="repeat"></i></span>
+              <span><strong>Recurring</strong><small>Weekly · biweekly</small></span>
+            </a>
           </div>
+          <div class="hero-card-foot">
+            <a href="free-estimate.html" class="btn btn-brass btn-block btn-lg" data-magnetic>Start My Free Estimate</a>
+          </div>
+        </aside>
 
-          <aside class="hero-estimate hero-card" data-reveal data-reveal-delay="5">
-            <div class="hero-card-top">
-              <div>
-                <p class="hero-card-eyebrow">Start here</p>
-                <h3>Your free estimate in 90 seconds</h3>
-              </div>
-              <span class="pill pill-brass">No obligation</span>
-            </div>
-            <div class="hero-card-body hero-card-grid">
-              <a href="free-estimate.html?service=commercial" class="opt">
-                <span class="opt-ic"><i data-lucide="building-2"></i></span>
-                <span><strong>Commercial</strong><small>Offices &amp; facilities</small></span>
-              </a>
-              <a href="free-estimate.html?service=residential" class="opt">
-                <span class="opt-ic brass"><i data-lucide="home"></i></span>
-                <span><strong>Residential</strong><small>Houses &amp; condos</small></span>
-              </a>
-              <a href="free-estimate.html?service=move" class="opt">
-                <span class="opt-ic"><i data-lucide="move-3d"></i></span>
-                <span><strong>Move-In / Out</strong><small>Turnover cleans</small></span>
-              </a>
-              <a href="free-estimate.html?service=recurring" class="opt">
-                <span class="opt-ic brass"><i data-lucide="repeat"></i></span>
-                <span><strong>Recurring</strong><small>Weekly · biweekly</small></span>
-              </a>
-            </div>
-            <div class="hero-card-foot">
-              <a href="free-estimate.html" class="btn btn-brass btn-block btn-lg" data-magnetic>Start My Free Estimate</a>
-            </div>
-          </aside>
+        <div class="hero-metrics" data-reveal data-reveal-delay="5">
+          <div class="hero-metric">
+            <span class="hero-metric-val"><span data-rating>4.9</span><small>★</small></span>
+            <span class="hero-metric-lbl">Google · <span data-review-count>127</span>+ reviews</span>
+          </div>
+          <div class="hero-metric">
+            <span class="hero-metric-val" data-clients>340+</span>
+            <span class="hero-metric-lbl">Homes &amp; businesses served</span>
+          </div>
+          <div class="hero-metric">
+            <span class="hero-metric-val">90s</span>
+            <span class="hero-metric-lbl">Free estimate</span>
+          </div>
         </div>
       </div>
 
