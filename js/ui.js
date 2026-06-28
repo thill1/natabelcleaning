@@ -1,5 +1,5 @@
 /* =========================================================================
-   NATABEL CLEANING SERVICES — UI enhancements
+   NATABEL PRISTINE CLEANING — UI enhancements
    Promo bar, floating CTA, config-driven social proof, choice radios
    ========================================================================= */
 (function () {

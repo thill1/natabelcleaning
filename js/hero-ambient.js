@@ -21,9 +21,9 @@
     if (!ctx) return;
 
     const palette = [
-      { r: 203, g: 168, b: 116 }, /* brass */
-      { r: 247, g: 243, b: 235 }, /* ivory */
-      { r: 20, g: 104, b: 78 },   /* emerald */
+      { r: 212, g: 175, b: 55 },  /* gold */
+      { r: 255, g: 255, b: 255 },  /* white */
+      { r: 10, g: 10, b: 10 },     /* black */
     ];
 
     let w = 0;
@@ -105,7 +105,7 @@
       ctx.save();
       ctx.translate(g.x, g.y);
       ctx.rotate(g.rot);
-      ctx.strokeStyle = `rgba(247,243,235,${alpha})`;
+      ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
       ctx.lineWidth = 0.6;
       ctx.lineCap = 'round';
       ctx.beginPath();

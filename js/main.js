@@ -1,5 +1,5 @@
 /* =========================================================================
-   NATABEL CLEANING SERVICES — Core site interactions
+   NATABEL PRISTINE CLEANING — Core site interactions
    Header scroll, mobile menu, reveal-on-scroll, FAQ accordion, phone tracking
    ========================================================================= */
 (function () {

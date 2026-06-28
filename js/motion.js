@@ -1,5 +1,5 @@
 /* =========================================================================
-   NATABEL CLEANING SERVICES — Premium motion layer
+   NATABEL PRISTINE CLEANING — Premium motion layer
    GSAP + ScrollTrigger + Lucide + custom cursor + magnetic CTAs
    + before/after slider + parallax + animated counters + enhanced sparkles
    Loaded once per page via <script src="js/motion.js" defer>

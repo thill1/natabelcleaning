@@ -1,5 +1,5 @@
 /* =========================================================================
-   NATABEL CLEANING SERVICES — Multi-step Free Estimate funnel
+   NATABEL PRISTINE CLEANING — Multi-step Free Estimate funnel
    7 steps: service → property → frequency → size → location → contact → submit
    Branches residential vs commercial property options.
    ========================================================================= */

@@ -1,5 +1,5 @@
 /* =========================================================================
-   NATABEL CLEANING SERVICES — Shared partials
+   NATABEL PRISTINE CLEANING — Shared partials
    Injects sticky header, mobile menu, mobile CTA bar, footer.
    Uses Lucide icons via data-lucide="..." (initialized by motion.js).
    Active nav link auto-highlighted from current path.
@@ -23,7 +23,7 @@
   ];
   const here = (location.pathname.split('/').pop() || 'index.html');
   const navLink = (item) => {
-    const active = item.match.includes(here) ? ' style="color:var(--emerald);background:var(--emerald-tint);"' : '';
+    const active = item.match.includes(here) ? ' style="color:var(--brass-deep);background:var(--brass-soft);"' : '';
     return `<a href="${item.href}"${active}>${item.label}</a>`;
   };
 
@@ -33,7 +33,7 @@
       <div class="bar">
         <a href="index.html" class="brand" aria-label="${B.name} — home">
           <img src="assets/logo.svg" alt="" class="brand-mark" width="44" height="44" />
-          <span class="brand-name">Natabel<span>The Art of Clean</span></span>
+          <span class="brand-name">Natabel Pristine<span>Cleaning</span></span>
         </a>
         <nav class="nav" aria-label="Primary">${NAV.map(navLink).join('')}</nav>
         <div class="header-cta">
@@ -55,7 +55,7 @@
     <div class="mm-header">
       <a href="index.html" class="brand">
         <img src="assets/logo.svg" alt="" class="brand-mark" width="40" height="40" />
-        <span class="brand-name">Natabel</span>
+        <span class="brand-name">Natabel Pristine</span>
       </a>
       <button class="menu-toggle mm-close" aria-label="Close menu"><i data-lucide="x"></i></button>
     </div>
@@ -126,7 +126,7 @@
         <div class="footer-brand">
           <a href="index.html" class="brand" style="margin-bottom:16px;">
             <img src="assets/logo.svg" alt="" class="brand-mark" width="44" height="44" />
-            <span class="brand-name" style="color:var(--ivory);">Natabel<span style="color:var(--brass-bright);">The Art of Clean</span></span>
+            <span class="brand-name" style="color:var(--ivory);">Natabel Pristine<span style="color:var(--brass-bright);">Cleaning</span></span>
           </a>
           <p style="color:rgba(247,243,235,.62);font-size:.92rem;max-width:40ch;">${B.description}</p>
           <div class="footer-social" style="margin-top:20px;">

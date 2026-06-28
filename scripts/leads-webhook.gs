@@ -1,5 +1,5 @@
 /**
- * Natabel Cleaning Services — Lead webhook (Google Apps Script)
+ * Natabel Pristine Cleaning — Lead webhook (Google Apps Script)
  *
  * Deploy:
  * 1. Create a new Google Sheet with tabs "Leads" (headers row 1) and optional "Errors"

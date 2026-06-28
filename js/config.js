@@ -1,5 +1,5 @@
 /* =========================================================================
-   NATABEL CLEANING SERVICES — Central Configuration
+   NATABEL PRISTINE CLEANING — Central Configuration
    Global object: window.PCC (project config container)
    Everything else reads from this object.
    ========================================================================= */
@@ -7,12 +7,12 @@
 window.PCC = {
   /* ---------- Business identity (NAP — keep consistent everywhere) ---------- */
   business: {
-    name:     'Natabel Cleaning Services',
-    legalName:'Natabel Cleaning Services',
+    name:     'Natabel Pristine Cleaning',
+    legalName:'Natabel Pristine Cleaning',
     founder:  'Fatima Patalano',
-    tagline:  'The Art of Clean \u00b7 Sacramento',
+    tagline:  'Pristine Clean \u00b7 Sacramento',
     description:
-      'Natabel Cleaning Services is Sacramento\u2019s premium residential and commercial cleaning company. ' +
+      'Natabel Pristine Cleaning is Sacramento\u2019s premium residential and commercial cleaning company. ' +
       'Founder-led by Fatima Patalano, we deliver meticulous house cleaning, deep cleaning, recurring office cleaning, ' +
       'janitorial service, and move-in/move-out cleaning across Sacramento and surrounding communities.',
     phone:          '(916) 555-0148',
