@@ -36,8 +36,9 @@ const HEAD = (p) => `<!DOCTYPE html>
   <meta property="og:description" content="${p.ogDesc}" />
   <meta property="og:url" content="https://www.natabelcleaning.com/${p.slug}" />
   <meta property="og:image" content="https://www.natabelcleaning.com/assets/og-image.jpg" />
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

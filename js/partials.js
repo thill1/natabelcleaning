@@ -31,9 +31,8 @@
   <header class="site-header" id="siteHeader">
     <div class="container container-wide">
       <div class="bar">
-        <a href="index.html" class="brand" aria-label="${B.name} — home">
-          <img src="assets/logo.svg" alt="" class="brand-mark" width="44" height="44" />
-          <span class="brand-name">Natabel<span>Pristine Cleaning</span></span>
+        <a href="index.html" class="brand brand-logo-link" aria-label="${B.name} — home">
+          <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo" width="220" height="106" />
         </a>
         <nav class="nav" aria-label="Primary">${NAV.map(navLink).join('')}</nav>
         <div class="header-cta">
@@ -53,9 +52,8 @@
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
   <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
     <div class="mm-header">
-      <a href="index.html" class="brand">
-        <img src="assets/logo.svg" alt="" class="brand-mark" width="40" height="40" />
-        <span class="brand-name">Natabel<span>Pristine Cleaning</span></span>
+      <a href="index.html" class="brand brand-logo-link">
+        <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-sm" width="200" height="96" />
       </a>
       <button class="menu-toggle mm-close" aria-label="Close menu"><i data-lucide="x"></i></button>
     </div>
@@ -124,9 +122,8 @@
     <div class="container container-wide">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="brand" style="margin-bottom:16px;">
-            <img src="assets/logo.svg" alt="" class="brand-mark" width="44" height="44" />
-            <span class="brand-name" style="color:var(--ivory);">Natabel<span style="color:var(--brass-bright);">Pristine Cleaning</span></span>
+          <a href="index.html" class="brand brand-logo-link" style="margin-bottom:16px;">
+            <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-footer" width="240" height="115" />
           </a>
           <p style="color:rgba(247,243,235,.62);font-size:.92rem;max-width:40ch;">${B.description}</p>
           <div class="footer-social" style="margin-top:20px;">
