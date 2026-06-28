@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Placeholder  kitchen before cleaning">
+  <defs>
+    <linearGradient id="wallBefore" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#9A8E7A"/>
+      <stop offset="100%" stop-color="#7A6F5E"/>
+    </linearGradient>
+    <linearGradient id="counterBefore" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6E6458"/>
+      <stop offset="100%" stop-color="#5A5248"/>
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.08"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#6B6256"/>
+  <rect width="1600" height="720" fill="url(#wallBefore)"/>
+
+  <!-- Upper cabinets -->
+  <g fill="#5C5348">
+    <rect x="80" y="70" width="420" height="170" rx="6"/>
+    <rect x="530" y="70" width="540" height="170" rx="6"/>
+    <rect x="1100" y="70" width="420" height="170" rx="6"/>
+    <rect x="95" y="95" width="180" height="120" rx="4" fill="#4A433B"/>
+    <rect x="300" y="95" width="180" height="120" rx="4" fill="#4A433B"/>
+    <rect x="545" y="95" width="250" height="120" rx="4" fill="#4A433B"/>
+    <rect x="820" y="95" width="230" height="120" rx="4" fill="#4A433B"/>
+    <rect x="1115" y="95" width="180" height="120" rx="4" fill="#4A433B"/>
+    <rect x="1320" y="95" width="180" height="120" rx="4" fill="#4A433B"/>
+  </g>
+
+  <!-- Window -->
+  <rect x="620" y="280" width="360" height="220" rx="8" fill="#8FA0A8" opacity="0.55"/>
+  <rect x="640" y="300" width="150" height="180" fill="#7A8C95" opacity="0.45"/>
+  <rect x="810" y="300" width="150" height="180" fill="#7A8C95" opacity="0.45"/>
+  <rect x="798" y="280" width="4" height="220" fill="#5C5348"/>
+  <rect x="620" y="388" width="360" height="4" fill="#5C5348"/>
+
+  <!-- Backsplash stains -->
+  <g opacity="0.55">
+    <ellipse cx="350" cy="560" rx="90" ry="45" fill="#4A4035"/>
+    <ellipse cx="1180" cy="540" rx="120" ry="55" fill="#4A4035"/>
+    <ellipse cx="800" cy="575" rx="70" ry="35" fill="#3E362E"/>
+  </g>
+  <rect x="80" y="520" width="1440" height="110" fill="#7A7164"/>
+
+  <!-- Counter -->
+  <rect x="60" y="620" width="1480" height="38" fill="url(#counterBefore)"/>
+  <rect x="60" y="658" width="1480" height="14" fill="#4E4740"/>
+
+  <!-- Clutter -->
+  <ellipse cx="220" cy="610" rx="95" ry="28" fill="#8B8175"/>
+  <rect x="150" y="565" width="140" height="55" rx="8" fill="#9A9084"/>
+  <rect x="170" y="575" width="45" height="35" rx="4" fill="#B5AFA6"/>
+  <rect x="225" y="580" width="55" height="30" rx="4" fill="#A89E92"/>
+  <circle cx="420" cy="600" r="42" fill="#7D756A"/>
+  <circle cx="420" cy="600" r="28" fill="#6A635A"/>
+  <rect x="500" y="575" width="180" height="48" rx="6" fill="#8A8074"/>
+  <rect x="520" y="585" width="140" height="12" rx="3" fill="#6E655B"/>
+  <rect x="520" y="605" width="100" height="10" rx="3" fill="#6E655B"/>
+
+  <!-- Sink with dishes -->
+  <rect x="760" y="575" width="280" height="52" rx="8" fill="#6E6760"/>
+  <rect x="780" y="590" width="240" height="30" rx="6" fill="#5A544E"/>
+  <circle cx="850" cy="585" r="22" fill="#9A9088"/>
+  <circle cx="920" cy="578" r="18" fill="#8E857C"/>
+  <rect x="980" y="568" width="40" height="50" rx="4" fill="#A09588"/>
+
+  <!-- Stovetop grime -->
+  <rect x="1180" y="565" width="260" height="58" rx="6" fill="#5E5750"/>
+  <circle cx="1240" cy="594" r="22" fill="#3E3832"/>
+  <circle cx="1310" cy="594" r="22" fill="#3E3832"/>
+  <circle cx="1380" cy="594" r="22" fill="#3E3832"/>
+  <circle cx="1240" cy="594" r="10" fill="#2A2622"/>
+  <circle cx="1310" cy="594" r="10" fill="#2A2622"/>
+  <circle cx="1380" cy="594" r="10" fill="#2A2622"/>
+
+  <!-- Lower cabinets -->
+  <g fill="#544D44">
+    <rect x="80" y="672" width="420" height="250" rx="6"/>
+    <rect x="530" y="672" width="540" height="250" rx="6"/>
+    <rect x="1100" y="672" width="420" height="250" rx="6"/>
+    <rect x="110" y="710" width="90" height="18" rx="3" fill="#D4AF37" opacity="0.35"/>
+    <rect x="560" y="710" width="90" height="18" rx="3" fill="#D4AF37" opacity="0.35"/>
+    <rect x="1130" y="710" width="90" height="18" rx="3" fill="#D4AF37" opacity="0.35"/>
+  </g>
+
+  <!-- Floor -->
+  <rect y="922" width="1600" height="78" fill="#4A433C"/>
+  <g opacity="0.25" stroke="#3A342E" stroke-width="2">
+    <line x1="0" y1="960" x2="1600" y2="960"/>
+    <line x1="200" y1="922" x2="200" y2="1000"/>
+    <line x1="400" y1="922" x2="400" y2="1000"/>
+    <line x1="600" y1="922" x2="600" y2="1000"/>
+    <line x1="800" y1="922" x2="800" y2="1000"/>
+    <line x1="1000" y1="922" x2="1000" y2="1000"/>
+    <line x1="1200" y1="922" x2="1200" y2="1000"/>
+    <line x1="1400" y1="922" x2="1400" y2="1000"/>
+  </g>
+
+  <rect width="1600" height="1000" filter="url(#grain)" opacity="0.35"/>
+  <rect width="1600" height="1000" fill="#000" opacity="0.12"/>
+
+  <g opacity="0.72">
+    <rect x="48" y="48" width="220" height="44" rx="22" fill="#0A0A0A"/>
+    <text x="158" y="78" text-anchor="middle" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="18" font-weight="700" letter-spacing="3">PLACEHOLDER</text>
+  </g>
+</svg>

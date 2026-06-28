@@ -723,7 +723,9 @@ html.js-ready [data-reveal][data-reveal-delay="5"] { transition-delay: .48s; }
 
 /* ---------- Before / After slider ---------- */
 .ba-slider { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--border); aspect-ratio: 16/10; user-select: none; cursor: ew-resize; background: var(--emerald-soft); }
-.ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ba-img.ba-dirty,
+.ba-img.ba-clean { object-position: center; }
 .ba-after-wrap { position: absolute; inset: 0; width: 50%; overflow: hidden; }
 .ba-after-wrap .ba-img { width: 200%; max-width: none; }
 .ba-label { position: absolute; top: 16px; padding: 6px 12px; border-radius: 999px; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; z-index: 3; }
@@ -1051,23 +1053,9 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
 }
 .card.card-premium:hover::before { opacity: 1; }
 
-/* Before / after visual placeholders */
-.ba-dirty {
-  background:
-    linear-gradient(160deg, rgba(60,50,40,.55) 0%, rgba(90,75,55,.4) 100%),
-    repeating-linear-gradient(-12deg, #8B7D6B 0 18px, #7A6E5C 18px 36px);
-  color: rgba(255,255,255,.75);
-  font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .12em;
-  display: flex; align-items: flex-end; justify-content: flex-start; padding: 20px;
-}
-.ba-clean {
-  background:
-    linear-gradient(160deg, rgba(10,10,10,.15) 0%, rgba(255,255,255,.95) 100%),
-    repeating-linear-gradient(12deg, var(--emerald-soft) 0 14px, var(--ivory) 14px 28px);
-  color: var(--emerald); font-family: 'JetBrains Mono', monospace;
-  font-size: .72rem; letter-spacing: .12em;
-  display: flex; align-items: flex-end; justify-content: flex-end; padding: 20px;
-}
+/* Before / after image fallbacks (placeholder SVGs in assets/) */
+.ba-dirty { background: #7A6F5E; }
+.ba-clean { background: #F8F6F2; }
 
 /* Enhanced page hero */
 .page-hero {
