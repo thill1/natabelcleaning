@@ -16,6 +16,7 @@ const VENDOR = `
   <script src="js/leads.js"></script>
   <script src="js/funnel.js"></script>
   <script src="js/ui.js"></script>
+  <script src="js/bubble-render.js"></script>
   <script src="js/bubbles.js"></script>
   <script src="js/page-hero.js"></script>
   <script src="js/main.js"></script>

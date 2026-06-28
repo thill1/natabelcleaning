@@ -1,39 +1,37 @@
 /* =========================================================================
-   NATABEL — Hero ambient atmosphere
-   Soft floating bubbles. Brand palette only.
+   NATABEL — Hero ambient suds
+   Realistic rising soap bubbles on the homepage hero canvas.
    ========================================================================= */
 (function () {
   'use strict';
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const R = window.NatabelBubbleRender;
 
   function bootHeroAmbient() {
-    if (reduce) return;
+    if (reduce || !R) return;
     const mount = document.querySelector('.hero-bg') || document.querySelector('.hero');
     if (!mount) return;
 
-    const canvas = document.createElement('canvas');
-    canvas.className = 'hero-ambient-canvas';
-    canvas.setAttribute('aria-hidden', 'true');
-    mount.appendChild(canvas);
+    let canvas = mount.querySelector('.hero-ambient-canvas, #heroAmbient, .natabel-bubble-canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.className = 'hero-ambient-canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      mount.appendChild(canvas);
+    }
+    if (canvas.dataset.heroSuds) return;
+    canvas.dataset.heroSuds = '1';
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const palette = [
-      { r: 212, g: 175, b: 55 },  /* gold */
-      { r: 255, g: 255, b: 255 },  /* white */
-      { r: 10, g: 10, b: 10 },     /* black */
-    ];
-
     let w = 0;
     let h = 0;
     let dpr = 1;
-    let particles = [];
-    let glints = [];
+    let bubbles = [];
     let raf = 0;
     let last = 0;
-    let nextGlintAt = 0;
 
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -45,77 +43,42 @@
       canvas.style.width = w + 'px';
       canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      seedParticles();
+      seedBubbles();
     }
 
-    function seedParticles() {
+    function seedBubbles() {
       const isMobile = w < 760;
-      const count = isMobile ? 6 : 11;
-      particles = [];
+      const count = isMobile ? 38 : 68;
+      bubbles = [];
       for (let i = 0; i < count; i++) {
-        const col = palette[i % 3];
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: 28 + Math.random() * (isMobile ? 40 : 72),
-          col,
-          alpha: 0.04 + Math.random() * 0.07,
-          vx: (Math.random() - 0.5) * 0.08,
-          vy: (Math.random() - 0.5) * 0.06,
-          phase: Math.random() * Math.PI * 2,
+        const b = R.makeBubble(i * 173 + 41, w, h, {
+          minTiny: 4,
+          maxTiny: 16,
+          minR: 10,
+          maxR: isMobile ? 40 : 48,
+          minLarge: 24,
+          maxLarge: isMobile ? 58 : 72,
+          density: 1,
+          clusterChance: 0.32,
         });
+        b.y = (i / count) * (h + 80) + b.r;
+        bubbles.push(b);
       }
     }
 
-    function spawnGlint(now) {
-      if (now < nextGlintAt) return;
-      nextGlintAt = now + 7000 + Math.random() * 9000;
-      if (glints.length > 2) return;
-      glints.push({
-        x: w * (0.15 + Math.random() * 0.7),
-        y: h * (0.12 + Math.random() * 0.55),
-        size: 6 + Math.random() * 14,
-        born: now,
-        life: 900 + Math.random() * 600,
-        rot: Math.random() * Math.PI,
-      });
-    }
-
-    function drawParticle(p, t) {
-      const pulse = 0.85 + Math.sin(t * 0.0004 + p.phase) * 0.15;
-      const r = p.r * pulse;
-      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
-      const { r: cr, g: cg, b: cb } = p.col;
-      g.addColorStop(0, `rgba(${cr},${cg},${cb},${p.alpha * 1.4})`);
-      g.addColorStop(0.45, `rgba(${cr},${cg},${cb},${p.alpha * 0.35})`);
-      g.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    function drawBubble(g, now) {
-      const age = now - g.born;
-      const p = Math.min(age / g.life, 1);
-      const fade = p < 0.15 ? p / 0.15 : p > 0.8 ? (1 - p) / 0.2 : 1;
-      const alpha = fade * 0.5;
-      const r = g.size * (0.5 + fade * 0.5);
-
-      ctx.save();
-      ctx.translate(g.x, g.y - p * 40);
-      ctx.strokeStyle = `rgba(212,175,55,${alpha})`;
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.arc(0, 0, r, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.fillStyle = `rgba(255,255,255,${alpha * 0.15})`;
-      ctx.fill();
-      ctx.fillStyle = `rgba(255,255,255,${alpha * 0.6})`;
-      ctx.beginPath();
-      ctx.ellipse(-r * 0.3, -r * 0.3, r * 0.22, r * 0.14, -0.4, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+    function respawn(b, i) {
+      Object.assign(b, R.makeBubble(i * 173 + (Date.now() % 8000), w, h, {
+        minTiny: 4,
+        maxTiny: 16,
+        minR: 10,
+        maxR: 48,
+        minLarge: 24,
+        maxLarge: 72,
+        density: 1,
+        clusterChance: 0.32,
+      }));
+      b.y = h + b.r + 10 + Math.random() * 40;
+      b.x = Math.random() * w;
     }
 
     function tick(now) {
@@ -124,20 +87,20 @@
       last = now;
 
       ctx.clearRect(0, 0, w, h);
-      spawnGlint(now);
 
-      particles.forEach(p => {
-        p.x += p.vx * dt;
-        p.y += p.vy * dt;
-        if (p.x < -p.r) p.x = w + p.r;
-        if (p.x > w + p.r) p.x = -p.r;
-        if (p.y < -p.r) p.y = h + p.r;
-        if (p.y > h + p.r) p.y = -p.r;
-        drawParticle(p, now);
+      bubbles.forEach((b, i) => {
+        R.stepBubble(b, dt);
+
+        if (b.y < -b.r * 4) respawn(b, i);
+
+        const drawAlpha = b.alpha * (0.65 + (b.y / h) * 0.35);
+
+        if (b.cluster) {
+          R.drawSudsCluster(ctx, b.x, b.y, b.r, { alpha: drawAlpha, seed: b.seed });
+        } else {
+          R.drawSoapBubble(ctx, b.x, b.y, b.r, { alpha: drawAlpha, seed: b.seed, rim: 1.05 });
+        }
       });
-
-      glints = glints.filter(g => now - g.born < g.life);
-      glints.forEach(g => drawBubble(g, now));
 
       raf = requestAnimationFrame(tick);
     }
@@ -145,9 +108,7 @@
     resize();
     raf = requestAnimationFrame(tick);
 
-    const ro = typeof ResizeObserver !== 'undefined'
-      ? new ResizeObserver(resize)
-      : null;
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
     if (ro) ro.observe(mount);
     else window.addEventListener('resize', resize, { passive: true });
 
