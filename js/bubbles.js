@@ -34,13 +34,34 @@
     return img;
   }
 
+  const BLACK_SURFACE_SEL =
+    '.section-dark, .cta-banner, .visual-panel.emerald, .bg-emerald, .path-card-dark, .site-footer, .side-cta';
+
+  function isBlackSurface(el) {
+    return el.matches(BLACK_SURFACE_SEL) || !!el.closest(BLACK_SURFACE_SEL);
+  }
+
+  function heroMatchedBubbleOpts(mobile) {
+    return {
+      count: mobile ? 64 : 68,
+      minTiny: 3,
+      maxTiny: mobile ? 18 : 16,
+      minR: mobile ? 8 : 10,
+      maxR: mobile ? 44 : 48,
+      minLarge: mobile ? 20 : 24,
+      maxLarge: mobile ? 62 : 72,
+      density: mobile ? 1.15 : 1,
+      clusterChance: mobile ? 0.44 : 0.32,
+    };
+  }
+
   /* ---------- 1. Section accent suds (static sprites, gentle float) ---------- */
   function placeSectionBubbles() {
     const targets = document.querySelectorAll(
-      '.section-head, .cta-banner, .page-hero-copy, .trust-ribbon, .funnel-card .funnel-progress, .form-head, .split, .grid-4, .section-gold'
+      '.section-head, .page-hero-copy, .trust-ribbon, .funnel-card .funnel-progress, .form-head, .split, .grid-4, .section-gold'
     );
     targets.forEach((scope, ti) => {
-      if (scope.querySelector('.natabel-bubble')) return;
+      if (scope.querySelector('.natabel-bubble') || isBlackSurface(scope)) return;
       const isCopy = scope.classList.contains('page-hero-copy');
       const mobile = isMobileViewport();
       const count = isCopy ? (mobile ? 5 : 3) : (mobile ? 7 : 4);
@@ -69,10 +90,15 @@
   function mountCanvasFields() {
     if (reduce) return;
     const mobile = isMobileViewport();
-    document.querySelectorAll('.page-hero, .section-dark').forEach(mount => {
-      const isDark = mount.classList.contains('section-dark');
+    const heroOpts = heroMatchedBubbleOpts(mobile);
+
+    document.querySelectorAll(BLACK_SURFACE_SEL).forEach(mount => {
+      R.mountBubbleField(mount, heroOpts);
+    });
+
+    document.querySelectorAll('.page-hero').forEach(mount => {
       R.mountBubbleField(mount, {
-        count: isDark ? (mobile ? 38 : 28) : (mobile ? 30 : 22),
+        count: mobile ? 30 : 22,
         minTiny: 3,
         maxTiny: mobile ? 14 : 12,
         minR: 8,
@@ -147,10 +173,10 @@
     bootCursorBubbles();
     bootCTABubbles();
     setTimeout(() => { placeSectionBubbles(); mountCanvasFields(); bootCTABubbles(); }, 400);
-    window.addEventListener('load', () => { placeSectionBubbles(); bootCTABubbles(); });
+    window.addEventListener('load', () => { placeSectionBubbles(); mountCanvasFields(); bootCTABubbles(); });
   }
 
-  window.NatabelBubbles = { boot, placeSectionBubbles, bootCTABubbles };
+  window.NatabelBubbles = { boot, placeSectionBubbles, mountCanvasFields, bootCTABubbles };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();

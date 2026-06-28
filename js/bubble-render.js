@@ -172,7 +172,8 @@
     const canvas = document.createElement('canvas');
     canvas.className = 'natabel-bubble-canvas';
     canvas.setAttribute('aria-hidden', 'true');
-    mount.appendChild(canvas);
+    if (mount.firstChild) mount.insertBefore(canvas, mount.firstChild);
+    else mount.appendChild(canvas);
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
