@@ -12,6 +12,11 @@
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const mobileMq = window.matchMedia('(max-width: 759px)');
+
+  function isMobileViewport() {
+    return mobileMq.matches;
+  }
 
   function el(tag, cls) {
     const e = document.createElement(tag);
@@ -37,13 +42,16 @@
     targets.forEach((scope, ti) => {
       if (scope.querySelector('.natabel-bubble')) return;
       const isCopy = scope.classList.contains('page-hero-copy');
-      const count = isCopy ? 3 : 4;
+      const mobile = isMobileViewport();
+      const count = isCopy ? (mobile ? 5 : 3) : (mobile ? 7 : 4);
       for (let i = 0; i < count; i++) {
         const bubble = el('span', 'natabel-bubble');
         const sx = isCopy ? (2 + Math.random() * 16) : (4 + Math.random() * 90);
         const sy = isCopy ? (4 + Math.random() * 12) : (6 + Math.random() * 82);
-        const size = Math.random() > 0.4 ? 36 + Math.floor(Math.random() * 28) : 22 + Math.floor(Math.random() * 14);
-        const cluster = Math.random() > 0.55;
+        const size = mobile
+          ? (Math.random() > 0.35 ? 28 + Math.floor(Math.random() * 24) : 18 + Math.floor(Math.random() * 12))
+          : (Math.random() > 0.4 ? 36 + Math.floor(Math.random() * 28) : 22 + Math.floor(Math.random() * 14));
+        const cluster = Math.random() > (mobile ? 0.45 : 0.55);
         bubble.appendChild(bubbleImg(size, { seed: ti * 100 + i * 17, cluster, alpha: 0.88 }));
         bubble.style.setProperty('--bx', sx + '%');
         bubble.style.setProperty('--by', sy + '%');
@@ -60,16 +68,19 @@
   /* ---------- 2. Canvas suds fields — hero handled by hero-ambient.js ---------- */
   function mountCanvasFields() {
     if (reduce) return;
+    const mobile = isMobileViewport();
     document.querySelectorAll('.page-hero, .section-dark').forEach(mount => {
+      const isDark = mount.classList.contains('section-dark');
       R.mountBubbleField(mount, {
-        count: mount.classList.contains('section-dark') ? 28 : 22,
+        count: isDark ? (mobile ? 38 : 28) : (mobile ? 30 : 22),
         minTiny: 3,
-        maxTiny: 12,
+        maxTiny: mobile ? 14 : 12,
         minR: 8,
-        maxR: 38,
+        maxR: mobile ? 42 : 38,
         minLarge: 20,
-        maxLarge: 58,
-        clusterChance: 0.34,
+        maxLarge: mobile ? 62 : 58,
+        clusterChance: mobile ? 0.4 : 0.34,
+        density: mobile ? 1.1 : 1,
       });
     });
   }

@@ -32,7 +32,7 @@
     <div class="container container-wide">
       <div class="bar">
         <a href="index.html" class="brand brand-logo-link" aria-label="${B.name} — home">
-          <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo" width="220" height="106" />
+          <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-header" width="240" height="115" />
         </a>
         <nav class="nav" aria-label="Primary">${NAV.map(navLink).join('')}</nav>
         <div class="header-cta">
@@ -53,7 +53,7 @@
   <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
     <div class="mm-header">
       <a href="index.html" class="brand brand-logo-link">
-        <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-sm" width="200" height="96" />
+        <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-sm" width="220" height="106" />
       </a>
       <button class="menu-toggle mm-close" aria-label="Close menu"><i data-lucide="x"></i></button>
     </div>
@@ -107,6 +107,9 @@
   const trustRibbon = `
   <section class="trust-ribbon" aria-label="Trust indicators">
     <div class="container container-wide">
+      <div class="trust-ribbon-brand">
+        <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-trust" width="220" height="106" />
+      </div>
       <div class="trust-ribbon-grid">
         <div class="tr-item"><span class="tr-num"><span data-rating>${R.googleRating}</span>★</span><span class="tr-lbl">Google rating · <span data-review-count>${R.reviewCount}</span>+ reviews</span></div>
         <div class="tr-item"><span class="tr-num" data-clients>${R.clientsServed}</span><span class="tr-lbl">Clients served across Sacramento</span></div>
@@ -123,7 +126,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="brand brand-logo-link" style="margin-bottom:16px;">
-            <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-footer" width="240" height="115" />
+            <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-footer" width="280" height="134" />
           </a>
           <p style="color:rgba(247,243,235,.62);font-size:.92rem;max-width:40ch;">${B.description}</p>
           <div class="footer-social" style="margin-top:20px;">

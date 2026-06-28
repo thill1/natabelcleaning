@@ -200,19 +200,21 @@
 
     function seedField() {
       const isMobile = w < 760;
-      const base = opts.count || (isMobile ? 32 : 56);
-      const count = Math.floor(base * (w / 1100 + 0.55));
+      const base = opts.count || (isMobile ? 46 : 56);
+      const count = isMobile
+        ? Math.floor(base * 1.3)
+        : Math.floor(base * (w / 1100 + 0.55));
       bubbles = [];
       for (let i = 0; i < count; i++) {
         const b = makeBubble(i * 131 + 17, w, h, {
           minTiny: 3,
-          maxTiny: 14,
-          minR: 8,
-          maxR: isMobile ? 36 : 44,
-          minLarge: 22,
-          maxLarge: isMobile ? 52 : 68,
-          density: opts.density || 1,
-          clusterChance: opts.clusterChance || 0.3,
+          maxTiny: isMobile ? 16 : 14,
+          minR: isMobile ? 6 : 8,
+          maxR: isMobile ? 40 : 44,
+          minLarge: isMobile ? 18 : 22,
+          maxLarge: isMobile ? 56 : 68,
+          density: isMobile ? 1.12 : (opts.density || 1),
+          clusterChance: isMobile ? 0.42 : (opts.clusterChance || 0.3),
         });
         b.y = rand(b.seed + 2) * h;
         bubbles.push(b);

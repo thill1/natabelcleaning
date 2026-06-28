@@ -225,10 +225,13 @@ button { font-family: inherit; cursor: pointer; }
   width: auto;
   flex-shrink: 0;
 }
-.brand-logo-sm { height: 38px; }
-.brand-logo-footer { height: clamp(44px, 5vw, 52px); }
+.brand-logo-header { height: 46px; }
+.brand-logo-sm { height: 42px; }
+.brand-logo-footer { height: clamp(52px, 7vw, 68px); }
+.brand-logo-trust { height: clamp(40px, 5vw, 52px); width: auto; margin: 0 auto; display: block; }
 @media (min-width: 720px) {
-  .site-header .brand-logo { height: 48px; }
+  .site-header .brand-logo-header { height: 56px; }
+  .brand-logo-sm { height: 46px; }
 }
 .brand-mark { width: 44px; height: 44px; flex-shrink: 0; filter: drop-shadow(0 4px 8px rgba(10,10,10,.15)); }
 .brand-name { font-family: 'DM Serif Display', serif; font-weight: 600; font-size: 1.28rem; color: var(--ink); letter-spacing: -.02em; line-height: 1.05; }
@@ -312,6 +315,8 @@ body { padding-bottom: 84px; }
 }
 @media (max-width: 719px){
   .hero-v2 .hero-inner { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .hero-logo-featured { text-align: center; }
+  .hero-logo-img { width: min(94%, 320px); margin: 0 auto; }
 }
 @media (min-width: 1020px){
   .hero-v2 .hero-inner {
@@ -321,6 +326,13 @@ body { padding-bottom: 84px; }
 }
 
 /* Copy column */
+.hero-logo-featured { margin-bottom: clamp(20px, 4vw, 36px); }
+.hero-logo-link { display: inline-block; text-decoration: none; line-height: 0; }
+.hero-logo-img {
+  display: block;
+  width: min(100%, 380px);
+  height: auto;
+}
 .hero-kicker { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
 .pill-hero { background: rgba(212,175,55,.12); backdrop-filter: blur(8px); border-color: rgba(212,175,55,.35); color: var(--ivory); }
 .hero-kicker-tag { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--brass-bright); }
@@ -720,6 +732,12 @@ html.js-ready [data-reveal][data-reveal-delay="5"] { transition-delay: .48s; }
 .cta-banner::before,
 .cta-banner::after { display: none; }
 .cta-banner > * { position: relative; z-index: 1; }
+.cta-banner-logo { margin-bottom: clamp(20px, 3vw, 28px); }
+.cta-banner-logo-img {
+  display: block;
+  width: min(100%, 260px);
+  height: auto;
+}
 .cta-banner h2 { color: var(--ivory); }
 .cta-banner p { color: rgba(255,255,255,.85); }
 .cta-banner .btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
@@ -940,6 +958,11 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
   border-bottom: 1px solid var(--border);
   padding: 28px 0;
 }
+.trust-ribbon-brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 .trust-ribbon-grid {
   display: grid; gap: 20px;
   grid-template-columns: repeat(2, 1fr);
@@ -1029,6 +1052,12 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
   align-items: center;
 }
 .page-hero-copy { min-width: 0; }
+.page-hero-logo { margin-bottom: clamp(16px, 3vw, 24px); }
+.page-hero-logo-img {
+  display: block;
+  width: min(100%, 280px);
+  height: auto;
+}
 .page-hero-media {
   margin: 0;
   border-radius: var(--radius-xl);
@@ -1115,6 +1144,14 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
 }
 .hero-copy .natabel-bubble, .page-hero-copy .natabel-bubble { max-width: 52px; }
 .cta-banner .natabel-bubble { max-width: 44px; opacity: 0.85; }
+@media (max-width: 759px) {
+  .natabel-bubble {
+    animation-duration: 8.5s;
+    filter: drop-shadow(0 2px 6px rgba(255,255,255,.14));
+  }
+  .page-hero-copy .natabel-bubble,
+  .cta-banner .natabel-bubble { max-width: 46px; }
+}
 
 /* Cursor suds trail */
 .natabel-trail-bubble {

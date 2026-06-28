@@ -77,4 +77,13 @@
       }
     });
   });
+
+  /* ---------- CTA banners: feature brand logo ---------- */
+  document.querySelectorAll('.cta-banner').forEach(banner => {
+    if (banner.querySelector('.cta-banner-logo')) return;
+    const logo = document.createElement('div');
+    logo.className = 'cta-banner-logo';
+    logo.innerHTML = `<img src="assets/logo-wordmark.png" alt="${B.name}" class="cta-banner-logo-img" width="240" height="115" />`;
+    banner.insertBefore(logo, banner.firstChild);
+  });
 })();

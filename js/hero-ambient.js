@@ -48,18 +48,18 @@
 
     function seedBubbles() {
       const isMobile = w < 760;
-      const count = isMobile ? 38 : 68;
+      const count = isMobile ? 64 : 68;
       bubbles = [];
       for (let i = 0; i < count; i++) {
         const b = R.makeBubble(i * 173 + 41, w, h, {
-          minTiny: 4,
-          maxTiny: 16,
-          minR: 10,
-          maxR: isMobile ? 40 : 48,
-          minLarge: 24,
-          maxLarge: isMobile ? 58 : 72,
-          density: 1,
-          clusterChance: 0.32,
+          minTiny: 3,
+          maxTiny: isMobile ? 18 : 16,
+          minR: isMobile ? 8 : 10,
+          maxR: isMobile ? 44 : 48,
+          minLarge: isMobile ? 20 : 24,
+          maxLarge: isMobile ? 62 : 72,
+          density: isMobile ? 1.15 : 1,
+          clusterChance: isMobile ? 0.44 : 0.32,
         });
         b.y = (i / count) * (h + 80) + b.r;
         b.pop = b.y > h * 0.82 ? 0 : 1;
@@ -68,15 +68,16 @@
     }
 
     function respawn(b, i) {
+      const isMobile = w < 760;
       Object.assign(b, R.makeBubble(i * 173 + (Date.now() % 8000), w, h, {
-        minTiny: 4,
-        maxTiny: 16,
-        minR: 10,
-        maxR: 48,
-        minLarge: 24,
-        maxLarge: 72,
-        density: 1,
-        clusterChance: 0.32,
+        minTiny: 3,
+        maxTiny: isMobile ? 18 : 16,
+        minR: isMobile ? 8 : 10,
+        maxR: isMobile ? 44 : 48,
+        minLarge: isMobile ? 20 : 24,
+        maxLarge: isMobile ? 62 : 72,
+        density: isMobile ? 1.15 : 1,
+        clusterChance: isMobile ? 0.44 : 0.32,
       }));
       b.y = h + b.r + 10 + Math.random() * 40;
       b.x = Math.random() * w;

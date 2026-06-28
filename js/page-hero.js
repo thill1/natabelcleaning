@@ -67,6 +67,13 @@
       inner.appendChild(copy);
     }
 
+    if (!copy.querySelector('.page-hero-logo')) {
+      const logoWrap = document.createElement('div');
+      logoWrap.className = 'page-hero-logo';
+      logoWrap.innerHTML = `<img src="assets/logo-wordmark.png" alt="${window.PCC.business.name}" class="page-hero-logo-img" width="280" height="134" />`;
+      copy.insertBefore(logoWrap, copy.firstChild);
+    }
+
     if (!inner.querySelector('.page-hero-media')) {
       const fig = document.createElement('figure');
       fig.className = 'page-hero-media reveal d1';
