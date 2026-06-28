@@ -722,8 +722,8 @@ html.js-ready [data-reveal][data-reveal-delay="5"] { transition-delay: .48s; }
 .review-author small { color: var(--muted); font-size: .78rem; }
 
 /* ---------- Before / After slider ---------- */
-.ba-slider { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--border); aspect-ratio: 16/10; user-select: none; cursor: ew-resize; background: var(--emerald-soft); }
-.ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ba-slider { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--border); aspect-ratio: 16/10; min-height: 280px; user-select: none; cursor: ew-resize; background: var(--emerald-soft); }
+.ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
 .ba-img.ba-dirty,
 .ba-img.ba-clean { object-position: center; }
 .ba-after-wrap { position: absolute; inset: 0; width: 50%; overflow: hidden; }
