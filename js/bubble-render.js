@@ -33,66 +33,34 @@
 
     ctx.save();
 
-    /* Soap film body — nearly transparent with faint cool tint */
-    const body = ctx.createRadialGradient(x - r * 0.28, y - r * 0.32, r * 0.05, x, y, r);
-    body.addColorStop(0, `rgba(255,255,255,${0.04 * alpha})`);
-    body.addColorStop(0.45, `rgba(230,245,255,${0.025 * alpha})`);
-    body.addColorStop(0.82, `rgba(255,250,240,${0.035 * alpha})`);
-    body.addColorStop(1, `rgba(255,255,255,${0.08 * alpha})`);
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = body;
-    ctx.fill();
+    /* No body fill — avoids soft orb glow when bubbles overlap on black */
 
-    /* Iridescent rim — soap film (no gold wash) */
-    const iridescence = [
-      [`rgba(255,180,210,${0.42 * alpha * rimBoost})`, -0.8, 0.6],
-      [`rgba(170,220,255,${0.38 * alpha * rimBoost})`, 0.4, 1.4],
-      [`rgba(200,255,230,${0.3 * alpha * rimBoost})`, 1.8, 2.8],
-      [`rgba(255,255,255,${0.22 * alpha * rimBoost})`, 3.2, 4.2],
-    ];
-    iridescence.forEach(([color, a0, a1], i) => {
-      ctx.beginPath();
-      ctx.arc(x, y, r - 0.5, a0 + i * 0.02, a1 + i * 0.02);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = Math.max(0.6, r * 0.07);
-      ctx.lineCap = 'round';
-      ctx.stroke();
-    });
-
-    /* Crisp outer edge — soap membrane */
+    /* Thin white soap rim — no fill, no colored wash */
     ctx.beginPath();
-    ctx.arc(x, y, r - 0.3, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255,255,255,${0.72 * alpha * rimBoost})`;
-    ctx.lineWidth = Math.max(0.45, r * 0.035);
+    ctx.arc(x, y, r - 0.45, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(255,255,255,${0.82 * alpha * rimBoost})`;
+    ctx.lineWidth = Math.max(0.35, r * 0.028);
     ctx.stroke();
 
-    /* Inner bottom reflection (light passing through) */
-    const caustic = ctx.createRadialGradient(x + r * 0.15, y + r * 0.42, 0, x + r * 0.15, y + r * 0.42, r * 0.35);
-    caustic.addColorStop(0, `rgba(255,255,255,${0.35 * alpha})`);
-    caustic.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = caustic;
+    /* Faint inner arc — specular edge only */
     ctx.beginPath();
-    ctx.ellipse(x + r * 0.12, y + r * 0.38, r * 0.28, r * 0.14, 0.35, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.arc(x, y, r - 0.75, -1.1, 0.6);
+    ctx.strokeStyle = `rgba(255,255,255,${0.28 * alpha * rimBoost})`;
+    ctx.lineWidth = Math.max(0.3, r * 0.02);
+    ctx.lineCap = 'round';
+    ctx.stroke();
 
-    /* Primary specular highlight — upper left */
-    ctx.fillStyle = `rgba(255,255,255,${0.92 * alpha})`;
+    /* Specular highlight — upper left */
+    ctx.fillStyle = `rgba(255,255,255,${0.88 * alpha})`;
     ctx.beginPath();
-    ctx.ellipse(x - r * 0.32, y - r * 0.36, r * 0.2, r * 0.11, -0.55, 0, Math.PI * 2);
+    ctx.ellipse(x - r * 0.32, y - r * 0.36, r * 0.18, r * 0.1, -0.55, 0, Math.PI * 2);
     ctx.fill();
 
     /* Secondary highlight */
-    ctx.fillStyle = `rgba(255,255,255,${0.55 * alpha})`;
-    ctx.beginPath();
-    ctx.ellipse(x + r * 0.18, y - r * 0.48, r * 0.07, r * 0.04, -0.25, 0, Math.PI * 2);
-    ctx.fill();
-
-    /* Tiny catch-light dot */
-    if (r > 6) {
-      ctx.fillStyle = `rgba(255,255,255,${0.75 * alpha})`;
+    if (r > 8) {
+      ctx.fillStyle = `rgba(255,255,255,${0.45 * alpha})`;
       ctx.beginPath();
-      ctx.arc(x - r * 0.18, y - r * 0.22, Math.max(0.8, r * 0.04), 0, Math.PI * 2);
+      ctx.ellipse(x + r * 0.16, y - r * 0.46, r * 0.06, r * 0.035, -0.25, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -170,17 +138,31 @@
       wobbleAmp: 0.6 + rand(seed + 7) * 2.8,
       wobbleSpeed: 0.0004 + rand(seed + 8) * 0.0035,
       swayAmp: 0.2 + rand(seed + 15) * 1.4,
-      alpha: 0.38 + rand(seed + 9) * 0.5,
+      alpha: 0.5 + rand(seed + 9) * 0.45,
       seed,
+      pop: 0,
+      popSpeed: 0.002 + rand(seed + 16) * 0.004,
     };
   }
 
   function stepBubble(b, dt) {
+    if (b.pop < 1) b.pop = Math.min(1, b.pop + b.popSpeed * dt);
     b.wobblePhase += b.wobbleSpeed * dt;
     b.x += b.vx * dt
       + Math.sin(b.wobblePhase) * b.wobbleAmp * 0.045 * dt
       + Math.cos(b.wobblePhase * 0.67 + b.phase2) * b.swayAmp * 0.022 * dt;
     b.y += b.vy * dt + Math.sin(b.wobblePhase * 1.35 + b.phase2) * 0.018 * dt;
+  }
+
+  function drawBubble(ctx, b, drawAlpha) {
+    const popEase = b.pop < 1 ? 0.3 + 0.7 * (1 - Math.pow(1 - b.pop, 3)) : 1;
+    const r = b.r * popEase;
+    const a = drawAlpha * Math.min(1, b.pop * 1.4);
+    if (b.cluster) {
+      drawSudsCluster(ctx, b.x, b.y, r, { alpha: a, seed: b.seed });
+    } else {
+      drawSoapBubble(ctx, b.x, b.y, r, { alpha: a, seed: b.seed });
+    }
   }
 
   function mountBubbleField(mount, options) {
@@ -250,6 +232,7 @@
       }));
       b.y = h + b.r + rand(b.seed) * 60;
       b.x = rand(b.seed + 11) * w;
+      b.pop = 0;
     }
 
     function tick(now) {
@@ -265,13 +248,8 @@
         if (b.y < -b.r * 3) respawn(b, i);
 
         const edgeFade = Math.min(1, Math.min(b.y / (h * 0.12), (h - b.y) / (h * 0.08)) || 1);
-        const drawAlpha = b.alpha * Math.max(0.2, edgeFade);
-
-        if (b.cluster) {
-          drawSudsCluster(ctx, b.x, b.y, b.r, { alpha: drawAlpha, seed: b.seed });
-        } else {
-          drawSoapBubble(ctx, b.x, b.y, b.r, { alpha: drawAlpha, seed: b.seed });
-        }
+        const drawAlpha = b.alpha * Math.max(0.25, edgeFade);
+        drawBubble(ctx, b, drawAlpha);
       });
 
       raf = requestAnimationFrame(tick);
@@ -303,6 +281,7 @@
     createSprite,
     makeBubble,
     stepBubble,
+    drawBubble,
     mountBubbleField,
   };
 })();

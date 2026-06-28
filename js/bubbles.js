@@ -32,11 +32,11 @@
   /* ---------- 1. Section accent suds (static sprites, gentle float) ---------- */
   function placeSectionBubbles() {
     const targets = document.querySelectorAll(
-      '.section-head, .cta-banner, .page-hero-copy, .hero-copy, .trust-ribbon, .funnel-card .funnel-progress, .form-head, .split, .grid-4, .section-dark, .section-gold'
+      '.section-head, .cta-banner, .page-hero-copy, .trust-ribbon, .funnel-card .funnel-progress, .form-head, .split, .grid-4, .section-gold'
     );
     targets.forEach((scope, ti) => {
       if (scope.querySelector('.natabel-bubble')) return;
-      const isCopy = scope.classList.contains('page-hero-copy') || scope.classList.contains('hero-copy');
+      const isCopy = scope.classList.contains('page-hero-copy');
       const count = isCopy ? 3 : 4;
       for (let i = 0; i < count; i++) {
         const bubble = el('span', 'natabel-bubble');

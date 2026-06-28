@@ -222,7 +222,6 @@
   /* ---------- 7. Hero scene parallax & shine ---------- */
   function bootHeroStage() {
     const scene = document.getElementById('heroScene');
-    const shine = document.getElementById('heroShine');
     if (!scene || reduce) return;
 
     if (canHover) {
@@ -231,16 +230,9 @@
         const px = (e.clientX - r.left) / r.width - 0.5;
         const py = (e.clientY - r.top) / r.height - 0.5;
         scene.style.transform = `rotateY(${px * 4}deg) rotateX(${-py * 3}deg)`;
-        if (shine) {
-          const sx = ((e.clientX - r.left) / r.width) * 100;
-          const sy = ((e.clientY - r.top) / r.height) * 100;
-          shine.style.background = `radial-gradient(circle 280px at ${sx}% ${sy}%, rgba(255,255,255,.4), transparent 65%)`;
-          shine.style.opacity = '1';
-        }
       }, { passive: true });
       scene.addEventListener('mouseleave', () => {
         scene.style.transform = '';
-        if (shine) shine.style.opacity = '';
       });
     }
 

@@ -62,6 +62,7 @@
           clusterChance: 0.32,
         });
         b.y = (i / count) * (h + 80) + b.r;
+        b.pop = b.y > h * 0.82 ? 0 : 1;
         bubbles.push(b);
       }
     }
@@ -79,6 +80,7 @@
       }));
       b.y = h + b.r + 10 + Math.random() * 40;
       b.x = Math.random() * w;
+      b.pop = 0;
     }
 
     function tick(now) {
@@ -86,7 +88,8 @@
       const dt = Math.min(now - last, 32);
       last = now;
 
-      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, w, h);
 
       bubbles.forEach((b, i) => {
         R.stepBubble(b, dt);
@@ -94,12 +97,7 @@
         if (b.y < -b.r * 4) respawn(b, i);
 
         const drawAlpha = b.alpha * (0.65 + (b.y / h) * 0.35);
-
-        if (b.cluster) {
-          R.drawSudsCluster(ctx, b.x, b.y, b.r, { alpha: drawAlpha, seed: b.seed });
-        } else {
-          R.drawSoapBubble(ctx, b.x, b.y, b.r, { alpha: drawAlpha, seed: b.seed, rim: 1.05 });
-        }
+        R.drawBubble(ctx, b, drawAlpha);
       });
 
       raf = requestAnimationFrame(tick);
