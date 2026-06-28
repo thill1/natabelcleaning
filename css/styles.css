@@ -770,7 +770,7 @@ html.js-ready [data-reveal][data-reveal-delay="5"] { transition-delay: .48s; }
 .cta-banner { position: relative; overflow: hidden; background: #000000; border-radius: var(--radius-xl); padding: clamp(56px, 8vw, 96px); color: var(--ivory); box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,.08); }
 .cta-banner::before,
 .cta-banner::after { display: none; }
-.cta-banner > * { position: relative; z-index: 2; }
+.cta-banner > *:not(.natabel-bubble-canvas) { position: relative; z-index: 2; }
 .cta-banner-logo { margin-bottom: clamp(20px, 3vw, 28px); }
 .cta-banner-logo-img {
   display: block;
@@ -1140,13 +1140,17 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
    REALISTIC SUDS BUBBLE SYSTEM — canvas + sprite accents
    ========================================================================= */
 .natabel-bubble-canvas {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  pointer-events: none; z-index: 1;
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .section-dark .container,
 .bg-emerald .container,
-.path-card-dark > * {
+.path-card-dark > *:not(.natabel-bubble-canvas) {
   position: relative;
   z-index: 2;
 }
