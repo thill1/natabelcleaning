@@ -10,11 +10,10 @@ window.PCC = {
     name:     'Natabel Pristine Cleaning',
     legalName:'Natabel Pristine Cleaning',
     founder:  'Fatima Patalano',
-    tagline:  'Pristine Clean \u00b7 Sacramento',
+    tagline:  'Premium Cleaning \u00b7 Sacramento',
     description:
-      'Natabel Pristine Cleaning is Sacramento\u2019s premium residential and commercial cleaning company. ' +
-      'Founder-led by Fatima Patalano, we deliver meticulous house cleaning, deep cleaning, recurring office cleaning, ' +
-      'janitorial service, and move-in/move-out cleaning across Sacramento and surrounding communities.',
+      'Natabel Pristine Cleaning delivers luxury residential and commercial cleaning across Sacramento. ' +
+      'Founder-led by Fatima Patalano, we bring meticulous standards, vetted teams, and a pristine finish to every home, office, and facility we serve.',
     phone:          '(916) 555-0148',
     phoneHref:      'tel:+19165550148',
     email:          'hello@natabelcleaning.com',

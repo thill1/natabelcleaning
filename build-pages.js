@@ -16,7 +16,7 @@ const VENDOR = `
   <script src="js/leads.js"></script>
   <script src="js/funnel.js"></script>
   <script src="js/ui.js"></script>
-  <script src="js/sparkles.js"></script>
+  <script src="js/bubbles.js"></script>
   <script src="js/page-hero.js"></script>
   <script src="js/main.js"></script>
   <script src="js/motion.js" defer></script>`;
@@ -61,7 +61,7 @@ const FOOT = (schema) => `
 </html>`;
 
 /* Shared section builders */
-const cta = (h1Italic, body, primary, secondary, primaryHref, secondaryHref, primaryIcon='sparkles', secondaryIcon='phone') => `
+const cta = (h1Italic, body, primary, secondary, primaryHref, secondaryHref, primaryIcon='droplets', secondaryIcon='phone') => `
     <section class="section">
       <div class="container">
         <div class="cta-banner reveal">
@@ -203,7 +203,7 @@ pages.push({
         <h1 class="reveal">Office cleaning<br /><span class="serif-italic">in Sacramento.</span></h1>
         <p class="lead reveal">Daily, weekly, biweekly, or nightly office cleaning with consistent crews and detailed checklists. Your staff and clients walk into a spotless, healthy workspace — every single day.</p>
         <div class="hero-ctas reveal">
-          <a href="free-estimate.html?service=commercial" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Free Office Quote</a>
+          <a href="free-estimate.html?service=commercial" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="droplets"></i> Get a Free Office Quote</a>
           <a href="commercial.html" class="btn btn-outline btn-lg">Full Commercial Services</a>
         </div>
       </div>
@@ -256,7 +256,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Get your free<br /><span class="serif-italic" style="color:var(--brass-bright);">office cleaning quote.</span>', 'Tell us about your office and we\'ll build a custom quote — usually within one business hour.', 'Get Free Office Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19165550148', 'sparkles', 'phone')}`
+    ${cta('Get your free<br /><span class="serif-italic" style="color:var(--brass-bright);">office cleaning quote.</span>', 'Tell us about your office and we\'ll build a custom quote — usually within one business hour.', 'Get Free Office Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19165550148', 'droplets', 'phone')}`
 });
 
 /* ============ JANITORIAL ============ */
@@ -275,7 +275,7 @@ pages.push({
         <h1 class="reveal">Janitorial services<br /><span class="serif-italic">in Sacramento.</span></h1>
         <p class="lead reveal">Contracted janitorial service for offices, medical facilities, retail, and commercial buildings. Full-scope cleaning — restrooms, floors, trash, dusting, sanitization — on a schedule that fits your facility.</p>
         <div class="hero-ctas reveal">
-          <a href="free-estimate.html?service=commercial" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Request a Janitorial Quote</a>
+          <a href="free-estimate.html?service=commercial" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="droplets"></i> Request a Janitorial Quote</a>
           <a href="commercial.html" class="btn btn-outline btn-lg">All Commercial Services</a>
         </div>
       </div>
@@ -330,7 +330,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Need reliable<br /><span class="serif-italic" style="color:var(--brass-bright);">janitorial service?</span>', 'Get a contracted janitorial quote tailored to your facility — usually within one business hour.', 'Get Janitorial Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19165550148', 'sparkles', 'phone')}`
+    ${cta('Need reliable<br /><span class="serif-italic" style="color:var(--brass-bright);">janitorial service?</span>', 'Get a contracted janitorial quote tailored to your facility — usually within one business hour.', 'Get Janitorial Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19165550148', 'droplets', 'phone')}`
 });
 
 /* ============ RESIDENTIAL ============ */
@@ -396,7 +396,7 @@ pages.push({
         </div>
         <div class="grid-4">
           <div class="card reveal"><div class="card-icon"><i data-lucide="home"></i></div><h3>Standard Cleaning</h3><p>Regular maintenance cleaning — kitchens, baths, living areas, floors.</p><div class="card-links"><a href="book-online.html">Book →</a></div></div>
-          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="sparkles"></i></div><h3>Deep Cleaning</h3><p>Top-to-bottom detail — baseboards, blinds, inside appliances, fans.</p><div class="card-links"><a href="deep-cleaning.html">Learn more →</a></div></div>
+          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="droplets"></i></div><h3>Deep Cleaning</h3><p>Top-to-bottom detail — baseboards, blinds, inside appliances, fans.</p><div class="card-links"><a href="deep-cleaning.html">Learn more →</a></div></div>
           <div class="card reveal d2"><div class="card-icon"><i data-lucide="repeat"></i></div><h3>Recurring Plans</h3><p>Weekly, biweekly, or monthly — same team, locked rate.</p><div class="card-links"><a href="recurring-cleaning.html">Plans →</a></div></div>
           <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="move-3d"></i></div><h3>Move-In / Move-Out</h3><p>Get your deposit back or start fresh in a spotless space.</p><div class="card-links"><a href="move-in-out.html">Learn more →</a></div></div>
         </div>
@@ -421,7 +421,7 @@ pages.push({
         <h1 class="reveal">Deep cleaning,<br /><span class="serif-italic">down to the last detail.</span></h1>
         <p class="lead reveal">Our most thorough clean. Everything in a standard clean, plus baseboards, blinds, inside appliances, grout scrubbing, ceiling fans, and the hard-to-reach corners most cleaners miss.</p>
         <div class="hero-ctas reveal">
-          <a href="free-estimate.html?service=deep" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Deep Cleaning Quote</a>
+          <a href="free-estimate.html?service=deep" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="droplets"></i> Get a Deep Cleaning Quote</a>
           <a href="residential.html" class="btn btn-outline btn-lg">All Residential Services</a>
         </div>
       </div>
@@ -462,7 +462,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Give your home<br /><span class="serif-italic" style="color:var(--brass-bright);">a fresh start.</span>', 'Book a deep clean and feel the difference meticulous attention makes.', 'Get Deep Cleaning Quote', 'Call Now', 'free-estimate.html?service=deep', 'tel:+19165550148', 'sparkles', 'phone')}`
+    ${cta('Give your home<br /><span class="serif-italic" style="color:var(--brass-bright);">a fresh start.</span>', 'Book a deep clean and feel the difference meticulous attention makes.', 'Get Deep Cleaning Quote', 'Call Now', 'free-estimate.html?service=deep', 'tel:+19165550148', 'droplets', 'phone')}`
 });
 
 /* ============ MOVE-IN / OUT ============ */
@@ -676,7 +676,7 @@ pages.push({
         <span class="pill reveal" style="margin-bottom:16px;">Local Coverage</span>
         <h1 class="reveal">Serving Sacramento<br /><span class="serif-italic">&amp; surrounding communities.</span></h1>
         <p class="lead reveal">Based in Sacramento, we clean homes and businesses across the greater metro area. If you don't see your neighborhood listed, just ask — we're always expanding.</p>
-        <div class="hero-ctas reveal"><a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Check My Address</a></div>
+        <div class="hero-ctas reveal"><a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="droplets"></i> Check My Address</a></div>
       </div>
     </section>
 
@@ -752,13 +752,13 @@ pages.push({
         </div>
         <div class="grid-4">
           <div class="card reveal"><div class="card-icon"><i data-lucide="shield-check"></i></div><h3>Trust</h3><p>Background-checked teams, consistent crews, and a founder who answers the phone.</p></div>
-          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="sparkles"></i></div><h3>Meticulous</h3><p>Hotel-grade standards on every clean — the corners most cleaners miss.</p></div>
+          <div class="card reveal d1"><div class="card-icon brass"><i data-lucide="droplets"></i></div><h3>Meticulous</h3><p>Hotel-grade standards on every clean — the corners most cleaners miss.</p></div>
           <div class="card reveal d2"><div class="card-icon"><i data-lucide="map-pin"></i></div><h3>Local</h3><p>Born and based in Sacramento. We clean in the neighborhoods we live in.</p></div>
           <div class="card reveal d3"><div class="card-icon brass"><i data-lucide="heart"></i></div><h3>Kind</h3><p>Friendly, respectful, and genuinely glad to be in your space. Every time.</p></div>
         </div>
       </div>
     </section>
-    ${cta('Work with a company<br /><span class="serif-italic" style="color:var(--brass-bright);">that actually cares.</span>', 'Get a free estimate from Natabel — founded and run by Fatima, right here in Sacramento.', 'Get Free Estimate', 'Call Fatima', 'free-estimate.html', 'tel:+19165550148', 'sparkles', 'phone')}`
+    ${cta('Work with a company<br /><span class="serif-italic" style="color:var(--brass-bright);">that actually cares.</span>', 'Get a free estimate from Natabel — founded and run by Fatima, right here in Sacramento.', 'Get Free Estimate', 'Call Fatima', 'free-estimate.html', 'tel:+19165550148', 'droplets', 'phone')}`
 });
 
 /* ============ REVIEWS ============ */
@@ -786,7 +786,7 @@ pages.push({
         <span class="pill pill-brass reveal" style="margin-bottom:16px;">4.9★ · 127+ Reviews</span>
         <h1 class="reveal">Sacramento loves<br /><span class="serif-italic">a genuinely clean space.</span></h1>
         <p class="lead reveal">Real words from the offices, homes, and properties we clean every week. <em>(Placeholder reviews — replace with verified Google reviews.)</em></p>
-        <div class="hero-ctas reveal"><a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="sparkles"></i> Get a Free Estimate</a></div>
+        <div class="hero-ctas reveal"><a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="droplets"></i> Get a Free Estimate</a></div>
       </div>
     </section>
 
@@ -797,7 +797,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Join hundreds of happy<br /><span class="serif-italic" style="color:var(--brass-bright);">Sacramento clients.</span>', 'Get a free estimate and see the Natabel difference for yourself.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19165550148', 'sparkles', 'phone')}`
+    ${cta('Join hundreds of happy<br /><span class="serif-italic" style="color:var(--brass-bright);">Sacramento clients.</span>', 'Get a free estimate and see the Natabel difference for yourself.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19165550148', 'droplets', 'phone')}`
 });
 
 /* ============ FAQ ============ */
@@ -839,7 +839,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Still have questions?<br /><span class="serif-italic" style="color:var(--brass-bright);">Let\'s talk.</span>', 'Call us or request a free estimate — we\'ll answer everything.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19165550148', 'sparkles', 'phone')}`
+    ${cta('Still have questions?<br /><span class="serif-italic" style="color:var(--brass-bright);">Let\'s talk.</span>', 'Call us or request a free estimate — we\'ll answer everything.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19165550148', 'droplets', 'phone')}`
 });
 
 /* ============ FREE ESTIMATE (uses funnel) ============ */

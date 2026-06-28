@@ -33,7 +33,7 @@
       <div class="bar">
         <a href="index.html" class="brand" aria-label="${B.name} — home">
           <img src="assets/logo.svg" alt="" class="brand-mark" width="44" height="44" />
-          <span class="brand-name">Natabel Pristine<span>Cleaning</span></span>
+          <span class="brand-name">Natabel<span>Pristine Cleaning</span></span>
         </a>
         <nav class="nav" aria-label="Primary">${NAV.map(navLink).join('')}</nav>
         <div class="header-cta">
@@ -55,7 +55,7 @@
     <div class="mm-header">
       <a href="index.html" class="brand">
         <img src="assets/logo.svg" alt="" class="brand-mark" width="40" height="40" />
-        <span class="brand-name">Natabel Pristine</span>
+        <span class="brand-name">Natabel<span>Pristine Cleaning</span></span>
       </a>
       <button class="menu-toggle mm-close" aria-label="Close menu"><i data-lucide="x"></i></button>
     </div>
@@ -79,7 +79,7 @@
   const mobileCtaBar = `
   <nav class="mobile-cta-bar" aria-label="Quick actions">
     <a href="${PHONE_HREF}" aria-label="Call now"><i data-lucide="phone"></i><span>Call</span></a>
-    <a href="free-estimate.html" class="cta-primary" aria-label="Get a free estimate"><i data-lucide="sparkles"></i><span>Free Estimate</span></a>
+    <a href="free-estimate.html" class="cta-primary" aria-label="Get a free estimate"><i data-lucide="droplets"></i><span>Free Estimate</span></a>
     <a href="book-online.html" aria-label="Book online"><i data-lucide="calendar-check"></i><span>Book</span></a>
   </nav>`;
 
@@ -87,7 +87,7 @@
   const promoBar = `
   <div class="promo-bar" role="region" aria-label="Promotion">
     <div class="container container-wide promo-inner">
-      <p><i data-lucide="sparkles"></i> <strong>Free estimates in 90 seconds</strong> <span class="promo-hide-sm">— no obligation. Sacramento homes &amp; businesses.</span></p>
+      <p><i data-lucide="droplets"></i> <strong>Free estimates in 90 seconds</strong> <span class="promo-hide-sm">— premium cleaning for Sacramento homes &amp; businesses.</span></p>
       <div class="promo-actions">
         <a href="free-estimate.html" class="btn btn-brass btn-sm">Get My Estimate</a>
         <button type="button" class="promo-close" aria-label="Dismiss promotion"><i data-lucide="x"></i></button>
@@ -98,7 +98,7 @@
   const floatCta = `
   <aside class="float-cta" aria-label="Quick actions">
     <a href="free-estimate.html" class="float-cta-main btn btn-brass" data-magnetic>
-      <i data-lucide="sparkles"></i>
+      <i data-lucide="droplets"></i>
       <span>Free Estimate</span>
     </a>
     <a href="${PHONE_HREF}" class="float-cta-phone" aria-label="Call ${PHONE_DISPLAY}">
@@ -126,7 +126,7 @@
         <div class="footer-brand">
           <a href="index.html" class="brand" style="margin-bottom:16px;">
             <img src="assets/logo.svg" alt="" class="brand-mark" width="44" height="44" />
-            <span class="brand-name" style="color:var(--ivory);">Natabel Pristine<span style="color:var(--brass-bright);">Cleaning</span></span>
+            <span class="brand-name" style="color:var(--ivory);">Natabel<span style="color:var(--brass-bright);">Pristine Cleaning</span></span>
           </a>
           <p style="color:rgba(247,243,235,.62);font-size:.92rem;max-width:40ch;">${B.description}</p>
           <div class="footer-social" style="margin-top:20px;">
@@ -172,7 +172,7 @@
       </div>
       <div class="footer-bottom">
         <div>© ${year} ${B.name}. Licensed &amp; insured. ${B.licenseNumber}.</div>
-        <div>Sacramento County · Founder-led · Premium cleaning</div>
+        <div>Sacramento County · Premium residential &amp; commercial cleaning</div>
       </div>
     </div>
   </footer>`;

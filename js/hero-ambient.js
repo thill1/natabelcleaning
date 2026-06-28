@@ -1,6 +1,6 @@
 /* =========================================================================
    NATABEL — Hero ambient atmosphere
-   Soft bokeh + rare specular glints. Brand palette only. No cartoon stars.
+   Soft floating bubbles. Brand palette only.
    ========================================================================= */
 (function () {
   'use strict';
@@ -95,38 +95,26 @@
       ctx.fill();
     }
 
-    function drawGlint(g, now) {
+    function drawBubble(g, now) {
       const age = now - g.born;
       const p = Math.min(age / g.life, 1);
-      const fade = p < 0.2 ? p / 0.2 : p > 0.75 ? (1 - p) / 0.25 : 1;
-      const alpha = fade * 0.55;
-      const len = g.size * (0.6 + fade * 0.8);
+      const fade = p < 0.15 ? p / 0.15 : p > 0.8 ? (1 - p) / 0.2 : 1;
+      const alpha = fade * 0.5;
+      const r = g.size * (0.5 + fade * 0.5);
 
       ctx.save();
-      ctx.translate(g.x, g.y);
-      ctx.rotate(g.rot);
-      ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-      ctx.lineWidth = 0.6;
-      ctx.lineCap = 'round';
+      ctx.translate(g.x, g.y - p * 40);
+      ctx.strokeStyle = `rgba(212,175,55,${alpha})`;
+      ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.moveTo(-len, 0);
-      ctx.lineTo(len, 0);
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
       ctx.stroke();
+      ctx.fillStyle = `rgba(255,255,255,${alpha * 0.15})`;
+      ctx.fill();
+      ctx.fillStyle = `rgba(255,255,255,${alpha * 0.6})`;
       ctx.beginPath();
-      ctx.moveTo(0, -len * 0.65);
-      ctx.lineTo(0, len * 0.65);
-      ctx.stroke();
-
-      ctx.strokeStyle = `rgba(203,168,116,${alpha * 0.7})`;
-      ctx.lineWidth = 0.35;
-      ctx.beginPath();
-      ctx.moveTo(-len * 0.35, -len * 0.35);
-      ctx.lineTo(len * 0.35, len * 0.35);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(len * 0.35, -len * 0.35);
-      ctx.lineTo(-len * 0.35, len * 0.35);
-      ctx.stroke();
+      ctx.ellipse(-r * 0.3, -r * 0.3, r * 0.22, r * 0.14, -0.4, 0, Math.PI * 2);
+      ctx.fill();
       ctx.restore();
     }
 
@@ -149,7 +137,7 @@
       });
 
       glints = glints.filter(g => now - g.born < g.life);
-      glints.forEach(g => drawGlint(g, now));
+      glints.forEach(g => drawBubble(g, now));
 
       raf = requestAnimationFrame(tick);
     }

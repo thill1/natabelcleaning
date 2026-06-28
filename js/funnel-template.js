@@ -22,7 +22,7 @@
         <label class="choice"><input type="radio" name="service_type" value="residential" /><span class="choice-ic"><i data-lucide="home"></i></span><strong>Residential Cleaning</strong><small>House, apartment, condo</small></label>
         <label class="choice"><input type="radio" name="service_type" value="commercial" /><span class="choice-ic"><i data-lucide="building-2"></i></span><strong>Commercial Cleaning</strong><small>Office, retail, medical</small></label>
         <label class="choice"><input type="radio" name="service_type" value="move_in_out" /><span class="choice-ic"><i data-lucide="move-3d"></i></span><strong>Move-In / Move-Out</strong><small>Tenant &amp; turnover</small></label>
-        <label class="choice"><input type="radio" name="service_type" value="deep_cleaning" /><span class="choice-ic"><i data-lucide="sparkles"></i></span><strong>Deep Cleaning</strong><small>Top-to-bottom detail</small></label>
+        <label class="choice"><input type="radio" name="service_type" value="deep_cleaning" /><span class="choice-ic"><i data-lucide="droplets"></i></span><strong>Deep Cleaning</strong><small>Top-to-bottom detail</small></label>
         <label class="choice"><input type="radio" name="service_type" value="recurring" /><span class="choice-ic"><i data-lucide="repeat"></i></span><strong>Recurring Cleaning</strong><small>Weekly / biweekly / monthly</small></label>
         <label class="choice"><input type="radio" name="service_type" value="property_management" /><span class="choice-ic"><i data-lucide="key-round"></i></span><strong>Property Management</strong><small>Rental turnover &amp; upkeep</small></label>
       </div>
