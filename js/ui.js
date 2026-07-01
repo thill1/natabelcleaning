@@ -26,6 +26,18 @@
   fillOrHide('[data-review-count]', R.reviewCount);
   fillOrHide('[data-clients]', R.clientsServed);
 
+  /* ---------- Price anchors ----------
+     Plan cards carry <p class="plan-price" data-price="weeklyFrom" hidden>.
+     They stay hidden until Fatima sets values in PCC.pricing. */
+  const pricing = window.PCC.pricing || {};
+  document.querySelectorAll('[data-price]').forEach(el => {
+    const val = pricing[el.dataset.price];
+    if (val) {
+      el.innerHTML = '<span class="from">From</span>' + val;
+      el.hidden = false;
+    }
+  });
+
   /* ---------- Promo bar dismiss ---------- */
   const promo = document.querySelector('.promo-bar');
   if (promo) {
