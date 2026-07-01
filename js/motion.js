@@ -20,11 +20,70 @@
     document.documentElement.style.scrollBehavior = 'smooth';
   }
 
+  /* ---------- 2b. SplitText hero headline — line-mask reveal ----------
+     GSAP 3.13+ ships SplitText free. Lines rise from behind clip masks;
+     the gold accent line lands last. Falls back to the CSS reveal when
+     SplitText is unavailable or reduced motion is requested. */
+  function bootSplitHero() {
+    if (reduce || !window.gsap || !window.SplitText) return;
+    const h1 = document.querySelector('.hero h1, .page-hero h1');
+    if (!h1 || h1.dataset.split) return;
+    h1.dataset.split = '1';
+
+    const run = () => {
+      // Take the headline out of the generic reveal pipeline
+      h1.classList.add('is-in', 'in');
+      h1.style.transition = 'none';
+      h1.style.opacity = '1';
+      h1.style.transform = 'none';
+      try {
+        const split = new window.SplitText(h1, { type: 'lines', mask: 'lines', linesClass: 'split-line' });
+        window.gsap.from(split.lines, {
+          yPercent: 115,
+          duration: 1.15,
+          ease: 'power4.out',
+          stagger: 0.14,
+          delay: 0.25,
+        });
+      } catch (e) { /* fall back to plain visible headline */ }
+    };
+    // Split only after fonts settle so line breaks are final
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+    else run();
+  }
+
+  /* ---------- 2c. Squeegee reveal — signature clean-sweep wipe ----------
+     Media panels wipe in left-to-right behind a shine bar, like a squeegee
+     pass. Applied to before/after sliders and page-hero photography. */
+  function bootSqueegee() {
+    const targets = document.querySelectorAll('.ba-slider, .page-hero-media');
+    if (!targets.length) return;
+    targets.forEach(el => el.classList.add('squeegee-reveal'));
+    if (reduce || !window.ScrollTrigger) {
+      targets.forEach(el => el.classList.add('swept'));
+      return;
+    }
+    targets.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9 && r.bottom > 0) {
+        setTimeout(() => el.classList.add('swept'), 350);
+      } else {
+        window.ScrollTrigger.create({
+          trigger: el,
+          start: 'top 82%',
+          once: true,
+          onEnter: () => el.classList.add('swept'),
+        });
+      }
+    });
+  }
+
   /* ---------- 3. GSAP + ScrollTrigger reveals & parallax ---------- */
   function bootGSAP() {
     if (!window.gsap) return;
     const gsap = window.gsap;
     if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
+    if (window.SplitText) gsap.registerPlugin(window.SplitText);
 
     if (reduce) {
       document.querySelectorAll('[data-reveal], .reveal').forEach(el => {
@@ -264,6 +323,8 @@
   function boot() {
     bootSmoothScroll();
     bootGSAP();
+    bootSplitHero();
+    bootSqueegee();
     bootLucide();
     bootCursor();
     bootMagnetic();

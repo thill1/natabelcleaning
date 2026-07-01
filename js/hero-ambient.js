@@ -1,11 +1,13 @@
 /* =========================================================================
    NATABEL — Hero ambient suds
    Realistic rising soap bubbles on the homepage hero canvas.
+   Interactive: bubbles drift away from the pointer; click to pop.
    ========================================================================= */
 (function () {
   'use strict';
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const R = window.NatabelBubbleRender;
 
   function bootHeroAmbient() {
@@ -84,6 +86,50 @@
       b.pop = 0;
     }
 
+    /* ---------- Pointer interaction ---------- */
+    const pointer = { x: -9999, y: -9999, active: false };
+    const heroEl = mount.closest('.hero') || mount;
+
+    function toCanvasCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    if (canHover) {
+      heroEl.addEventListener('mousemove', (e) => {
+        const p = toCanvasCoords(e);
+        pointer.x = p.x; pointer.y = p.y; pointer.active = true;
+      }, { passive: true });
+      heroEl.addEventListener('mouseleave', () => { pointer.active = false; }, { passive: true });
+    }
+
+    // Click-to-pop: playful burst on empty hero space (links still work)
+    heroEl.addEventListener('click', (e) => {
+      if (e.target.closest('a, button, input, select, label')) return;
+      const p = toCanvasCoords(e);
+      let popped = 0;
+      bubbles.forEach(b => {
+        const dx = b.x - p.x, dy = b.y - p.y;
+        if (!b.bursting && Math.hypot(dx, dy) < Math.max(60, b.r + 26) && popped < 6) {
+          b.bursting = 0.0001;
+          popped++;
+        }
+      });
+    });
+
+    const REPEL_R = 140;
+    function repel(b, dt) {
+      if (!pointer.active) return;
+      const dx = b.x - pointer.x;
+      const dy = b.y - pointer.y;
+      const d = Math.hypot(dx, dy);
+      if (d > 0.5 && d < REPEL_R) {
+        const f = (1 - d / REPEL_R) * 0.055 * dt;
+        b.x += (dx / d) * f * (18 / Math.max(10, b.r));
+        b.y += (dy / d) * f * (18 / Math.max(10, b.r));
+      }
+    }
+
     function tick(now) {
       if (!last) last = now;
       const dt = Math.min(now - last, 32);
@@ -93,7 +139,20 @@
       ctx.fillRect(0, 0, w, h);
 
       bubbles.forEach((b, i) => {
+        if (b.bursting) {
+          // Pop: rim expands and fades, then the bubble is reborn below
+          b.bursting = Math.min(1, b.bursting + dt / 240);
+          const burstR = b.r * (1 + b.bursting * 0.6);
+          const burstA = b.alpha * (1 - b.bursting);
+          if (burstA > 0.01) {
+            R.drawSoapBubble(ctx, b.x, b.y, burstR, { alpha: burstA, seed: b.seed, rim: 1.3 });
+          }
+          if (b.bursting >= 1) { respawn(b, i); b.bursting = 0; }
+          return;
+        }
+
         R.stepBubble(b, dt);
+        repel(b, dt);
 
         if (b.y < -b.r * 4) respawn(b, i);
 

@@ -373,7 +373,7 @@ body { padding-bottom: 84px; }
 .pill-hero { background: rgba(198,161,74,.12); backdrop-filter: blur(8px); border-color: rgba(198,161,74,.35); color: var(--ivory); }
 .hero-kicker-tag { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--brass-bright); }
 
-.hero h1 { margin-bottom: 20px; line-height: 1.02; max-width: 16ch; margin-left: auto; margin-right: auto; }
+.hero h1 { margin-bottom: 20px; line-height: 1.02; max-width: 20ch; margin-left: auto; margin-right: auto; }
 .hero-line { display: block; }
 .hero h1 .accent { color: var(--brass-bright); font-style: normal; }
 .hero h1 .accent em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; color: var(--brass-bright); }
@@ -1214,6 +1214,44 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
   }
   .page-hero-copy .natabel-bubble { max-width: 46px; }
 }
+
+/* =========================================================================
+   SQUEEGEE REVEAL — signature clean-sweep media wipe
+   Media wipes in left-to-right behind a soft shine bar, like a squeegee
+   pass over glass. Applied by motion.js to .ba-slider / .page-hero-media.
+   ========================================================================= */
+html.js-ready .squeegee-reveal {
+  clip-path: inset(0 100% 0 0);
+}
+html.js-ready .squeegee-reveal.swept {
+  animation: squeegeeSweep 1.15s var(--ease-lux) forwards;
+}
+@keyframes squeegeeSweep {
+  to { clip-path: inset(0 0% 0 0); }
+}
+.squeegee-reveal.squeegee-reveal { position: relative; }
+.squeegee-reveal::before {
+  content: ''; position: absolute; top: -4%; bottom: -4%; left: -18%;
+  width: 14%; z-index: 5; pointer-events: none; opacity: 0;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.85) 45%, rgba(227,200,120,.35) 60%, transparent);
+  filter: blur(6px);
+}
+html.js-ready .squeegee-reveal.swept::before {
+  animation: squeegeeShine 1.15s var(--ease-lux) forwards;
+}
+@keyframes squeegeeShine {
+  0% { left: -18%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 112%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js-ready .squeegee-reveal { clip-path: none !important; animation: none !important; }
+  html.js-ready .squeegee-reveal::before { display: none; }
+}
+
+/* SplitText line masks — GSAP wraps lines; keep gold accents intact */
+.split-line { will-change: transform; }
 
 /* Cursor suds trail */
 .natabel-trail-bubble {

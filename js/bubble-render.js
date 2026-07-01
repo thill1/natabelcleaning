@@ -42,6 +42,30 @@
     ctx.lineWidth = Math.max(0.35, r * 0.028);
     ctx.stroke();
 
+    /* Thin-film iridescence — faint spectral arcs hugging the rim.
+       Gold-biased with whispers of rose and cyan; deterministic per seed. */
+    if (r > 6) {
+      const irA = 0.14 * alpha * rimBoost;
+      const a0 = rand(seed + 21) * Math.PI * 2;
+      const irW = Math.max(0.3, r * 0.022);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.arc(x, y, r - 0.9, a0, a0 + 1.5);
+      ctx.strokeStyle = `rgba(227,200,120,${irA})`;
+      ctx.lineWidth = irW;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(x, y, r - 0.9, a0 + 1.9, a0 + 2.9);
+      ctx.strokeStyle = `rgba(200,150,190,${irA * 0.6})`;
+      ctx.lineWidth = irW;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(x, y, r - 0.9, a0 + 3.4, a0 + 4.5);
+      ctx.strokeStyle = `rgba(140,200,215,${irA * 0.55})`;
+      ctx.lineWidth = irW;
+      ctx.stroke();
+    }
+
     /* Faint inner arc — specular edge only */
     ctx.beginPath();
     ctx.arc(x, y, r - 0.75, -1.1, 0.6);
