@@ -9,16 +9,22 @@
   const B = window.PCC.business;
   const R = window.PCC.reviews;
 
-  /* ---------- Config-driven text ---------- */
-  document.querySelectorAll('[data-rating]').forEach(el => {
-    el.textContent = String(R.googleRating);
-  });
-  document.querySelectorAll('[data-review-count]').forEach(el => {
-    el.textContent = String(R.reviewCount);
-  });
-  document.querySelectorAll('[data-clients]').forEach(el => {
-    el.textContent = R.clientsServed;
-  });
+  /* ---------- Config-driven text ----------
+     Rating fields are null until real Google reviews exist. While null,
+     any element carrying rating placeholders is hidden (walk up to the
+     wrapper marked data-requires-reviews, or hide the element itself). */
+  function fillOrHide(sel, value) {
+    document.querySelectorAll(sel).forEach(el => {
+      if (value == null || value === '') {
+        (el.closest('[data-requires-reviews]') || el).style.display = 'none';
+      } else {
+        el.textContent = String(value);
+      }
+    });
+  }
+  fillOrHide('[data-rating]', R.googleRating);
+  fillOrHide('[data-review-count]', R.reviewCount);
+  fillOrHide('[data-clients]', R.clientsServed);
 
   /* ---------- Promo bar dismiss ---------- */
   const promo = document.querySelector('.promo-bar');

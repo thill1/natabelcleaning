@@ -90,10 +90,10 @@
     </div>
     <div class="funnel-step">
       <h3>Where is the property?</h3>
-      <p class="step-desc">We serve Sacramento and surrounding communities.</p>
+      <p class="step-desc">We serve Rocklin, Roseville, Granite Bay, Loomis, Lincoln, and surrounding Placer County communities.</p>
       <div class="field-row">
         <div class="field"><label>ZIP code <span class="req">*</span></label><input type="text" name="zip" inputmode="numeric" pattern="[0-9]{5}" placeholder="e.g. 95814" /><div class="field-error">Please enter a 5-digit ZIP.</div></div>
-        <div class="field"><label>City</label><input type="text" name="city" placeholder="e.g. Sacramento" /></div>
+        <div class="field"><label>City</label><input type="text" name="city" placeholder="e.g. Rocklin" /></div>
       </div>
       <div class="field"><label>Service address <span class="muted" style="font-weight:400;">(optional)</span></label><input type="text" name="address" placeholder="Street address (optional)" /></div>
       <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="button" class="btn btn-emerald" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
@@ -118,7 +118,7 @@
       <div class="card" style="background:var(--emerald-tint);border-color:var(--emerald-line);">
         <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No pressure.</strong> Just a clear, honest estimate.</p></div>
         <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>No obligation.</strong> Decide on your timeline.</p></div>
-        <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Local team.</strong> Founded and run from Sacramento.</p></div>
+        <div class="feat-item"><span class="feat-check"><i data-lucide="check"></i></span><p><strong>Local team.</strong> Founded and run from Rocklin.</p></div>
       </div>
       <div class="funnel-nav"><button type="button" class="btn btn-back" data-back><i data-lucide="arrow-left"></i> Back</button><button type="submit" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="send"></i> Submit My Free Estimate Request</button></div>
     </div>

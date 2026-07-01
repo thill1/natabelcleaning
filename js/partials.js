@@ -81,11 +81,10 @@
     <a href="book-online.html" aria-label="Book online"><i data-lucide="calendar-check"></i><span>Book</span></a>
   </nav>`;
 
-  const R = window.PCC.reviews;
   const promoBar = `
   <div class="promo-bar" role="region" aria-label="Promotion">
     <div class="container container-wide promo-inner">
-      <p><i data-lucide="droplets"></i> <strong>Free estimates in 90 seconds</strong> <span class="promo-hide-sm">— premium cleaning for Sacramento homes &amp; businesses.</span></p>
+      <p><i data-lucide="droplets"></i> <strong>Free estimates in 90 seconds</strong> <span class="promo-hide-sm">— premium cleaning for Rocklin &amp; Placer County homes and businesses.</span></p>
       <div class="promo-actions">
         <a href="free-estimate.html" class="btn btn-brass btn-sm">Get My Estimate</a>
         <button type="button" class="promo-close" aria-label="Dismiss promotion"><i data-lucide="x"></i></button>
@@ -111,10 +110,8 @@
         <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-trust" width="220" height="106" />
       </div>
       <div class="trust-ribbon-grid">
-        <div class="tr-item"><span class="tr-num"><span data-rating>${R.googleRating}</span>★</span><span class="tr-lbl">Google rating · <span data-review-count>${R.reviewCount}</span>+ reviews</span></div>
-        <div class="tr-item"><span class="tr-num" data-clients>${R.clientsServed}</span><span class="tr-lbl">Clients served across Sacramento</span></div>
-        <div class="tr-item"><span class="tr-num">${R.yearsInBusiness}+</span><span class="tr-lbl">Years founder-led &amp; local</span></div>
-        <div class="tr-item"><span class="tr-num"><i data-lucide="shield-check"></i></span><span class="tr-lbl">Licensed, insured &amp; background-checked</span></div>
+        ${(window.PCC.trust && window.PCC.trust.promises ? window.PCC.trust.promises : []).map(p => `
+        <div class="tr-item"><span class="tr-num">${p.num} <i data-lucide="${p.icon}"></i></span><span class="tr-lbl">${p.label}</span></div>`).join('')}
       </div>
     </div>
   </section>`;
@@ -172,7 +169,7 @@
       </div>
       <div class="footer-bottom">
         <div>© ${year} ${B.name}. Licensed &amp; insured. ${B.licenseNumber}.</div>
-        <div>Sacramento County · Premium residential &amp; commercial cleaning</div>
+        <div>Rocklin, CA · Serving Placer &amp; Sacramento Counties</div>
       </div>
     </div>
   </footer>`;

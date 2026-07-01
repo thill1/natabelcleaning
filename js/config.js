@@ -7,23 +7,24 @@
 window.PCC = {
   /* ---------- Business identity (NAP — keep consistent everywhere) ---------- */
   business: {
-    name:     'Natabel Pristine Cleaning',
-    legalName:'Natabel Pristine Cleaning',
+    name:     'NataBel Pristine Cleaning',
+    legalName:'NataBel Pristine Cleaning',
     founder:  'Fatima Patalano',
-    tagline:  'Premium Cleaning \u00b7 Sacramento',
+    tagline:  'Premium Cleaning \u00b7 Rocklin, CA',
     description:
-      'Natabel Pristine Cleaning delivers luxury residential and commercial cleaning across Sacramento. ' +
+      'NataBel Pristine Cleaning delivers luxury residential and commercial cleaning across Rocklin, Roseville, Granite Bay, and greater Placer County. ' +
       'Founder-led by Fatima Patalano, we bring meticulous standards, vetted teams, and a pristine finish to every home, office, and facility we serve.',
+    /* TODO: replace with the real business line before launch */
     phone:          '(916) 555-0148',
     phoneHref:      'tel:+19165550148',
     email:          'hello@natabelcleaning.com',
     url:            'https://www.natabelcleaning.com',
-    streetAddress:  'Sacramento, CA',
-    addressLocality:'Sacramento',
+    streetAddress:  'Rocklin, CA',
+    addressLocality:'Rocklin',
     addressRegion:  'CA',
-    postalCode:     '95814',
-    geo:            { lat: 38.5816, lng: -121.4944 },
-    founded:        '2021',
+    postalCode:     '95765',
+    geo:            { lat: 38.7907, lng: -121.2358 },
+    founded:        '2026',
     licenseNumber:  'Lic# pending',
     hours: [
       { days: 'Mon \u2013 Fri', time: '7:00 AM \u2013 6:00 PM' },
@@ -31,10 +32,9 @@ window.PCC = {
       { days: 'Sunday',    time: 'By appointment' },
     ],
     serviceAreas: [
-      'Sacramento','Roseville','Rocklin','Folsom','Elk Grove','Davis',
-      'Rancho Cordova','Carmichael','Citrus Heights','Fair Oaks','Orangevale',
-      'West Sacramento','Natomas','Midtown Sacramento','East Sacramento',
-      'Land Park','Arden-Arcade',
+      'Rocklin','Roseville','Granite Bay','Loomis','Lincoln','Penryn',
+      'Newcastle','Auburn','Folsom','Citrus Heights','Fair Oaks','Orangevale',
+      'Carmichael','Sacramento',
     ],
   },
 
@@ -46,20 +46,40 @@ window.PCC = {
     yelp:      'https://yelp.com/biz/natabelcleaning',
   },
 
-  /* ---------- Reviews (placeholders \u2014 replace with real reviews) ---------- */
+  /* ---------- Reviews & trust ----------
+     NataBel is a new company. Rating fields stay null until real Google
+     reviews exist \u2014 the UI hides star/count elements while they are null
+     and shows the honest trust promises below instead. When reviews are
+     live, set googleRating + reviewCount and the UI upgrades itself. */
   reviews: {
-    googleRating: 4.9,
-    reviewCount:  127,
-    yearsInBusiness: 4,
-    clientsServed:  '340+',
-    recurringAccounts: '60+',
+    googleRating: null,
+    reviewCount:  null,
+    clientsServed: null,
+  },
+  trust: {
+    guarantee:      'The Pristine Guarantee',
+    guaranteeCopy:  'Not pristine? Tell us within 24 hours and we return to re-clean the missed areas \u2014 free.',
+    promises: [
+      { icon: 'user-round',   num: '100%', label: 'Founder-inspected cleans' },
+      { icon: 'shield-check', num: 'Bonded', label: 'Licensed, insured & background-checked' },
+      { icon: 'refresh-ccw',  num: '24 hr', label: 'Pristine Guarantee re-clean window' },
+      { icon: 'map-pin',      num: 'Local', label: 'Rocklin-based \u00b7 Placer County proud' },
+    ],
+  },
+
+  /* ---------- Pricing anchors (leave '' to hide until Fatima sets rates) ---------- */
+  pricing: {
+    weeklyFrom:   '',
+    biweeklyFrom: '',
+    monthlyFrom:  '',
+    deepFrom:     '',
   },
 
   /* ---------- Photography (Unsplash — replace with owned assets when ready) ---------- */
   images: {
     pages: {
       default:             { src: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952', alt: 'Professional cleaner in a bright, tidy home' },
-      commercial:          { src: 'https://images.unsplash.com/photo-1497366216548-37526070297c', alt: 'Modern Sacramento office interior' },
+      commercial:          { src: 'https://images.unsplash.com/photo-1497366216548-37526070297c', alt: 'Modern Rocklin office interior' },
       office:              { src: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2', alt: 'Clean open-plan office workspace' },
       janitorial:          { src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab', alt: 'Commercial building lobby' },
       residential:         { src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c', alt: 'Sunlit residential living room' },
@@ -71,7 +91,7 @@ window.PCC = {
       contact:             { src: 'https://images.unsplash.com/photo-1423666639043-f5600c2da73b', alt: 'Customer service and communication' },
       faq:                 { src: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85', alt: 'Planning documents on a desk' },
       reviews:             { src: 'https://images.unsplash.com/photo-1556745750-68295e2c6992', alt: 'Happy client in a clean space' },
-      areas:               { src: 'https://images.unsplash.com/photo-1569336414137-3a9a0e5ae986', alt: 'Sacramento area neighborhood' },
+      areas:               { src: 'https://images.unsplash.com/photo-1569336414137-3a9a0e5ae986', alt: 'Rocklin and Placer County neighborhood' },
       booking:             { src: 'https://images.unsplash.com/photo-1506784365847-bbad939e9335', alt: 'Calendar and scheduling' },
       estimate:            { src: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c', alt: 'Estimate consultation in a clean home' },
     },
