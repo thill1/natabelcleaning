@@ -103,7 +103,7 @@
       <p class="step-desc">We'll reach out within one business hour. No spam, ever.</p>
       <div class="field-row">
         <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" /><div class="field-error">Please enter your name.</div></div>
-        <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(949) 246-2176" /><div class="field-error">Please enter a valid phone number.</div></div>
+        <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(916) 899-8811" /><div class="field-error">Please enter a valid phone number.</div></div>
       </div>
       <div class="field-row">
         <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@example.com" /><div class="field-error">Please enter a valid email.</div></div>
@@ -129,7 +129,7 @@
     <p data-summary style="color:var(--muted);max-width:54ch;margin-inline:auto;"></p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
       <a href="free-estimate.html" class="btn btn-emerald">Submit another request</a>
-      <a href="tel:+19492462176" class="btn btn-outline">Need it sooner? Call us</a>
+      <a href="tel:+19168998811" class="btn btn-outline">Need it sooner? Call us</a>
     </div>
   </div>
 </div>`;

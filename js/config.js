@@ -15,8 +15,8 @@ window.PCC = {
       'NataBel Pristine Cleaning delivers luxury residential and commercial cleaning across Rocklin, Roseville, Granite Bay, and greater Placer County. ' +
       'Founder-led by Fatima Patalano, we bring meticulous standards, vetted teams, and a pristine finish to every home, office, and facility we serve.',
     /* Business line */
-    phone:          '(949) 246-2176',
-    phoneHref:      'tel:+19492462176',
+    phone:          '(916) 899-8811',
+    phoneHref:      'tel:+19168998811',
     email:          'natabelpritinecleaning@gmail.com',
     url:            'https://www.natabelpristinecleaning.com',
     streetAddress:  'Rocklin, CA',
