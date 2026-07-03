@@ -18,7 +18,7 @@ const VENDOR = `
   <script src="js/ui.js"></script>
   <script src="js/bubble-render.js"></script>
   <script src="js/bubbles.js"></script>
-  <script src="js/page-hero.js"></script>
+  <script src="js/page-hero.js?v=contact-hero-20260703"></script>
   <script src="js/main.js"></script>
   <script src="js/motion.js" defer></script>`;
 
@@ -50,9 +50,9 @@ const HEAD = (p) => `<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=contact-hero-20260703" />
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
-  <script src="js/config.js"></script>
+  <script src="js/config.js?v=contact-hero-20260703"></script>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
