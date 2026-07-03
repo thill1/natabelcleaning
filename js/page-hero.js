@@ -41,6 +41,25 @@
     return `<img src="${src}" alt="${p.alt}" width="${w}" height="${Math.round(w * 0.75)}" loading="${opts.loading || 'lazy'}" decoding="async" />`;
   }
 
+  function removeBrokenImage(img) {
+    const media = img.closest('.page-hero-media');
+    if (media) {
+      media.remove();
+      return;
+    }
+
+    const slot = img.closest('.photo-slot');
+    if (slot) slot.classList.add('photo-slot-empty');
+    img.remove();
+  }
+
+  function bindImageFallback(root) {
+    root.querySelectorAll('img').forEach(img => {
+      img.addEventListener('error', () => removeBrokenImage(img), { once: true });
+      if (img.complete && img.naturalWidth === 0) removeBrokenImage(img);
+    });
+  }
+
   function upgradePageHero(section) {
     if (section.classList.contains('page-hero-ready')) return;
     const key = section.dataset.heroKey || PAGE_KEYS[pageFile()] || 'default';
@@ -78,6 +97,7 @@
       const fig = document.createElement('figure');
       fig.className = 'page-hero-media reveal d1';
       fig.innerHTML = buildImg(p, { loading: 'eager', width: 800 });
+      bindImageFallback(fig);
       inner.appendChild(fig);
     }
   }
@@ -92,9 +112,11 @@
     if (el.classList.contains('visual-panel') || el.classList.contains('split-media')) {
       el.classList.remove('visual-panel', 'emerald', 'brass');
       el.innerHTML = `<div class="photo-slot-inner">${buildImg(p, { width: 900 })}<div class="photo-slot-overlay"></div></div>`;
+      bindImageFallback(el);
       return;
     }
     el.innerHTML = buildImg(p, { width: 720 });
+    bindImageFallback(el);
   }
 
   function boot() {

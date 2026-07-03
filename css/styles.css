@@ -1140,6 +1140,7 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
   display: block;
 }
 .photo-slot.photo-slot { border-radius: var(--radius-lg); overflow: hidden; }
+.photo-slot-empty { display: none; }
 .photo-slot-inner { position: relative; }
 .photo-slot-inner img {
   width: 100%;
@@ -1155,7 +1156,6 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
 @media (max-width: 960px) {
   .page-hero-inner { grid-template-columns: 1fr; }
   .page-hero-media {
-    order: -1;
     max-height: 280px;
     aspect-ratio: 16 / 10;
     width: 100%;

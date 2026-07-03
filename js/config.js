@@ -88,7 +88,7 @@ window.PCC = {
       recurring:           { src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0', alt: 'Well-maintained family home interior' },
       property:            { src: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa', alt: 'Rental property exterior and entryway' },
       about:               { src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf', alt: 'Founder-led cleaning team at work' },
-      contact:             { src: 'https://images.unsplash.com/photo-1423666639043-f5600c2da73b', alt: 'Customer service and communication' },
+      contact:             { src: 'https://images.unsplash.com/photo-1556745757-8d76bdb6984b', alt: 'Customer service and communication' },
       faq:                 { src: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85', alt: 'Planning documents on a desk' },
       reviews:             { src: 'https://images.unsplash.com/photo-1556745750-68295e2c6992', alt: 'Happy client in a clean space' },
       areas:               { src: 'https://images.unsplash.com/photo-1569336414137-3a9a0e5ae986', alt: 'Rocklin and Placer County neighborhood' },
