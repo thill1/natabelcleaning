@@ -17,7 +17,7 @@ window.PCC = {
     /* Business line */
     phone:          '(949) 246-2176',
     phoneHref:      'tel:+19492462176',
-    email:          'hello@natabelcleaning.com',
+    email:          'natabelpritinecleaning@gmail.com',
     url:            'https://www.natabelpristinecleaning.com',
     streetAddress:  'Rocklin, CA',
     addressLocality:'Rocklin',
@@ -107,7 +107,7 @@ window.PCC = {
     method:   'POST',
     includeUTM: true,
     demoMode: true,
-    notifyEmail: 'hello@natabelcleaning.com',
+    notifyEmail: 'natabelpritinecleaning@gmail.com',
   },
 
   /* ---------- Analytics & conversion tracking ---------- */

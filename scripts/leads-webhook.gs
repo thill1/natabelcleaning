@@ -10,7 +10,7 @@
  * 6. Set PCC.leads.demoMode to false (or leave endpoint non-empty — site auto-disables demo)
  */
 
-const NOTIFY_EMAIL = 'hello@natabelcleaning.com';
+const NOTIFY_EMAIL = 'natabelpritinecleaning@gmail.com';
 const SHEET_NAME = 'Leads';
 
 function doPost(e) {
