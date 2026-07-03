@@ -193,7 +193,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Ready for a cleaner,<br /><span class="serif-italic" style="color:var(--brass-bright);">healthier workplace?</span>', 'Schedule a walkthrough and get a custom scope of work within 1–3 business days. Or request a recurring quote in 90 seconds.', 'Schedule a Walkthrough', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19165550148', 'building-2', 'phone')}`
+    ${cta('Ready for a cleaner,<br /><span class="serif-italic" style="color:var(--brass-bright);">healthier workplace?</span>', 'Schedule a walkthrough and get a custom scope of work within 1–3 business days. Or request a recurring quote in 90 seconds.', 'Schedule a Walkthrough', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19492462176', 'building-2', 'phone')}`
 });
 
 /* ============ OFFICE CLEANING ============ */
@@ -265,7 +265,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Get your free<br /><span class="serif-italic" style="color:var(--brass-bright);">office cleaning quote.</span>', 'Tell us about your office and we\'ll build a custom quote — usually within one business hour.', 'Get Free Office Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19165550148', 'droplets', 'phone')}`
+    ${cta('Get your free<br /><span class="serif-italic" style="color:var(--brass-bright);">office cleaning quote.</span>', 'Tell us about your office and we\'ll build a custom quote — usually within one business hour.', 'Get Free Office Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19492462176', 'droplets', 'phone')}`
 });
 
 /* ============ JANITORIAL ============ */
@@ -339,7 +339,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Need reliable<br /><span class="serif-italic" style="color:var(--brass-bright);">janitorial service?</span>', 'Get a contracted janitorial quote tailored to your facility — usually within one business hour.', 'Get Janitorial Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19165550148', 'droplets', 'phone')}`
+    ${cta('Need reliable<br /><span class="serif-italic" style="color:var(--brass-bright);">janitorial service?</span>', 'Get a contracted janitorial quote tailored to your facility — usually within one business hour.', 'Get Janitorial Quote', 'Call Now', 'free-estimate.html?service=commercial', 'tel:+19492462176', 'droplets', 'phone')}`
 });
 
 /* ============ RESIDENTIAL ============ */
@@ -411,7 +411,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Book your residential<br /><span class="serif-italic" style="color:var(--brass-bright);">cleaning today.</span>', 'Free estimates, flexible scheduling, and a local team that actually shows up.', 'Book Residential Cleaning', 'Call Now', 'book-online.html', 'tel:+19165550148', 'calendar-check', 'phone')}`
+    ${cta('Book your residential<br /><span class="serif-italic" style="color:var(--brass-bright);">cleaning today.</span>', 'Free estimates, flexible scheduling, and a local team that actually shows up.', 'Book Residential Cleaning', 'Call Now', 'book-online.html', 'tel:+19492462176', 'calendar-check', 'phone')}`
 });
 
 /* ============ DEEP CLEANING ============ */
@@ -471,7 +471,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Give your home<br /><span class="serif-italic" style="color:var(--brass-bright);">a fresh start.</span>', 'Book a deep clean and feel the difference meticulous attention makes.', 'Get Deep Cleaning Quote', 'Call Now', 'free-estimate.html?service=deep', 'tel:+19165550148', 'droplets', 'phone')}`
+    ${cta('Give your home<br /><span class="serif-italic" style="color:var(--brass-bright);">a fresh start.</span>', 'Book a deep clean and feel the difference meticulous attention makes.', 'Get Deep Cleaning Quote', 'Call Now', 'free-estimate.html?service=deep', 'tel:+19492462176', 'droplets', 'phone')}`
 });
 
 /* ============ MOVE-IN / OUT ============ */
@@ -529,7 +529,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Moving soon?<br /><span class="serif-italic" style="color:var(--brass-bright);">Let us handle the clean.</span>', 'Get a move-in or move-out quote — usually within one business hour.', 'Get Move-Out Quote', 'Call Now', 'free-estimate.html?service=move', 'tel:+19165550148', 'move-3d', 'phone')}`
+    ${cta('Moving soon?<br /><span class="serif-italic" style="color:var(--brass-bright);">Let us handle the clean.</span>', 'Get a move-in or move-out quote — usually within one business hour.', 'Get Move-Out Quote', 'Call Now', 'free-estimate.html?service=move', 'tel:+19492462176', 'move-3d', 'phone')}`
 });
 
 /* ============ RECURRING CLEANING ============ */
@@ -608,7 +608,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Ready for a<br /><span class="serif-italic" style="color:var(--brass-bright);">consistently clean space?</span>', 'Build your recurring cleaning plan in 90 seconds.', 'Build My Cleaning Plan', 'Call Now', 'free-estimate.html?service=recurring', 'tel:+19165550148', 'repeat', 'phone')}`
+    ${cta('Ready for a<br /><span class="serif-italic" style="color:var(--brass-bright);">consistently clean space?</span>', 'Build your recurring cleaning plan in 90 seconds.', 'Build My Cleaning Plan', 'Call Now', 'free-estimate.html?service=recurring', 'tel:+19492462176', 'repeat', 'phone')}`
 });
 
 /* ============ PROPERTY MANAGEMENT ============ */
@@ -666,7 +666,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Stop juggling cleaners.<br /><span class="serif-italic" style="color:var(--brass-bright);">Get one reliable partner.</span>', 'Get a property management cleaning quote — usually within one business hour.', 'Get Property Mgmt Quote', 'Call Now', 'free-estimate.html?service=property_management', 'tel:+19165550148', 'key-round', 'phone')}`
+    ${cta('Stop juggling cleaners.<br /><span class="serif-italic" style="color:var(--brass-bright);">Get one reliable partner.</span>', 'Get a property management cleaning quote — usually within one business hour.', 'Get Property Mgmt Quote', 'Call Now', 'free-estimate.html?service=property_management', 'tel:+19492462176', 'key-round', 'phone')}`
 });
 
 /* ============ SERVICE AREAS ============ */
@@ -710,7 +710,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Not sure if we cover you?<br /><span class="serif-italic" style="color:var(--brass-bright);">Just ask.</span>', 'Enter your ZIP in our estimate funnel and we\'ll confirm coverage instantly.', 'Check My Address', 'Call Now', 'free-estimate.html', 'tel:+19165550148', 'map-pin', 'phone')}`
+    ${cta('Not sure if we cover you?<br /><span class="serif-italic" style="color:var(--brass-bright);">Just ask.</span>', 'Enter your ZIP in our estimate funnel and we\'ll confirm coverage instantly.', 'Check My Address', 'Call Now', 'free-estimate.html', 'tel:+19492462176', 'map-pin', 'phone')}`
 });
 
 /* ============ ABOUT (Fatima) ============ */
@@ -767,7 +767,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Work with a company<br /><span class="serif-italic" style="color:var(--brass-bright);">that actually cares.</span>', 'Get a free estimate from Natabel — founded and run by Fatima, right here in Sacramento.', 'Get Free Estimate', 'Call Fatima', 'free-estimate.html', 'tel:+19165550148', 'droplets', 'phone')}`
+    ${cta('Work with a company<br /><span class="serif-italic" style="color:var(--brass-bright);">that actually cares.</span>', 'Get a free estimate from Natabel — founded and run by Fatima, right here in Sacramento.', 'Get Free Estimate', 'Call Fatima', 'free-estimate.html', 'tel:+19492462176', 'droplets', 'phone')}`
 });
 
 /* ============ REVIEWS ============ */
@@ -806,7 +806,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Join hundreds of happy<br /><span class="serif-italic" style="color:var(--brass-bright);">Sacramento clients.</span>', 'Get a free estimate and see the Natabel difference for yourself.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19165550148', 'droplets', 'phone')}`
+    ${cta('Join hundreds of happy<br /><span class="serif-italic" style="color:var(--brass-bright);">Sacramento clients.</span>', 'Get a free estimate and see the Natabel difference for yourself.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19492462176', 'droplets', 'phone')}`
 });
 
 /* ============ FAQ ============ */
@@ -848,7 +848,7 @@ pages.push({
         </div>
       </div>
     </section>
-    ${cta('Still have questions?<br /><span class="serif-italic" style="color:var(--brass-bright);">Let\'s talk.</span>', 'Call us or request a free estimate — we\'ll answer everything.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19165550148', 'droplets', 'phone')}`
+    ${cta('Still have questions?<br /><span class="serif-italic" style="color:var(--brass-bright);">Let\'s talk.</span>', 'Call us or request a free estimate — we\'ll answer everything.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19492462176', 'droplets', 'phone')}`
 });
 
 /* ============ FREE ESTIMATE (uses funnel) ============ */
@@ -920,7 +920,7 @@ pages.push({
               </div>
               <div class="field-row">
                 <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" /><div class="field-error">Please enter your name.</div></div>
-                <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(916) 555-0148" /><div class="field-error">Please enter a valid phone number.</div></div>
+                <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(949) 246-2176" /><div class="field-error">Please enter a valid phone number.</div></div>
               </div>
               <div class="field-row">
                 <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@example.com" /><div class="field-error">Please enter a valid email.</div></div>
@@ -941,7 +941,7 @@ pages.push({
 pages.push({
   slug: 'contact.html',
   title: 'Contact | Natabel Pristine Cleaning | Sacramento',
-  desc: 'Contact Natabel Pristine Cleaning in Sacramento. Call (916) 555-0148, email hello@natabelcleaning.com, or send a message. Serving Sacramento and surrounding communities. Mon–Fri 7a–6p, Sat 8a–4p.',
+  desc: 'Contact Natabel Pristine Cleaning in Sacramento. Call (949) 246-2176, email hello@natabelcleaning.com, or send a message. Serving Sacramento and surrounding communities. Mon–Fri 7a–6p, Sat 8a–4p.',
   ogTitle: 'Contact Natabel Pristine Cleaning — Sacramento',
   ogDesc: 'Call, email, or message us. Sacramento-based, founder-led, responsive.',
   schema: `{"@context":"https://schema.org","@graph":[{"@type":"ContactPage","url":"https://www.natabelpristinecleaning.com/contact.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://www.natabelpristinecleaning.com/contact.html"}]}]}`,
@@ -962,14 +962,14 @@ pages.push({
             <span class="h-eyebrow">Reach Us Directly</span>
             <h2>Contact<br /><span class="serif-italic">information.</span></h2>
             <div class="feat-list">
-              <div class="feat-item"><span class="feat-check"><i data-lucide="phone"></i></span><p><strong>Call:</strong> <a href="tel:+19165550148">(916) 555-0148</a></p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="phone"></i></span><p><strong>Call:</strong> <a href="tel:+19492462176">(949) 246-2176</a></p></div>
               <div class="feat-item"><span class="feat-check"><i data-lucide="mail"></i></span><p><strong>Email:</strong> <a href="mailto:hello@natabelcleaning.com">hello@natabelcleaning.com</a></p></div>
               <div class="feat-item"><span class="feat-check"><i data-lucide="map-pin"></i></span><p><strong>Service area:</strong> Sacramento &amp; surrounding communities</p></div>
               <div class="feat-item"><span class="feat-check"><i data-lucide="clock"></i></span><p><strong>Hours:</strong> Mon–Fri 7a–6p · Sat 8a–4p · Sun by appointment</p></div>
             </div>
             <div class="card" style="background:var(--emerald-tint);border-color:var(--emerald-line);margin-top:24px;">
               <h3 style="color:var(--emerald);margin-bottom:8px;">Prefer to text?</h3>
-              <p style="margin:0;color:var(--ink-2);">Text us at <strong>(916) 555-0148</strong> — great for quick questions, scheduling, or sending photos of your space.</p>
+              <p style="margin:0;color:var(--ink-2);">Text us at <strong>(949) 246-2176</strong> — great for quick questions, scheduling, or sending photos of your space.</p>
             </div>
           </div>
           <div class="reveal d1">
@@ -983,7 +983,7 @@ pages.push({
                   <input type="hidden" name="form_type" value="contact" />
                   <div class="field-row">
                     <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" /><div class="field-error">Please enter your name.</div></div>
-                    <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(916) 555-0148" /><div class="field-error">Please enter a valid phone number.</div></div>
+                    <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="phone" placeholder="(949) 246-2176" /><div class="field-error">Please enter a valid phone number.</div></div>
                   </div>
                   <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@example.com" /><div class="field-error">Please enter a valid email.</div></div>
                   <div class="field"><label>Subject</label><select name="subject"><option value="">Select…</option><option>Free estimate</option><option>Residential cleaning</option><option>Commercial cleaning</option><option>Recurring plan</option><option>Move-in / move-out</option><option>General question</option></select></div>
