@@ -39,6 +39,25 @@
       return w < 760 ? 0.42 : 1;
     }
 
+    function mobileBubbleOptions(isMobile) {
+      return {
+        minTiny: 3,
+        maxTiny: isMobile ? 13 : 16,
+        minR: isMobile ? 7 : 10,
+        maxR: isMobile ? 32 : 48,
+        minLarge: isMobile ? 18 : 24,
+        maxLarge: isMobile ? 44 : 72,
+        density: isMobile ? 0.9 : 1,
+        clusterChance: isMobile ? 0.34 : 0.32,
+      };
+    }
+
+    function keepMobileBubbleInFrame(b) {
+      if (w >= 760) return;
+      const inset = Math.max(14, b.r * 0.72);
+      b.x = Math.min(w - inset, Math.max(inset, b.x));
+    }
+
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = mount.getBoundingClientRect();
@@ -57,16 +76,8 @@
       const count = isMobile ? 64 : 68;
       bubbles = [];
       for (let i = 0; i < count; i++) {
-        const b = R.makeBubble(i * 173 + 41, w, h, {
-          minTiny: 3,
-          maxTiny: isMobile ? 18 : 16,
-          minR: isMobile ? 8 : 10,
-          maxR: isMobile ? 44 : 48,
-          minLarge: isMobile ? 20 : 24,
-          maxLarge: isMobile ? 62 : 72,
-          density: isMobile ? 1.15 : 1,
-          clusterChance: isMobile ? 0.44 : 0.32,
-        });
+        const b = R.makeBubble(i * 173 + 41, w, h, mobileBubbleOptions(isMobile));
+        keepMobileBubbleInFrame(b);
         b.y = (i / count) * (h + 80) + b.r;
         b.pop = b.y > h * 0.82 ? 0 : 1;
         bubbles.push(b);
@@ -75,18 +86,10 @@
 
     function respawn(b, i) {
       const isMobile = w < 760;
-      Object.assign(b, R.makeBubble(i * 173 + (Date.now() % 8000), w, h, {
-        minTiny: 3,
-        maxTiny: isMobile ? 18 : 16,
-        minR: isMobile ? 8 : 10,
-        maxR: isMobile ? 44 : 48,
-        minLarge: isMobile ? 20 : 24,
-        maxLarge: isMobile ? 62 : 72,
-        density: isMobile ? 1.15 : 1,
-        clusterChance: isMobile ? 0.44 : 0.32,
-      }));
+      Object.assign(b, R.makeBubble(i * 173 + (Date.now() % 8000), w, h, mobileBubbleOptions(isMobile)));
       b.y = h + b.r + 10 + Math.random() * 40;
       b.x = Math.random() * w;
+      keepMobileBubbleInFrame(b);
       b.pop = 0;
     }
 

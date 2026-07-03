@@ -43,15 +43,15 @@
 
   function heroMatchedBubbleOpts(mobile) {
     return {
-      count: mobile ? 64 : 68,
+      count: mobile ? 42 : 68,
       minTiny: 3,
-      maxTiny: mobile ? 18 : 16,
-      minR: mobile ? 8 : 10,
-      maxR: mobile ? 44 : 48,
-      minLarge: mobile ? 20 : 24,
-      maxLarge: mobile ? 62 : 72,
-      density: mobile ? 1.15 : 1,
-      clusterChance: mobile ? 0.44 : 0.32,
+      maxTiny: mobile ? 12 : 16,
+      minR: mobile ? 7 : 10,
+      maxR: mobile ? 30 : 48,
+      minLarge: mobile ? 16 : 24,
+      maxLarge: mobile ? 42 : 72,
+      density: mobile ? 0.88 : 1,
+      clusterChance: mobile ? 0.32 : 0.32,
     };
   }
 
@@ -64,13 +64,13 @@
       if (scope.querySelector('.natabel-bubble') || isBlackSurface(scope)) return;
       const isCopy = scope.classList.contains('page-hero-copy');
       const mobile = isMobileViewport();
-      const count = isCopy ? (mobile ? 5 : 3) : (mobile ? 7 : 4);
+      const count = isCopy ? (mobile ? 3 : 3) : (mobile ? 4 : 4);
       for (let i = 0; i < count; i++) {
         const bubble = el('span', 'natabel-bubble');
         const sx = isCopy ? (2 + Math.random() * 16) : (4 + Math.random() * 90);
         const sy = isCopy ? (4 + Math.random() * 12) : (6 + Math.random() * 82);
         const size = mobile
-          ? (Math.random() > 0.35 ? 28 + Math.floor(Math.random() * 24) : 18 + Math.floor(Math.random() * 12))
+          ? (Math.random() > 0.35 ? 22 + Math.floor(Math.random() * 16) : 14 + Math.floor(Math.random() * 10))
           : (Math.random() > 0.4 ? 36 + Math.floor(Math.random() * 28) : 22 + Math.floor(Math.random() * 14));
         const cluster = Math.random() > (mobile ? 0.45 : 0.55);
         bubble.appendChild(bubbleImg(size, { seed: ti * 100 + i * 17, cluster, alpha: 0.88 }));
@@ -98,15 +98,15 @@
 
     document.querySelectorAll('.page-hero').forEach(mount => {
       R.mountBubbleField(mount, {
-        count: mobile ? 30 : 22,
+        count: mobile ? 18 : 22,
         minTiny: 3,
-        maxTiny: mobile ? 14 : 12,
+        maxTiny: mobile ? 10 : 12,
         minR: 8,
-        maxR: mobile ? 42 : 38,
-        minLarge: 20,
-        maxLarge: mobile ? 62 : 58,
-        clusterChance: mobile ? 0.4 : 0.34,
-        density: mobile ? 1.1 : 1,
+        maxR: mobile ? 28 : 38,
+        minLarge: mobile ? 16 : 20,
+        maxLarge: mobile ? 40 : 58,
+        clusterChance: mobile ? 0.3 : 0.34,
+        density: mobile ? 0.85 : 1,
       });
     });
   }

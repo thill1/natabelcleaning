@@ -218,6 +218,12 @@
       return isMobileField() ? 0.42 : 1;
     }
 
+    function keepBubbleInFrame(b) {
+      if (!isMobileField()) return;
+      const inset = Math.max(12, b.r * 0.72);
+      b.x = Math.min(w - inset, Math.max(inset, b.x));
+    }
+
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = mount.getBoundingClientRect();
@@ -231,22 +237,23 @@
 
     function seedField() {
       const isMobile = isMobileField();
-      const base = opts.count || (isMobile ? 46 : 56);
+      const base = opts.count || (isMobile ? 36 : 56);
       const count = isMobile
-        ? Math.floor(base * 1.3)
+        ? Math.floor(base * 1.05)
         : Math.floor(base * (w / 1100 + 0.55));
       bubbles = [];
       for (let i = 0; i < count; i++) {
         const b = makeBubble(i * 131 + 17, w, h, {
           minTiny: 3,
-          maxTiny: isMobile ? 16 : 14,
+          maxTiny: isMobile ? 12 : 14,
           minR: isMobile ? 6 : 8,
-          maxR: isMobile ? 40 : 44,
-          minLarge: isMobile ? 18 : 22,
-          maxLarge: isMobile ? 56 : 68,
-          density: isMobile ? 1.12 : (opts.density || 1),
-          clusterChance: isMobile ? 0.42 : (opts.clusterChance || 0.3),
+          maxR: isMobile ? 30 : 44,
+          minLarge: isMobile ? 16 : 22,
+          maxLarge: isMobile ? 42 : 68,
+          density: isMobile ? 0.88 : (opts.density || 1),
+          clusterChance: isMobile ? 0.32 : (opts.clusterChance || 0.3),
         });
+        keepBubbleInFrame(b);
         b.y = rand(b.seed + 2) * h;
         bubbles.push(b);
       }
@@ -256,16 +263,17 @@
       const isMobile = isMobileField();
       Object.assign(b, makeBubble(i * 131 + Date.now() % 10000, w, h, {
         minTiny: 3,
-        maxTiny: isMobile ? 16 : 14,
+        maxTiny: isMobile ? 12 : 14,
         minR: isMobile ? 6 : 8,
-        maxR: isMobile ? 40 : 36,
-        minLarge: isMobile ? 18 : 22,
-        maxLarge: isMobile ? 56 : 68,
-        density: isMobile ? 1.12 : (opts.density || 1),
-        clusterChance: isMobile ? 0.42 : (opts.clusterChance || 0.3),
+        maxR: isMobile ? 30 : 36,
+        minLarge: isMobile ? 16 : 22,
+        maxLarge: isMobile ? 42 : 68,
+        density: isMobile ? 0.88 : (opts.density || 1),
+        clusterChance: isMobile ? 0.32 : (opts.clusterChance || 0.3),
       }));
       b.y = h + b.r + rand(b.seed) * 60;
       b.x = rand(b.seed + 11) * w;
+      keepBubbleInFrame(b);
       b.pop = 0;
     }
 
