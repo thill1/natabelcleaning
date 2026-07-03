@@ -13,7 +13,7 @@
 
 - Static marketing site for **NataBel Pristine Cleaning** — a new (2026) residential and commercial cleaning company based in **Rocklin, CA** (Placer County); founder **Fatima Patalano**, a client of Sentient Partners. Service area leads Placer-first: Rocklin, Roseville, Granite Bay, Loomis, Lincoln, Penryn, Newcastle, Auburn, then Folsom/Sacramento-side communities.
 - No-build stack: plain HTML (~16 pages), single `css/styles.css`, vanilla JS from CDN — no `package.json`.
-- Deploy target: GitHub Pages via `thill1/natabelcleaning` (`thill1.github.io/natabelcleaning`); production canonical URL is `natabelcleaning.com`.
+- Deploy target: Vercel via `thill1/natabelcleaning`; production canonical URL is `natabelpristinecleaning.com`.
 - Central config lives in `js/config.js` as `window.PCC`; shared header/footer/nav in `js/partials.js`; page scaffolding in `build-pages.js`. `PCC.pricing` holds optional "From $X" plan anchors (hidden until set); `PCC.trust` holds the guarantee copy and promise tiles.
 - Design tokens in `css/styles.css` — primary tokens are `--noir*` (black ramp) with legacy `--emerald*` aliases kept for older markup; `--brass*` is the champagne gold ramp.
 - Typography: **Fraunces variable** (display; opsz auto, SOFT axis raised at display sizes, signature/quote styles use SOFT 60–100 + WONK) + Plus Jakarta Sans (UI, tabular-nums for stats). No mono font. Lucide icons pinned to `0.469.0`.

@@ -18,7 +18,7 @@ window.PCC = {
     phone:          '(916) 555-0148',
     phoneHref:      'tel:+19165550148',
     email:          'hello@natabelcleaning.com',
-    url:            'https://www.natabelcleaning.com',
+    url:            'https://www.natabelpristinecleaning.com',
     streetAddress:  'Rocklin, CA',
     addressLocality:'Rocklin',
     addressRegion:  'CA',

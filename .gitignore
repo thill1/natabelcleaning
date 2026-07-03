@@ -30,3 +30,4 @@ screenshot-*.png
 
 # Docs (internal)
 docs/
+.vercel

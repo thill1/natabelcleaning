@@ -29,18 +29,18 @@ const HEAD = (p) => `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${p.title}</title>
   <meta name="description" content="${p.desc}" />
-  <link rel="canonical" href="https://www.natabelcleaning.com/${p.slug}" />
+  <link rel="canonical" href="https://www.natabelpristinecleaning.com/${p.slug}" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="${p.ogTitle}" />
   <meta property="og:description" content="${p.ogDesc}" />
-  <meta property="og:url" content="https://www.natabelcleaning.com/${p.slug}" />
-  <meta property="og:image" content="https://thill1.github.io/natabelcleaning/assets/og-share.jpg" />
+  <meta property="og:url" content="https://www.natabelpristinecleaning.com/${p.slug}" />
+  <meta property="og:image" content="https://www.natabelpristinecleaning.com/assets/og-share.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Natabel Pristine Cleaning — gold logo on black with soap bubbles" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://thill1.github.io/natabelcleaning/assets/og-share.jpg" />
+  <meta name="twitter:image" content="https://www.natabelpristinecleaning.com/assets/og-share.jpg" />
   <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
@@ -99,7 +99,7 @@ pages.push({
   desc: 'Recurring commercial cleaning for Sacramento businesses. Office cleaning, janitorial service, restroom sanitation, floor care, post-construction. Walkthrough-based pricing, after-hours service, custom scopes. Free quotes.',
   ogTitle: 'Recurring Commercial Cleaning for Sacramento Businesses',
   ogDesc: 'Offices, retail, medical, property management. Walkthrough-based pricing, after-hours service, custom scopes.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Commercial Cleaning","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Commercial Cleaning","item":"https://www.natabelcleaning.com/commercial.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Commercial Cleaning","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Commercial Cleaning","item":"https://www.natabelpristinecleaning.com/commercial.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -203,7 +203,7 @@ pages.push({
   desc: 'Professional office cleaning in Sacramento. Daily, weekly, biweekly, and nightly office cleaning with consistent crews, detailed checklists, and after-hours availability. Free quotes for Sacramento offices.',
   ogTitle: 'Office Cleaning Sacramento — Daily, Weekly & Nightly',
   ogDesc: 'Consistent crews, detailed checklists, after-hours availability. Free quotes for Sacramento offices.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Office Cleaning","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Commercial","item":"https://www.natabelcleaning.com/commercial.html"},{"@type":"ListItem","position":3,"name":"Office Cleaning","item":"https://www.natabelcleaning.com/office-cleaning.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Office Cleaning","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Commercial","item":"https://www.natabelpristinecleaning.com/commercial.html"},{"@type":"ListItem","position":3,"name":"Office Cleaning","item":"https://www.natabelpristinecleaning.com/office-cleaning.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -275,7 +275,7 @@ pages.push({
   desc: 'Contracted janitorial services for Sacramento offices, medical, retail, and commercial facilities. Restroom sanitation, floor care, trash removal, and full-scope cleaning on flexible schedules. Free janitorial quotes.',
   ogTitle: 'Janitorial Services Sacramento — Contracted Commercial Janitorial',
   ogDesc: 'Full-scope janitorial service on flexible schedules. Restrooms, floors, trash, sanitization.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Janitorial Services","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Commercial","item":"https://www.natabelcleaning.com/commercial.html"},{"@type":"ListItem","position":3,"name":"Janitorial Services","item":"https://www.natabelcleaning.com/janitorial-services.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Janitorial Services","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Commercial","item":"https://www.natabelpristinecleaning.com/commercial.html"},{"@type":"ListItem","position":3,"name":"Janitorial Services","item":"https://www.natabelpristinecleaning.com/janitorial-services.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -349,7 +349,7 @@ pages.push({
   desc: 'Trustworthy residential cleaning in Sacramento. Recurring weekly & biweekly house cleaning, deep cleaning, apartment & condo cleaning, move-in/move-out. Vetted teams, flexible scheduling, free estimates.',
   ogTitle: 'House Cleaning Sacramento — Recurring & One-Time',
   ogDesc: 'Vetted teams, flexible scheduling, customizable checklists. Free estimates for Sacramento homes.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Residential Cleaning","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Residential Cleaning","item":"https://www.natabelcleaning.com/residential.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Residential Cleaning","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Residential Cleaning","item":"https://www.natabelpristinecleaning.com/residential.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -421,7 +421,7 @@ pages.push({
   desc: 'Deep cleaning service in Sacramento. Top-to-bottom detail cleaning — baseboards, blinds, inside appliances, grout, ceiling fans, hard-to-reach areas. Perfect for spring cleaning or resetting your space. Free quotes.',
   ogTitle: 'Deep Cleaning Sacramento — Top-to-Bottom Detail',
   ogDesc: 'Baseboards, blinds, inside appliances, grout, fans. The reset your space deserves.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Deep Cleaning","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Deep Cleaning","item":"https://www.natabelcleaning.com/deep-cleaning.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Deep Cleaning","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Deep Cleaning","item":"https://www.natabelpristinecleaning.com/deep-cleaning.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -481,7 +481,7 @@ pages.push({
   desc: 'Move-in and move-out cleaning in Sacramento. Empty-unit top-to-bottom cleans — inside cabinets, appliances, closets. Get your deposit back or start fresh in a spotless space. Free quotes.',
   ogTitle: 'Move-In / Move-Out Cleaning Sacramento',
   ogDesc: 'Empty-unit deep cleans. Inside cabinets, appliances, closets. Get your deposit back.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Move In Move Out Cleaning","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Move-In / Move-Out","item":"https://www.natabelcleaning.com/move-in-out.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Move In Move Out Cleaning","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Move-In / Move-Out","item":"https://www.natabelpristinecleaning.com/move-in-out.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -539,7 +539,7 @@ pages.push({
   desc: 'Recurring cleaning plans in Sacramento. Weekly, biweekly, and monthly plans for homes and businesses. Same vetted team, locked-in rate, customizable checklists. Commercial nightly & custom schedules.',
   ogTitle: 'Recurring Cleaning Plans Sacramento — Weekly, Biweekly, Monthly',
   ogDesc: 'Lock in your team, your rate, and your rhythm. Same vetted crew every visit.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Recurring Cleaning","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Recurring Cleaning","item":"https://www.natabelcleaning.com/recurring-cleaning.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Recurring Cleaning","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Recurring Cleaning","item":"https://www.natabelpristinecleaning.com/recurring-cleaning.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -618,7 +618,7 @@ pages.push({
   desc: 'Property management cleaning in Sacramento. Rental turnover, common area, and maintenance cleaning for landlords and property managers. Photo-documented, on-time, reliable. Free quotes.',
   ogTitle: 'Property Management Cleaning Sacramento',
   ogDesc: 'Turnover, common areas, and maintenance cleaning for landlords and property managers.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Property Management Cleaning","provider":{"@id":"https://www.natabelcleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Property Management","item":"https://www.natabelcleaning.com/property-management.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Service","serviceType":"Property Management Cleaning","provider":{"@id":"https://www.natabelpristinecleaning.com/#business"},"areaServed":"Sacramento, CA"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Property Management","item":"https://www.natabelpristinecleaning.com/property-management.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -677,7 +677,7 @@ pages.push({
   desc: 'Natabel Pristine Cleaning serves Sacramento, Roseville, Rocklin, Folsom, Elk Grove, Davis, Rancho Cordova, Carmichael, Citrus Heights, Fair Oaks, Orangevale, West Sacramento, Natomas, Midtown, East Sacramento, Land Park & Arden-Arcade.',
   ogTitle: 'Sacramento Cleaning Service Areas',
   ogDesc: 'Serving Sacramento and 17 surrounding communities. Founder-led, local, insured.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Service Areas","url":"https://www.natabelcleaning.com/service-areas.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Service Areas","item":"https://www.natabelcleaning.com/service-areas.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Service Areas","url":"https://www.natabelpristinecleaning.com/service-areas.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Service Areas","item":"https://www.natabelpristinecleaning.com/service-areas.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -720,7 +720,7 @@ pages.push({
   desc: 'Meet Fatima Patalano, founder of Natabel Pristine Cleaning. A Sacramento local building a premium, reliable, founder-led cleaning company for Sacramento homes and businesses. Licensed, insured, and community-rooted.',
   ogTitle: 'About Fatima — Founder of Natabel Pristine Cleaning',
   ogDesc: 'A Sacramento local building a premium, founder-led cleaning company.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"AboutPage","url":"https://www.natabelcleaning.com/about.html"},{"@type":"Person","name":"Fatima Patalano","jobTitle":"Founder","worksFor":{"@id":"https://www.natabelcleaning.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"About","item":"https://www.natabelcleaning.com/about.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"AboutPage","url":"https://www.natabelpristinecleaning.com/about.html"},{"@type":"Person","name":"Fatima Patalano","jobTitle":"Founder","worksFor":{"@id":"https://www.natabelpristinecleaning.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"About","item":"https://www.natabelpristinecleaning.com/about.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -787,7 +787,7 @@ pages.push({
   desc: 'Read reviews from Natabel Pristine Cleaning clients across Sacramento — office managers, property managers, homeowners, and commercial clients. 4.9★ Google-rated, 127+ reviews.',
   ogTitle: 'Natabel Pristine Cleaning Reviews — Sacramento',
   ogDesc: '4.9★ from 127+ Sacramento clients. Office managers, homeowners, property managers.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Review","itemReviewed":{"@id":"https://www.natabelcleaning.com/#business"},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Dana K."}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Reviews","item":"https://www.natabelcleaning.com/reviews.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Review","itemReviewed":{"@id":"https://www.natabelpristinecleaning.com/#business"},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Dana K."}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Reviews","item":"https://www.natabelpristinecleaning.com/reviews.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -858,7 +858,7 @@ pages.push({
   desc: 'Get a free cleaning estimate in 90 seconds. Residential, commercial, move-in/out, deep cleaning, recurring plans. No pressure, no obligation. Serving Sacramento and surrounding communities.',
   ogTitle: 'Free Cleaning Estimate — Natabel, Sacramento',
   ogDesc: '90-second estimate. No pressure, no obligation. Residential & commercial.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Free Estimate","url":"https://www.natabelcleaning.com/free-estimate.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Free Estimate","item":"https://www.natabelcleaning.com/free-estimate.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Free Estimate","url":"https://www.natabelpristinecleaning.com/free-estimate.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Free Estimate","item":"https://www.natabelpristinecleaning.com/free-estimate.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -885,7 +885,7 @@ pages.push({
   desc: 'Book residential cleaning, schedule a commercial walkthrough, or request a free estimate online. Preferred date and time, confirmation step, and SMS/email reminders. Sacramento and surrounding communities.',
   ogTitle: 'Book Cleaning Online — Natabel, Sacramento',
   ogDesc: 'Residential booking, commercial walkthroughs, free estimates. Preferred date & time.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Book Online","url":"https://www.natabelcleaning.com/book-online.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Book Online","item":"https://www.natabelcleaning.com/book-online.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Book Online","url":"https://www.natabelpristinecleaning.com/book-online.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Book Online","item":"https://www.natabelpristinecleaning.com/book-online.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
@@ -944,7 +944,7 @@ pages.push({
   desc: 'Contact Natabel Pristine Cleaning in Sacramento. Call (916) 555-0148, email hello@natabelcleaning.com, or send a message. Serving Sacramento and surrounding communities. Mon–Fri 7a–6p, Sat 8a–4p.',
   ogTitle: 'Contact Natabel Pristine Cleaning — Sacramento',
   ogDesc: 'Call, email, or message us. Sacramento-based, founder-led, responsive.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"ContactPage","url":"https://www.natabelcleaning.com/contact.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelcleaning.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://www.natabelcleaning.com/contact.html"}]}]}`,
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"ContactPage","url":"https://www.natabelpristinecleaning.com/contact.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://www.natabelpristinecleaning.com/contact.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
