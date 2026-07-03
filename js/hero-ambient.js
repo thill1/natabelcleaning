@@ -35,6 +35,10 @@
     let raf = 0;
     let last = 0;
 
+    function motionScale() {
+      return w < 760 ? 0.42 : 1;
+    }
+
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = mount.getBoundingClientRect();
@@ -141,7 +145,7 @@
       bubbles.forEach((b, i) => {
         if (b.bursting) {
           // Pop: rim expands and fades, then the bubble is reborn below
-          b.bursting = Math.min(1, b.bursting + dt / 240);
+          b.bursting = Math.min(1, b.bursting + (dt * motionScale()) / 240);
           const burstR = b.r * (1 + b.bursting * 0.6);
           const burstA = b.alpha * (1 - b.bursting);
           if (burstA > 0.01) {
@@ -151,8 +155,9 @@
           return;
         }
 
-        R.stepBubble(b, dt);
-        repel(b, dt);
+        const scaledDt = dt * motionScale();
+        R.stepBubble(b, scaledDt);
+        repel(b, scaledDt);
 
         if (b.y < -b.r * 4) respawn(b, i);
 

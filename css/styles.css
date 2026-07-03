@@ -1190,6 +1190,8 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
   pointer-events: none;
   z-index: 0;
   transform: translate(-50%, -50%) scale(var(--bs, 1));
+  --bubble-drift-x: 6px;
+  --bubble-drift-y: -22px;
   animation: natabelBubbleFloat 10s var(--ease) infinite;
   animation-delay: var(--bd, 0s);
   filter: drop-shadow(0 2px 8px rgba(255,255,255,.12));
@@ -1203,13 +1205,15 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 110px); }
 @keyframes natabelBubbleFloat {
   0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(var(--bs, 1)); }
   12% { opacity: 0.92; }
-  50% { opacity: 0.78; transform: translate(calc(-50% + 6px), calc(-50% - 22px)) scale(calc(var(--bs, 1) * 1.04)); }
+  50% { opacity: 0.78; transform: translate(calc(-50% + var(--bubble-drift-x)), calc(-50% + var(--bubble-drift-y))) scale(calc(var(--bs, 1) * 1.04)); }
   88% { opacity: 0.35; }
 }
 .hero-copy .natabel-bubble, .page-hero-copy .natabel-bubble { max-width: 52px; }
 @media (max-width: 759px) {
   .natabel-bubble {
-    animation-duration: 8.5s;
+    --bubble-drift-x: 3px;
+    --bubble-drift-y: -12px;
+    animation-duration: 18s;
     filter: drop-shadow(0 2px 6px rgba(255,255,255,.14));
   }
   .page-hero-copy .natabel-bubble { max-width: 46px; }
