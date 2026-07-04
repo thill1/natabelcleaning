@@ -120,6 +120,9 @@
   }
 
   function boot() {
+    if (document.querySelector('.page-hero')) {
+      document.documentElement.classList.add('has-page-hero');
+    }
     document.querySelectorAll('.page-hero:not(.page-hero-ready)').forEach(upgradePageHero);
     document.querySelectorAll('[data-photo]').forEach(fillPhotoSlot);
   }

@@ -25,7 +25,8 @@
      the gold accent line lands last. Falls back to the CSS reveal when
      SplitText is unavailable or reduced motion is requested. */
   function bootSplitHero() {
-    if (reduce || !window.gsap || !window.SplitText) return;
+    const compactMotion = window.matchMedia('(max-width: 719px)').matches;
+    if (reduce || compactMotion || !window.gsap || !window.SplitText) return;
     const h1 = document.querySelector('.hero h1, .page-hero h1');
     if (!h1 || h1.dataset.split) return;
     h1.dataset.split = '1';

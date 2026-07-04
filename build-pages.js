@@ -15,12 +15,12 @@ const VENDOR = `
   <script src="js/partials.js"></script>
   <script src="js/leads.js"></script>
   <script src="js/funnel.js"></script>
-  <script src="js/ui.js"></script>
+  <script src="js/ui.js?v=design-polish-20260703"></script>
   <script src="js/bubble-render.js"></script>
   <script src="js/bubbles.js"></script>
-  <script src="js/page-hero.js?v=contact-hero-20260703"></script>
+  <script src="js/page-hero.js?v=design-polish-20260703"></script>
   <script src="js/main.js"></script>
-  <script src="js/motion.js" defer></script>`;
+  <script src="js/motion.js?v=design-polish-20260703" defer></script>`;
 
 const HEAD = (p) => `<!DOCTYPE html>
 <html lang="en">
@@ -50,9 +50,9 @@ const HEAD = (p) => `<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=contact-hero-20260703" />
+  <link rel="stylesheet" href="css/styles.css?v=design-polish-20260703" />
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
-  <script src="js/config.js?v=contact-hero-20260703"></script>
+  <script src="js/config.js?v=design-polish-20260703"></script>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
@@ -745,10 +745,10 @@ pages.push({
         </div>
 
         <div class="stats-strip reveal d2" style="margin-top:56px;max-width:760px;margin-inline:auto;">
-          <div class="stat"><div class="num" data-count="4.9"></div><div class="lbl">Google rating</div></div>
-          <div class="stat"><div class="num" data-count="127" data-suffix="+"></div><div class="lbl">5-star reviews</div></div>
-          <div class="stat"><div class="num" data-count="340" data-suffix="+"></div><div class="lbl">Clients served</div></div>
-          <div class="stat"><div class="num" data-count="60" data-suffix="+"></div><div class="lbl">Recurring accounts</div></div>
+          <div class="stat"><div class="num">100%</div><div class="lbl">Founder-inspected cleans</div></div>
+          <div class="stat"><div class="num">24 hr</div><div class="lbl">Pristine Guarantee</div></div>
+          <div class="stat"><div class="num">1</div><div class="lbl">Dedicated team per client</div></div>
+          <div class="stat"><div class="num">0</div><div class="lbl">Corners cut. Ever.</div></div>
         </div>
       </div>
     </section>
@@ -771,30 +771,25 @@ pages.push({
 });
 
 /* ============ REVIEWS ============ */
-const REVIEWS = [
-  ['DK','Dana K.','Office Manager · Midtown Sacramento','"Natabel has been cleaning our 8,000 sq ft office weekly for over a year. Reliable, thorough, and our staff has absolutely noticed the difference. Fatima is responsive and professional."'],
-  ['MR','Marcus R.','Property Manager · Elk Grove','"I manage 14 rental units across Elk Grove and Folsom. Turnovers used to be my biggest headache — now I just call Natabel. Photo-documented cleans, on-time every time."'],
-  ['SP','Sofia P.','Homeowner · Land Park','"Biweekly cleaning that has genuinely changed our weekends. Coming home to a clean house on a Friday is the best feeling. They remember every little thing we asked for."'],
-  ['JT','James T.','Move-Out Customer · Natomas','"Used them for a move-out clean. Got my full deposit back for the first time ever. The place looked better than when I moved in. Worth every penny."'],
-  ['AL','Aisha L.','Recurring Customer · East Sacramento','"Third month of weekly cleans and I am a customer for life. Same two cleaners every time, they know my dog by name, and the house has never been more consistently clean."'],
-  ['BC','Brian C.','Commercial Client · Roseville','"Our retail store gets cleaned nightly by Natabel. Floors sparkle, restrooms are always stocked, and they handle after-hours access seamlessly. A genuinely premium operation."'],
-  ['LG','Lisa G.','Homeowner · Folsom','"The deep clean was transformative. Baseboards, blinds, inside the oven — they got everything. I have already booked a recurring biweekly plan."'],
-  ['RV','Raj V.','Office Manager · Rancho Cordova','"Switched from a national chain to Natabel and the difference is night and day. Same crew, better communication, and our office has never looked better."'],
+const STANDARDS = [
+  ['clipboard-check','Written Standard','Founder-inspected','Fatima\'s checklist, every visit','Every clean is inspected against the founder\'s checklist before we call it finished: baseboards, grout, glass, and the details most services skip.'],
+  ['refresh-ccw','Guarantee','The Pristine Guarantee','24-hour re-clean promise','If anything falls short of pristine, tell us within 24 hours and we return to re-clean the missed areas: free, direct, and handled with care.'],
+  ['users-round','Consistency','Your dedicated team','Consistent crew, every time','Recurring clients get the same vetted, background-checked team whenever scheduling allows, so the crew learns the space and the standard.'],
 ];
 pages.push({
   slug: 'reviews.html',
-  title: 'Reviews | Natabel Pristine Cleaning | Sacramento',
-  desc: 'Read reviews from Natabel Pristine Cleaning clients across Sacramento — office managers, property managers, homeowners, and commercial clients. 4.9★ Google-rated, 127+ reviews.',
-  ogTitle: 'Natabel Pristine Cleaning Reviews — Sacramento',
-  ogDesc: '4.9★ from 127+ Sacramento clients. Office managers, homeowners, property managers.',
-  schema: `{"@context":"https://schema.org","@graph":[{"@type":"Review","itemReviewed":{"@id":"https://www.natabelpristinecleaning.com/#business"},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"Dana K."}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Reviews","item":"https://www.natabelpristinecleaning.com/reviews.html"}]}]}`,
+  title: 'Reviews & Standards | NataBel Pristine Cleaning | Rocklin',
+  desc: 'NataBel Pristine Cleaning is collecting verified reviews. Until then, review the written standards, guarantee, and founder-led quality promises behind every clean.',
+  ogTitle: 'NataBel Pristine Cleaning Reviews & Standards',
+  ogDesc: 'Verified reviews are coming soon. See the NataBel standard and 24-hour pristine guarantee.',
+  schema: `{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Reviews","item":"https://www.natabelpristinecleaning.com/reviews.html"}]}]}`,
   body: `
     <section class="page-hero">
       <div class="container">
         <div class="breadcrumbs reveal"><a href="index.html">Home</a><span class="sep">/</span><span>Reviews</span></div>
-        <span class="pill pill-brass reveal" style="margin-bottom:16px;">4.9★ · 127+ Reviews</span>
-        <h1 class="reveal">Sacramento loves<br /><span class="serif-italic">a genuinely clean space.</span></h1>
-        <p class="lead reveal">Real words from the offices, homes, and properties we clean every week. <em>(Placeholder reviews — replace with verified Google reviews.)</em></p>
+        <span class="pill pill-brass reveal" style="margin-bottom:16px;">Verified Reviews Coming Soon</span>
+        <h1 class="reveal">The NataBel standard,<br /><span class="serif-italic">in writing.</span></h1>
+        <p class="lead reveal">We're collecting verified client reviews the right way. Until then, here is the standard every NataBel client can count on.</p>
         <div class="hero-ctas reveal"><a href="free-estimate.html" class="btn btn-brass btn-lg" data-magnetic><i data-lucide="droplets"></i> Get a Free Estimate</a></div>
       </div>
     </section>
@@ -802,11 +797,11 @@ pages.push({
     <section class="section">
       <div class="container container-wide">
         <div class="grid-3">
-          ${REVIEWS.map((r,i) => `<div class="review-card reveal${i%3===1?' d1':i%3===2?' d2':''}"><div class="review-stars">★★★★★</div><p class="review-body">${r[3]}</p><div class="review-author"><span class="review-avatar">${r[0]}</span><span><strong>${r[1]}</strong><small>${r[2]}</small></span></div></div>`).join('')}
+          ${STANDARDS.map((r,i) => `<div class="review-card standard-card reveal${i%3===1?' d1':i%3===2?' d2':''}"><div class="standard-label"><i data-lucide="${r[0]}"></i> ${r[1]}</div><p class="review-body">${r[4]}</p><div class="review-author"><span class="review-avatar"><i data-lucide="${r[0]}"></i></span><span><strong>${r[2]}</strong><small>${r[3]}</small></span></div></div>`).join('')}
         </div>
       </div>
     </section>
-    ${cta('Join hundreds of happy<br /><span class="serif-italic" style="color:var(--brass-bright);">Sacramento clients.</span>', 'Get a free estimate and see the Natabel difference for yourself.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19168998811', 'droplets', 'phone')}`
+    ${cta('Start with the standard<br /><span class="serif-italic" style="color:var(--brass-bright);">we put in writing.</span>', 'Get a free estimate and see the NataBel difference for yourself.', 'Get Free Estimate', 'Call Now', 'free-estimate.html', 'tel:+19168998811', 'droplets', 'phone')}`
 });
 
 /* ============ FAQ ============ */

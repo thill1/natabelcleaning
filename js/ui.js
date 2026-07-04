@@ -59,17 +59,23 @@
   /* ---------- Floating estimate CTA (desktop) ---------- */
   const floatCta = document.querySelector('.float-cta');
   if (floatCta) {
-    const hero = document.querySelector('.hero, .page-hero');
-    let visible = false;
-    const onScroll = () => {
-      const threshold = hero ? hero.offsetTop + hero.offsetHeight * 0.55 : 420;
-      const show = window.scrollY > threshold;
-      if (show === visible) return;
-      visible = show;
-      floatCta.classList.toggle('visible', show);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const page = location.pathname.split('/').pop() || 'index.html';
+    const suppressFloat = ['free-estimate.html', 'contact.html', 'book-online.html'].includes(page);
+    if (suppressFloat) {
+      floatCta.remove();
+    } else {
+      const hero = document.querySelector('.hero, .page-hero');
+      let visible = false;
+      const onScroll = () => {
+        const threshold = hero ? hero.offsetTop + hero.offsetHeight * 0.65 : 700;
+        const show = window.scrollY > threshold;
+        if (show === visible) return;
+        visible = show;
+        floatCta.classList.toggle('visible', show);
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
   }
 
   /* ---------- Choice radios: sync .checked on load + click ---------- */
