@@ -415,6 +415,20 @@ body { padding-bottom: 84px; }
 }
 .hero-trust-pill svg, .hero-trust-pill .i { width: 17px; height: 17px; color: var(--brass-bright); flex-shrink: 0; }
 .hero-trust-pill .hero-float-stars { color: var(--brass); letter-spacing: 1px; font-size: .78rem; }
+.hero-founder-pill picture {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.founder-pill-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid rgba(227,200,120,.55);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.08);
+}
 .hero-trust-pill strong { color: var(--brass-bright); font-weight: 700; }
 
 .hero-metrics {
@@ -1197,11 +1211,19 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 78px); }
   max-height: min(480px, 52vh);
   border: 1px solid rgba(10,10,10,.06);
 }
+.page-hero-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .page-hero-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+.page-hero-media-about img {
+  object-position: center top;
 }
 .photo-slot.photo-slot { border-radius: var(--radius-lg); overflow: hidden; }
 .photo-slot-empty { display: none; }
@@ -1381,7 +1403,62 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 78px); }
   box-shadow: 0 32px 72px rgba(10,10,10,.18), 0 10px 26px rgba(10,10,10,.08);
   border: 1px solid rgba(10,10,10,.06);
 }
+.founder-media picture { display: block; width: 100%; height: 100%; }
 .founder-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.founder-headshot-card {
+  position: relative;
+  background: var(--noir);
+}
+.founder-headshot-card img {
+  object-position: center top;
+}
+.founder-headshot-card::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.68));
+  pointer-events: none;
+}
+.founder-headshot-caption {
+  position: absolute;
+  left: clamp(18px, 4vw, 30px);
+  right: clamp(18px, 4vw, 30px);
+  bottom: clamp(18px, 4vw, 30px);
+  z-index: 1;
+  color: var(--ivory);
+}
+.founder-headshot-caption span {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  margin-bottom: 9px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(227,200,120,.18);
+  border: 1px solid rgba(227,200,120,.34);
+  color: var(--brass-bright);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.founder-headshot-caption strong,
+.founder-headshot-caption small {
+  display: block;
+}
+.founder-headshot-caption strong {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 420;
+  line-height: 1;
+}
+.founder-headshot-caption small {
+  margin-top: 7px;
+  color: rgba(255,255,255,.76);
+  font-size: .88rem;
+  font-weight: 600;
+}
 .founder-proof-card {
   height: 100%;
   min-height: 420px;

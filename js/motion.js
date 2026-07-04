@@ -57,7 +57,7 @@
      Media panels wipe in left-to-right behind a shine bar, like a squeegee
      pass. Applied to before/after sliders and page-hero photography. */
   function bootSqueegee() {
-    const targets = document.querySelectorAll('.ba-slider, .page-hero-media, .founder-media');
+    const targets = document.querySelectorAll('.ba-slider, .page-hero-media, .founder-media:not(.founder-headshot-card)');
     if (!targets.length) return;
     targets.forEach(el => el.classList.add('squeegee-reveal'));
     if (reduce || !window.ScrollTrigger) {

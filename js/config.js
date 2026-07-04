@@ -87,7 +87,7 @@ window.PCC = {
       move:                { src: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3', alt: 'Empty home ready for move-in cleaning' },
       recurring:           { src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0', alt: 'Well-maintained family home interior' },
       property:            { src: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa', alt: 'Rental property exterior and entryway' },
-      about:               { src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c', alt: 'Pristine Rocklin home interior' },
+      about:               { src: 'assets/fatima-patalano-headshot-portrait-800x1000.jpg', webp: 'assets/fatima-patalano-headshot-portrait-800x1000.webp', alt: 'Fatima Patalano, founder and owner of NataBel Pristine Cleaning', width: 800, height: 1000 },
       contact:             { src: 'https://images.unsplash.com/photo-1556745757-8d76bdb6984b', alt: 'Customer service and communication' },
       faq:                 { src: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85', alt: 'Planning documents on a desk' },
       reviews:             { src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c', alt: 'Polished kitchen detail after cleaning' },

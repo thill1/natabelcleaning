@@ -29,10 +29,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0;1,9..144,300..700,0..100,0&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/styles.css?v=design-polish-20260703" />
+  <link rel="stylesheet" href="css/styles.css?v=fatima-headshot-20260704" />
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
   <script>document.documentElement.classList.add('js-ready');</script>
-  <script src="js/config.js?v=design-polish-20260703"></script>
+  <script src="js/config.js?v=fatima-headshot-20260704"></script>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
@@ -71,7 +71,13 @@
           <div class="hero-trust-pills" data-reveal data-reveal-delay="4">
             <span class="hero-trust-pill"><i data-lucide="refresh-ccw"></i> 24-hour <strong>Pristine Guarantee</strong></span>
             <span class="hero-trust-pill"><i data-lucide="shield-check"></i> Licensed &amp; insured</span>
-            <span class="hero-trust-pill"><i data-lucide="user-round"></i> Founder-led by <strong>Fatima Patalano</strong></span>
+            <span class="hero-trust-pill hero-founder-pill">
+              <picture>
+                <source srcset="assets/fatima-patalano-headshot-square-800.webp" type="image/webp" />
+                <img src="assets/fatima-patalano-headshot-square-800.jpg" alt="Fatima Patalano" class="founder-pill-avatar" loading="eager" decoding="async" width="800" height="800" />
+              </picture>
+              Founder-led by <strong>Fatima Patalano</strong>
+            </span>
           </div>
         </div>
 
@@ -422,17 +428,16 @@
             </div>
           </div>
           <div class="reveal d1">
-            <figure class="founder-media founder-proof-card" aria-label="Founder checklist">
-              <img src="assets/logo-wordmark.png" alt="NataBel Pristine Cleaning" class="founder-proof-logo" loading="lazy" decoding="async" width="520" height="250" />
-              <div>
-                <h3>Fatima's checklist, every visit.</h3>
-                <ul class="founder-proof-list">
-                  <li><i data-lucide="clipboard-check"></i><span>Room-by-room finish checklist before the team leaves.</span></li>
-                  <li><i data-lucide="sparkles"></i><span>Detail areas reviewed for the polished, pristine finish NataBel promises.</span></li>
-                  <li><i data-lucide="refresh-ccw"></i><span>24-hour re-clean promise if anything falls short.</span></li>
-                </ul>
-                <p class="founder-proof-note">A written standard, a founder-led team, and no borrowed praise.</p>
-              </div>
+            <figure class="founder-media founder-headshot-card">
+              <picture>
+                <source srcset="assets/fatima-patalano-headshot-portrait-800x1000.webp" type="image/webp" />
+                <img src="assets/fatima-patalano-headshot-portrait-800x1000.jpg" alt="Fatima Patalano, founder and owner of NataBel Pristine Cleaning" loading="eager" fetchpriority="high" decoding="async" width="800" height="1000" />
+              </picture>
+              <figcaption class="founder-headshot-caption">
+                <span>Founder &amp; Owner</span>
+                <strong>Fatima Patalano</strong>
+                <small>NataBel Pristine Cleaning</small>
+              </figcaption>
             </figure>
             <div class="founder-guarantee">
               <span class="founder-guarantee-ic"><i data-lucide="refresh-ccw"></i></span>
@@ -546,7 +551,12 @@
           { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "16:00" }
         ],
         "areaServed": ["Rocklin","Roseville","Granite Bay","Loomis","Lincoln","Penryn","Newcastle","Auburn","Folsom","Citrus Heights","Fair Oaks","Orangevale","Carmichael","Sacramento"],
-        "founder": { "@type": "Person", "name": "Fatima Patalano" }
+        "founder": {
+          "@type": "Person",
+          "name": "Fatima Patalano",
+          "jobTitle": "Founder and Owner",
+          "image": "https://www.natabelpristinecleaning.com/assets/fatima-patalano-headshot-square-800.jpg"
+        }
       },
       { "@type": "CleaningService", "name": "NataBel Pristine Cleaning", "parentOrganization": { "@id": "https://www.natabelpristinecleaning.com/#business" }, "areaServed": "Rocklin, CA and surrounding Placer County communities" },
       {
@@ -580,8 +590,8 @@
   <script src="js/funnel.js"></script>
   <script src="js/ui.js?v=design-polish-20260703"></script>
   <script src="js/bubbles.js"></script>
-  <script src="js/page-hero.js?v=design-polish-20260703"></script>
+  <script src="js/page-hero.js?v=fatima-headshot-20260704"></script>
   <script src="js/main.js"></script>
-  <script src="js/motion.js?v=design-polish-20260703" defer></script>
+  <script src="js/motion.js?v=fatima-headshot-20260704" defer></script>
 </body>
 </html>

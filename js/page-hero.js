@@ -37,8 +37,19 @@
   function buildImg(p, opts) {
     opts = opts || {};
     const w = opts.width || 960;
-    const src = p.src.includes('?') ? p.src : `${p.src}?w=${w}&q=82&auto=format&fit=crop`;
-    return `<img src="${src}" alt="${p.alt}" width="${w}" height="${Math.round(w * 0.75)}" loading="${opts.loading || 'lazy'}" decoding="async" />`;
+    const local = src => src && (/^(assets\/|\/assets\/|https:\/\/www\.natabelpristinecleaning\.com\/assets\/)/).test(src);
+    const formatSrc = src => {
+      if (!src) return '';
+      if (local(src) || src.includes('?')) return src;
+      return `${src}?w=${w}&q=82&auto=format&fit=crop`;
+    };
+    const src = formatSrc(p.src);
+    const webp = formatSrc(p.webp);
+    const width = p.width || w;
+    const height = p.height || Math.round(width * 0.75);
+    const img = `<img src="${src}" alt="${p.alt}" width="${width}" height="${height}" loading="${opts.loading || 'lazy'}" decoding="async" />`;
+    if (webp) return `<picture><source srcset="${webp}" type="image/webp">${img}</picture>`;
+    return img;
   }
 
   function removeBrokenImage(img) {
@@ -95,7 +106,7 @@
 
     if (!inner.querySelector('.page-hero-media')) {
       const fig = document.createElement('figure');
-      fig.className = 'page-hero-media reveal d1';
+      fig.className = `page-hero-media page-hero-media-${key} reveal d1`;
       fig.innerHTML = buildImg(p, { loading: 'eager', width: 800 });
       bindImageFallback(fig);
       inner.appendChild(fig);
