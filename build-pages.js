@@ -827,7 +827,7 @@ pages.push({
   ogDesc: 'Free estimates, recurring plans, janitorial contracts, after-hours service, and more.',
   schema: JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":FAQS.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))}),
   body: `
-    <section class="page-hero">
+    <section class="page-hero" data-hero-media="none">
       <div class="container">
         <div class="breadcrumbs reveal"><a href="index.html">Home</a><span class="sep">/</span><span>FAQ</span></div>
         <span class="pill reveal" style="margin-bottom:16px;">Frequently Asked</span>
@@ -855,7 +855,7 @@ pages.push({
   ogDesc: '90-second estimate. No pressure, no obligation. Residential & commercial.',
   schema: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Free Estimate","url":"https://www.natabelpristinecleaning.com/free-estimate.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Free Estimate","item":"https://www.natabelpristinecleaning.com/free-estimate.html"}]}]}`,
   body: `
-    <section class="page-hero">
+    <section class="page-hero" data-hero-media="none">
       <div class="container">
         <div class="breadcrumbs reveal"><a href="index.html">Home</a><span class="sep">/</span><span>Free Estimate</span></div>
         <span class="pill pill-brass reveal" style="margin-bottom:16px;">90 Seconds · No Obligation</span>
@@ -941,7 +941,7 @@ pages.push({
   ogDesc: 'Call, email, or message us. Sacramento-based, founder-led, responsive.',
   schema: `{"@context":"https://schema.org","@graph":[{"@type":"ContactPage","url":"https://www.natabelpristinecleaning.com/contact.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://www.natabelpristinecleaning.com/contact.html"}]}]}`,
   body: `
-    <section class="page-hero">
+    <section class="page-hero" data-hero-media="none">
       <div class="container">
         <div class="breadcrumbs reveal"><a href="index.html">Home</a><span class="sep">/</span><span>Contact</span></div>
         <span class="pill reveal" style="margin-bottom:16px;">Get in Touch</span>

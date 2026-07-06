@@ -1195,6 +1195,10 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 78px); }
   align-items: center;
 }
 .page-hero-copy { min-width: 0; }
+.page-hero-no-media .page-hero-inner {
+  display: block;
+  max-width: 880px;
+}
 .page-hero-logo { margin-bottom: clamp(16px, 3vw, 24px); }
 .page-hero-logo-img {
   display: block;

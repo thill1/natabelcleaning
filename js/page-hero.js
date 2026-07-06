@@ -25,13 +25,14 @@
     'book-online.html': 'booking',
     'free-estimate.html': 'estimate',
   };
+  const NO_MEDIA_KEYS = new Set(['contact', 'faq', 'estimate']);
 
   function pageFile() {
     return (location.pathname.split('/').pop() || 'index.html');
   }
 
   function photo(key) {
-    return IMG.pages[key] || IMG.pages.default;
+    return Object.prototype.hasOwnProperty.call(IMG.pages, key) ? IMG.pages[key] : IMG.pages.default;
   }
 
   function buildImg(p, opts) {
@@ -74,10 +75,11 @@
   function upgradePageHero(section) {
     if (section.classList.contains('page-hero-ready')) return;
     const key = section.dataset.heroKey || PAGE_KEYS[pageFile()] || 'default';
-    const p = photo(key);
-    if (!p) return;
+    const noMedia = section.dataset.heroMedia === 'none' || NO_MEDIA_KEYS.has(key);
+    const p = noMedia ? null : photo(key);
+    if (!noMedia && !p) return;
 
-    section.classList.add('page-hero-split', 'page-hero-ready');
+    section.classList.add(noMedia ? 'page-hero-no-media' : 'page-hero-split', 'page-hero-ready');
     const container = section.querySelector('.container');
     if (!container) return;
 
@@ -104,7 +106,7 @@
       copy.insertBefore(logoWrap, copy.firstChild);
     }
 
-    if (!inner.querySelector('.page-hero-media')) {
+    if (!noMedia && !inner.querySelector('.page-hero-media')) {
       const fig = document.createElement('figure');
       fig.className = `page-hero-media page-hero-media-${key} reveal d1`;
       fig.innerHTML = buildImg(p, { loading: 'eager', width: 800 });
