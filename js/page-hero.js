@@ -99,7 +99,7 @@
       inner.appendChild(copy);
     }
 
-    if (!copy.querySelector('.page-hero-logo')) {
+    if (!noMedia && !copy.querySelector('.page-hero-logo')) {
       const logoWrap = document.createElement('div');
       logoWrap.className = 'page-hero-logo';
       logoWrap.innerHTML = `<img src="assets/logo-wordmark.png" alt="${window.PCC.business.name}" class="page-hero-logo-img" width="280" height="134" />`;
