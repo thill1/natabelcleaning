@@ -25,7 +25,7 @@
     'book-online.html': 'booking',
     'free-estimate.html': 'estimate',
   };
-  const NO_MEDIA_KEYS = new Set(['contact', 'faq', 'estimate']);
+  const NO_MEDIA_KEYS = new Set(['default', 'contact', 'faq', 'estimate']);
 
   function pageFile() {
     return (location.pathname.split('/').pop() || 'index.html');

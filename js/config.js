@@ -78,7 +78,7 @@ window.PCC = {
   /* ---------- Photography (Unsplash — replace with owned assets when ready) ---------- */
   images: {
     pages: {
-      default:             { src: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952', alt: 'Professional cleaner in a bright, tidy home' },
+      default:             null,
       commercial:          { src: 'https://images.unsplash.com/photo-1497366216548-37526070297c', alt: 'Modern Rocklin office interior' },
       office:              { src: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2', alt: 'Clean open-plan office workspace' },
       janitorial:          { src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab', alt: 'Commercial building lobby' },
