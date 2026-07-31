@@ -1,9 +1,31 @@
 /* =========================================================================
-   Natabel page generator — one-off build tool.
-   Generates all interior pages from a shared template + per-page data.
-   Run: node build-pages.js
-   Safe to delete after running.
+   NataBel page generator — ARCHIVED one-off build tool. DO NOT RUN.
+
+   This script was used to scaffold the interior pages originally. The live
+   pages have since been hand-edited well past what this template knows:
+   it still contains the pre-rebrand Sacramento copy, the lowercase
+   "Natabel" spelling, and GSAP 3.12.5 (the site now runs 3.13 + SplitText).
+
+   Running it would overwrite the shipped pages and silently revert the
+   Rocklin/Placer rebrand, the NataBel casing, and the motion layer.
+
+   It is kept only as historical reference. If you genuinely need to
+   regenerate pages, first bring this template back in sync with the live
+   HTML, then run with:  ALLOW_PAGE_REGEN=1 node build-pages.js
    ========================================================================= */
+if (process.env.ALLOW_PAGE_REGEN !== '1') {
+  console.error([
+    '',
+    'REFUSING TO RUN: build-pages.js is archived and out of date.',
+    'It would overwrite the live interior pages with pre-rebrand content',
+    '(Sacramento copy, "Natabel" spelling, GSAP 3.12.5).',
+    '',
+    'If you really mean it: ALLOW_PAGE_REGEN=1 node build-pages.js',
+    '',
+  ].join('\n'));
+  process.exit(1);
+}
+
 const fs = require('fs');
 const path = require('path');
 

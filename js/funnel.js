@@ -101,9 +101,9 @@
         zip: 'text',
       },
       event: window.PCC.events.estimateFormSubmit,
-      onSuccess: (payload) => {
-        // enrich with funnel state already collected
-        Object.assign(payload, state);
+      // Attach readable funnel labels before the lead is routed
+      enrich: (payload) => { Object.assign(payload, state); },
+      onSuccess: (payload, result) => {
         // fire unified lead + specific commercial/recurring events
         if (isCommercial()) window.PCC.util.track(window.PCC.events.commercialWalkthrough, { type: payload.service_type });
         if (/recurring/i.test(payload.frequency || '')) window.PCC.util.track(window.PCC.events.recurringQuote, { frequency: payload.frequency });
@@ -112,10 +112,19 @@
         success.classList.add('active');
         const summary = success.querySelector('[data-summary]');
         if (summary) {
-          summary.innerHTML =
-            `<strong>${payload.name}</strong>, your ${payload.service_type_label || payload.service_type || 'cleaning'} estimate request is in.` +
-            `<br><br>A member of our team will reach out within one business hour at <strong>${payload.phone}</strong> or <strong>${payload.email}</strong>` +
-            (payload.city ? ` to confirm details for your ${payload.city} ${payload.zip ? '· ' + payload.zip : ''} property.` : '.');
+          const service = payload.service_type_label || payload.service_type || 'cleaning';
+          if (result && result.delivery === 'email') {
+            const phone = (window.PCC.business && window.PCC.business.phone) || '';
+            summary.innerHTML =
+              `<strong>${payload.name}</strong>, your ${service} estimate is ready to send.` +
+              `<br><br>Your email app is opening with the details filled in — <strong>press Send</strong> and we'll reply within one business hour.` +
+              (phone ? `<br><br>Prefer to talk now? Call <strong>${phone}</strong>.` : '');
+          } else {
+            summary.innerHTML =
+              `<strong>${payload.name}</strong>, your ${service} estimate request is in.` +
+              `<br><br>A member of our team will reach out within one business hour at <strong>${payload.phone}</strong> or <strong>${payload.email}</strong>` +
+              (payload.city ? ` to confirm details for your ${payload.city} ${payload.zip ? '· ' + payload.zip : ''} property.` : '.');
+          }
         }
         success.scrollIntoView({ block: 'center', behavior: 'smooth' });
       },

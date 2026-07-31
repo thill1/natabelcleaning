@@ -100,8 +100,17 @@ window.PCC = {
   /* ---------- Lead routing ----------
      Submit handler posts JSON to PCC.leads.endpoint when set.
      Quick setup: deploy scripts/leads-webhook.gs as a Google Apps Script web app,
-     paste the deployment URL below, and demo mode turns off automatically.
-     Also works with Jobber / Housecall Pro / GoHighLevel / Make / Zapier webhooks. */
+     paste the deployment URL below, and leads post straight to the inbox/sheet.
+     Also works with Jobber / Housecall Pro / GoHighLevel / Make / Zapier webhooks.
+
+     Delivery order (js/leads.js):
+       1. endpoint, if set and it accepts the lead
+       2. otherwise the visitor's mail client, pre-filled to notifyEmail
+       3. if neither is possible, the form says so and shows the phone number
+     A lead is never reported as sent when it wasn't.
+
+     demoMode only applies on localhost, so the live site can never fake a
+     successful submission. */
   leads: {
     endpoint: '',
     method:   'POST',

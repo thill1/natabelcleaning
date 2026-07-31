@@ -76,27 +76,73 @@
     return ok;
   }
 
+  const isLocalhost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
+
+  const FIELD_LABELS = {
+    name: 'Name', phone: 'Phone', email: 'Email', message: 'Message',
+    service_type: 'Service', service_type_label: 'Service', frequency: 'Frequency',
+    property_type: 'Property', bedrooms: 'Bedrooms', bathrooms: 'Bathrooms',
+    sqft: 'Approx. square feet', city: 'City', zip: 'ZIP', address: 'Address',
+    preferred_date: 'Preferred date', preferred_time: 'Preferred time',
+    booking_type: 'Booking type', notes: 'Notes', lead_source_label: 'Submitted from',
+  };
+  const SKIP_IN_EMAIL = ['submitted_at', 'source', 'landing_page', 'referrer'];
+
+  /* Human-readable email body so a mailto fallback is actually usable */
+  function composeEmail(payload) {
+    const lines = [];
+    Object.keys(FIELD_LABELS).forEach(k => {
+      if (payload[k]) lines.push(`${FIELD_LABELS[k]}: ${payload[k]}`);
+    });
+    Object.keys(payload).forEach(k => {
+      if (FIELD_LABELS[k] || SKIP_IN_EMAIL.includes(k) || k.startsWith('utm_')) return;
+      if (payload[k]) lines.push(`${k}: ${payload[k]}`);
+    });
+    const utm = Object.keys(payload).filter(k => k.startsWith('utm_') && payload[k]);
+    if (utm.length) lines.push('', '-- campaign --', ...utm.map(k => `${k}: ${payload[k]}`));
+    lines.push('', `Submitted: ${new Date().toLocaleString()}`, `Page: ${payload.source || ''}`);
+    return lines.join('\n');
+  }
+
+  function mailtoFallback(payload) {
+    const to = cfg.notifyEmail || (window.PCC.business && window.PCC.business.email);
+    if (!to) return false;
+    const subject = `Website request — ${payload.lead_source_label || 'New lead'}${payload.name ? ' — ' + payload.name : ''}`;
+    const url = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(composeEmail(payload))}`;
+    try { window.location.href = url; return true; } catch (e) { return false; }
+  }
+
   async function route(payload) {
-    if (cfg.demoMode || !cfg.endpoint) {
-      // Simulate latency, then succeed
-      console.info('[PCC lead] demo mode — payload:', payload);
-      await new Promise(r => setTimeout(r, 700));
-      return { ok: true, demo: true };
+    // Dev only: never simulate a successful send on the live site.
+    if (cfg.demoMode && isLocalhost) {
+      console.info('[PCC lead] demo mode (localhost) — payload:', payload);
+      await new Promise(r => setTimeout(r, 400));
+      return { ok: true, delivery: 'demo' };
     }
-    try {
-      const res = await fetch(cfg.endpoint, {
-        method: cfg.method || 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      let body = null;
-      try { body = await res.json(); } catch (_) { /* non-JSON response */ }
-      const ok = res.ok && (!body || body.ok !== false);
-      return { ok, status: res.status, body };
-    } catch (e) {
-      console.warn('[PCC lead] routing error', e);
-      return { ok: false, error: e };
+
+    if (cfg.endpoint) {
+      try {
+        const res = await fetch(cfg.endpoint, {
+          method: cfg.method || 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        let body = null;
+        try { body = await res.json(); } catch (_) { /* non-JSON response */ }
+        const ok = res.ok && (!body || body.ok !== false);
+        if (ok) return { ok: true, delivery: 'endpoint', status: res.status, body };
+        // Endpoint answered with an error — fall through to email rather than lose the lead
+        console.warn('[PCC lead] endpoint rejected the lead', res.status, body);
+      } catch (e) {
+        console.warn('[PCC lead] routing error', e);
+        // fall through to the email fallback rather than losing the lead
+      }
     }
+
+    // No endpoint (or it failed): hand the lead to the visitor's mail client
+    // so it still reaches the business instead of being silently dropped.
+    if (mailtoFallback(payload)) return { ok: true, delivery: 'email' };
+    return { ok: false, delivery: 'none' };
   }
 
   /* Generic form binder */
@@ -127,6 +173,8 @@
         return;
       }
       const payload = collect(form);
+      // Let callers add derived fields (e.g. funnel labels) before the lead is sent
+      if (opts.enrich) { try { opts.enrich(payload); } catch (_) { /* non-fatal */ } }
       const btn = form.querySelector('[type="submit"]');
       const orig = btn ? btn.textContent : '';
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
@@ -139,13 +187,20 @@
 
       if (btn) { btn.disabled = false; btn.textContent = orig; }
 
+      const phone = (window.PCC.business && window.PCC.business.phone) || '';
+
       if (result.ok) {
-        if (opts.onSuccess) { opts.onSuccess(payload); return; }
+        if (opts.onSuccess) { opts.onSuccess(payload, result); return; }
+        if (result.delivery === 'email') {
+          // Mail client is opening — the request is not sent until they hit Send.
+          notice(form, `Your email app is opening with your request — press Send and we'll reply within one business hour.${phone ? ' Prefer to call? ' + phone : ''}`, 'info');
+          return;
+        }
         form.reset();
         notice(form, opts.successMsg || "Thank you! We'll be in touch within one business hour.", 'success');
         if (opts.successRedirect) setTimeout(() => { window.location.href = opts.successRedirect; }, 1200);
       } else {
-        notice(form, 'Something went wrong sending your request. Please call us — we\'re happy to help.', 'error');
+        notice(form, `We couldn't send your request automatically. Please call us at ${phone || 'the number above'} or email us directly — we're happy to help.`, 'error');
       }
     });
   }
