@@ -127,7 +127,12 @@ window.PCC = {
      demoMode only applies on localhost, so the live site can never fake a
      successful submission. */
   leads: {
-    endpoint: '',
+    /* Vercel Function in /api/lead.js. It emails the lead via Resend and,
+       if LEAD_WEBHOOK_URL is set, forwards it on. Needs RESEND_API_KEY in
+       the Vercel project settings; until that exists the endpoint returns
+       an error and js/leads.js falls back to the mail-client hand-off, so
+       a lead is never silently dropped. */
+    endpoint: '/api/lead',
     method:   'POST',
     includeUTM: true,
     demoMode: true,

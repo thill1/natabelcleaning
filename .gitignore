@@ -33,3 +33,4 @@ docs/
 .vercel
 .claude/
 .cursor/hooks/state/
+.env*
