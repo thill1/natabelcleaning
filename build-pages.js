@@ -936,7 +936,7 @@ pages.push({
 pages.push({
   slug: 'contact.html',
   title: 'Contact | Natabel Pristine Cleaning | Sacramento',
-  desc: 'Contact Natabel Pristine Cleaning in Sacramento. Call (916) 899-8811, email natabelpritinecleaning@gmail.com, or send a message. Serving Sacramento and surrounding communities. Mon–Fri 7a–6p, Sat 8a–4p.',
+  desc: 'Contact Natabel Pristine Cleaning in Sacramento. Call (916) 899-8811, email natabelpristinecleaning@gmail.com, or send a message. Serving Sacramento and surrounding communities. Mon–Fri 7a–6p, Sat 8a–4p.',
   ogTitle: 'Contact Natabel Pristine Cleaning — Sacramento',
   ogDesc: 'Call, email, or message us. Sacramento-based, founder-led, responsive.',
   schema: `{"@context":"https://schema.org","@graph":[{"@type":"ContactPage","url":"https://www.natabelpristinecleaning.com/contact.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.natabelpristinecleaning.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://www.natabelpristinecleaning.com/contact.html"}]}]}`,
@@ -958,7 +958,7 @@ pages.push({
             <h2>Contact<br /><span class="serif-italic">information.</span></h2>
             <div class="feat-list">
               <div class="feat-item"><span class="feat-check"><i data-lucide="phone"></i></span><p><strong>Call:</strong> <a href="tel:+19168998811">(916) 899-8811</a></p></div>
-              <div class="feat-item"><span class="feat-check"><i data-lucide="mail"></i></span><p><strong>Email:</strong> <a href="mailto:natabelpritinecleaning@gmail.com">natabelpritinecleaning@gmail.com</a></p></div>
+              <div class="feat-item"><span class="feat-check"><i data-lucide="mail"></i></span><p><strong>Email:</strong> <a href="mailto:natabelpristinecleaning@gmail.com">natabelpristinecleaning@gmail.com</a></p></div>
               <div class="feat-item"><span class="feat-check"><i data-lucide="map-pin"></i></span><p><strong>Service area:</strong> Sacramento &amp; surrounding communities</p></div>
               <div class="feat-item"><span class="feat-check"><i data-lucide="clock"></i></span><p><strong>Hours:</strong> Mon–Fri 7a–6p · Sat 8a–4p · Sun by appointment</p></div>
             </div>
