@@ -116,6 +116,20 @@
     </div>
   </section>`;
 
+  /* Social icons — only profiles with a real URL are rendered.
+     A blank entry in PCC.social is skipped entirely rather than linking
+     to a dead page. */
+  const SOCIAL_META = {
+    google:    { label: 'Google Business Profile', icon: 'map-pin' },
+    yelp:      { label: 'Yelp', icon: 'star' },
+    facebook:  { label: 'Facebook', icon: 'facebook' },
+    instagram: { label: 'Instagram', icon: 'instagram' },
+  };
+  const socialLinks = Object.keys(SOCIAL_META)
+    .filter(k => ((window.PCC.social || {})[k] || '').trim())
+    .map(k => `<a href="${window.PCC.social[k].trim()}" aria-label="${SOCIAL_META[k].label}" target="_blank" rel="noopener"><i data-lucide="${SOCIAL_META[k].icon}"></i></a>`)
+    .join('');
+
   const year = new Date().getFullYear();
   const footer = `
   <footer class="site-footer">
@@ -126,11 +140,7 @@
             <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-footer" width="280" height="134" />
           </a>
           <p style="color:rgba(247,243,235,.62);font-size:.92rem;max-width:40ch;">${B.description}</p>
-          <div class="footer-social" style="margin-top:20px;">
-            <a href="${window.PCC.social.facebook}" aria-label="Facebook" target="_blank" rel="noopener"><i data-lucide="facebook"></i></a>
-            <a href="${window.PCC.social.instagram}" aria-label="Instagram" target="_blank" rel="noopener"><i data-lucide="instagram"></i></a>
-            <a href="${window.PCC.social.google}" aria-label="Google Business Profile" target="_blank" rel="noopener"><i data-lucide="map-pin"></i></a>
-          </div>
+          ${socialLinks ? `<div class="footer-social" style="margin-top:20px;">${socialLinks}</div>` : ''}
         </div>
         <div>
           <h4>Services</h4>

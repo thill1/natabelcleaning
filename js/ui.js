@@ -26,6 +26,17 @@
   fillOrHide('[data-review-count]', R.reviewCount);
   fillOrHide('[data-clients]', R.clientsServed);
 
+  /* ---------- Social links in page content ----------
+     Elements marked data-social-link="google" (etc.) get their href from
+     PCC.social and stay hidden while that profile URL is blank, so we
+     never show a button that leads nowhere. */
+  const social = window.PCC.social || {};
+  document.querySelectorAll('[data-social-link]').forEach(el => {
+    const url = (social[el.dataset.socialLink] || '').trim();
+    if (url) { el.href = url; el.hidden = false; }
+    else { el.hidden = true; }
+  });
+
   /* ---------- Price anchors ----------
      Plan cards carry <p class="plan-price" data-price="weeklyFrom" hidden>.
      They stay hidden until Fatima sets values in PCC.pricing. */

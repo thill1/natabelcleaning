@@ -38,12 +38,27 @@ window.PCC = {
     ],
   },
 
-  /* ---------- Social ---------- */
+  /* ---------- Social ----------
+     Only non-empty entries are rendered. Leave a profile blank until its
+     real URL is known — a blank entry is hidden everywhere (footer icons
+     and the "Leave a Google review" button), which is always better than
+     linking somewhere wrong.
+
+     The previous values used the pre-rebrand "natabelcleaning" slug and
+     were both broken: the Yelp URL 404s, and the g.page link redirected to
+     a Google search listing a competitor rather than Fatima's profile.
+
+     google — use the review link from the Google Business Profile
+              dashboard ("Ask for reviews" / "Get more reviews").
+     yelp   — the real yelp.com/biz/... URL for the claimed listing. */
   social: {
-    facebook:  'https://facebook.com/natabelcleaning',
-    instagram: 'https://instagram.com/natabelcleaning',
-    google:    'https://g.page/natabelcleaning',
-    yelp:      'https://yelp.com/biz/natabelcleaning',
+    facebook:  '',
+    instagram: '',
+    /* Stable Knowledge Graph id for the profile. Preferred over the
+       share.google short link, which carries session/tracking params
+       (rlz, sxsrf timestamp, utm_source) that go stale. */
+    google:    'https://www.google.com/search?kgmid=/g/11nr0z4tls',
+    yelp:      'https://www.yelp.com/biz/natabel-pristine-cleaning-rocklin',
   },
 
   /* ---------- Reviews & trust ----------
