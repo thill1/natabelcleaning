@@ -33,11 +33,49 @@
   function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
   function isPhone(v) { return /[0-9()\-\s+]{10,}/.test(v); }
 
+  /* ---------- Spam protection ----------
+     Two cheap, invisible checks that stop the overwhelming majority of bot
+     submissions without putting a captcha in front of real customers:
+       1. Honeypot — a field hidden from people but attractive to bots.
+          Any value in it means the sender was not a human.
+       2. Time-to-submit — bots post near-instantly. A form completed in
+          under MIN_FILL_MS was almost certainly not typed by a person.
+     Both are silent: a suspected bot is shown the normal confirmation so it
+     has no signal to adapt, but nothing is delivered. */
+  const HONEYPOT_FIELD = 'website_url';
+  const MIN_FILL_MS = 2500;
+
+  function installHoneypot(form) {
+    if (form.querySelector(`[name="${HONEYPOT_FIELD}"]`)) return;
+    const wrap = document.createElement('div');
+    wrap.setAttribute('aria-hidden', 'true');
+    wrap.style.cssText = 'position:absolute!important;left:-9999px!important;top:auto;width:1px;height:1px;overflow:hidden;';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = HONEYPOT_FIELD;
+    input.tabIndex = -1;
+    input.autocomplete = 'off';
+    wrap.appendChild(input);
+    form.appendChild(wrap);
+    form.dataset.renderedAt = String(Date.now());
+  }
+
+  function looksAutomated(form) {
+    const hp = form.querySelector(`[name="${HONEYPOT_FIELD}"]`);
+    if (hp && String(hp.value || '').trim()) return 'honeypot';
+    const started = parseInt(form.dataset.renderedAt || '0', 10);
+    if (started && Date.now() - started < MIN_FILL_MS) return 'too-fast';
+    return null;
+  }
+
   /* Collect every named field + dataset extras into a clean payload */
   function collect(form) {
     const fd = new FormData(form);
     const payload = { submitted_at: new Date().toISOString(), source: window.location.pathname };
-    fd.forEach((v, k) => { if (v && String(v).trim()) payload[k] = String(v).trim(); });
+    fd.forEach((v, k) => {
+      if (k === HONEYPOT_FIELD) return; // never forward the trap field
+      if (v && String(v).trim()) payload[k] = String(v).trim();
+    });
     if (cfg.includeUTM) Object.assign(payload, window.PCC.util.getUTM());
     payload.lead_source_label = form.dataset.leadSource || payload.form_type || 'Website';
     return payload;
@@ -152,6 +190,8 @@
     const requiredMap = opts.required || {};
     const eventName = opts.event || ev.contactFormSubmit;
 
+    installHoneypot(form);
+
     // form_start tracking — fire once on first interaction
     let started = false;
     const startTracker = () => {
@@ -166,6 +206,17 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Silently drop suspected bots: show the normal confirmation, deliver nothing.
+      const automated = looksAutomated(form);
+      if (automated) {
+        console.info('[PCC lead] submission ignored (' + automated + ')');
+        if (opts.onSuccess) { opts.onSuccess(collect(form), { ok: true, delivery: 'ignored' }); return; }
+        form.reset();
+        notice(form, opts.successMsg || "Thank you! We'll be in touch within one business hour.", 'success');
+        return;
+      }
+
       const choicesOk = opts.choices ? validateChoices(form, opts.choices) : true;
       const fieldsOk = validate(form, requiredMap);
       if (!choicesOk || !fieldsOk) {
