@@ -32,3 +32,4 @@ screenshot-*.png
 docs/
 .vercel
 .claude/
+.cursor/hooks/state/
