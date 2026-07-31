@@ -174,7 +174,11 @@ module.exports = async function handler(req, res) {
       email: mail.reason, emailDetail: mail.detail, webhook: hook && hook.reason,
       lead: buildEmail(payload).text,
     });
-    return res.status(502).json({ ok: false, error: 'delivery_failed' });
+    // Deliberately 200 with ok:false rather than a 5xx. Cloudflare sits in
+    // front of this domain and replaces 5xx bodies with its own error page,
+    // which would hide this JSON from the browser. The client treats
+    // ok:false as a failure and falls back to the mail-client hand-off.
+    return res.status(200).json({ ok: false, error: 'delivery_failed' });
   }
 
   console.info('[lead] delivered', { email: mail.ok, webhook: hook ? hook.ok : 'not-configured' });
