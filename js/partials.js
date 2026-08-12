@@ -159,6 +159,7 @@
           <h4>Company</h4>
           <div class="footer-links">
             <a href="about.html">About Fatima</a>
+            <a href="join-our-team.html">Join Our Team</a>
             <a href="reviews.html">Reviews</a>
             <a href="service-areas.html">Service Areas</a>
             <a href="faq.html">FAQ</a>
