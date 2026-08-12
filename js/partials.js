@@ -19,6 +19,7 @@
     { label: 'Reviews',       href: 'reviews.html',          match: ['reviews.html'] },
     { label: 'FAQ',           href: 'faq.html',              match: ['faq.html'] },
     { label: 'About',         href: 'about.html',            match: ['about.html'] },
+    { label: 'Career',        href: 'join-our-team.html',    match: ['join-our-team.html'] },
     { label: 'Contact',       href: 'contact.html',          match: ['contact.html'] },
   ];
   const here = (location.pathname.split('/').pop() || 'index.html');
@@ -66,6 +67,7 @@
       <a href="reviews.html" ${here === 'reviews.html' ? 'aria-current="page" class="active"' : ''}>Reviews</a>
       <a href="about.html" ${here === 'about.html' ? 'aria-current="page" class="active"' : ''}>About Fatima</a>
       <a href="faq.html" ${here === 'faq.html' ? 'aria-current="page" class="active"' : ''}>FAQ</a>
+      <a href="join-our-team.html" ${here === 'join-our-team.html' ? 'aria-current="page" class="active"' : ''}>Career</a>
       <a href="contact.html" ${here === 'contact.html' ? 'aria-current="page" class="active"' : ''}>Contact</a>
     </nav>
     <div class="mm-cta">
