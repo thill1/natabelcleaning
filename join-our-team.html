@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=careers-20260812" />
+  <link rel="stylesheet" href="css/styles.css?v=careers-full-20260812" />
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
   <script>document.documentElement.classList.add('js-ready');</script>
   <script src="js/config.js?v=api-lead-20260730"></script>
@@ -67,37 +67,79 @@
                   <button type="button" data-language="es" aria-pressed="false">Español</button>
                 </div>
                 <h2 data-en="Apply today" data-es="Solicita hoy">Apply today</h2>
-                <p data-en="Complete this short application and Fatima's team will contact you." data-es="Completa esta breve solicitud y el equipo de Fatima se comunicará contigo.">Complete this short application and Fatima's team will contact you.</p>
+                <p data-en="Complete the full application below. Most applicants finish in about 8–10 minutes." data-es="Completa la solicitud de empleo. La mayoría de los candidatos termina en aproximadamente 8–10 minutos.">Complete the full application below. Most applicants finish in about 8–10 minutes.</p>
               </div>
               <div class="form-body">
                 <form id="careerForm" data-lead-source="Job Application" novalidate>
                   <input type="hidden" name="form_type" value="job_application" />
                   <input type="hidden" name="application_language" id="applicationLanguage" value="English" />
                   <input type="hidden" name="position" value="Housecleaner" />
+                  <div class="career-progress" aria-label="Application progress">
+                    <div class="career-progress-meta"><strong id="stepLabel">Step 1 of 4</strong><span id="stepName">Contact &amp; Eligibility</span></div>
+                    <div class="career-progress-track"><span id="stepProgress"></span></div>
+                  </div>
+                  <section class="application-step active" data-step="1">
+                  <h3 data-en="Contact &amp; eligibility" data-es="Contacto y elegibilidad">Contact &amp; eligibility</h3>
+                  <p class="step-intro" data-en="Tell us how to reach you and confirm your basic work eligibility." data-es="Indícanos cómo contactarte y confirma tu elegibilidad básica para trabajar.">Tell us how to reach you and confirm your basic work eligibility.</p>
                   <div class="field-row">
-                    <div class="field"><label><span data-en="Full name" data-es="Nombre completo">Full name</span> <span class="req">*</span></label><input type="text" name="name" autocomplete="name" /><div class="field-error" data-en="Please enter your name." data-es="Ingresa tu nombre.">Please enter your name.</div></div>
-                    <div class="field"><label><span data-en="Phone" data-es="Teléfono">Phone</span> <span class="req">*</span></label><input type="tel" name="phone" autocomplete="tel" placeholder="(916) 555-0123" /><div class="field-error" data-en="Please enter a valid phone number." data-es="Ingresa un número válido.">Please enter a valid phone number.</div></div>
+                    <div class="field"><label><span data-en="Full legal name" data-es="Nombre legal completo">Full legal name</span> <span class="req">*</span></label><input type="text" name="name" autocomplete="name" required /><div class="field-error" data-en="Please enter your name." data-es="Ingresa tu nombre.">Please enter your name.</div></div>
+                    <div class="field"><label><span data-en="Phone" data-es="Teléfono">Phone</span> <span class="req">*</span></label><input type="tel" name="phone" autocomplete="tel" placeholder="(916) 555-0123" required /><div class="field-error" data-en="Please enter a valid phone number." data-es="Ingresa un número válido.">Please enter a valid phone number.</div></div>
                   </div>
                   <div class="field-row">
-                    <div class="field"><label><span data-en="Email" data-es="Correo electrónico">Email</span></label><input type="email" name="email" autocomplete="email" /></div>
-                    <div class="field"><label><span data-en="City / ZIP" data-es="Ciudad / Código postal">City / ZIP</span> <span class="req">*</span></label><input type="text" name="city_zip" autocomplete="postal-code" /><div class="field-error" data-en="Please enter your city or ZIP." data-es="Ingresa tu ciudad o código postal.">Please enter your city or ZIP.</div></div>
+                    <div class="field"><label><span data-en="Email" data-es="Correo electrónico">Email</span> <span class="req">*</span></label><input type="email" name="email" autocomplete="email" required /><div class="field-error" data-en="Please enter a valid email." data-es="Ingresa un correo válido.">Please enter a valid email.</div></div>
+                    <div class="field"><label><span data-en="Preferred contact" data-es="Contacto preferido">Preferred contact</span> <span class="req">*</span></label><select name="preferred_contact" required><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="Call" data-en="Phone call" data-es="Llamada">Phone call</option><option value="Text" data-en="Text message" data-es="Mensaje de texto">Text message</option><option value="Email" data-en="Email" data-es="Correo electrónico">Email</option></select><div class="field-error" data-en="Please select one." data-es="Selecciona una opción.">Please select one.</div></div>
                   </div>
+                  <div class="field"><label><span data-en="Street address" data-es="Dirección">Street address</span> <span class="req">*</span></label><input type="text" name="address" autocomplete="street-address" required /><div class="field-error" data-en="Please enter your address." data-es="Ingresa tu dirección.">Please enter your address.</div></div>
+                  <div class="field-row"><div class="field"><label><span data-en="City" data-es="Ciudad">City</span> <span class="req">*</span></label><input type="text" name="city" autocomplete="address-level2" required /><div class="field-error" data-en="Please enter your city." data-es="Ingresa tu ciudad.">Please enter your city.</div></div><div class="field"><label><span data-en="ZIP code" data-es="Código postal">ZIP code</span> <span class="req">*</span></label><input type="text" name="zip" autocomplete="postal-code" inputmode="numeric" required /><div class="field-error" data-en="Please enter your ZIP code." data-es="Ingresa tu código postal.">Please enter your ZIP code.</div></div></div>
+                  <div class="field"><label><span data-en="Are you at least 18 years old?" data-es="¿Tienes al menos 18 años?">Are you at least 18 years old?</span> <span class="req">*</span></label><div class="career-choice-row"><label class="career-radio"><input type="radio" name="age_18_or_older" value="Yes" required /> <span data-en="Yes" data-es="Sí">Yes</span></label><label class="career-radio"><input type="radio" name="age_18_or_older" value="No" /> <span data-en="No" data-es="No">No</span></label></div><div class="field-error" data-en="Please select an answer." data-es="Selecciona una respuesta.">Please select an answer.</div></div>
+                  <div class="field"><label><span data-en="Are you legally authorized to work in the United States?" data-es="¿Estás legalmente autorizado(a) para trabajar en los Estados Unidos?">Are you legally authorized to work in the United States?</span> <span class="req">*</span></label><div class="career-choice-row"><label class="career-radio"><input type="radio" name="work_authorized" value="Yes" required /> <span data-en="Yes" data-es="Sí">Yes</span></label><label class="career-radio"><input type="radio" name="work_authorized" value="No" /> <span data-en="No" data-es="No">No</span></label></div><div class="field-error" data-en="Please select an answer." data-es="Selecciona una respuesta.">Please select an answer.</div></div>
+                  </section>
+
+                  <section class="application-step" data-step="2">
+                  <h3 data-en="Availability &amp; job requirements" data-es="Disponibilidad y requisitos">Availability &amp; job requirements</h3>
+                  <p class="step-intro" data-en="Housecleaning work takes place at client locations throughout the local service area." data-es="El trabajo se realiza en propiedades de clientes dentro del área de servicio local.">Housecleaning work takes place at client locations throughout the local service area.</p>
                   <div class="field">
                     <label><span data-en="Preferred schedule" data-es="Horario preferido">Preferred schedule</span> <span class="req">*</span></label>
                     <div class="career-choice-row">
-                      <label class="career-radio"><input type="radio" name="preferred_schedule" value="Full-time" /> <span data-en="Full-time" data-es="Tiempo completo">Full-time</span></label>
+                      <label class="career-radio"><input type="radio" name="preferred_schedule" value="Full-time" required /> <span data-en="Full-time" data-es="Tiempo completo">Full-time</span></label>
                       <label class="career-radio"><input type="radio" name="preferred_schedule" value="Part-time" /> <span data-en="Part-time" data-es="Medio tiempo">Part-time</span></label>
                     </div>
                     <div class="field-error" data-en="Please select a schedule." data-es="Selecciona un horario.">Please select a schedule.</div>
                   </div>
                   <div class="field-row">
-                    <div class="field"><label><span data-en="Cleaning experience" data-es="Experiencia en limpieza">Cleaning experience</span></label><select name="cleaning_experience"><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="None" data-en="No professional experience" data-es="Sin experiencia profesional">No professional experience</option><option value="Less than 1 year" data-en="Less than 1 year" data-es="Menos de 1 año">Less than 1 year</option><option value="1-2 years" data-en="1–2 years" data-es="1–2 años">1–2 years</option><option value="3+ years" data-en="3+ years" data-es="3+ años">3+ years</option></select></div>
-                    <div class="field"><label><span data-en="Reliable transportation" data-es="Transporte confiable">Reliable transportation</span> <span class="req">*</span></label><select name="reliable_transportation"><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="Yes" data-en="Yes" data-es="Sí">Yes</option><option value="No" data-en="No" data-es="No">No</option></select><div class="field-error" data-en="Please select an answer." data-es="Selecciona una respuesta.">Please select an answer.</div></div>
+                    <div class="field"><label><span data-en="Cleaning experience" data-es="Experiencia en limpieza">Cleaning experience</span> <span class="req">*</span></label><select name="cleaning_experience" required><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="None" data-en="No professional experience" data-es="Sin experiencia profesional">No professional experience</option><option value="Less than 1 year" data-en="Less than 1 year" data-es="Menos de 1 año">Less than 1 year</option><option value="1-2 years" data-en="1–2 years" data-es="1–2 años">1–2 years</option><option value="3+ years" data-en="3+ years" data-es="3+ años">3+ years</option></select><div class="field-error" data-en="Please select an answer." data-es="Selecciona una respuesta.">Please select an answer.</div></div>
+                    <div class="field"><label><span data-en="Reliable transportation" data-es="Transporte confiable">Reliable transportation</span> <span class="req">*</span></label><select name="reliable_transportation" required><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="Yes" data-en="Yes" data-es="Sí">Yes</option><option value="No" data-en="No" data-es="No">No</option></select><div class="field-error" data-en="Please select an answer." data-es="Selecciona una respuesta.">Please select an answer.</div></div>
                   </div>
+                  <div class="field-row"><div class="field"><label><span data-en="Available start date" data-es="Fecha disponible para comenzar">Available start date</span> <span class="req">*</span></label><input type="date" name="available_start_date" required /><div class="field-error" data-en="Please choose a date." data-es="Selecciona una fecha.">Please choose a date.</div></div><div class="field"><label><span data-en="Hours desired per week" data-es="Horas deseadas por semana">Hours desired per week</span> <span class="req">*</span></label><select name="hours_desired" required><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="Under 20">Under 20</option><option value="20-29">20–29</option><option value="30-39">30–39</option><option value="40+">40+</option></select><div class="field-error" data-en="Please select hours." data-es="Selecciona las horas.">Please select hours.</div></div></div>
+                  <div class="field"><label data-en="Days available" data-es="Días disponibles">Days available</label><div class="availability-grid"><label><input type="checkbox" name="available_monday" value="Yes" /> <span data-en="Monday" data-es="Lunes">Monday</span></label><label><input type="checkbox" name="available_tuesday" value="Yes" /> <span data-en="Tuesday" data-es="Martes">Tuesday</span></label><label><input type="checkbox" name="available_wednesday" value="Yes" /> <span data-en="Wednesday" data-es="Miércoles">Wednesday</span></label><label><input type="checkbox" name="available_thursday" value="Yes" /> <span data-en="Thursday" data-es="Jueves">Thursday</span></label><label><input type="checkbox" name="available_friday" value="Yes" /> <span data-en="Friday" data-es="Viernes">Friday</span></label><label><input type="checkbox" name="available_saturday" value="Yes" /> <span data-en="Saturday" data-es="Sábado">Saturday</span></label></div></div>
+                  <div class="field-row"><div class="field"><label data-en="Earliest available time" data-es="Hora más temprana disponible">Earliest available time</label><input type="time" name="available_from" /></div><div class="field"><label data-en="Latest available time" data-es="Hora más tarde disponible">Latest available time</label><input type="time" name="available_until" /></div></div>
+                  <div class="field"><label><span data-en="Can you perform the essential duties of this position, with or without reasonable accommodation?" data-es="¿Puedes realizar las funciones esenciales de este puesto, con o sin una adaptación razonable?">Can you perform the essential duties of this position, with or without reasonable accommodation?</span> <span class="req">*</span></label><select name="essential_duties" required><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="Yes" data-en="Yes" data-es="Sí">Yes</option><option value="No" data-en="No" data-es="No">No</option></select><div class="field-error" data-en="Please select an answer." data-es="Selecciona una respuesta.">Please select an answer.</div></div>
+                  <div class="field"><label><span data-en="Will you complete training and follow NataBel safety and cleaning protocols?" data-es="¿Completarás la capacitación y seguirás los protocolos de seguridad y limpieza de NataBel?">Will you complete training and follow NataBel safety and cleaning protocols?</span> <span class="req">*</span></label><select name="training_and_protocols" required><option value="" data-en="Select" data-es="Selecciona">Select</option><option value="Yes" data-en="Yes" data-es="Sí">Yes</option><option value="No" data-en="No" data-es="No">No</option></select><div class="field-error" data-en="Please select an answer." data-es="Selecciona una respuesta.">Please select an answer.</div></div>
+                  </section>
+
+                  <section class="application-step" data-step="3">
+                  <h3 data-en="Experience &amp; employment history" data-es="Experiencia e historial laboral">Experience &amp; employment history</h3>
+                  <p class="step-intro" data-en="Experience is helpful, but dependable candidates who are willing to learn are encouraged to apply." data-es="La experiencia es útil, pero invitamos a postularse a personas confiables dispuestas a aprender.">Experience is helpful, but dependable candidates who are willing to learn are encouraged to apply.</p>
+                  <div class="field"><label data-en="Languages spoken" data-es="Idiomas que hablas">Languages spoken</label><input type="text" name="languages_spoken" data-placeholder-en="Example: English, Spanish" data-placeholder-es="Ejemplo: inglés, español" placeholder="Example: English, Spanish" /></div>
+                  <div class="field"><label data-en="Relevant cleaning skills" data-es="Habilidades de limpieza relevantes">Relevant cleaning skills</label><textarea name="cleaning_skills" data-placeholder-en="Residential, commercial, deep cleaning, move-out cleaning, equipment, products, or other skills." data-placeholder-es="Limpieza residencial, comercial, profunda, de mudanzas, equipos, productos u otras habilidades." placeholder="Residential, commercial, deep cleaning, move-out cleaning, equipment, products, or other skills."></textarea></div>
+                  <fieldset class="employment-block"><legend data-en="Most recent employer" data-es="Empleador más reciente">Most recent employer</legend><div class="field"><label data-en="Company name" data-es="Nombre de la empresa">Company name</label><input type="text" name="employer_1_company" /></div><div class="field-row"><div class="field"><label data-en="Job title" data-es="Puesto">Job title</label><input type="text" name="employer_1_title" /></div><div class="field"><label data-en="Supervisor" data-es="Supervisor(a)">Supervisor</label><input type="text" name="employer_1_supervisor" /></div></div><div class="field-row"><div class="field"><label data-en="Start date" data-es="Fecha de inicio">Start date</label><input type="month" name="employer_1_start" /></div><div class="field"><label data-en="End date" data-es="Fecha de término">End date</label><input type="month" name="employer_1_end" /></div></div><div class="field"><label data-en="Duties and reason for leaving" data-es="Funciones y motivo de salida">Duties and reason for leaving</label><textarea name="employer_1_details"></textarea></div><label class="career-consent compact"><input type="checkbox" name="may_contact_employer_1" value="Yes" /><span data-en="NataBel may contact this employer." data-es="NataBel puede contactar a este empleador.">NataBel may contact this employer.</span></label></fieldset>
+                  <fieldset class="employment-block"><legend data-en="Previous employer (optional)" data-es="Empleador anterior (opcional)">Previous employer (optional)</legend><div class="field"><label data-en="Company name" data-es="Nombre de la empresa">Company name</label><input type="text" name="employer_2_company" /></div><div class="field-row"><div class="field"><label data-en="Job title" data-es="Puesto">Job title</label><input type="text" name="employer_2_title" /></div><div class="field"><label data-en="Supervisor" data-es="Supervisor(a)">Supervisor</label><input type="text" name="employer_2_supervisor" /></div></div><div class="field-row"><div class="field"><label data-en="Start date" data-es="Fecha de inicio">Start date</label><input type="month" name="employer_2_start" /></div><div class="field"><label data-en="End date" data-es="Fecha de término">End date</label><input type="month" name="employer_2_end" /></div></div><div class="field"><label data-en="Duties and reason for leaving" data-es="Funciones y motivo de salida">Duties and reason for leaving</label><textarea name="employer_2_details"></textarea></div></fieldset>
                   <div class="field"><label data-en="Tell us about yourself" data-es="Cuéntanos sobre ti">Tell us about yourself</label><textarea name="message" data-placeholder-en="Your availability, experience, and why you would like to join NataBel." data-placeholder-es="Tu disponibilidad, experiencia y por qué te gustaría unirte a NataBel." placeholder="Your availability, experience, and why you would like to join NataBel."></textarea></div>
+                  </section>
+
+                  <section class="application-step" data-step="4">
+                  <h3 data-en="References &amp; certification" data-es="Referencias y certificación">References &amp; certification</h3>
+                  <p class="step-intro" data-en="Provide two professional references who are not relatives." data-es="Proporciona dos referencias profesionales que no sean familiares.">Provide two professional references who are not relatives.</p>
+                  <fieldset class="employment-block"><legend data-en="Reference 1" data-es="Referencia 1">Reference 1</legend><div class="field-row"><div class="field"><label><span data-en="Name" data-es="Nombre">Name</span> <span class="req">*</span></label><input type="text" name="reference_1_name" required /><div class="field-error" data-en="Please enter a name." data-es="Ingresa un nombre.">Please enter a name.</div></div><div class="field"><label><span data-en="Phone or email" data-es="Teléfono o correo">Phone or email</span> <span class="req">*</span></label><input type="text" name="reference_1_contact" required /><div class="field-error" data-en="Please enter contact information." data-es="Ingresa la información de contacto.">Please enter contact information.</div></div></div><div class="field"><label data-en="Professional relationship" data-es="Relación profesional">Professional relationship</label><input type="text" name="reference_1_relationship" /></div></fieldset>
+                  <fieldset class="employment-block"><legend data-en="Reference 2" data-es="Referencia 2">Reference 2</legend><div class="field-row"><div class="field"><label><span data-en="Name" data-es="Nombre">Name</span> <span class="req">*</span></label><input type="text" name="reference_2_name" required /><div class="field-error" data-en="Please enter a name." data-es="Ingresa un nombre.">Please enter a name.</div></div><div class="field"><label><span data-en="Phone or email" data-es="Teléfono o correo">Phone or email</span> <span class="req">*</span></label><input type="text" name="reference_2_contact" required /><div class="field-error" data-en="Please enter contact information." data-es="Ingresa la información de contacto.">Please enter contact information.</div></div></div><div class="field"><label data-en="Professional relationship" data-es="Relación profesional">Professional relationship</label><input type="text" name="reference_2_relationship" /></div></fieldset>
+                  <div class="application-certification"><h4 data-en="Applicant certification" data-es="Certificación del solicitante">Applicant certification</h4><p data-en="I certify that this application is true and complete. I authorize NataBel to verify the information provided and contact the references and employers I have authorized. I understand that false or misleading information may disqualify me or, if hired, result in termination. This application is not a contract or guarantee of employment." data-es="Certifico que esta solicitud es verdadera y completa. Autorizo a NataBel a verificar la información proporcionada y contactar a las referencias y empleadores que he autorizado. Entiendo que la información falsa o engañosa puede descalificarme o, si soy contratado(a), resultar en la terminación de mi empleo. Esta solicitud no es un contrato ni una garantía de empleo.">I certify that this application is true and complete. I authorize NataBel to verify the information provided and contact the references and employers I have authorized. I understand that false or misleading information may disqualify me or, if hired, result in termination. This application is not a contract or guarantee of employment.</p></div>
+                  <label class="career-consent"><input type="checkbox" name="applicant_certification" value="Agreed" required /><span data-en="I have read and agree to the applicant certification above." data-es="He leído y acepto la certificación del solicitante anterior.">I have read and agree to the applicant certification above.</span></label>
+                  <div class="field-row"><div class="field"><label><span data-en="Electronic signature (type full name)" data-es="Firma electrónica (escribe tu nombre completo)">Electronic signature (type full name)</span> <span class="req">*</span></label><input type="text" name="electronic_signature" required /><div class="field-error" data-en="Please type your full name." data-es="Escribe tu nombre completo.">Please type your full name.</div></div><div class="field"><label><span data-en="Date" data-es="Fecha">Date</span> <span class="req">*</span></label><input type="date" name="signature_date" required /><div class="field-error" data-en="Please enter today's date." data-es="Ingresa la fecha de hoy.">Please enter today's date.</div></div></div>
                   <label class="career-consent"><input type="checkbox" name="contact_consent" value="Yes" required /><span data-en="I confirm this information is accurate and agree that NataBel may contact me about employment opportunities. Submitting this form does not guarantee employment." data-es="Confirmo que esta información es correcta y acepto que NataBel puede contactarme sobre oportunidades de empleo. Enviar este formulario no garantiza empleo.">I confirm this information is accurate and agree that NataBel may contact me about employment opportunities. Submitting this form does not guarantee employment.</span></label>
                   <button type="submit" class="btn btn-brass btn-lg btn-block"><i data-lucide="send"></i> <span data-en="Submit Application" data-es="Enviar Solicitud">Submit Application</span></button>
-                  <p style="font-size:.76rem;color:var(--muted);margin:14px 0 0;text-align:center;" data-en="NataBel Pristine Cleaning is an equal opportunity employer." data-es="NataBel Pristine Cleaning ofrece igualdad de oportunidades de empleo.">NataBel Pristine Cleaning is an equal opportunity employer.</p>
+                  <p class="equal-opportunity" data-en="NataBel Pristine Cleaning is an equal opportunity employer. Do not submit a Social Security number, birth date, driver's-license number, banking information, or medical information through this form." data-es="NataBel Pristine Cleaning ofrece igualdad de oportunidades de empleo. No envíes tu número de Seguro Social, fecha de nacimiento, número de licencia de conducir, información bancaria ni información médica mediante este formulario.">NataBel Pristine Cleaning is an equal opportunity employer. Do not submit a Social Security number, birth date, driver's-license number, banking information, or medical information through this form.</p>
+                  </section>
+                  <div class="application-nav"><button type="button" class="btn btn-outline" id="prevStep" hidden><i data-lucide="arrow-left"></i> <span data-en="Back" data-es="Atrás">Back</span></button><button type="button" class="btn btn-primary" id="nextStep"><span data-en="Continue" data-es="Continuar">Continue</span> <i data-lucide="arrow-right"></i></button></div>
                 </form>
               </div>
             </div>
@@ -125,7 +167,57 @@
     (function () {
       const form = document.getElementById('careerForm');
       const langInput = document.getElementById('applicationLanguage');
+      const steps = Array.from(form.querySelectorAll('.application-step'));
+      const prevButton = document.getElementById('prevStep');
+      const nextButton = document.getElementById('nextStep');
+      const stepLabel = document.getElementById('stepLabel');
+      const stepName = document.getElementById('stepName');
+      const stepProgress = document.getElementById('stepProgress');
+      const stepNames = { en: ['Contact & Eligibility', 'Availability & Requirements', 'Experience & Employment', 'References & Certification'], es: ['Contacto y elegibilidad', 'Disponibilidad y requisitos', 'Experiencia y empleo', 'Referencias y certificación'] };
+      let language = 'en';
+      let currentStep = 0;
+
+      function showStep(index, moveFocus) {
+        currentStep = Math.max(0, Math.min(index, steps.length - 1));
+        steps.forEach((step, i) => step.classList.toggle('active', i === currentStep));
+        prevButton.hidden = currentStep === 0;
+        nextButton.hidden = currentStep === steps.length - 1;
+        stepLabel.textContent = language === 'es' ? `Paso ${currentStep + 1} de ${steps.length}` : `Step ${currentStep + 1} of ${steps.length}`;
+        stepName.textContent = stepNames[language][currentStep];
+        stepProgress.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+        if (moveFocus) {
+          document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          steps[currentStep].querySelector('h3')?.setAttribute('tabindex', '-1');
+          steps[currentStep].querySelector('h3')?.focus({ preventScroll: true });
+        }
+      }
+
+      function validateStep(step) {
+        let valid = true;
+        const required = Array.from(step.querySelectorAll('[required]'));
+        const radioNames = new Set(required.filter(el => el.type === 'radio').map(el => el.name));
+        required.filter(el => el.type !== 'radio' && el.type !== 'checkbox').forEach(el => {
+          const bad = !el.value.trim() || (el.type === 'email' && !el.validity.valid) || (el.type === 'tel' && !/[0-9()\-\s+]{10,}/.test(el.value));
+          el.closest('.field')?.classList.toggle('invalid', bad);
+          if (bad) valid = false;
+        });
+        radioNames.forEach(name => {
+          const first = step.querySelector(`input[name="${name}"]`);
+          const bad = !step.querySelector(`input[name="${name}"]:checked`);
+          first?.closest('.field')?.classList.toggle('invalid', bad);
+          if (bad) valid = false;
+        });
+        required.filter(el => el.type === 'checkbox').forEach(el => {
+          const bad = !el.checked;
+          el.closest('.career-consent')?.classList.toggle('invalid', bad);
+          if (bad) valid = false;
+        });
+        if (!valid) step.querySelector('.invalid input, .invalid select, .invalid textarea')?.focus();
+        return valid;
+      }
+
       function setLanguage(lang) {
+        language = lang;
         document.documentElement.lang = lang;
         langInput.value = lang === 'es' ? 'Spanish' : 'English';
         document.querySelectorAll('[data-en][data-es]').forEach(el => { el.textContent = el.dataset[lang]; });
@@ -135,14 +227,25 @@
           btn.classList.toggle('active', active);
           btn.setAttribute('aria-pressed', String(active));
         });
+        showStep(currentStep, false);
       }
       document.querySelectorAll('[data-language]').forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.language)));
+      nextButton.addEventListener('click', () => { if (validateStep(steps[currentStep])) showStep(currentStep + 1, true); });
+      prevButton.addEventListener('click', () => showStep(currentStep - 1, true));
+      const signatureDate = form.querySelector('[name="signature_date"]');
+      if (signatureDate && !signatureDate.value) signatureDate.value = new Date().toISOString().slice(0, 10);
+      showStep(0, false);
       if (window.PCC && window.PCC.forms) {
         window.PCC.forms.bind(form, {
-          required: { name: 'text', phone: 'phone', city_zip: 'text', reliable_transportation: 'text' },
-          choices: ['preferred_schedule', 'contact_consent'],
+          required: { name: 'text', phone: 'phone', email: 'email', address: 'text', city: 'text', zip: 'text', preferred_contact: 'text', reliable_transportation: 'text', available_start_date: 'text', hours_desired: 'text', essential_duties: 'text', training_and_protocols: 'text', reference_1_name: 'text', reference_1_contact: 'text', reference_2_name: 'text', reference_2_contact: 'text', electronic_signature: 'text', signature_date: 'text' },
+          choices: ['age_18_or_older', 'work_authorized', 'preferred_schedule', 'applicant_certification', 'contact_consent'],
           event: 'job_application_submit',
-          successMsg: 'Application received! Fatima’s team will contact you soon. / ¡Solicitud recibida! El equipo de Fatima se comunicará contigo pronto.'
+          successMsg: 'Application received! Fatima’s team will contact you soon. / ¡Solicitud recibida! El equipo de Fatima se comunicará contigo pronto.',
+          enrich: payload => { payload.application_version = 'Full bilingual application v1'; },
+          onSuccess: function () {
+            form.innerHTML = `<div class="application-success"><i data-lucide="circle-check-big"></i><h3>${language === 'es' ? '¡Solicitud recibida!' : 'Application received!'}</h3><p>${language === 'es' ? 'Gracias por tu interés en NataBel. El equipo de Fatima revisará tu solicitud y se comunicará contigo.' : 'Thank you for your interest in NataBel. Fatima’s team will review your application and contact you.'}</p></div>`;
+            if (window.lucide) window.lucide.createIcons();
+          }
         });
       }
     })();
