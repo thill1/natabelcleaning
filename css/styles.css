@@ -936,6 +936,7 @@ body:has(.page-hero) .site-header:not(.scrolled) .menu-toggle {
 .career-phone { color:var(--ivory); font-weight:700; font-size:clamp(1.15rem,2vw,1.45rem); }
 .career-phone:hover { color:var(--brass-bright); }
 .career-founder-photo { position:relative; width:100%; max-width:430px; margin:0 0 0 auto; overflow:hidden; border:1px solid rgba(227,200,120,.35); border-radius:28px; background:#181818; box-shadow:0 28px 70px rgba(0,0,0,.48); aspect-ratio:4/5; }
+.career-founder-photo.reveal { opacity:1 !important; transform:none !important; }
 .career-founder-photo picture,.career-founder-photo img { display:block; width:100%; height:100%; }
 .career-founder-photo img { object-fit:cover; object-position:center top; }
 .career-founder-photo::after { content:''; position:absolute; inset:auto 0 0; height:35%; background:linear-gradient(transparent,rgba(0,0,0,.82)); pointer-events:none; }
