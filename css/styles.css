@@ -920,6 +920,7 @@ body:has(.page-hero) .site-header:not(.scrolled) .menu-toggle {
 /* ---------- Careers landing page ---------- */
 .career-hero { color:var(--ivory); border-bottom-color:rgba(255,255,255,.1); }
 .career-hero.page-hero { padding-top:calc(var(--promo-h,56px) + 82px); padding-bottom:46px; background:radial-gradient(700px 420px at 14% 15%,rgba(198,161,74,.12),transparent 60%),#000; }
+.career-hero .reveal { opacity:1 !important; transform:none !important; }
 .career-hero.page-hero-no-media .career-hero-inner { display:grid; grid-template-columns:minmax(0,1.12fr) minmax(300px,.72fr); gap:clamp(32px,5vw,68px); align-items:center; max-width:none; }
 .career-hero h1, .career-hero .breadcrumbs span { color: var(--ivory); }
 .career-hero .breadcrumbs a, .career-hero .lead { color: rgba(255,255,255,.76); }
