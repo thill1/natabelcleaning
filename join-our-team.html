@@ -20,7 +20,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=careers-hero-v3-20260812" />
+  <link rel="stylesheet" href="css/styles.css?v=careers-ui-review-20260813" />
+  <style>
+    #apply .reveal { opacity: 1 !important; transform: none !important; visibility: visible !important; }
+    @media (max-width: 719px) {
+      body:has(.career-hero) { padding-bottom: 0; }
+      body:has(.career-hero) .mobile-cta-bar { display: none; }
+    }
+  </style>
   <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
   <script>document.documentElement.classList.add('js-ready');</script>
   <script src="js/config.js?v=api-lead-20260730"></script>
@@ -36,7 +43,7 @@
         <div class="page-hero-inner career-hero-inner">
           <div class="page-hero-copy career-hero-copy">
             <div class="breadcrumbs reveal"><a href="index.html">Home</a><span class="sep">/</span><span data-en="Careers" data-es="Empleos">Careers</span></div>
-            <div class="career-hiring-callout reveal"><i data-lucide="sparkles"></i><span data-en="Now Hiring Housecleaners" data-es="Contratando Personal de Limpieza">Now Hiring Housecleaners</span></div>
+            <div class="career-hiring-callout reveal"><i data-lucide="spray-can"></i><span data-en="Now Hiring Housecleaners" data-es="Contratando Personal de Limpieza">Now Hiring Housecleaners</span></div>
             <h1 class="reveal"><span data-en="Join our team" data-es="Únete a nuestro equipo">Join our team</span> <span class="serif-italic" data-en="today." data-es="hoy.">today.</span></h1>
             <p class="lead reveal" data-en="Build a rewarding career with a local team that values beautiful work, dependable service, and treating people with respect." data-es="Construye una carrera gratificante con un equipo local que valora el trabajo excelente, el servicio confiable y tratar a las personas con respeto.">Build a rewarding career with a local team that values beautiful work, dependable service, and treating people with respect.</p>
             <blockquote class="career-founder-message reveal">
@@ -70,7 +77,7 @@
             <div class="career-benefits">
               <div class="career-benefit"><i data-lucide="clock-3"></i><div><strong data-en="Flexible opportunities" data-es="Oportunidades flexibles">Flexible opportunities</strong><span data-en="Full-time and part-time availability considered." data-es="Consideramos disponibilidad de tiempo completo y medio tiempo.">Full-time and part-time availability considered.</span></div></div>
               <div class="career-benefit"><i data-lucide="graduation-cap"></i><div><strong data-en="Training and support" data-es="Capacitación y apoyo">Training and support</strong><span data-en="Learn NataBel's standards with guidance from Fatima and the team." data-es="Aprende los estándares de NataBel con el apoyo de Fatima y el equipo.">Learn NataBel's standards with guidance from Fatima and the team.</span></div></div>
-              <div class="career-benefit"><i data-lucide="car"></i><div><strong data-en="Local service area" data-es="Área de servicio local">Local service area</strong><span data-en="Work in Rocklin and nearby Placer and Sacramento County communities." data-es="Trabaja en Rocklin y comunidades cercanas de los condados de Placer y Sacramento.">Work in Rocklin and nearby Placer and Sacramento County communities.</span></div></div>
+              <div class="career-benefit"><i data-lucide="car"></i><div><strong data-en="Local service area" data-es="Área de servicio local">Local service area</strong><span data-en="Work in Rocklin and nearby communities based on route and scheduling." data-es="Trabaja en Rocklin y comunidades cercanas según la ruta y el horario.">Work in Rocklin and nearby communities based on route and scheduling.</span></div></div>
               <div class="career-benefit"><i data-lucide="heart-handshake"></i><div><strong data-en="Respectful, founder-led team" data-es="Equipo respetuoso dirigido por su fundadora">Respectful, founder-led team</strong><span data-en="Be known, supported, and recognized for excellent work." data-es="Recibe apoyo y reconocimiento por tu excelente trabajo.">Be known, supported, and recognized for excellent work.</span></div></div>
             </div>
           </div>
@@ -175,7 +182,6 @@
   <script src="js/leads.js?v=careers-20260812"></script>
   <script src="js/ui.js?v=launch-20260730"></script>
   <script src="js/bubble-render.js"></script>
-  <script src="js/bubbles.js"></script>
   <script src="js/page-hero.js?v=no-hero-media-20260706"></script>
   <script src="js/main.js"></script>
   <script src="js/motion.js?v=fatima-headshot-20260704" defer></script>
@@ -258,8 +264,15 @@
           event: 'job_application_submit',
           successMsg: 'Application received! Fatima’s team will contact you soon. / ¡Solicitud recibida! El equipo de Fatima se comunicará contigo pronto.',
           enrich: payload => { payload.application_version = 'Full bilingual application v1'; },
-          onSuccess: function () {
-            form.innerHTML = `<div class="application-success"><i data-lucide="circle-check-big"></i><h3>${language === 'es' ? '¡Solicitud recibida!' : 'Application received!'}</h3><p>${language === 'es' ? 'Gracias por tu interés en NataBel. El equipo de Fatima revisará tu solicitud y se comunicará contigo.' : 'Thank you for your interest in NataBel. Fatima’s team will review your application and contact you.'}</p></div>`;
+          onSuccess: function (_payload, result) {
+            const needsSend = result && result.delivery === 'email';
+            const title = needsSend
+              ? (language === 'es' ? 'Tu solicitud está lista para enviar' : 'Your application is ready to send')
+              : (language === 'es' ? '¡Solicitud recibida!' : 'Application received!');
+            const message = needsSend
+              ? (language === 'es' ? 'Se está abriendo tu aplicación de correo con los detalles. Presiona Enviar para que NataBel reciba tu solicitud.' : 'Your email app is opening with the details. Press Send so NataBel receives your application.')
+              : (language === 'es' ? 'Gracias por tu interés en NataBel. El equipo de Fatima revisará tu solicitud y se comunicará contigo.' : 'Thank you for your interest in NataBel. Fatima’s team will review your application and contact you.');
+            form.innerHTML = `<div class="application-success"><i data-lucide="${needsSend ? 'send' : 'circle-check-big'}"></i><h3>${title}</h3><p>${message}</p></div>`;
             if (window.lucide) window.lucide.createIcons();
           }
         });

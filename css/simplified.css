@@ -9,7 +9,7 @@
   --simple-gold: #c6a14a;
   --simple-gold-bright: #e3c878;
   --simple-gold-deep: #8f6e1f;
-  --simple-radius: 24px;
+  --simple-radius: 16px;
   --simple-shadow: 0 24px 70px rgba(27, 19, 5, .09);
 }
 
@@ -29,11 +29,15 @@ html { scroll-behavior: smooth; }
 }
 .simple-site .site-header .bar { min-height: 82px; }
 .simple-site .site-header .brand-logo-header { width: 156px; height: auto; }
-.simple-site .site-header .nav a { color: rgba(255,255,255,.78); }
+.simple-site .site-header .nav { gap: 0; }
+.simple-site .site-header .nav a { padding-inline: 12px; color: rgba(255,255,255,.78); font-size: .89rem; }
 .simple-site .site-header .nav a:hover,
 .simple-site .site-header .nav a[aria-current="page"] { color: var(--simple-gold-bright); background: transparent; }
 .simple-site .site-header .phone-link { color: rgba(255,255,255,.8); }
 .simple-site .site-header .menu-toggle { color: white; }
+@media (max-width: 1240px) {
+  .simple-site .site-header .phone-link { display: none; }
+}
 
 .simple-hero {
   position: relative;
@@ -78,12 +82,12 @@ html { scroll-behavior: smooth; }
   margin: 0;
   font-family: "Fraunces", Georgia, serif;
   font-weight: 430;
-  letter-spacing: -.055em;
+  letter-spacing: -.035em;
   line-height: .94;
   text-wrap: balance;
 }
 .simple-hero h1 { color: #fff; }
-.simple-hero h1 { max-width: 780px; font-size: clamp(3.6rem, 7vw, 7.35rem); }
+.simple-hero h1 { max-width: 780px; font-size: clamp(3.6rem, 7vw, 6rem); }
 .simple-hero h1 em,
 .simple-page-hero h1 em { color: var(--simple-gold-bright); font-weight: 430; }
 .simple-hero-copy > p {
@@ -148,7 +152,7 @@ html { scroll-behavior: smooth; }
 .simple-cta h2 {
   margin: 0;
   font: 450 clamp(2.35rem, 5vw, 4.7rem)/1.01 "Fraunces", Georgia, serif;
-  letter-spacing: -.045em;
+  letter-spacing: -.035em;
   text-wrap: balance;
 }
 .simple-section-head p,
@@ -170,6 +174,7 @@ html { scroll-behavior: smooth; }
 .simple-choice-card.dark { background: #0a0a09; border-color: #242017; color: white; }
 .simple-choice-card .number { color: var(--simple-gold-deep); font: 600 .72rem/1 "Plus Jakarta Sans", sans-serif; letter-spacing: .16em; }
 .simple-choice-card h3 { margin: 72px 0 14px; font: 450 clamp(2.15rem, 4vw, 3.8rem)/1 "Fraunces", Georgia, serif; letter-spacing: -.04em; }
+.simple-choice-card.dark h3 { color: #fff; }
 .simple-choice-card p { max-width: 44ch; color: var(--simple-muted); line-height: 1.7; }
 .simple-choice-card.dark p { color: rgba(255,255,255,.58); }
 .simple-choice-card .text-link { position: absolute; left: clamp(30px, 5vw, 56px); bottom: 42px; }
@@ -231,7 +236,7 @@ html { scroll-behavior: smooth; }
 .simple-cta h2 { color: #fff; }
 
 .simple-page-hero { padding: clamp(80px, 11vw, 150px) 0 clamp(60px, 8vw, 110px); background: white; }
-.simple-page-hero h1 { max-width: 900px; font-size: clamp(3.2rem, 7vw, 6.7rem); }
+.simple-page-hero h1 { max-width: 900px; font-size: clamp(3.2rem, 7vw, 6rem); }
 .simple-page-hero p { max-width: 680px; margin: 26px 0 0; color: var(--simple-muted); font-size: 1.08rem; line-height: 1.75; }
 
 /* Quote experience */
@@ -239,7 +244,7 @@ html { scroll-behavior: smooth; }
 .quote-page .mobile-cta-bar { display: none; }
 .quote-page { padding-bottom: 0; }
 .quote-intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 28px; }
-.quote-intro h1 { margin: 0; font: 450 clamp(2.5rem, 5vw, 4.6rem)/1 "Fraunces", Georgia, serif; letter-spacing: -.045em; }
+.quote-intro h1 { margin: 0; font: 450 clamp(2.5rem, 5vw, 4.6rem)/1 "Fraunces", Georgia, serif; letter-spacing: -.035em; }
 .quote-intro p { max-width: 540px; margin: 12px 0 0; color: var(--simple-muted); line-height: 1.65; }
 .quote-honesty { max-width: 330px; padding: 12px 15px; border: 1px solid #decfae; border-radius: 12px; color: #685622; background: #fff9e9; font-size: .78rem; line-height: 1.5; }
 .quote-card { overflow: hidden; border: 1px solid var(--simple-line); border-radius: 26px; background: white; box-shadow: var(--simple-shadow); }

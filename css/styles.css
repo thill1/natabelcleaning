@@ -303,6 +303,8 @@ button { font-family: inherit; cursor: pointer; }
 .mobile-menu nav a[aria-current="page"], .mobile-menu nav a.active { background: var(--noir-tint); color: var(--noir); font-weight: 600; }
 .mobile-menu .mm-cta { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
 
+.application-nav .btn[hidden] { display: none; }
+
 .mobile-cta-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 70; display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border); box-shadow: 0 -8px 28px rgba(10,10,10,.10); }
 @media (min-width: 720px){ .mobile-cta-bar { display: none; } }
 .mobile-cta-bar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 12px 6px; min-height: 52px; border-radius: 12px; font-size: .66rem; font-weight: 600; color: var(--ink-2); border: 1px solid var(--border); background: var(--ivory); letter-spacing: .02em; transition: background .15s var(--ease), transform .1s var(--ease); }
@@ -929,7 +931,7 @@ body:has(.page-hero) .site-header:not(.scrolled) .menu-toggle {
 .career-hero .lead { max-width:58ch; margin:0; font-size:clamp(1rem,1.4vw,1.16rem); }
 .career-hiring-callout { display:inline-flex; align-items:center; gap:10px; padding:10px 15px; border:1px solid rgba(227,200,120,.42); border-radius:10px; background:rgba(227,200,120,.12); color:var(--brass-bright); font-size:clamp(1rem,1.8vw,1.35rem); font-weight:800; line-height:1.2; letter-spacing:.045em; text-transform:uppercase; }
 .career-hiring-callout svg { width:22px; height:22px; flex:0 0 auto; }
-.career-founder-message { margin:22px 0 0; padding-left:17px; border-left:3px solid var(--brass-bright); }
+.career-founder-message { margin:22px 0 0; padding-left:17px; border-left:1px solid var(--brass-bright); }
 .career-founder-message p { margin:0 0 6px; color:var(--ivory); font-family:var(--font-display); font-size:clamp(1.12rem,1.8vw,1.38rem); font-style:italic; line-height:1.45; }
 .career-founder-message cite { display:flex; flex-wrap:wrap; gap:5px 10px; color:var(--brass-bright); font-size:.76rem; font-style:normal; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
 .career-founder-message cite span { color:rgba(255,255,255,.58); }
@@ -994,7 +996,7 @@ body:has(.page-hero) .site-header:not(.scrolled) .menu-toggle {
 .employment-block .field:last-child { margin-bottom:0; }
 .career-consent.compact { margin-bottom:0; }
 .career-consent.invalid { color:#b94533; }
-.application-certification { padding:18px; margin:22px 0 16px; border-left:4px solid var(--brass); border-radius:10px; background:var(--brass-soft); }
+.application-certification { padding:18px; margin:22px 0 16px; border:1px solid rgba(198,161,74,.34); border-radius:10px; background:var(--brass-soft); }
 .application-certification h4 { margin-bottom:8px; color:var(--ink); }
 .application-certification p { margin:0; color:var(--ink-2); font-size:.82rem; line-height:1.6; }
 .equal-opportunity { margin:14px 0 0; color:var(--muted); text-align:center; font-size:.72rem; line-height:1.55; }
@@ -1471,7 +1473,7 @@ html.has-promo .hero { padding-top: calc(var(--promo-h, 56px) + 78px); }
    ========================================================================= */
 .founder-quote {
   margin: 26px 0 22px; padding-left: 22px;
-  border-left: 3px solid var(--brass);
+  border-left: 1px solid var(--brass);
   font-family: var(--font-display); font-style: italic; font-weight: 400;
   font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.45;
   color: var(--ink); letter-spacing: -.01em;

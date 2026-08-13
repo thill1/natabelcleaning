@@ -5,11 +5,9 @@
 
   const B = window.PCC.business;
   const here = location.pathname.split('/').pop() || 'index.html';
-  const servicePages = [
-    'services.html', 'residential.html', 'commercial.html', 'deep-cleaning.html',
-    'move-in-out.html', 'recurring-cleaning.html', 'office-cleaning.html',
-    'janitorial-services.html', 'property-management.html'
-  ];
+  const residentialPages = ['residential.html', 'deep-cleaning.html', 'move-in-out.html'];
+  const commercialPages = ['commercial.html', 'office-cleaning.html', 'janitorial-services.html', 'property-management.html'];
+  const serviceHubPages = ['services.html', 'recurring-cleaning.html'];
 
   const active = pages => pages.includes(here) ? ' aria-current="page"' : '';
   const header = `
@@ -20,8 +18,11 @@
             <img src="assets/logo-wordmark.png" alt="${B.name}" class="brand-logo brand-logo-header" width="240" height="115" />
           </a>
           <nav class="nav" aria-label="Primary">
-            <a href="services.html"${active(servicePages)}>Services</a>
+            <a href="services.html"${active(serviceHubPages)}>Services</a>
+            <a href="residential.html"${active(residentialPages)}>Residential</a>
+            <a href="commercial.html"${active(commercialPages)}>Commercial</a>
             <a href="about.html"${active(['about.html'])}>About</a>
+            <a href="contact.html"${active(['contact.html'])}>Contact</a>
           </nav>
           <div class="header-cta">
             <a href="${B.phoneHref}" class="phone-link" aria-label="Call ${B.phone}"><i data-lucide="phone"></i><span>${B.phone}</span></a>
@@ -41,8 +42,13 @@
       </div>
       <nav>
         <a href="index.html"${active(['index.html'])}>Home</a>
-        <a href="services.html"${active(servicePages)}>Services</a>
+        <a href="services.html"${active(serviceHubPages)}>All Services</a>
+        <a href="residential.html"${active(residentialPages)}>Residential</a>
+        <a href="commercial.html"${active(commercialPages)}>Commercial</a>
         <a href="about.html"${active(['about.html'])}>About Fatima</a>
+        <a href="service-areas.html"${active(['service-areas.html'])}>Service Areas</a>
+        <a href="faq.html"${active(['faq.html'])}>FAQ</a>
+        <a href="contact.html"${active(['contact.html'])}>Contact</a>
         <a href="free-estimate.html"${active(['free-estimate.html'])}>Instant Estimate</a>
       </nav>
       <div class="mm-cta">
@@ -98,7 +104,7 @@
             <span style="display:flex;gap:11px;color:rgba(247,243,235,.62);font-size:.92rem;"><i data-lucide="clock" style="color:var(--brass-bright);"></i> Mon–Fri 7a–6p · Sat 8a–4p</span>
           </div></div>
         </div>
-        <div class="footer-bottom"><div>© ${new Date().getFullYear()} ${B.name}.</div><div>Rocklin, CA · Serving Placer &amp; Sacramento Counties</div></div>
+        <div class="footer-bottom"><div>© ${new Date().getFullYear()} ${B.name}.</div><div>Rocklin, CA · Placer-first service area</div></div>
       </div>
     </footer>`;
 
