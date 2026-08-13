@@ -13,7 +13,7 @@ window.PCC = {
     tagline:  'Premium Cleaning \u00b7 Rocklin, CA',
     description:
       'NataBel Pristine Cleaning delivers luxury residential and commercial cleaning across Rocklin, Roseville, Granite Bay, and greater Placer County. ' +
-      'Founder-led by Fatima Patalano, we bring meticulous standards, vetted teams, and a pristine finish to every home, office, and facility we serve.',
+      'Founder-led by Fatima Patalano, we bring careful scope-setting, meticulous standards, and a pristine finish to homes, offices, and facilities.',
     /* Business line */
     phone:          '(916) 899-8811',
     phoneHref:      'tel:+19168998811',
@@ -76,7 +76,7 @@ window.PCC = {
     guaranteeCopy:  'Not pristine? Tell us within 24 hours and we return to re-clean the missed areas \u2014 free.',
     promises: [
       { icon: 'user-round',   num: '100%', label: 'Founder-inspected cleans' },
-      { icon: 'shield-check', num: 'Bonded', label: 'Licensed, insured & background-checked' },
+      { icon: 'clipboard-check', num: 'Clear', label: 'Checklist-led scope before service' },
       { icon: 'refresh-ccw',  num: '24 hr', label: 'Pristine Guarantee re-clean window' },
       { icon: 'map-pin',      num: 'Local', label: 'Rocklin-based \u00b7 Placer County proud' },
     ],
@@ -135,7 +135,7 @@ window.PCC = {
     endpoint: '/api/lead',
     method:   'POST',
     includeUTM: true,
-    demoMode: true,
+    demoMode: false,
     notifyEmail: 'natabelpristinecleaning@gmail.com',
   },
 
@@ -156,6 +156,10 @@ window.PCC = {
     commercialWalkthrough:    'commercial_walkthrough_request',
     recurringQuote:           'recurring_quote_request',
     contactFormSubmit:        'contact_form_submit',
+    quoteStarted:             'quote_started',
+    quoteContactSubmitted:    'quote_contact_submitted',
+    quoteRevealed:            'quote_revealed',
+    quoteDeliveryFailed:      'quote_delivery_failed',
     lead:                     'lead',
   },
 };

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/book-online", "destination": "/free-estimate.html", "permanent": true },
+    { "source": "/book-online.html", "destination": "/free-estimate.html", "permanent": true },
+    { "source": "/reviews", "destination": "/about.html#guarantee", "permanent": true },
+    { "source": "/reviews.html", "destination": "/about.html#guarantee", "permanent": true }
+  ]
+}

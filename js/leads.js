@@ -170,7 +170,7 @@
         const ok = res.ok && (!body || body.ok !== false);
         if (ok) return { ok: true, delivery: 'endpoint', status: res.status, body };
         // Endpoint answered with an error — fall through to email rather than lose the lead
-        console.warn('[PCC lead] endpoint rejected the lead', res.status, body);
+        console.info('[PCC lead] automatic delivery unavailable; using visitor email hand-off', res.status, body);
       } catch (e) {
         console.warn('[PCC lead] routing error', e);
         // fall through to the email fallback rather than losing the lead
@@ -213,7 +213,7 @@
         console.info('[PCC lead] submission ignored (' + automated + ')');
         if (opts.onSuccess) { opts.onSuccess(collect(form), { ok: true, delivery: 'ignored' }); return; }
         form.reset();
-        notice(form, opts.successMsg || "Thank you! We'll be in touch within one business hour.", 'success');
+        notice(form, opts.successMsg || "Thank you! NataBel will follow up to confirm the details.", 'success');
         return;
       }
 
@@ -244,11 +244,11 @@
         if (opts.onSuccess) { opts.onSuccess(payload, result); return; }
         if (result.delivery === 'email') {
           // Mail client is opening — the request is not sent until they hit Send.
-          notice(form, `Your email app is opening with your request — press Send and we'll reply within one business hour.${phone ? ' Prefer to call? ' + phone : ''}`, 'info');
+          notice(form, `Your email app is opening with your request — press Send so NataBel receives it.${phone ? ' Prefer to call? ' + phone : ''}`, 'info');
           return;
         }
         form.reset();
-        notice(form, opts.successMsg || "Thank you! We'll be in touch within one business hour.", 'success');
+        notice(form, opts.successMsg || "Thank you! NataBel will follow up to confirm the details.", 'success');
         if (opts.successRedirect) setTimeout(() => { window.location.href = opts.successRedirect; }, 1200);
       } else {
         notice(form, `We couldn't send your request automatically. Please call us at ${phone || 'the number above'} or email us directly — we're happy to help.`, 'error');
@@ -267,7 +267,7 @@
       bind(contact, {
         required: { name: 'text', phone: 'phone', email: 'email', message: 'text' },
         event: ev.contactFormSubmit,
-        successMsg: "Thank you! We'll reply within one business hour.",
+        successMsg: "Thank you! NataBel will follow up to confirm the details.",
       });
     }
     const booking = document.getElementById('bookingForm');
@@ -277,7 +277,7 @@
         required: { name: 'text', phone: 'phone', email: 'email', zip: 'text', preferred_date: 'text', preferred_time: 'text' },
         choices: ['booking_type'],
         event: ev.bookingFormSubmit,
-        successMsg: "Booking request received! We'll confirm your date and time within one business hour.",
+        successMsg: "Booking request received! NataBel will follow up to confirm availability.",
       });
     }
   }

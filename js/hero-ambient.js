@@ -12,7 +12,7 @@
 
   function bootHeroAmbient() {
     if (reduce || !R) return;
-    const mount = document.querySelector('.hero-bg') || document.querySelector('.hero');
+    const mount = document.querySelector('.hero-bg') || document.querySelector('.hero') || document.querySelector('.simple-hero');
     if (!mount) return;
 
     let canvas = mount.querySelector('.hero-ambient-canvas, #heroAmbient, .natabel-bubble-canvas');
@@ -95,7 +95,7 @@
 
     /* ---------- Pointer interaction ---------- */
     const pointer = { x: -9999, y: -9999, active: false };
-    const heroEl = mount.closest('.hero') || mount;
+    const heroEl = mount.closest('.hero, .simple-hero') || mount;
 
     function toCanvasCoords(e) {
       const rect = canvas.getBoundingClientRect();
@@ -190,4 +190,6 @@
   }
 
   window.NatabelHeroAmbient = { boot: bootHeroAmbient };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootHeroAmbient, { once: true });
+  else bootHeroAmbient();
 })();
