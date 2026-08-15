@@ -53,7 +53,7 @@
         <section class="quote-step" data-step="frequency">
           <span class="quote-step-eyebrow">Choose your schedule</span>
           <h2>How often would you like us to clean?</h2>
-          <p>Your approved NataBel recurring rate appears directly on each option.</p>
+          <p>The price shown is for the cleaning service only. Prices are subject to change.</p>
           <div class="quote-options quote-frequency-options">
             <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="weekly" />
               <span class="quote-option-content"><span class="quote-frequency-tag">Best value</span><strong>Weekly</strong><span class="quote-frequency-price" data-price="weekly">Checking…</span><small>For homes that stay consistently maintained.</small></span></label>
@@ -80,8 +80,8 @@
           </div>
 
           <div class="quote-upgrade-block">
-            <div class="quote-upgrade-head"><div><span class="quote-step-eyebrow">Optional upgrades</span><h3>Anything extra you want us to price?</h3></div><span>Confirmed separately</span></div>
-            <p>Select anything you may want. These do not change the recurring base price until NataBel's add-on rate card is finalized.</p>
+            <div class="quote-upgrade-head"><div><span class="quote-step-eyebrow">Optional add-ons</span><h3>Would you like anything extra?</h3></div><span>Quoted separately</span></div>
+            <p>Select any add-ons you are interested in. They are not included in the cleaning price shown. Fatima will call you for any additional add-on quotes.</p>
             <div class="quote-upgrades">
               ${upgrade('inside_refrigerator', 'refrigerator', 'Inside refrigerator', 'Detailed interior refrigerator cleaning.')}
               ${upgrade('inside_oven', 'cooking-pot', 'Inside oven', 'Interior oven cleaning and buildup removal.')}
@@ -97,16 +97,17 @@
 
         <section class="quote-step" data-step="quote">
           <span class="quote-step-eyebrow">Your NataBel cleaning plan</span>
-          <h2>Your recurring price.</h2>
+          <h2>Your cleaning price.</h2>
           <div class="quote-review-card">
             <div class="quote-review-home"><div><strong data-review-home>Home details</strong><span data-review-zip></span></div><i data-lucide="home"></i></div>
-            <div class="quote-review-main"><span data-review-frequency>Recurring cleaning</span><strong data-review-price>—</strong><small>per visit</small></div>
+            <div class="quote-review-main"><span data-review-frequency>Recurring cleaning</span><strong data-review-price>—</strong><small>per visit · cleaning service only</small></div>
             <div class="quote-review-lines">
               <div><span>First visit</span><strong data-review-first>Standard recurring scope</strong></div>
-              <div><span>Optional upgrades</span><strong data-review-extras>None selected</strong></div>
+              <div><span>Optional add-ons requested</span><strong data-review-extras>None selected</strong></div>
             </div>
           </div>
           <p class="quote-review-note" data-review-note>Final scope and availability are confirmed before service.</p>
+          <p class="quote-review-note"><strong>Fatima will call you for any additional add-on quotes.</strong> Prices are subject to change.</p>
           <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Reserve My Cleaning <i data-lucide="arrow-right"></i></button></div>
         </section>
 
@@ -133,8 +134,10 @@
         <span class="quote-step-eyebrow">Quote saved</span>
         <h2>Your recurring cleaning estimate is ready.</h2>
         <div class="quote-final-price"><strong data-status-price>—</strong><span>per visit</span></div>
+        <p><strong>Cleaning service only.</strong> Prices are subject to change.</p>
         <p data-status-copy></p>
         <div class="quote-status-note" data-status-note></div>
+        <p class="quote-review-note"><strong>Fatima will call you for any additional add-on quotes.</strong></p>
         <div class="quote-status-actions">
           <a href="book-online.html?source=instant-quote" class="btn btn-brass" data-booking-link><i data-lucide="calendar-check"></i> Choose My Cleaning Date</a>
           <a href="tel:+19168998811" class="btn btn-outline"><i data-lucide="phone"></i> Call NataBel</a>
