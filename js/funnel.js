@@ -194,9 +194,11 @@
     card.querySelector('[data-review-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : 'Custom';
     card.querySelector('[data-review-first]').textContent = selected('recent_cleaning') === 'no' ? 'Confirm first-visit reset' : 'Standard recurring scope';
     card.querySelector('[data-review-extras]').textContent = extras.length ? extras.map(key => upgradeLabels[key] || key).join(', ') : 'None selected';
-    card.querySelector('[data-review-note]').textContent = selected('recent_cleaning') === 'no'
-      ? 'Your recurring rate is shown above. Because the home has not been professionally cleaned recently, NataBel will confirm whether the first visit needs a separate reset price before service.'
-      : 'Your recurring rate is shown above. Final scope, selected upgrades, and availability are confirmed before service.';
+    const notes = [];
+    if (selected('recent_cleaning') === 'no') notes.push('NataBel will confirm whether the first visit needs a separate reset price before service.');
+    if (extras.length) notes.push('Fatima will call you for any additional add-on quotes.');
+    if (!notes.length) notes.push('Final scope and availability are confirmed before service.');
+    card.querySelector('[data-review-note]').textContent = notes.join(' ');
   }
 
   card.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => {
@@ -218,7 +220,7 @@
     const data = {
       submitted_at: new Date().toISOString(),
       source: location.pathname,
-      lead_source_label: form.dataset.leadSource || 'Instant Estimate',
+      lead_source_label: form.dataset.leadSource || 'Instant Quote',
       quote_type: 'residential'
     };
     const extras = [];
@@ -253,7 +255,7 @@
       copy.textContent = `${frequencyLabels[submitted.frequency] || 'Recurring'} cleaning. ${deliveryMessage(data.fallbackDelivery || data.delivery)}`;
       const notes = [];
       if (submitted.recent_cleaning === 'no') notes.push('The first visit may require a separate reset price after NataBel confirms the starting condition.');
-      if (selectedExtras().length) notes.push('Selected optional upgrades will be priced separately until the add-on rate card is finalized.');
+      if (selectedExtras().length) notes.push('Fatima will call you for any additional add-on quotes.');
       if (!notes.length) notes.push('Final scope and availability are confirmed before service.');
       note.textContent = notes.join(' ');
       window.PCC.util.track(window.PCC.events.quoteRevealed || 'quote_revealed', { frequency: submitted.frequency, amount });
@@ -262,17 +264,6 @@
       note.textContent = 'NataBel will review the home details and confirm pricing before a cleaning date is finalized.';
     }
 
-    const bookingLink = status.querySelector('[data-booking-link]');
-    const params = new URLSearchParams({
-      source: 'instant-quote',
-      frequency: submitted.frequency || '',
-      sqft: submitted.square_footage || '',
-      bedrooms: submitted.bedrooms || '',
-      bathrooms: submitted.bathrooms || '',
-      zip: submitted.zip || ''
-    });
-    if (Number.isFinite(amount)) params.set('quote', String(amount));
-    bookingLink.href = `book-online.html?${params.toString()}`;
     status.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (window.lucide) window.lucide.createIcons();
   }
