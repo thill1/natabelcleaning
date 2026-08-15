@@ -7,8 +7,8 @@
       <span class="quote-option-content"><span class="quote-option-icon"><i data-lucide="${icon}"></i></span><strong>${title}</strong><small>${detail}</small></span></label>`;
   }
 
-  function upgrade(value, icon, title, detail) {
-    return `<label class="quote-upgrade"><input type="checkbox" name="requested_add_ons" value="${value}" />
+  function selectable(name, value, icon, title, detail) {
+    return `<label class="quote-upgrade"><input type="checkbox" name="${name}" value="${value}" />
       <span><span class="quote-upgrade-icon"><i data-lucide="${icon}"></i></span><span><strong>${title}</strong><small>${detail}</small></span><i data-lucide="plus" class="quote-upgrade-plus"></i></span></label>`;
   }
 
@@ -70,7 +70,7 @@
         <section class="quote-step" data-step="first-visit">
           <span class="quote-step-eyebrow">First visit</span>
           <h2>Help us understand the starting point.</h2>
-          <p>This protects the recurring price from being confused with a more detailed first-time reset.</p>
+          <p>A few details help Fatima prepare the team for your home without changing the base cleaning price shown.</p>
           <div class="quote-question-block">
             <h3>Has the home been professionally cleaned within the last 30 days?</h3>
             <div class="quote-options two">
@@ -79,16 +79,29 @@
             </div>
           </div>
 
+          <div class="quote-upgrade-block quote-focus-block">
+            <div class="quote-upgrade-head"><div><span class="quote-step-eyebrow">Focus areas</span><h3>What should we pay extra attention to?</h3></div><span>Choose any</span></div>
+            <p>Select the areas that matter most to you. These preferences help the team plan the visit and do not change the base cleaning price.</p>
+            <div class="quote-upgrades">
+              ${selectable('focus_areas', 'kitchen', 'cooking-pot', 'Kitchen', 'Counters, sink, stovetop, appliance exteriors and high-use surfaces.')}
+              ${selectable('focus_areas', 'bathrooms', 'bath', 'Bathrooms', 'Showers, tubs, toilets, sinks, fixtures and mirrors.')}
+              ${selectable('focus_areas', 'floors', 'sparkles', 'Floors', 'Vacuuming, mopping, edges and visible floor buildup.')}
+              ${selectable('focus_areas', 'dusting_surfaces', 'feather', 'Dust & surfaces', 'Furniture, shelves, ledges and frequently used surfaces.')}
+              ${selectable('focus_areas', 'bedrooms', 'bed-double', 'Bedrooms', 'Dusting, floors, mirrors and general room reset.')}
+              ${selectable('focus_areas', 'high_touch', 'hand', 'High-touch areas', 'Handles, switches and other frequently touched surfaces.')}
+            </div>
+          </div>
+
           <div class="quote-upgrade-block">
             <div class="quote-upgrade-head"><div><span class="quote-step-eyebrow">Optional add-ons</span><h3>Would you like anything extra?</h3></div><span>Quoted separately</span></div>
             <p>Select any add-ons you are interested in. They are not included in the cleaning price shown. Fatima will call you for any additional add-on quotes.</p>
             <div class="quote-upgrades">
-              ${upgrade('inside_refrigerator', 'refrigerator', 'Inside refrigerator', 'Detailed interior refrigerator cleaning.')}
-              ${upgrade('inside_oven', 'cooking-pot', 'Inside oven', 'Interior oven cleaning and buildup removal.')}
-              ${upgrade('interior_windows', 'panels-top-left', 'Interior windows', 'Interior glass and reachable window detailing.')}
-              ${upgrade('baseboard_detail', 'panel-bottom', 'Baseboard detail', 'Extra attention to baseboards and edges.')}
-              ${upgrade('cabinet_interiors', 'archive', 'Cabinet interiors', 'Interior cabinet wipe-down when emptied.')}
-              ${upgrade('pet_hair', 'paw-print', 'Pet hair treatment', 'Additional pet-hair attention where needed.')}
+              ${selectable('requested_add_ons', 'inside_refrigerator', 'refrigerator', 'Inside refrigerator', 'Detailed interior refrigerator cleaning.')}
+              ${selectable('requested_add_ons', 'inside_oven', 'cooking-pot', 'Inside oven', 'Interior oven cleaning and buildup removal.')}
+              ${selectable('requested_add_ons', 'interior_windows', 'panels-top-left', 'Interior windows', 'Interior glass and reachable window detailing.')}
+              ${selectable('requested_add_ons', 'baseboard_detail', 'panel-bottom', 'Baseboard detail', 'Extra attention to baseboards and edges.')}
+              ${selectable('requested_add_ons', 'cabinet_interiors', 'archive', 'Cabinet interiors', 'Interior cabinet wipe-down when emptied.')}
+              ${selectable('requested_add_ons', 'pet_hair', 'paw-print', 'Pet hair treatment', 'Additional pet-hair attention where needed.')}
             </div>
           </div>
           <div class="quote-server-error" data-step-error>Please tell us whether the home was professionally cleaned recently.</div>
@@ -103,6 +116,7 @@
             <div class="quote-review-main"><span data-review-frequency>Recurring cleaning</span><strong data-review-price>—</strong><small>per visit · cleaning service only</small></div>
             <div class="quote-review-lines">
               <div><span>First visit</span><strong data-review-first>Standard recurring scope</strong></div>
+              <div><span>Focus areas</span><strong data-review-focus>None selected</strong></div>
               <div><span>Optional add-ons requested</span><strong data-review-extras>None selected</strong></div>
             </div>
           </div>
@@ -121,7 +135,7 @@
             <div class="quote-field"><label for="quoteEmail">Email</label><input id="quoteEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" /><span class="quote-error">Enter a valid email.</span></div>
             <div class="quote-field"><label for="quoteCity">City</label><input id="quoteCity" name="city" autocomplete="address-level2" placeholder="Rocklin" /><span class="quote-error">Enter the city.</span></div>
             <div class="quote-field full"><label for="serviceAddress">Service address</label><input id="serviceAddress" name="service_address" autocomplete="street-address" placeholder="123 Main Street" /><span class="quote-error">Enter the service address.</span></div>
-            <div class="quote-field full"><label for="quoteNotes">Anything NataBel should know? <span class="quote-optional">(optional)</span></label><textarea id="quoteNotes" name="notes" placeholder="Pets, special surfaces, access notes, preferred days, or focus areas."></textarea></div>
+            <div class="quote-field full"><label for="quoteNotes">Anything NataBel should know? <span class="quote-optional">(optional)</span></label><textarea id="quoteNotes" name="notes" placeholder="Pets, special surfaces, access notes, preferred days, or anything else we should know."></textarea></div>
           </div>
           <label class="quote-consent"><input type="checkbox" name="contact_consent" value="yes" /> <span>I agree that NataBel may contact me about this quote and requested cleaning service. This is not a marketing subscription.</span></label>
           <div class="quote-server-error" data-submit-error></div>
