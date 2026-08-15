@@ -51,14 +51,14 @@ function emailHtml(body, quote, customer) {
   const extras = selectedExtras(body);
   return `<div style="font-family:Arial,sans-serif;color:#17140f;line-height:1.6;max-width:620px;margin:auto">
     <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8f6e1f">NataBel Pristine Cleaning</p>
-    <h1 style="font-family:Georgia,serif;font-weight:500">${customer ? 'Your recurring cleaning estimate' : 'New instant-quote lead'}</h1>
+    <h1 style="font-family:Georgia,serif;font-weight:500">${customer ? 'Your recurring cleaning quote' : 'New instant-quote lead'}</h1>
     <p style="font-size:38px;font-family:Georgia,serif;margin:18px 0">${amount} <span style="font-size:16px">per visit</span></p>
     <p><strong>Cleaning service only.</strong> Prices are subject to change.</p>
     <p><strong>${safe(frequencyLabel(body.frequency))}</strong> recurring cleaning for ${safe(body.name || 'this home')} in ${safe(body.city)} ${safe(body.zip)}.</p>
     <p><strong>Home:</strong> ${safe(body.square_footage)} sq ft · ${safe(body.bedrooms)} bed · ${safe(body.bathrooms)} bath<br><strong>Property:</strong> ${safe(body.property_type)}<br><strong>Service address:</strong> ${safe(body.service_address)}<br><strong>Professionally cleaned in the last 30 days:</strong> ${safe(body.recent_cleaning)}</p>
     ${extras ? `<p><strong>Requested add-ons:</strong> ${safe(extras)}</p><p><strong>Fatima will call you for any additional add-on quotes.</strong></p>` : ''}
     <p style="padding:14px;background:#fff8e7;border:1px solid #decfae">${safe(firstVisitNote)} Add-ons are not included in the cleaning price shown.</p>
-    ${customer ? '<p>NataBel will follow up using the contact details you provided. You can also continue to the booking page to choose a preferred cleaning date.</p>' : `<p><strong>Phone:</strong> ${safe(body.phone)}<br><strong>Email:</strong> ${safe(body.email)}<br><strong>Notes:</strong> ${safe(body.notes)}</p>`}
+    ${customer ? '<p>NataBel will follow up using the contact details you provided to confirm the first visit and scheduling. If you would like immediate help, call (916) 899-8811.</p>' : `<p><strong>Phone:</strong> ${safe(body.phone)}<br><strong>Email:</strong> ${safe(body.email)}<br><strong>Notes:</strong> ${safe(body.notes)}</p>`}
   </div>`;
 }
 
@@ -85,7 +85,7 @@ module.exports = async function handler(req, res) {
 
   const customer = await sendEmail({
     to: body.email,
-    subject: `Your NataBel recurring estimate: $${result.quote.amount} per visit`,
+    subject: `Your NataBel recurring quote: $${result.quote.amount} per visit`,
     html: emailHtml(body, result.quote, true)
   });
   const internal = await sendEmail({
