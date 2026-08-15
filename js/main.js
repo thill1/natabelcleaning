@@ -9,18 +9,29 @@
   if (!document.querySelector('link[data-qa-final-fixes]')) {
     const finalFixes = document.createElement('link');
     finalFixes.rel = 'stylesheet';
-    finalFixes.href = 'css/qa-final-fixes.css?v=20260815-bubbles';
+    finalFixes.href = 'css/qa-final-fixes.css?v=20260815-hero-bubbles';
     finalFixes.dataset.qaFinalFixes = 'true';
     document.head.appendChild(finalFixes);
   }
 
-  /* Branded bubble fields load once and then attach only to surfaces whose
+  /* Hero-matched bubble fields load once and attach only to surfaces whose
      computed background is actually black / near-black. */
   if (!document.querySelector('script[data-dark-bubbles]')) {
     const darkBubbles = document.createElement('script');
-    darkBubbles.src = 'js/dark-bubbles.js?v=20260815';
+    darkBubbles.src = 'js/dark-bubbles.js?v=20260815-hero-match';
     darkBubbles.dataset.darkBubbles = 'true';
     document.head.appendChild(darkBubbles);
+  }
+
+  /* Careers hero hierarchy: the hiring label belongs directly beneath the
+     primary headline so the eye reads Join our team today → Now Hiring. */
+  const careerHeroCopy = document.querySelector('.career-hero-copy');
+  if (careerHeroCopy) {
+    const careerHeading = careerHeroCopy.querySelector('h1');
+    const hiringCallout = careerHeroCopy.querySelector('.career-hiring-callout');
+    if (careerHeading && hiringCallout && careerHeading.nextElementSibling !== hiringCallout) {
+      careerHeading.insertAdjacentElement('afterend', hiringCallout);
+    }
   }
 
   /* ---------- Header scroll state ---------- */
