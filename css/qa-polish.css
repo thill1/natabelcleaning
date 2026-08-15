@@ -1,0 +1,285 @@
+/* Deployment visual QA polish — loaded after the core styles. */
+:root {
+  --qa-gutter: clamp(20px, 4vw, 56px);
+  --qa-section: clamp(84px, 8vw, 124px);
+  --qa-radius: 20px;
+  --qa-shadow: 0 24px 70px rgba(20, 15, 7, .10);
+}
+
+html { text-rendering: optimizeLegibility; }
+.simple-site {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.simple-site .container,
+.simple-site .container-wide { width: min(1200px, calc(100% - (var(--qa-gutter) * 2))); }
+.simple-site p { text-wrap: pretty; }
+.simple-site h1,
+.simple-site h2,
+.simple-site h3 { text-wrap: balance; }
+
+/* Header: translucent over the landing hero, solid black after scroll. */
+.simple-site .site-header {
+  min-height: 88px;
+  background: rgba(5,5,5,.97);
+  border-bottom-color: rgba(227,200,120,.15);
+  transition: background .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.simple-site .site-header.scrolled {
+  background: rgba(5,5,5,.985);
+  border-bottom-color: rgba(227,200,120,.20);
+  box-shadow: 0 12px 34px rgba(0,0,0,.20);
+}
+.simple-site:has(.simple-hero) .site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  width: 100%;
+  background: rgba(5,5,5,.42);
+  border-bottom-color: rgba(255,255,255,.09);
+}
+.simple-site:has(.simple-hero) .site-header.scrolled { background: rgba(5,5,5,.985); }
+.simple-site .site-header .bar { min-height: 88px; gap: 20px; }
+.simple-site .site-header .brand-logo-header { width: 166px; }
+.simple-site .site-header .nav { gap: 2px; }
+.simple-site .site-header .nav a {
+  padding: 13px 10px;
+  color: rgba(255,255,255,.82);
+  font-size: .94rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.simple-site .site-header .nav a:hover,
+.simple-site .site-header .nav a[aria-current="page"] { color: var(--simple-gold-bright); }
+.header-call-btn {
+  min-height: 46px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1px;
+  padding: 7px 14px !important;
+  border: 1px solid rgba(227,200,120,.42) !important;
+  border-radius: 11px !important;
+  background: rgba(255,255,255,.055) !important;
+  color: #fff !important;
+  line-height: 1.05;
+}
+.header-call-btn:hover { border-color: var(--simple-gold-bright) !important; background: rgba(227,200,120,.10) !important; }
+.header-call-btn i { width: 15px; position: absolute; opacity: 0; pointer-events: none; }
+.header-call-label { color: var(--simple-gold-bright); font-size: .62rem; font-weight: 800; letter-spacing: .10em; text-transform: uppercase; }
+.header-call-number { color: #fff; font-size: .91rem; font-weight: 700; white-space: nowrap; }
+.simple-site .site-header .header-cta { gap: 10px; }
+.simple-site .site-header .header-cta > .btn-brass { min-height: 46px; padding-inline: 17px; font-weight: 750; }
+
+/* Hero balance and hierarchy. */
+.simple-hero { min-height: min(790px, 100svh); }
+.simple-hero-grid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, .68fr);
+  gap: clamp(48px, 7vw, 96px);
+  padding: 150px 0 96px;
+}
+.simple-hero h1 { max-width: 820px; font-size: clamp(3.55rem, 6.5vw, 5.85rem); line-height: .97; letter-spacing: -.03em; }
+.simple-hero-copy > p { max-width: 620px; margin-top: 27px; font-size: clamp(1.04rem, 1.35vw, 1.16rem); line-height: 1.72; }
+.simple-actions { gap: 11px; margin-top: 32px; }
+.simple-actions .btn { min-height: 54px; padding-inline: 21px; }
+.simple-trust-line { margin-top: 29px; gap: 11px 22px; font-size: .84rem; }
+
+/* Hero path card: photographic thumbnails replace generic circles. */
+.concierge-card { padding: 8px; border-radius: 26px; border-color: rgba(227,200,120,.30); }
+.concierge-card-inner { padding: 27px; border-radius: 19px; background: rgba(13,12,10,.96); }
+.concierge-card h2 { margin-top: 9px; font-size: clamp(1.65rem, 2.5vw, 2.18rem); }
+.concierge-card > div > p { margin-bottom: 20px; }
+.concierge-paths { gap: 12px; }
+.concierge-path {
+  grid-template-columns: 62px 1fr auto;
+  gap: 15px;
+  min-height: 88px;
+  padding: 12px;
+  border-radius: 15px;
+}
+.concierge-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 12px;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+}
+.concierge-path:nth-child(1) .concierge-icon { background-image: url('../assets/ba-after-kitchen.jpg'); }
+.concierge-path:nth-child(2) .concierge-icon { background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=500&q=78'); }
+.concierge-icon svg { display: none; }
+.concierge-path strong { font-size: 1rem; }
+.concierge-path span span { margin-top: 4px; font-size: .76rem; line-height: 1.4; }
+
+/* Consistent section rhythm and typography. */
+.simple-section { padding: var(--qa-section) 0; }
+.simple-section-head { max-width: 790px; margin-bottom: clamp(38px, 5vw, 56px); }
+.simple-section-head h2,
+.simple-split h2,
+.simple-cta h2 { font-size: clamp(2.45rem, 4.55vw, 4.45rem); line-height: 1.02; letter-spacing: -.03em; }
+.simple-section-head p,
+.simple-split p { max-width: 66ch; margin-top: 18px; font-size: 1rem; line-height: 1.72; }
+.simple-kicker { margin-bottom: 21px; font-size: .72rem; letter-spacing: .17em; }
+
+/* Primary home/business CTA cards with photography. */
+.simple-choice-grid { gap: clamp(18px, 2.4vw, 28px); }
+.simple-choice-card {
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-radius: var(--qa-radius);
+  box-shadow: var(--qa-shadow);
+  transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+}
+.simple-choice-card:hover { transform: translateY(-4px); box-shadow: 0 30px 80px rgba(20,15,7,.14); border-color: rgba(198,161,74,.42); }
+.simple-choice-card::before {
+  content: "";
+  display: block;
+  flex: 0 0 248px;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  border-bottom: 1px solid var(--simple-line);
+}
+.simple-choice-card:first-child::before { background-image: url('../assets/ba-after-kitchen.jpg'); }
+.simple-choice-card:last-child::before {
+  background-image: linear-gradient(rgba(5,5,5,.10), rgba(5,5,5,.28)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=82');
+  border-bottom-color: rgba(227,200,120,.18);
+}
+.simple-choice-card .number { margin: 31px clamp(28px, 4vw, 44px) 0; font-size: .70rem; }
+.simple-choice-card h3 { margin: 18px clamp(28px, 4vw, 44px) 12px; font-size: clamp(2rem, 3.3vw, 3.2rem); line-height: 1.02; letter-spacing: -.035em; }
+.simple-choice-card p { margin: 0 clamp(28px, 4vw, 44px); font-size: .94rem; line-height: 1.68; }
+.simple-choice-card .text-link {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: max-content;
+  margin: auto clamp(28px, 4vw, 44px) 33px;
+  font-size: .90rem;
+  font-weight: 750;
+}
+.simple-choice-card .text-link i { width: 17px; }
+
+/* Proof, steps, split content. */
+.simple-proof-grid { gap: clamp(42px, 6.5vw, 82px); }
+.simple-founder { grid-template-columns: 122px 1fr; gap: 24px; padding: 24px; border-radius: 18px; }
+.simple-founder img { width: 122px; }
+.simple-founder blockquote { font-size: clamp(1.08rem, 1.7vw, 1.3rem); }
+.simple-promise { grid-template-columns: 42px 1fr; gap: 15px; padding: 19px 0; }
+.simple-promises > .simple-promise:first-child { padding-top: 5px; }
+.simple-steps { border-radius: 18px; }
+.simple-step { min-height: 250px; padding: 34px 32px; }
+.simple-step h3 { margin-top: 48px; font-size: 1.45rem; line-height: 1.16; }
+.simple-step p { margin-top: 9px; font-size: .89rem; line-height: 1.62; }
+.simple-split { gap: clamp(48px, 7vw, 94px); }
+.simple-photo img { border-radius: 18px; box-shadow: var(--qa-shadow); }
+.simple-photo-note { right: 18px; bottom: 22px; }
+.simple-service-list { gap: 11px; margin-top: 29px; }
+.simple-service-list a,
+.simple-service-list span { min-height: 60px; padding: 15px 17px; border-radius: 11px; }
+.simple-faq summary { padding: 23px 4px; font-size: .98rem; }
+.simple-faq p { padding-bottom: 23px; }
+
+/* Interior page heroes. */
+.simple-page-hero { padding: clamp(104px, 10vw, 138px) 0 clamp(72px, 7vw, 98px); }
+.simple-page-hero h1 { max-width: 940px; font-size: clamp(3.15rem, 6.2vw, 5.65rem); line-height: .98; letter-spacing: -.03em; }
+.simple-page-hero p { max-width: 720px; margin-top: 24px; font-size: 1.06rem; line-height: 1.72; }
+
+/* Bottom CTA hierarchy. */
+.simple-cta {
+  gap: 38px;
+  padding: clamp(38px, 5vw, 58px);
+  border-radius: 20px;
+  border: 1px solid rgba(227,200,120,.18);
+  box-shadow: 0 25px 70px rgba(5,5,5,.14);
+}
+.simple-cta h2 { font-size: clamp(2.25rem, 4vw, 3.85rem); }
+.simple-cta p { margin-top: 12px; font-size: .96rem; line-height: 1.55; }
+.simple-cta .btn { min-height: 54px; white-space: nowrap; }
+
+/* Quote flow visual QA. */
+.quote-shell { padding: clamp(38px, 5vw, 64px) 0 96px; }
+.quote-intro { align-items: center; margin-bottom: 30px; }
+.quote-intro h1 { max-width: 790px; font-size: clamp(2.65rem, 4.7vw, 4.45rem); line-height: 1.01; letter-spacing: -.03em; }
+.quote-intro p { max-width: 610px; margin-top: 14px; }
+.quote-card { border-radius: 22px; box-shadow: 0 26px 74px rgba(27,19,5,.10); }
+.quote-progress { padding: 19px 28px; }
+.quote-step { min-height: 520px; padding: clamp(34px, 5vw, 60px); }
+.quote-step h2 { max-width: 850px; font-size: clamp(2.1rem, 3.7vw, 3.35rem); line-height: 1.06; letter-spacing: -.03em; }
+.quote-step > p { max-width: 710px; margin-top: 12px; margin-bottom: 28px; }
+.quote-options { gap: 14px; }
+.quote-option-content { min-height: 152px; padding: 21px; border-radius: 15px; }
+.quote-fields { gap: 17px 20px; }
+.quote-field input,
+.quote-field select,
+.quote-field textarea { min-height: 54px; border-radius: 10px; }
+.quote-nav { margin-top: 32px; }
+.quote-nav .btn { min-height: 50px; }
+.quote-review-card { border-radius: 18px !important; }
+.quote-review-main { padding: 38px 24px !important; }
+.quote-status { padding: clamp(48px, 7vw, 78px); }
+.quote-status-actions .btn { min-height: 52px; }
+
+/* Footer spacing and legibility. */
+.simple-site .site-footer { padding-top: clamp(64px, 7vw, 88px); }
+.simple-site .footer-grid { gap: clamp(32px, 5vw, 64px); }
+.simple-site .footer-links,
+.simple-site .footer-contact { gap: 11px; }
+.simple-site .footer-bottom { margin-top: 48px; padding-top: 22px; }
+
+@media (max-width: 1180px) {
+  .header-call-number { display: none; }
+  .header-call-btn { min-width: 86px; align-items: center; }
+  .simple-site .site-header .nav a { padding-inline: 8px; font-size: .90rem; }
+}
+
+@media (max-width: 980px) {
+  .simple-hero-grid { grid-template-columns: 1fr; padding-top: 138px; gap: 42px; }
+  .concierge-card { max-width: 650px; }
+  .simple-choice-card { min-height: 530px; }
+  .simple-choice-card::before { flex-basis: 224px; }
+}
+
+@media (max-width: 720px) {
+  :root { --qa-gutter: 14px; --qa-section: 72px; }
+  .simple-site .site-header,
+  .simple-site:has(.simple-hero) .site-header { min-height: 70px; }
+  .simple-site .site-header .bar { min-height: 70px; }
+  .simple-site .site-header .brand-logo-header { width: 132px; }
+  .simple-hero { min-height: auto; }
+  .simple-hero-grid { padding: 118px 0 72px; gap: 38px; }
+  .simple-hero h1 { font-size: clamp(3rem, 14vw, 4.7rem); line-height: .98; }
+  .simple-hero-copy > p { font-size: 1rem; line-height: 1.65; }
+  .simple-actions .btn { width: 100%; justify-content: center; }
+  .concierge-card-inner { padding: 20px; }
+  .concierge-path { grid-template-columns: 56px 1fr 18px; min-height: 80px; }
+  .concierge-icon { width: 56px; height: 56px; }
+  .simple-choice-grid { gap: 18px; }
+  .simple-choice-card { min-height: 500px; }
+  .simple-choice-card::before { flex-basis: 205px; }
+  .simple-choice-card .number { margin-top: 26px; }
+  .simple-choice-card .text-link { margin-bottom: 28px; }
+  .simple-section-head h2,
+  .simple-split h2,
+  .simple-cta h2 { font-size: clamp(2.25rem, 11vw, 3.35rem); }
+  .simple-founder { grid-template-columns: 82px 1fr; gap: 18px; padding: 20px; }
+  .simple-founder img { width: 82px; }
+  .simple-page-hero { padding-top: 88px; padding-bottom: 68px; }
+  .simple-page-hero h1 { font-size: clamp(3rem, 13vw, 4.5rem); }
+  .simple-cta { padding: 32px 25px; }
+  .quote-shell { padding-top: 26px; }
+  .quote-intro h1 { font-size: clamp(2.45rem, 11vw, 3.65rem); }
+  .quote-step { padding: 30px 20px; }
+  .quote-frequency .quote-option-content { min-height: 178px !important; }
+  .quote-upgrades { gap: 9px !important; }
+  .quote-status { padding: 40px 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .simple-choice-card,
+  .site-header { transition: none; }
+}
