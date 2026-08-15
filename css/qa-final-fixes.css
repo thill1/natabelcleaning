@@ -1,4 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
 /* Final deployment QA corrections layered after qa-polish.css. */
+
+/* Replace the more playful Fraunces display face with a cleaner editorial serif.
+   Plus Jakarta Sans remains the body/UI face for legibility. */
+.simple-site h1,
+.simple-site h2,
+.simple-site h3,
+.simple-site blockquote,
+.simple-site .quote-frequency strong {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+}
+.simple-site .quote-review-main strong,
+.simple-site .quote-final-price strong,
+.simple-site .quote-frequency-price {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+
+/* Keep service-area rejection unmistakable without making the form feel harsh. */
+.simple-site .quote-field.invalid .quote-error {
+  max-width: 620px;
+  margin-top: 9px;
+  line-height: 1.45;
+}
 
 /* Six navigation items plus two CTAs need extra breathing room at laptop widths. */
 @media (max-width: 1240px) {
