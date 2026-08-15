@@ -3,6 +3,16 @@
   'use strict';
   if (!window.PCC) return;
 
+  /* Final deployment polish is intentionally additive so the original design
+     system remains intact and easy to roll back. */
+  if (!document.querySelector('link[data-qa-polish]')) {
+    const polish = document.createElement('link');
+    polish.rel = 'stylesheet';
+    polish.href = 'css/qa-polish.css?v=20260815-final';
+    polish.dataset.qaPolish = 'true';
+    document.head.appendChild(polish);
+  }
+
   const B = window.PCC.business;
   const here = location.pathname.split('/').pop() || 'index.html';
   const residentialPages = ['residential.html', 'deep-cleaning.html', 'move-in-out.html'];
@@ -22,11 +32,12 @@
             <a href="residential.html"${active(residentialPages)}>Residential</a>
             <a href="commercial.html"${active(commercialPages)}>Commercial</a>
             <a href="about.html"${active(['about.html'])}>About</a>
+            <a href="join-our-team.html"${active(['join-our-team.html'])}>Career</a>
             <a href="contact.html"${active(['contact.html'])}>Contact</a>
           </nav>
           <div class="header-cta">
-            <a href="${B.phoneHref}" class="phone-link" aria-label="Call ${B.phone}"><i data-lucide="phone"></i><span>${B.phone}</span></a>
-            <a href="free-estimate.html" class="btn btn-brass btn-sm">Instant Estimate</a>
+            <a href="${B.phoneHref}" class="header-call-btn" aria-label="Call NataBel at ${B.phone}"><i data-lucide="phone"></i><span class="header-call-label">Call Now</span><span class="header-call-number">${B.phone}</span></a>
+            <a href="free-estimate.html" class="btn btn-brass btn-sm">Instant Quote</a>
             <button class="menu-toggle" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false"><i data-lucide="menu"></i></button>
           </div>
         </div>
@@ -46,21 +57,22 @@
         <a href="residential.html"${active(residentialPages)}>Residential</a>
         <a href="commercial.html"${active(commercialPages)}>Commercial</a>
         <a href="about.html"${active(['about.html'])}>About Fatima</a>
+        <a href="join-our-team.html"${active(['join-our-team.html'])}>Career</a>
         <a href="service-areas.html"${active(['service-areas.html'])}>Service Areas</a>
         <a href="faq.html"${active(['faq.html'])}>FAQ</a>
         <a href="contact.html"${active(['contact.html'])}>Contact</a>
-        <a href="free-estimate.html"${active(['free-estimate.html'])}>Instant Estimate</a>
+        <a href="free-estimate.html"${active(['free-estimate.html'])}>Instant Quote</a>
       </nav>
       <div class="mm-cta">
         <a href="${B.phoneHref}" class="btn btn-outline btn-block"><i data-lucide="phone"></i> Call ${B.phone}</a>
-        <a href="free-estimate.html" class="btn btn-brass btn-block">Get My Estimate</a>
+        <a href="free-estimate.html" class="btn btn-brass btn-block">Get My Quote</a>
       </div>
     </aside>`;
 
   const mobileCta = `
     <nav class="mobile-cta-bar" aria-label="Quick actions">
       <a href="${B.phoneHref}" aria-label="Call ${B.phone}"><i data-lucide="phone"></i><span>Call</span></a>
-      <a href="free-estimate.html" class="cta-primary" aria-label="Get an instant estimate"><i data-lucide="calculator"></i><span>Estimate</span></a>
+      <a href="free-estimate.html" class="cta-primary" aria-label="Get an instant cleaning quote"><i data-lucide="calculator"></i><span>Quote</span></a>
     </nav>`;
 
   const trustRibbon = `
@@ -98,7 +110,7 @@
             <a href="about.html">About Fatima</a><a href="service-areas.html">Service Areas</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="join-our-team.html">Join Our Team</a>
           </div></div>
           <div><h4>Start Here</h4><div class="footer-contact">
-            <a href="free-estimate.html"><i data-lucide="calculator"></i> Instant Estimate</a>
+            <a href="free-estimate.html"><i data-lucide="calculator"></i> Instant Quote</a>
             <a href="${B.phoneHref}"><i data-lucide="phone"></i> ${B.phone}</a>
             <a href="mailto:${B.email}"><i data-lucide="mail"></i> ${B.email}</a>
             <span style="display:flex;gap:11px;color:rgba(247,243,235,.62);font-size:.92rem;"><i data-lucide="clock" style="color:var(--brass-bright);"></i> Mon–Fri 7a–6p · Sat 8a–4p</span>
@@ -120,7 +132,7 @@
 
   const quoteTemplate = window.PCC.templates && window.PCC.templates.estimateFunnelCard;
   document.querySelectorAll('[data-partial="estimate-funnel"]').forEach(element => {
-    if (quoteTemplate) element.innerHTML = quoteTemplate(element.dataset.leadSource || 'Instant Estimate');
+    if (quoteTemplate) element.innerHTML = quoteTemplate(element.dataset.leadSource || 'Instant Quote');
   });
 
   const schemaEl = document.getElementById('page-schema');
