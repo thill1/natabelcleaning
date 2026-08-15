@@ -14,7 +14,7 @@
 
   function estimateFunnelCard(source) {
     return `<div class="quote-card quote-card-v2" data-funnel>
-      <div class="quote-progress" aria-label="Estimate progress">
+      <div class="quote-progress" aria-label="Quote progress">
         <div><div class="quote-progress-meta"><span data-step-label>Step 1 · Service area</span><span data-step-count>1 of 6</span></div><div class="quote-progress-track"><span></span></div></div>
         <span class="simple-kicker" style="margin:0;white-space:nowrap;">About 90 seconds</span>
       </div>
@@ -32,7 +32,7 @@
           <p>Enter the service ZIP code so we can start with the right local pricing path.</p>
           <div class="quote-single-field">
             <div class="quote-field"><label for="residentialZip">Service ZIP code</label><input id="residentialZip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="95765" /><span class="quote-error">Enter a five-digit ZIP code.</span></div>
-            <p class="quote-field-note"><i data-lucide="map-pin"></i> NataBel serves Rocklin, Roseville, Granite Bay and surrounding Placer and Sacramento-area communities. Final service-area confirmation happens before booking.</p>
+            <p class="quote-field-note"><i data-lucide="map-pin"></i> NataBel serves Rocklin, Roseville, Granite Bay and surrounding Placer and Sacramento-area communities. Final service-area confirmation happens before scheduling.</p>
           </div>
           <div class="quote-nav"><span></span><button class="btn btn-brass" type="button" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
         </section>
@@ -123,7 +123,7 @@
             <div class="quote-field full"><label for="serviceAddress">Service address</label><input id="serviceAddress" name="service_address" autocomplete="street-address" placeholder="123 Main Street" /><span class="quote-error">Enter the service address.</span></div>
             <div class="quote-field full"><label for="quoteNotes">Anything NataBel should know? <span class="quote-optional">(optional)</span></label><textarea id="quoteNotes" name="notes" placeholder="Pets, special surfaces, access notes, preferred days, or focus areas."></textarea></div>
           </div>
-          <label class="quote-consent"><input type="checkbox" name="contact_consent" value="yes" /> <span>I agree that NataBel may contact me about this estimate and requested cleaning service. This is not a marketing subscription.</span></label>
+          <label class="quote-consent"><input type="checkbox" name="contact_consent" value="yes" /> <span>I agree that NataBel may contact me about this quote and requested cleaning service. This is not a marketing subscription.</span></label>
           <div class="quote-server-error" data-submit-error></div>
           <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="submit"><span data-submit-label>Send My Quote</span> <i data-lucide="arrow-right"></i></button></div>
         </section>
@@ -132,15 +132,15 @@
       <section class="quote-status" data-quote-status aria-live="polite">
         <div class="quote-status-icon"><i data-status-icon data-lucide="check"></i></div>
         <span class="quote-step-eyebrow">Quote saved</span>
-        <h2>Your recurring cleaning estimate is ready.</h2>
+        <h2>Your recurring cleaning quote is ready.</h2>
         <div class="quote-final-price"><strong data-status-price>—</strong><span>per visit</span></div>
         <p><strong>Cleaning service only.</strong> Prices are subject to change.</p>
         <p data-status-copy></p>
         <div class="quote-status-note" data-status-note></div>
         <p class="quote-review-note"><strong>Fatima will call you for any additional add-on quotes.</strong></p>
         <div class="quote-status-actions">
-          <a href="book-online.html?source=instant-quote" class="btn btn-brass" data-booking-link><i data-lucide="calendar-check"></i> Choose My Cleaning Date</a>
-          <a href="tel:+19168998811" class="btn btn-outline"><i data-lucide="phone"></i> Call NataBel</a>
+          <a href="tel:+19168998811" class="btn btn-brass"><i data-lucide="phone"></i> Call Now to Schedule</a>
+          <a href="index.html" class="btn btn-outline"><i data-lucide="home"></i> Back to Home</a>
           <a href="free-estimate.html" class="btn btn-outline">Start Over</a>
         </div>
       </section>
