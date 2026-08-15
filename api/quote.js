@@ -1,5 +1,6 @@
 const priceBook = require('../lib/price-book');
 const { calculateResidential } = require('../lib/quote-pricing');
+const serviceArea = require('../lib/service-area');
 
 const BUSINESS_EMAIL = 'natabelpristinecleaning@gmail.com';
 const FROM_EMAIL = 'quotes@natabelpristinecleaning.com';
@@ -68,6 +69,16 @@ module.exports = async function handler(req, res) {
   const body = typeof req.body === 'string' ? (() => { try { return JSON.parse(req.body); } catch (_) { return null; } })() : req.body;
   if (!body || typeof body !== 'object' || Array.isArray(body)) return res.status(400).json({ ok: false, error: 'invalid_payload' });
   if (String(body.website_url || '').trim()) return res.status(200).json({ ok: true, discarded: true });
+
+  const zip = String(body.zip || '').trim();
+  if (/^\d{5}$/.test(zip) && !serviceArea.isEligibleZip(zip)) {
+    return res.status(200).json({
+      ok: false,
+      status: 'service_area_unavailable',
+      error: 'zip_not_served',
+      serviceAreaVersion: serviceArea.version
+    });
+  }
 
   let result;
   try { result = calculateResidential(body, priceBook); }
