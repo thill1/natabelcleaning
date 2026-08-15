@@ -1,0 +1,42 @@
+/* Final deployment QA corrections layered after qa-polish.css. */
+
+/* Six navigation items plus two CTAs need extra breathing room at laptop widths. */
+@media (max-width: 1240px) {
+  .simple-site .header-call-btn { display: none; }
+  .simple-site .site-header .brand-logo-header { width: 154px; }
+  .simple-site .site-header .nav a { padding-inline: 8px; font-size: .89rem; }
+  .simple-site .site-header .header-cta { gap: 8px; }
+}
+
+@media (max-width: 1080px) {
+  .simple-site .site-header .bar { gap: 12px; }
+  .simple-site .site-header .brand-logo-header { width: 146px; }
+  .simple-site .site-header .nav a { padding-inline: 6px; font-size: .86rem; }
+  .simple-site .site-header .header-cta > .btn-brass { padding-inline: 13px; }
+}
+
+/* At the core mobile breakpoint the menu owns navigation, so keep the header clean. */
+@media (max-width: 1019px) {
+  .simple-site .site-header .brand-logo-header { width: 150px; }
+  .simple-site .site-header .header-cta > .btn-brass { min-height: 44px; }
+}
+
+@media (max-width: 720px) {
+  .simple-site .site-header .brand-logo-header { width: 128px; }
+  .simple-site .site-header .header-cta > .btn-brass { display: none; }
+  .simple-site .site-header .menu-toggle { margin-left: auto; }
+  .simple-site .mobile-cta-bar { grid-template-columns: 1fr 1.35fr; }
+  .simple-site .quote-progress { padding-inline: 18px; }
+  .simple-site .quote-nav .btn { min-width: 0; }
+}
+
+/* Prevent long labels and buttons from causing overflow at narrow widths. */
+.simple-site .btn,
+.simple-site .text-link,
+.simple-site .quote-option strong,
+.simple-site .quote-upgrade strong { overflow-wrap: anywhere; }
+
+.simple-site .simple-choice-card,
+.simple-site .quote-card,
+.simple-site .simple-cta,
+.simple-site .concierge-card { isolation: isolate; }
