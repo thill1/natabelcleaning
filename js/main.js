@@ -5,6 +5,15 @@
 (function () {
   'use strict';
 
+  /* Final responsive corrections load after the shared polish layer. */
+  if (!document.querySelector('link[data-qa-final-fixes]')) {
+    const finalFixes = document.createElement('link');
+    finalFixes.rel = 'stylesheet';
+    finalFixes.href = 'css/qa-final-fixes.css?v=20260815-final';
+    finalFixes.dataset.qaFinalFixes = 'true';
+    document.head.appendChild(finalFixes);
+  }
+
   /* ---------- Header scroll state ---------- */
   const header = document.querySelector('.site-header');
   if (header) {
