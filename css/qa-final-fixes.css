@@ -20,6 +20,26 @@
   letter-spacing: -.035em;
 }
 
+/* Cormorant has taller ascenders/descenders than Fraunces. The former display
+   line-heights were intentionally very tight and caused italic lines to collide.
+   Give every display context enough leading to remain safe across breakpoints. */
+.simple-site .simple-hero h1 {
+  max-width: 790px;
+  font-size: clamp(3.35rem, 5.85vw, 5.35rem);
+  line-height: 1.07;
+  letter-spacing: -.022em;
+}
+.simple-site .simple-hero h1 em { line-height: inherit; }
+.simple-site .simple-page-hero h1,
+.simple-site .quote-intro h1 { line-height: 1.07; letter-spacing: -.022em; }
+.simple-site .simple-section-head h2,
+.simple-site .simple-split h2,
+.simple-site .simple-cta h2,
+.simple-site .quote-step h2 { line-height: 1.09; letter-spacing: -.02em; }
+.simple-site .simple-choice-card h3,
+.simple-site .simple-step h3,
+.simple-site .concierge-card h2 { line-height: 1.10; letter-spacing: -.018em; }
+
 /* Keep service-area rejection unmistakable without making the form feel harsh. */
 .simple-site .quote-field.invalid .quote-error {
   max-width: 620px;
@@ -46,6 +66,11 @@
 @media (max-width: 1019px) {
   .simple-site .site-header .brand-logo-header { width: 150px; }
   .simple-site .site-header .header-cta > .btn-brass { min-height: 44px; }
+  .simple-site .simple-hero h1 {
+    max-width: 720px;
+    font-size: clamp(3.15rem, 7.8vw, 4.85rem);
+    line-height: 1.075;
+  }
 }
 
 @media (max-width: 720px) {
@@ -55,6 +80,32 @@
   .simple-site .mobile-cta-bar { grid-template-columns: 1fr 1.35fr; }
   .simple-site .quote-progress { padding-inline: 18px; }
   .simple-site .quote-nav .btn { min-width: 0; }
+
+  /* Keep the homepage statement dramatic without allowing the italic line to
+     crash into adjacent baselines or force awkward edge clipping. */
+  .simple-site .simple-hero h1 {
+    max-width: 100%;
+    font-size: clamp(2.85rem, 10.4vw, 4.05rem);
+    line-height: 1.085;
+    letter-spacing: -.018em;
+  }
+  .simple-site .simple-hero-copy { min-width: 0; }
+  .simple-site .simple-hero-copy > p { margin-top: 24px; }
+  .simple-site .simple-actions { margin-top: 28px; }
+  .simple-site .simple-trust-line { margin-top: 26px; }
+  .simple-site .simple-page-hero h1,
+  .simple-site .quote-intro h1 { line-height: 1.08; }
+  .simple-site .simple-section-head h2,
+  .simple-site .simple-split h2,
+  .simple-site .simple-cta h2,
+  .simple-site .quote-step h2 { line-height: 1.10; }
+}
+
+@media (max-width: 430px) {
+  .simple-site .simple-hero h1 {
+    font-size: clamp(2.7rem, 11.6vw, 3.25rem);
+    line-height: 1.09;
+  }
 }
 
 /* Prevent long labels and buttons from causing overflow at narrow widths. */
