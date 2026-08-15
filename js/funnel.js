@@ -31,6 +31,14 @@
     cabinet_interiors: 'Cabinet interiors',
     pet_hair: 'Pet hair treatment'
   };
+  const focusLabels = {
+    kitchen: 'Kitchen',
+    bathrooms: 'Bathrooms',
+    floors: 'Floors',
+    dusting_surfaces: 'Dust & surfaces',
+    bedrooms: 'Bedrooms',
+    high_touch: 'High-touch areas'
+  };
   let index = 0;
   let previewRequestId = 0;
 
@@ -48,6 +56,10 @@
 
   function selectedExtras() {
     return Array.from(form.querySelectorAll('[name="requested_add_ons"]:checked')).map(input => input.value);
+  }
+
+  function selectedFocusAreas() {
+    return Array.from(form.querySelectorAll('[name="focus_areas"]:checked')).map(input => input.value);
   }
 
   function markField(name, invalid) {
@@ -205,11 +217,13 @@
     const frequency = selected('frequency');
     const amount = priceCache[frequency];
     const extras = selectedExtras();
+    const focusAreas = selectedFocusAreas();
     card.querySelector('[data-review-home]').textContent = reviewHomeLabel();
     card.querySelector('[data-review-zip]').textContent = `ZIP ${value('zip')}`;
     card.querySelector('[data-review-frequency]').textContent = frequencyLabels[frequency] || 'Recurring cleaning';
     card.querySelector('[data-review-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : 'Custom';
     card.querySelector('[data-review-first]').textContent = selected('recent_cleaning') === 'no' ? 'Confirm first-visit reset' : 'Standard recurring scope';
+    card.querySelector('[data-review-focus]').textContent = focusAreas.length ? focusAreas.map(key => focusLabels[key] || key).join(', ') : 'None selected';
     card.querySelector('[data-review-extras]').textContent = extras.length ? extras.map(key => upgradeLabels[key] || key).join(', ') : 'None selected';
     const notes = [];
     if (selected('recent_cleaning') === 'no') notes.push('NataBel will confirm whether the first visit needs a separate reset price before service.');
@@ -245,12 +259,15 @@
       quote_type: 'residential'
     };
     const extras = [];
+    const focusAreas = [];
     new FormData(form).forEach((entryValue, key) => {
       if (key === 'website_url' || !String(entryValue).trim()) return;
       if (key === 'requested_add_ons') extras.push(String(entryValue));
+      else if (key === 'focus_areas') focusAreas.push(String(entryValue));
       else data[key] = String(entryValue).trim();
     });
     if (extras.length) data.requested_add_ons = extras;
+    if (focusAreas.length) data.focus_areas = focusAreas;
     Object.assign(data, window.PCC.util.getUTM());
     return data;
   }
@@ -277,6 +294,7 @@
       const notes = [];
       if (submitted.recent_cleaning === 'no') notes.push('The first visit may require a separate reset price after NataBel confirms the starting condition.');
       if (selectedExtras().length) notes.push('Fatima will call you for any additional add-on quotes.');
+      if (selectedFocusAreas().length) notes.push('Your selected focus areas were included with the cleaning request.');
       if (!notes.length) notes.push('Final scope and availability are confirmed before service.');
       note.textContent = notes.join(' ');
       window.PCC.util.track(window.PCC.events.quoteRevealed || 'quote_revealed', { frequency: submitted.frequency, amount });
