@@ -40,51 +40,41 @@
 .simple-site .simple-step h3,
 .simple-site .concierge-card h2 { line-height: 1.10; letter-spacing: -.018em; }
 
-/* Branded soap-bubble texture on every intentional black / near-black surface.
-   The homepage hero keeps its dedicated interactive bubble canvas; these rules
-   are for secondary sections, cards, CTA surfaces, and the footer. */
-.simple-site .natabel-dark-bubbles {
+/* The navigation is intentionally solid black on every page. Bubbles are drawn
+   behind the nav content using the same renderer, opacity, sizing, and motion
+   profile as the homepage hero. */
+.site-header {
+  background: #050505 !important;
+}
+
+/* Hero-matched branded bubbles on every intentional black / near-black surface.
+   These rules are deliberately global so legacy interior pages and the careers
+   page receive the same treatment as the simplified pages. */
+.natabel-dark-bubbles {
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
-.simple-site .natabel-dark-bubbles > .natabel-bubble-canvas {
+.natabel-dark-bubbles > .natabel-bubble-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  opacity: .24;
-  mix-blend-mode: screen;
+  opacity: .78;
 }
-.simple-site .simple-section.dark.natabel-dark-bubbles > .natabel-bubble-canvas { opacity: .27; }
-.simple-site .site-footer.natabel-dark-bubbles > .natabel-bubble-canvas { opacity: .19; }
-.simple-site .simple-choice-card.dark.natabel-dark-bubbles > .natabel-bubble-canvas,
-.simple-site .concierge-card-inner.natabel-dark-bubbles > .natabel-bubble-canvas,
-.simple-site .simple-founder.natabel-dark-bubbles > .natabel-bubble-canvas,
-.simple-site .simple-photo-note.natabel-dark-bubbles > .natabel-bubble-canvas { opacity: .20; }
-.simple-site .simple-cta.natabel-dark-bubbles > .natabel-bubble-canvas { opacity: .23; }
-
-/* Keep all actual copy and controls above the decorative canvas. */
-.simple-site .simple-section.dark.natabel-dark-bubbles > .container,
-.simple-site .site-footer.natabel-dark-bubbles > .container,
-.simple-site .simple-cta.natabel-dark-bubbles > div,
-.simple-site .simple-cta.natabel-dark-bubbles > a,
-.simple-site .concierge-card-inner.natabel-dark-bubbles > :not(.natabel-bubble-canvas),
-.simple-site .simple-founder.natabel-dark-bubbles > :not(.natabel-bubble-canvas),
-.simple-site .simple-photo-note.natabel-dark-bubbles > :not(.natabel-bubble-canvas),
-.simple-site .side-cta.natabel-dark-bubbles > :not(.natabel-bubble-canvas),
-.simple-site .cta-banner.natabel-dark-bubbles > :not(.natabel-bubble-canvas),
-.simple-site .card.natabel-dark-bubbles > :not(.natabel-bubble-canvas) {
+.natabel-dark-bubbles > :not(.natabel-bubble-canvas) {
   position: relative;
   z-index: 1;
 }
-.simple-site .simple-choice-card.dark.natabel-dark-bubbles > :not(.natabel-bubble-canvas) { z-index: 1; }
-.simple-site .simple-choice-card.dark.natabel-dark-bubbles > .number,
-.simple-site .simple-choice-card.dark.natabel-dark-bubbles > h3,
-.simple-site .simple-choice-card.dark.natabel-dark-bubbles > p { position: relative; }
-.simple-site .simple-choice-card.dark.natabel-dark-bubbles > .text-link { z-index: 1; }
+.site-header.natabel-dark-bubbles > .container,
+.site-footer.natabel-dark-bubbles > .container,
+.simple-section.dark.natabel-dark-bubbles > .container {
+  position: relative;
+  z-index: 1;
+}
+.simple-choice-card.dark.natabel-dark-bubbles > .text-link { z-index: 1; }
 
 /* Keep service-area rejection unmistakable without making the form feel harsh. */
 .simple-site .quote-field.invalid .quote-error {
@@ -126,10 +116,6 @@
   .simple-site .mobile-cta-bar { grid-template-columns: 1fr 1.35fr; }
   .simple-site .quote-progress { padding-inline: 18px; }
   .simple-site .quote-nav .btn { min-width: 0; }
-
-  /* Keep secondary bubble fields restrained on smaller screens. */
-  .simple-site .natabel-dark-bubbles > .natabel-bubble-canvas { opacity: .18; }
-  .simple-site .simple-section.dark.natabel-dark-bubbles > .natabel-bubble-canvas { opacity: .21; }
 
   /* Keep the homepage statement dramatic without allowing the italic line to
      crash into adjacent baselines or force awkward edge clipping. */
