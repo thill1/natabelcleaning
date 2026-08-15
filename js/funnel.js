@@ -6,6 +6,7 @@
   if (!card) return;
 
   const form = card.querySelector('form');
+  const serviceArea = window.NataBelServiceArea;
   const requestedService = new URLSearchParams(location.search).get('service');
   if (requestedService && !['residential', 'recurring', 'standard'].includes(requestedService)) {
     const target = new URL('contact.html', location.href);
@@ -53,6 +54,25 @@
     const wrapper = field(name)?.closest('.quote-field');
     if (wrapper) wrapper.classList.toggle('invalid', invalid);
     return !invalid;
+  }
+
+  function setZipError(message) {
+    const error = field('zip')?.closest('.quote-field')?.querySelector('.quote-error');
+    if (error) error.textContent = message;
+  }
+
+  function validateZip() {
+    const zip = value('zip');
+    if (!/^\d{5}$/.test(zip)) {
+      setZipError('Enter a five-digit ZIP code.');
+      return markField('zip', true);
+    }
+    if (!serviceArea || !serviceArea.isEligibleZip(zip)) {
+      setZipError('This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
+      return markField('zip', true);
+    }
+    setZipError('Enter a five-digit ZIP code.');
+    return markField('zip', false);
   }
 
   function quoteInput(frequency) {
@@ -133,10 +153,7 @@
     const stepError = step.querySelector('[data-step-error]');
     if (stepError) stepError.classList.remove('active');
 
-    if (index === 0) {
-      const zip = value('zip');
-      return markField('zip', !/^\d{5}$/.test(zip));
-    }
+    if (index === 0) return validateZip();
 
     if (index === 1) {
       const sqft = Number(value('square_footage'));
@@ -207,6 +224,10 @@
   }));
   card.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => show(index - 1, true)));
 
+  field('zip')?.addEventListener('input', () => {
+    markField('zip', false);
+    setZipError('Enter a five-digit ZIP code.');
+  });
   form.querySelectorAll('[name="frequency"]').forEach(input => input.addEventListener('change', () => {
     const error = steps[2].querySelector('[data-step-error]');
     if (error) error.classList.remove('active');
@@ -294,6 +315,14 @@
           body.fallbackDelivery = await window.PCC.forms.route(data);
         }
         renderResult('estimated', body, data);
+        return;
+      }
+
+      if (body.status === 'service_area_unavailable') {
+        show(0, true);
+        setZipError('This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
+        markField('zip', true);
+        field('zip')?.focus();
         return;
       }
 
