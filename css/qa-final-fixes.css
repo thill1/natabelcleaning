@@ -76,6 +76,12 @@
 }
 .simple-choice-card.dark.natabel-dark-bubbles > .text-link { z-index: 1; }
 
+/* Careers hero hierarchy: the hiring callout now sits beneath the main
+   "Join our team today" headline with deliberate space above and below. */
+.career-hero h1 + .career-hiring-callout {
+  margin: 0 0 18px;
+}
+
 /* Keep service-area rejection unmistakable without making the form feel harsh. */
 .simple-site .quote-field.invalid .quote-error {
   max-width: 620px;
