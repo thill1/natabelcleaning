@@ -22,7 +22,6 @@
       <form id="instantEstimateForm" data-lead-source="${source}" novalidate>
         <input type="hidden" name="form_type" value="instant_estimate" />
         <input type="hidden" name="audience" value="residential" />
-        <input type="hidden" name="service_type" value="standard" />
         <input type="hidden" name="condition" value="average" />
         <input type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true" class="quote-honeypot" />
 
@@ -38,7 +37,12 @@
         </section>
 
         <section class="quote-step" data-step="home">
-          <span class="quote-step-eyebrow">Your home</span>
+          <span class="quote-step-eyebrow">Your cleaning</span>
+          <h2>What kind of cleaning do you need?</h2>
+          <div class="quote-options two" style="margin-bottom:28px">
+            ${option('service_type', 'standard', 'house-heart', 'Recurring Cleaning', 'Weekly, every 2 weeks, or every 4 weeks.')}
+            ${option('service_type', 'move', 'package-open', 'Move-In / Move-Out', 'A one-time detailed cleaning priced by home size plus the move-service premium.')}
+          </div>
           <h2>Tell us about the space.</h2>
           <p>Square footage sets the pricing tier. Bedrooms and bathrooms help NataBel validate the scope.</p>
           <div class="quote-fields">
@@ -47,36 +51,54 @@
             <div class="quote-field"><label for="bedrooms">Bedrooms</label><select id="bedrooms" name="bedrooms"><option value="">Choose</option><option>1</option><option>2</option><option>3</option><option>4</option><option value="5+">5+</option></select><span class="quote-error">Choose bedrooms.</span></div>
             <div class="quote-field"><label for="bathrooms">Bathrooms</label><select id="bathrooms" name="bathrooms"><option value="">Choose</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option value="4+">4+</option></select><span class="quote-error">Choose bathrooms.</span></div>
           </div>
-          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>See My Options <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-server-error" data-step-error>Please choose a cleaning type and complete the home details.</div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>See My Price <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="frequency">
-          <span class="quote-step-eyebrow">Choose your schedule</span>
-          <h2>How often would you like us to clean?</h2>
-          <p>The price shown is for the cleaning service only. Prices are subject to change.</p>
-          <div class="quote-options quote-frequency-options">
-            <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="weekly" />
-              <span class="quote-option-content"><span class="quote-frequency-tag">Best value</span><strong>Weekly</strong><span class="quote-frequency-price" data-price="weekly">Checking…</span><small>For homes that stay consistently maintained.</small></span></label>
-            <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="biweekly" />
-              <span class="quote-option-content"><span class="quote-frequency-tag featured">Most popular</span><strong>Every 2 weeks</strong><span class="quote-frequency-price" data-price="biweekly">Checking…</span><small>A strong balance of consistency and value.</small></span></label>
-            <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="monthly" />
-              <span class="quote-option-content"><span class="quote-frequency-tag">Every 4 weeks</span><strong>Monthly</strong><span class="quote-frequency-price" data-price="monthly">Checking…</span><small>For lighter recurring maintenance.</small></span></label>
+          <div data-recurring-only>
+            <span class="quote-step-eyebrow">Choose your schedule</span>
+            <h2>How often would you like us to clean?</h2>
+            <p>The price shown is for the cleaning service only. Prices are subject to change.</p>
+            <div class="quote-options quote-frequency-options">
+              <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="weekly" />
+                <span class="quote-option-content"><span class="quote-frequency-tag">Best value</span><strong>Weekly</strong><span class="quote-frequency-price" data-price="weekly">Checking…</span><small>For homes that stay consistently maintained.</small></span></label>
+              <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="biweekly" />
+                <span class="quote-option-content"><span class="quote-frequency-tag featured">Most popular</span><strong>Every 2 weeks</strong><span class="quote-frequency-price" data-price="biweekly">Checking…</span><small>A strong balance of consistency and value.</small></span></label>
+              <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="monthly" />
+                <span class="quote-option-content"><span class="quote-frequency-tag">Every 4 weeks</span><strong>Monthly</strong><span class="quote-frequency-price" data-price="monthly">Checking…</span><small>For lighter recurring maintenance.</small></span></label>
+            </div>
+          </div>
+          <div data-move-only hidden>
+            <span class="quote-step-eyebrow">Move cleaning</span>
+            <h2>Your Move-In / Move-Out cleaning price.</h2>
+            <p>This is a one-time cleaning based on the home’s square-footage tier plus the $175 move-service premium.</p>
+            <div class="quote-review-card" style="margin-top:20px">
+              <div class="quote-review-main"><span>Move-In / Move-Out Cleaning</span><strong data-price="move">Checking…</strong><small>one-time cleaning · cleaning service only</small></div>
+            </div>
           </div>
           <div class="quote-server-error" data-step-error>Please choose a cleaning frequency.</div>
-          <div class="quote-manual-rate" data-manual-rate hidden><i data-lucide="phone-call"></i><span><strong>This home needs a custom quote.</strong><small>NataBel confirms pricing manually for homes outside the approved recurring rate tiers.</small></span></div>
+          <div class="quote-manual-rate" data-manual-rate hidden><i data-lucide="phone-call"></i><span><strong>This home needs a custom quote.</strong><small>NataBel confirms pricing manually for homes outside the approved pricing tiers.</small></span></div>
           <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
         </section>
 
-        <section class="quote-step" data-step="first-visit">
-          <span class="quote-step-eyebrow">First visit</span>
-          <h2>Help us understand the starting point.</h2>
-          <p>A few details help Fatima prepare the team for your home without changing the base cleaning price shown.</p>
-          <div class="quote-question-block">
-            <h3>Has the home been professionally cleaned within the last 30 days?</h3>
-            <div class="quote-options two">
-              ${option('recent_cleaning', 'yes', 'badge-check', 'Yes', 'The home is already on a professional cleaning rhythm.')}
-              ${option('recent_cleaning', 'no', 'spray-can', 'No', 'The first visit may need a more detailed reset before recurring service begins.')}
+        <section class="quote-step" data-step="details">
+          <div data-recurring-only>
+            <span class="quote-step-eyebrow">First visit</span>
+            <h2>Help us understand the starting point.</h2>
+            <p>A few details help Fatima prepare the team for your home without changing the base cleaning price shown.</p>
+            <div class="quote-question-block">
+              <h3>Has the home been professionally cleaned within the last 30 days?</h3>
+              <div class="quote-options two">
+                ${option('recent_cleaning', 'yes', 'badge-check', 'Yes', 'The home is already on a professional cleaning rhythm.')}
+                ${option('recent_cleaning', 'no', 'spray-can', 'No', 'The first visit may need a more detailed reset before recurring service begins.')}
+              </div>
             </div>
+          </div>
+          <div data-move-only hidden>
+            <span class="quote-step-eyebrow">Move cleaning details</span>
+            <h2>Anything we should pay extra attention to?</h2>
+            <p>Your Move-In / Move-Out price is already set by home size. You can add preferences or request optional extras below.</p>
           </div>
 
           <div class="quote-upgrade-block quote-focus-block">
@@ -113,22 +135,22 @@
           <h2>Your cleaning price.</h2>
           <div class="quote-review-card">
             <div class="quote-review-home"><div><strong data-review-home>Home details</strong><span data-review-zip></span></div><i data-lucide="home"></i></div>
-            <div class="quote-review-main"><span data-review-frequency>Recurring cleaning</span><strong data-review-price>—</strong><small>per visit · cleaning service only</small></div>
+            <div class="quote-review-main"><span data-review-frequency>Cleaning</span><strong data-review-price>—</strong><small data-review-cadence>per visit · cleaning service only</small></div>
             <div class="quote-review-lines">
-              <div><span>First visit</span><strong data-review-first>Standard recurring scope</strong></div>
+              <div><span data-review-first-label>First visit</span><strong data-review-first>Standard recurring scope</strong></div>
               <div><span>Focus areas</span><strong data-review-focus>None selected</strong></div>
               <div><span>Optional add-ons requested</span><strong data-review-extras>None selected</strong></div>
             </div>
           </div>
           <p class="quote-review-note" data-review-note>Final scope and availability are confirmed before service.</p>
           <p class="quote-review-note"><strong>Fatima will call you for any additional add-on quotes.</strong> Prices are subject to change.</p>
-          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Reserve My Cleaning <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Send Me This Quote <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="contact">
           <span class="quote-step-eyebrow">Almost done</span>
           <h2>Where should we send your quote?</h2>
-          <p>Share the service address and contact details so NataBel can confirm the first visit and scheduling.</p>
+          <p>Share the service address and contact details so NataBel can confirm the cleaning and scheduling.</p>
           <div class="quote-fields">
             <div class="quote-field"><label for="quoteName">Full name</label><input id="quoteName" name="name" autocomplete="name" /><span class="quote-error">Enter your name.</span></div>
             <div class="quote-field"><label for="quotePhone">Mobile phone</label><input id="quotePhone" name="phone" type="tel" autocomplete="tel" placeholder="(916) 555-0123" /><span class="quote-error">Enter a valid phone number.</span></div>
@@ -146,8 +168,8 @@
       <section class="quote-status" data-quote-status aria-live="polite">
         <div class="quote-status-icon"><i data-status-icon data-lucide="check"></i></div>
         <span class="quote-step-eyebrow">Quote saved</span>
-        <h2>Your recurring cleaning quote is ready.</h2>
-        <div class="quote-final-price"><strong data-status-price>—</strong><span>per visit</span></div>
+        <h2 data-status-title>Your cleaning quote is ready.</h2>
+        <div class="quote-final-price"><strong data-status-price>—</strong><span data-status-cadence>per visit</span></div>
         <p><strong>Cleaning service only.</strong> Prices are subject to change.</p>
         <p data-status-copy></p>
         <div class="quote-status-note" data-status-note></div>
