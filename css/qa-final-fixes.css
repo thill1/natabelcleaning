@@ -44,7 +44,7 @@
    behind the nav content using the same renderer, opacity, sizing, and motion
    profile as the homepage hero. */
 .site-header {
-  background: #050505 !important;
+  background: var(--noir-deep) !important;
 }
 
 /* Hero-matched branded bubbles on every intentional black / near-black surface.

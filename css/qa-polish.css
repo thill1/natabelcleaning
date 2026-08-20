@@ -22,12 +22,12 @@ html { text-rendering: optimizeLegibility; }
 /* Header: translucent over the landing hero, solid black after scroll. */
 .simple-site .site-header {
   min-height: 88px;
-  background: rgba(5,5,5,.97);
+  background: var(--noir-deep);
   border-bottom-color: rgba(227,200,120,.15);
   transition: background .22s ease, border-color .22s ease, box-shadow .22s ease;
 }
 .simple-site .site-header.scrolled {
-  background: rgba(5,5,5,.985);
+  background: var(--noir-deep);
   border-bottom-color: rgba(227,200,120,.20);
   box-shadow: 0 12px 34px rgba(0,0,0,.20);
 }
@@ -35,10 +35,10 @@ html { text-rendering: optimizeLegibility; }
   position: fixed;
   inset: 0 0 auto;
   width: 100%;
-  background: rgba(5,5,5,.42);
+  background: var(--noir-deep);
   border-bottom-color: rgba(255,255,255,.09);
 }
-.simple-site:has(.simple-hero) .site-header.scrolled { background: rgba(5,5,5,.985); }
+.simple-site:has(.simple-hero) .site-header.scrolled { background: var(--noir-deep); }
 .simple-site .site-header .bar { min-height: 88px; gap: 20px; }
 .simple-site .site-header .brand-logo-header { width: 166px; }
 .simple-site .site-header .nav { gap: 2px; }
