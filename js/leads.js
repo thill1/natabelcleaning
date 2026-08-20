@@ -266,6 +266,7 @@
       contact.dataset.bound = '1';
       bind(contact, {
         required: { name: 'text', phone: 'phone', email: 'email', message: 'text' },
+        choices: ['contact_consent'],
         event: ev.contactFormSubmit,
         successMsg: "Thank you! NataBel will follow up to confirm the details.",
       });

@@ -8,7 +8,7 @@
   if (!document.querySelector('link[data-qa-polish]')) {
     const polish = document.createElement('link');
     polish.rel = 'stylesheet';
-    polish.href = 'css/qa-polish.css?v=20260815-final';
+    polish.href = 'css/qa-polish.css?v=20260820-audit';
     polish.dataset.qaPolish = 'true';
     document.head.appendChild(polish);
   }
@@ -92,7 +92,7 @@
     facebook: ['Facebook', 'facebook'],
     instagram: ['Instagram', 'instagram']
   }).filter(([key]) => ((window.PCC.social || {})[key] || '').trim())
-    .map(([key, meta]) => `<a href="${window.PCC.social[key].trim()}" aria-label="${meta[0]}" target="_blank" rel="noopener"><i data-lucide="${meta[1]}"></i></a>`).join('');
+    .map(([key, meta]) => `<a href="${window.PCC.social[key].trim()}" aria-label="${meta[0]}" target="_blank" rel="noopener"><i data-lucide="${meta[1]}"></i><span>${meta[0].replace(' Business Profile', '')}</span></a>`).join('');
 
   const footer = `
     <footer class="site-footer">
@@ -107,13 +107,14 @@
             <a href="services.html">All Services</a><a href="residential.html">Residential</a><a href="commercial.html">Commercial</a><a href="deep-cleaning.html">Deep Cleaning</a><a href="move-in-out.html">Move-In / Out</a><a href="recurring-cleaning.html">Recurring</a>
           </div></div>
           <div><h4>Helpful</h4><div class="footer-links">
-            <a href="about.html">About Fatima</a><a href="service-areas.html">Service Areas</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="join-our-team.html">Join Our Team</a>
+            <a href="about.html">About Fatima</a><a href="service-areas.html">Service Areas</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="join-our-team.html">Join Our Team</a><a href="privacy.html">Privacy</a>
           </div></div>
           <div><h4>Start Here</h4><div class="footer-contact">
             <a href="free-estimate.html"><i data-lucide="calculator"></i> Instant Quote</a>
+            <a href="contact.html?service=commercial&source=footer-start-here"><i data-lucide="building-2"></i> Commercial Walkthrough</a>
             <a href="${B.phoneHref}"><i data-lucide="phone"></i> ${B.phone}</a>
             <a href="mailto:${B.email}"><i data-lucide="mail"></i> ${B.email}</a>
-            <span style="display:flex;gap:11px;color:rgba(247,243,235,.62);font-size:.92rem;"><i data-lucide="clock" style="color:var(--brass-bright);"></i> Mon–Fri 7a–6p · Sat 8a–4p</span>
+            <span class="footer-hours"><i data-lucide="clock"></i> Mon–Fri 7a–6p · Sat 8a–4p</span>
           </div></div>
         </div>
         <div class="footer-bottom"><div>© ${new Date().getFullYear()} ${B.name}.</div><div>Rocklin, CA · Placer-first service area</div></div>
@@ -135,15 +136,59 @@
     if (quoteTemplate) element.innerHTML = quoteTemplate(element.dataset.leadSource || 'Instant Quote');
   });
 
-  const schemaEl = document.getElementById('page-schema');
-  if (schemaEl) {
-    try {
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(JSON.parse(schemaEl.textContent));
-      document.head.appendChild(script);
-    } catch (error) {
-      console.warn('page-schema JSON invalid', error);
+  const socialLinks = ['google', 'yelp']
+    .map(key => String((window.PCC.social || {})[key] || '').trim())
+    .filter(Boolean);
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${B.url}/#business`,
+    name: B.name,
+    url: B.url,
+    telephone: B.phoneHref.replace('tel:', ''),
+    email: B.email,
+    foundingDate: B.founded,
+    areaServed: (B.serviceAreas || []).map(area => ({ '@type': 'Place', name: `${area}, CA` })),
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '07:00',
+        closes: '18:00'
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Saturday'],
+        opens: '08:00',
+        closes: '16:00'
+      }
+    ],
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: B.geo?.lat,
+      longitude: B.geo?.lng
+    },
+    sameAs: socialLinks.length ? socialLinks : undefined,
+    founder: { '@type': 'Person', name: B.founder },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: B.addressLocality,
+      addressRegion: B.addressRegion,
+      postalCode: B.postalCode,
+      addressCountry: 'US'
     }
+  };
+
+  if (!document.querySelector('script[data-business-schema]')) {
+    const businessScript = document.createElement('script');
+    businessScript.type = 'application/ld+json';
+    businessScript.dataset.businessSchema = 'true';
+    businessScript.textContent = JSON.stringify(localBusinessSchema);
+    document.head.appendChild(businessScript);
+  }
+
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+    requestAnimationFrame(() => window.lucide.createIcons());
   }
 })();

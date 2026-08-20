@@ -31,7 +31,7 @@
           <p>Enter the service ZIP code so we can start with the right local pricing path.</p>
           <div class="quote-single-field">
             <div class="quote-field"><label for="residentialZip">Service ZIP code</label><input id="residentialZip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="95765" /><span class="quote-error">Enter a five-digit ZIP code.</span></div>
-            <p class="quote-field-note"><i data-lucide="map-pin"></i> NataBel serves Rocklin, Roseville, Granite Bay and surrounding Placer and Sacramento-area communities. Final service-area confirmation happens before scheduling.</p>
+            <p class="quote-field-note"><i data-lucide="map-pin"></i> NataBel serves Rocklin, Roseville, Granite Bay, nearby Placer communities, and selected Sacramento-side ZIPs. Final service-area confirmation happens before scheduling.</p>
           </div>
           <div class="quote-nav"><span></span><button class="btn btn-brass" type="button" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
         </section>
@@ -40,7 +40,7 @@
           <span class="quote-step-eyebrow">Your cleaning</span>
           <h2>What kind of cleaning do you need?</h2>
           <div class="quote-options two" style="margin-bottom:28px">
-            ${option('service_type', 'standard', 'house-heart', 'Recurring Cleaning', 'Weekly, every 2 weeks, or every 4 weeks.')}
+            ${option('service_type', 'standard', 'house', 'Recurring Cleaning', 'Weekly, every 2 weeks, or every 4 weeks.')}
             ${option('service_type', 'move', 'package-open', 'Move-In / Move-Out', 'A one-time detailed cleaning priced by home size plus the move-service premium.')}
           </div>
           <h2>Tell us about the space.</h2>
@@ -59,8 +59,8 @@
           <div data-recurring-only>
             <span class="quote-step-eyebrow">Choose your schedule</span>
             <h2>How often would you like us to clean?</h2>
-            <p>The price shown is for the cleaning service only. Prices are subject to change.</p>
-            <div class="quote-options quote-frequency-options">
+            <p class="quote-honesty-line"><strong>Cleaning service only.</strong> Add-ons are quoted separately.</p>
+            <div class="quote-options quote-frequency-options" data-frequency-options>
               <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="weekly" />
                 <span class="quote-option-content"><span class="quote-frequency-tag">Best value</span><strong>Weekly</strong><span class="quote-frequency-price" data-price="weekly">Checking…</span><small>For homes that stay consistently maintained.</small></span></label>
               <label class="quote-option quote-frequency"><input type="radio" name="frequency" value="biweekly" />
@@ -72,13 +72,13 @@
           <div data-move-only hidden>
             <span class="quote-step-eyebrow">Move cleaning</span>
             <h2>Your Move-In / Move-Out cleaning price.</h2>
-            <p>This is a one-time cleaning based on the home’s square-footage tier plus the $175 move-service premium.</p>
+            <p>This is a one-time cleaning based on the home’s square-footage tier plus the approved move-service premium.</p>
             <div class="quote-review-card" style="margin-top:20px">
               <div class="quote-review-main"><span>Move-In / Move-Out Cleaning</span><strong data-price="move">Checking…</strong><small>one-time cleaning · cleaning service only</small></div>
             </div>
           </div>
           <div class="quote-server-error" data-step-error>Please choose a cleaning frequency.</div>
-          <div class="quote-manual-rate" data-manual-rate hidden><i data-lucide="phone-call"></i><span><strong>This home needs a custom quote.</strong><small>NataBel confirms pricing manually for homes outside the approved pricing tiers.</small></span></div>
+          <div class="quote-manual-rate" data-manual-rate hidden><i data-lucide="phone-call"></i><span><strong>This home needs a custom quote.</strong><small>Fatima will confirm the right scope and price before scheduling.</small></span></div>
           <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Continue <i data-lucide="arrow-right"></i></button></div>
         </section>
 
@@ -143,7 +143,7 @@
             </div>
           </div>
           <p class="quote-review-note" data-review-note>Final scope and availability are confirmed before service.</p>
-          <p class="quote-review-note"><strong>Fatima will call you for any additional add-on quotes.</strong> Prices are subject to change.</p>
+          <p class="quote-review-note"><strong>Cleaning service only.</strong> Add-ons are quoted separately and confirmed by phone.</p>
           <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Send Me This Quote <i data-lucide="arrow-right"></i></button></div>
         </section>
 
@@ -159,7 +159,7 @@
             <div class="quote-field full"><label for="serviceAddress">Service address</label><input id="serviceAddress" name="service_address" autocomplete="street-address" placeholder="123 Main Street" /><span class="quote-error">Enter the service address.</span></div>
             <div class="quote-field full"><label for="quoteNotes">Anything NataBel should know? <span class="quote-optional">(optional)</span></label><textarea id="quoteNotes" name="notes" placeholder="Pets, special surfaces, access notes, preferred days, or anything else we should know."></textarea></div>
           </div>
-          <label class="quote-consent"><input type="checkbox" name="contact_consent" value="yes" /> <span>I agree that NataBel may contact me about this quote and requested cleaning service. This is not a marketing subscription.</span></label>
+          <label class="quote-consent"><input type="checkbox" name="contact_consent" value="yes" /> <span>I agree that NataBel may contact me about this quote and requested cleaning service. This is not a marketing subscription. See our <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
           <div class="quote-server-error" data-submit-error></div>
           <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="submit"><span data-submit-label>Send My Quote</span> <i data-lucide="arrow-right"></i></button></div>
         </section>
@@ -170,10 +170,10 @@
         <span class="quote-step-eyebrow">Quote saved</span>
         <h2 data-status-title>Your cleaning quote is ready.</h2>
         <div class="quote-final-price"><strong data-status-price>—</strong><span data-status-cadence>per visit</span></div>
-        <p><strong>Cleaning service only.</strong> Prices are subject to change.</p>
+        <p><strong>Cleaning service only.</strong> Add-ons are quoted separately.</p>
         <p data-status-copy></p>
         <div class="quote-status-note" data-status-note></div>
-        <p class="quote-review-note"><strong>Fatima will call you for any additional add-on quotes.</strong></p>
+        <p class="quote-review-note"><strong>Fatima will call you for any add-on requests.</strong></p>
         <div class="quote-status-actions">
           <a href="tel:+19168998811" class="btn btn-brass"><i data-lucide="phone"></i> Call Now to Schedule</a>
           <a href="index.html" class="btn btn-outline"><i data-lucide="home"></i> Back to Home</a>

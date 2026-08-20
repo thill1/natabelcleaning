@@ -25,7 +25,7 @@ window.PCC = {
     postalCode:     '95765',
     geo:            { lat: 38.7907, lng: -121.2358 },
     founded:        '2026',
-    licenseNumber:  'Lic# pending',
+    licenseNumber:  '',
     hours: [
       { days: 'Mon \u2013 Fri', time: '7:00 AM \u2013 6:00 PM' },
       { days: 'Saturday',  time: '8:00 AM \u2013 4:00 PM' },
@@ -106,7 +106,7 @@ window.PCC = {
       contact:             null,
       faq:                 null,
       reviews:             { src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c', alt: 'Polished kitchen detail after cleaning' },
-      areas:               { src: 'https://images.unsplash.com/photo-1569336414137-3a9a0e5ae986', alt: 'Rocklin and Placer County neighborhood' },
+      areas:               null,
       booking:             { src: 'https://images.unsplash.com/photo-1506784365847-bbad939e9335', alt: 'Calendar and scheduling' },
       estimate:            null,
     },

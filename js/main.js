@@ -9,7 +9,7 @@
   if (!document.querySelector('link[data-qa-final-fixes]')) {
     const finalFixes = document.createElement('link');
     finalFixes.rel = 'stylesheet';
-    finalFixes.href = 'css/qa-final-fixes.css?v=20260815-hero-bubbles';
+    finalFixes.href = 'css/qa-final-fixes.css?v=20260820-audit';
     finalFixes.dataset.qaFinalFixes = 'true';
     document.head.appendChild(finalFixes);
   }
@@ -18,7 +18,7 @@
      computed background is actually black / near-black. */
   if (!document.querySelector('script[data-dark-bubbles]')) {
     const darkBubbles = document.createElement('script');
-    darkBubbles.src = 'js/dark-bubbles.js?v=20260815-hero-match';
+    darkBubbles.src = 'js/dark-bubbles.js?v=20260820-audit';
     darkBubbles.dataset.darkBubbles = 'true';
     document.head.appendChild(darkBubbles);
   }
@@ -37,11 +37,16 @@
   /* ---------- Header scroll state ---------- */
   const header = document.querySelector('.site-header');
   if (header) {
+    const syncHeaderOffset = () => {
+      document.documentElement.style.setProperty('--site-header-offset', `${header.offsetHeight}px`);
+    };
     const onScroll = () => {
       if (window.scrollY > 12) header.classList.add('scrolled');
       else header.classList.remove('scrolled');
     };
+    syncHeaderOffset();
     onScroll();
+    window.addEventListener('resize', syncHeaderOffset, { passive: true });
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 

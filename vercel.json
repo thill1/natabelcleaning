@@ -1,9 +1,22 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
   "redirects": [
     { "source": "/book-online", "destination": "/free-estimate.html", "permanent": true },
     { "source": "/book-online.html", "destination": "/free-estimate.html", "permanent": true },
+    { "source": "/booking", "destination": "/book-online.html", "permanent": true },
+    { "source": "/booking.html", "destination": "/book-online.html", "permanent": true },
+    { "source": "/career", "destination": "/join-our-team.html", "permanent": true },
+    { "source": "/careers", "destination": "/join-our-team.html", "permanent": true },
+    { "source": "/career.html", "destination": "/join-our-team.html", "permanent": true },
+    { "source": "/careers.html", "destination": "/join-our-team.html", "permanent": true },
+    { "source": "/privacy", "destination": "/privacy.html", "permanent": true },
     { "source": "/reviews", "destination": "/about.html#guarantee", "permanent": true },
-    { "source": "/reviews.html", "destination": "/about.html#guarantee", "permanent": true }
+    { "source": "/reviews.html", "destination": "/about.html#guarantee", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/sitemap", "destination": "/sitemap.xml", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/favicon.ico", "destination": "/assets/favicon-32.png" }
   ]
 }
