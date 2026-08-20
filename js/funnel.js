@@ -62,7 +62,7 @@
       return markField('zip', true);
     }
     if (!serviceArea || !serviceArea.isEligibleZip(zip)) {
-      setZipError('This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
+      setZipError('This ZIP is outside NataBel’s current Rocklin-first service zone. Call (916) 899-8811 to ask about coverage.');
       return markField('zip', true);
     }
     setZipError('Enter a five-digit ZIP code.');
@@ -109,33 +109,52 @@
     }
   }
 
+  function setPriceNodeLoading(node) {
+    if (!node) return;
+    node.textContent = 'Checking…';
+    node.classList.add('is-loading');
+  }
+
+  function setManualState(visible) {
+    const manualBox = card.querySelector('[data-manual-rate]');
+    const optionsWrap = card.querySelector('[data-frequency-options]');
+    if (manualBox) manualBox.hidden = !visible;
+    if (optionsWrap) optionsWrap.hidden = visible;
+  }
+
   async function refreshPrices() {
     const requestId = ++previewRequestId;
-    const manualBox = card.querySelector('[data-manual-rate]');
-    if (manualBox) manualBox.hidden = true;
+    setManualState(false);
     syncServiceView();
 
     if (isMove()) {
       const node = card.querySelector('[data-price="move"]');
-      if (node) node.textContent = 'Checking…';
+      setPriceNodeLoading(node);
       const amount = await fetchPreview('one_time');
       if (requestId !== previewRequestId) return;
       priceCache.one_time = amount;
-      if (node) node.textContent = priceText(amount, 'one_time');
-      if (manualBox) manualBox.hidden = Number.isFinite(amount);
+      if (node) {
+        node.classList.remove('is-loading');
+        node.textContent = priceText(amount, 'one_time');
+      }
+      setManualState(!Number.isFinite(amount));
       return;
     }
 
-    card.querySelectorAll('[data-price="weekly"],[data-price="biweekly"],[data-price="monthly"]').forEach(node => { node.textContent = 'Checking…'; });
+    card.querySelectorAll('[data-price="weekly"],[data-price="biweekly"],[data-price="monthly"]').forEach(setPriceNodeLoading);
     const frequencies = ['weekly', 'biweekly', 'monthly'];
     const results = await Promise.all(frequencies.map(fetchPreview));
     if (requestId !== previewRequestId) return;
+    const hasEstimatedAmount = results.some(amount => Number.isFinite(amount));
     frequencies.forEach((frequency, i) => {
       priceCache[frequency] = results[i];
       const node = card.querySelector(`[data-price="${frequency}"]`);
-      if (node) node.textContent = priceText(results[i], frequency);
+      if (node) {
+        node.classList.remove('is-loading');
+        node.textContent = priceText(results[i], frequency);
+      }
     });
-    if (manualBox) manualBox.hidden = !results.every(amount => !Number.isFinite(amount));
+    setManualState(!hasEstimatedAmount);
   }
 
   function updateProgress() {
@@ -180,6 +199,8 @@
     }
     if (index === 2) {
       if (isMove()) return true;
+      const manualVisible = !card.querySelector('[data-manual-rate]')?.hidden;
+      if (manualVisible) return true;
       const ok = !!selected('frequency');
       if (!ok && stepError) stepError.classList.add('active');
       return ok;
@@ -229,7 +250,7 @@
     card.querySelector('[data-review-extras]').textContent = extras.length ? extras.map(key => upgradeLabels[key] || key).join(', ') : 'None selected';
     const notes = [];
     if (!isMove() && selected('recent_cleaning') === 'no') notes.push('NataBel will confirm whether the first visit needs a separate reset price before service.');
-    if (isMove()) notes.push('The Move-In / Move-Out price includes the $175 move-service premium for this square-footage tier.');
+    if (isMove()) notes.push('The Move-In / Move-Out price includes the approved move-service premium for this square-footage tier.');
     if (extras.length) notes.push('Fatima will call you for any additional add-on quotes.');
     if (!notes.length) notes.push('Final scope and availability are confirmed before service.');
     card.querySelector('[data-review-note]').textContent = notes.join(' ');
@@ -301,7 +322,7 @@
       copy.textContent = `${move ? 'Move-In / Move-Out' : (frequencyLabels[submitted.frequency] || 'Recurring')} cleaning. ${deliveryMessage(data.fallbackDelivery || data.delivery)}`;
       const notes = [];
       if (!move && submitted.recent_cleaning === 'no') notes.push('The first visit may require a separate reset price after NataBel confirms the starting condition.');
-      if (move) notes.push('Your one-time price includes the approved $175 move-service premium.');
+      if (move) notes.push('Your one-time price includes the approved move-service premium.');
       if (selectedExtras().length) notes.push('Fatima will call you for any additional add-on quotes.');
       if (selectedFocusAreas().length) notes.push('Your selected focus areas were included with the cleaning request.');
       if (!notes.length) notes.push('Final scope and availability are confirmed before service.');
@@ -343,7 +364,7 @@
       }
       if (body.status === 'service_area_unavailable') {
         show(0, true);
-        setZipError('This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
+        setZipError('This ZIP is outside NataBel’s current Rocklin-first service zone. Call (916) 899-8811 to ask about coverage.');
         markField('zip', true);
         field('zip')?.focus();
         return;
