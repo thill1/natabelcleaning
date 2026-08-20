@@ -24,7 +24,7 @@ html { scroll-behavior: smooth; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(5, 5, 5, .94);
+  background: var(--noir-deep);
   border-bottom: 1px solid rgba(227, 200, 120, .18);
   backdrop-filter: blur(18px);
 }
