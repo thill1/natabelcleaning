@@ -86,13 +86,17 @@
       </div>
     </section>`;
 
+  const socialIcons = {
+    google: '<svg class="footer-social-icon footer-social-icon-google" viewBox="0 0 533.5 544.3" aria-hidden="true" focusable="false"><path fill="#4285F4" d="M533.5 278.4c0-18.5-1.5-37-4.7-55.3H272.1v104.7h146.9c-6.1 33.9-25 62.5-53.2 81.6v67h85.9c50.4-46.4 81.8-114.9 81.8-198z"/><path fill="#34A853" d="M272.1 544.3c72.4 0 133.2-23.9 177.6-64.9l-85.9-67c-23.9 16-54.5 25.4-91.7 25.4-70.5 0-130.3-47.7-151.7-111.8H31.8v70.2c44.1 87.5 134.7 148.1 240.3 148.1z"/><path fill="#FBBC04" d="M120.4 326c-10.9-32.3-10.9-67.2 0-99.5v-70.2H31.8c-36.8 73.2-36.8 166.7 0 239.9l88.6-70.2z"/><path fill="#EA4335" d="M272.1 106.5c39.4-.6 77.3 14.2 106.4 41.2l79.2-79.2C404.7 24.1 342.1-.8 272.1 0 166.5 0 75.9 60.6 31.8 148.1l88.6 70.2c21.3-64.1 81.1-111.8 151.7-111.8z"/></svg>',
+    yelp: '<svg class="footer-social-icon footer-social-icon-yelp" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g fill="#FF1744"><path d="M30.8 4.7c2.1-.6 4.3.6 4.9 2.7l3.8 13.8c.5 1.8-.2 3.7-1.8 4.7l-8 5.4c-1.9 1.3-4.5.6-5.6-1.5l-7-13c-1.1-2-.3-4.5 1.8-5.5z"/><path d="M56.2 22.9c1.6 1.5 1.8 4 .3 5.6L46.1 39.2c-1.4 1.4-3.5 1.7-5.2.7l-7.8-4.4c-2.1-1.2-2.6-3.9-1.1-5.8L41 18.9c1.4-1.7 4-2 5.8-.7z"/><path d="M53.2 51.3c-.1 2.2-2 3.9-4.1 3.8l-14.3-.8c-1.9-.1-3.5-1.5-3.9-3.4l-1.9-9.4c-.5-2.4 1.3-4.6 3.7-4.6l14.2.2c2.2 0 4 1.8 4 4z"/><path d="M25.8 60.2c-2.1.8-4.4-.2-5.2-2.3l-5.3-13.3c-.7-1.7-.1-3.8 1.4-4.9l7.4-5.9c1.9-1.5 4.6-.9 5.8 1.2L37.2 47c1.1 1.9.5 4.4-1.5 5.5z"/><path d="M6.5 39.4c-1.8-1.3-2.2-3.8-.9-5.6l8.2-11.7c1.1-1.5 3.2-2.2 5-1.5l9.1 3.3c2.3.8 3.2 3.5 2.1 5.7l-6.3 12.7c-1 2-3.5 2.8-5.6 1.8z"/></g></svg>'
+  };
   const socials = Object.entries({
-    google: ['Google Business Profile', 'map-pin'],
-    yelp: ['Yelp', 'star'],
-    facebook: ['Facebook', 'facebook'],
-    instagram: ['Instagram', 'instagram']
+    google: ['Google Business Profile', socialIcons.google],
+    yelp: ['Yelp', socialIcons.yelp],
+    facebook: ['Facebook', '<i data-lucide="facebook" aria-hidden="true"></i>'],
+    instagram: ['Instagram', '<i data-lucide="instagram" aria-hidden="true"></i>']
   }).filter(([key]) => ((window.PCC.social || {})[key] || '').trim())
-    .map(([key, meta]) => `<a href="${window.PCC.social[key].trim()}" aria-label="${meta[0]}" target="_blank" rel="noopener"><i data-lucide="${meta[1]}"></i><span>${meta[0].replace(' Business Profile', '')}</span></a>`).join('');
+    .map(([key, meta]) => `<a href="${window.PCC.social[key].trim()}" aria-label="${meta[0]}" target="_blank" rel="noopener">${meta[1]}</a>`).join('');
 
   const footer = `
     <footer class="site-footer">
