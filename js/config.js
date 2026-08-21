@@ -44,21 +44,16 @@ window.PCC = {
      and the "Leave a Google review" button), which is always better than
      linking somewhere wrong.
 
-     The previous values used the pre-rebrand "natabelcleaning" slug and
-     were both broken: the Yelp URL 404s, and the g.page link redirected to
-     a Google search listing a competitor rather than Fatima's profile.
-
-     google — use the review link from the Google Business Profile
-              dashboard ("Ask for reviews" / "Get more reviews").
-     yelp   — the real yelp.com/biz/... URL for the claimed listing. */
+     Footer icon links below are review URLs (not generic listing/search):
+     google — Google Maps place URL with the !9m1!1b1 reviews-panel flag
+              and the listing kgmid (16s%2Fg%2F11nr0z4tls). Keep tracking
+              params such as entry/g_ep/sei stripped.
+     yelp   — Yelp business profile URL anchored directly to #reviews. */
   social: {
     facebook:  '',
     instagram: '',
-    /* Stable Knowledge Graph id for the profile. Preferred over the
-       share.google short link, which carries session/tracking params
-       (rlz, sxsrf timestamp, utm_source) that go stale. */
-    google:    'https://www.google.com/search?kgmid=/g/11nr0z4tls',
-    yelp:      'https://www.yelp.com/biz/natabel-pristine-cleaning-rocklin',
+    google:    'https://www.google.com/maps/place/NataBel+Pristine+Cleaning/@38.7834446,-121.2498116,11z/data=!4m8!3m7!1s0xa076a880b5d6e6e1:0xd85e531e54e951f0!8m2!3d38.7834446!4d-121.2498116!9m1!1b1!16s%2Fg%2F11nr0z4tls',
+    yelp:      'https://www.yelp.com/biz/natabel-pristine-cleaning-rocklin#reviews',
   },
 
   /* ---------- Reviews & trust ----------
