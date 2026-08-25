@@ -1,0 +1,405 @@
+/* NataBel Instant Estimate — focused conversion layout. */
+.quote-page {
+  --quote-black: #080807;
+  --quote-charcoal: #14120f;
+  --quote-paper: #fff;
+  --quote-cream: #f7f3ea;
+  --quote-line: #e4dccd;
+  --quote-gold: #c6a14a;
+  --quote-gold-light: #e3c878;
+  --quote-gold-dark: #80621c;
+  --quote-muted: #625e56;
+}
+
+.quote-page .site-header .nav,
+.quote-page .site-header .header-cta > .btn-brass { display: none; }
+.quote-page .site-header .bar { max-width: 1180px; margin-inline: auto; }
+.quote-page .site-header .header-call-btn { margin-left: auto; }
+
+.quote-page .quote-shell {
+  min-height: calc(100svh - 88px);
+  padding: clamp(28px, 4vw, 56px) 0 clamp(72px, 8vw, 112px);
+  background: var(--quote-cream);
+}
+
+.quote-conversion-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 350px) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: start;
+}
+
+.quote-page .quote-intro {
+  position: sticky;
+  top: 116px;
+  display: block;
+  margin: 0;
+  padding: clamp(28px, 3.5vw, 42px);
+  overflow: hidden;
+  border: 1px solid rgba(227, 200, 120, .24);
+  border-radius: 16px;
+  background: var(--quote-black);
+  color: #fff;
+}
+.quote-page .quote-intro::after {
+  content: "";
+  position: absolute;
+  right: -38px;
+  bottom: -44px;
+  width: 150px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(227, 200, 120, .16);
+  border-radius: 50%;
+  box-shadow: -54px -36px 0 -28px rgba(0,0,0,0), -54px -36px 0 -27px rgba(227,200,120,.10);
+  pointer-events: none;
+}
+.quote-page .quote-intro .simple-kicker { margin-bottom: 21px; }
+.quote-page .quote-intro h1 {
+  max-width: 10ch;
+  margin: 0;
+  color: #fff;
+  font: 450 clamp(2.55rem, 4vw, 3.85rem)/.98 "Fraunces", Georgia, serif;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+.quote-page .quote-intro > p {
+  max-width: 38ch;
+  margin: 22px 0 0;
+  color: rgba(255,255,255,.72);
+  font-size: .94rem;
+  line-height: 1.68;
+}
+
+.quote-assurances {
+  display: grid;
+  gap: 0;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+.quote-assurances li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 17px 0;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.quote-assurances svg { width: 18px; margin-top: 2px; color: var(--quote-gold-light); }
+.quote-assurances strong,
+.quote-assurances small { display: block; }
+.quote-assurances strong { color: #fff; font-size: .82rem; }
+.quote-assurances small { margin-top: 4px; color: rgba(255,255,255,.58); font-size: .71rem; line-height: 1.5; }
+
+.quote-help { position: relative; z-index: 1; margin-top: 26px; }
+.quote-help span { display: block; color: rgba(255,255,255,.56); font-size: .7rem; }
+.quote-help a { display: inline-flex; align-items: center; gap: 8px; margin-top: 7px; color: var(--quote-gold-light); font-size: .92rem; font-weight: 750; }
+.quote-help a svg { width: 17px; }
+
+.quote-funnel-column { min-width: 0; }
+.quote-commercial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 4px 0;
+  color: var(--quote-muted);
+  font-size: .76rem;
+  font-weight: 650;
+}
+.quote-commercial-link:hover { color: var(--quote-gold-dark); }
+.quote-commercial-link svg { width: 15px; color: var(--quote-gold-dark); }
+
+.quote-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; }
+.quote-page .quote-card {
+  overflow: clip;
+  border: 1px solid var(--quote-line);
+  border-radius: 16px;
+  background: var(--quote-paper);
+  box-shadow: none;
+}
+.quote-page .quote-progress {
+  grid-template-columns: 1fr auto;
+  gap: 22px;
+  padding: 20px clamp(22px, 3vw, 32px);
+  border-bottom: 1px solid var(--quote-line);
+  background: #fcfbf8;
+}
+.quote-page .quote-progress > .simple-kicker { margin: 0; white-space: nowrap; }
+.quote-page .quote-progress-meta { margin-bottom: 9px; color: #625e56; font-size: .73rem; }
+.quote-page .quote-progress-track { height: 4px; background: #e9e3d8; }
+.quote-page .quote-progress-track span { background: var(--quote-gold); }
+.quote-progress-estimate { color: var(--quote-gold-dark); font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+
+.quote-page .quote-step {
+  min-height: 0;
+  padding: clamp(32px, 4.5vw, 54px);
+}
+.quote-page .quote-step.active { animation: quote-step-reveal .34s cubic-bezier(.22,1,.36,1) both; }
+@keyframes quote-step-reveal {
+  from { opacity: .4; transform: translateY(8px); clip-path: inset(0 0 8% 0); }
+  to { opacity: 1; transform: none; clip-path: inset(0); }
+}
+.quote-step-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--quote-gold-dark);
+  font-size: .69rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.quote-page .quote-step h2 {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(2.1rem, 4vw, 3.25rem);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+}
+.quote-page .quote-step > p { max-width: 62ch; margin: 13px 0 27px; color: var(--quote-muted); line-height: 1.65; }
+
+.quote-page .quote-options { gap: 11px; }
+.quote-page .quote-option { position: relative; }
+.quote-page .quote-option-content {
+  position: relative;
+  min-height: 172px;
+  padding: 20px;
+  border: 1px solid var(--quote-line);
+  border-radius: 14px;
+  background: #fff;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.quote-page .quote-option:hover .quote-option-content { transform: translateY(-2px); border-color: #cbbd9e; }
+.quote-page .quote-option input:checked + .quote-option-content {
+  border-color: var(--quote-gold-dark);
+  background: #fff9ec;
+  box-shadow: none;
+}
+.quote-page .quote-option-content::after {
+  content: "✓";
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #d8cfbe;
+  border-radius: 50%;
+  color: transparent;
+  font-size: .75rem;
+  font-weight: 800;
+}
+.quote-page .quote-option input:checked + .quote-option-content::after { border-color: var(--quote-gold-dark); background: var(--quote-gold-dark); color: #fff; }
+.quote-page .quote-option input:focus-visible + .quote-option-content { outline: 3px solid rgba(198,161,74,.28); outline-offset: 3px; }
+.quote-page .quote-option-icon { margin-bottom: 26px; }
+.quote-page .quote-option strong { padding-right: 25px; font-size: .92rem; line-height: 1.3; }
+.quote-page .quote-option small { margin-top: 7px; color: var(--quote-muted); font-size: .72rem; line-height: 1.48; }
+.quote-service-options { margin-bottom: 2px; }
+
+.quote-single-field { max-width: 540px; }
+.quote-single-field .quote-field input { min-height: 66px; font-size: 1.22rem; font-weight: 700; letter-spacing: .02em; }
+.quote-input-help { color: var(--quote-muted); font-size: .7rem; line-height: 1.45; }
+.quote-field[hidden] { display: none !important; }
+
+.quote-live-estimate {
+  margin-top: 25px;
+  padding: clamp(22px, 3vw, 29px);
+  border: 1px solid rgba(227,200,120,.38);
+  border-radius: 14px;
+  background: var(--quote-black);
+  color: #fff;
+}
+.quote-live-estimate > span { display: block; color: var(--quote-gold-light); font-size: .68rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.quote-live-estimate > strong { display: block; margin: 9px 0 5px; color: #fff; font: 550 clamp(2.7rem,7vw,4.6rem)/.95 "Fraunces", Georgia, serif; letter-spacing: -.035em; }
+.quote-live-estimate > small { display: block; color: rgba(255,255,255,.68); font-size: .8rem; line-height: 1.5; }
+.quote-live-estimate > p { max-width: 68ch; margin: 19px 0 0; padding-top: 17px; border-top: 1px solid rgba(227,200,120,.26); color: rgba(255,255,255,.72); font-size: .72rem; line-height: 1.6; }
+
+.quote-detail-stack { display: grid; gap: 0; }
+.quote-form-section {
+  margin: 0;
+  padding: 26px 0 28px;
+  border: 0;
+  border-top: 1px solid var(--quote-line);
+  border-radius: 0;
+  background: transparent;
+}
+.quote-form-section:first-child { padding-top: 10px; border-top: 0; }
+.quote-form-section legend { padding: 0 8px; color: var(--quote-charcoal); font: 650 .83rem/1.3 "Plus Jakarta Sans", sans-serif; }
+.quote-form-section legend span {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--quote-charcoal);
+  color: var(--quote-gold-light);
+  font-size: .65rem;
+}
+.quote-page .quote-fields { gap: 16px 18px; }
+.quote-page .quote-field { gap: 7px; }
+.quote-page .quote-field label { font-size: .75rem; }
+.quote-page .quote-field input,
+.quote-page .quote-field select,
+.quote-page .quote-field textarea {
+  min-height: 53px;
+  border-color: #d6cdbd;
+  border-radius: 10px;
+  background: #fff;
+  font-size: .9rem;
+}
+.quote-page .quote-field textarea { min-height: 96px; }
+.quote-page .quote-field input:hover,
+.quote-page .quote-field select:hover,
+.quote-page .quote-field textarea:hover { border-color: #bcae91; }
+.quote-page .quote-field input:focus,
+.quote-page .quote-field select:focus,
+.quote-page .quote-field textarea:focus { outline: 3px solid rgba(198,161,74,.22); border-color: var(--quote-gold-dark); }
+
+.quote-optional-services {
+  margin-top: 22px;
+  border: 1px solid var(--quote-line);
+  border-radius: 14px;
+  background: #fff;
+}
+.quote-optional-services summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 18px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+.quote-optional-services summary::-webkit-details-marker { display: none; }
+.quote-optional-services summary span strong,
+.quote-optional-services summary span small { display: block; }
+.quote-optional-services summary strong { color: var(--quote-charcoal); font-size: .84rem; }
+.quote-optional-services summary small { margin-top: 4px; color: var(--quote-muted); font-size: .71rem; line-height: 1.45; }
+.quote-optional-services summary > svg { width: 18px; color: var(--quote-gold-dark); transition: transform .2s ease; }
+.quote-optional-services[open] summary > svg { transform: rotate(180deg); }
+.quote-optional-services .quote-upgrade-block { margin: 0; padding: 4px 20px 20px; border: 0; }
+.quote-upgrade-block h3 { margin: 0 0 15px; font: 500 1.3rem/1.2 "Fraunces", Georgia, serif; }
+.quote-upgrade-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; }
+.quote-upgrade-head > span { color: var(--quote-gold-dark); font-size: .67rem; font-weight: 800; white-space: nowrap; }
+.quote-upgrade-block > p { margin: 0 0 17px; color: var(--quote-muted); font-size: .78rem; line-height: 1.55; }
+.quote-upgrades { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
+.quote-upgrade { position: relative; cursor: pointer; }
+.quote-upgrade input { position: absolute; opacity: 0; pointer-events: none; }
+.quote-upgrade > span { display: grid; grid-template-columns: 34px 1fr 17px; gap: 10px; align-items: center; min-height: 76px; padding: 12px; border: 1px solid var(--quote-line); border-radius: 12px; background: #fff; transition: border-color .18s ease, background .18s ease; }
+.quote-upgrade input:checked + span { border-color: var(--quote-gold-dark); background: #fff9ec; }
+.quote-upgrade input:focus-visible + span { outline: 3px solid rgba(198,161,74,.28); outline-offset: 2px; }
+.quote-upgrade-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #f3ead8; color: var(--quote-gold-dark); }
+.quote-upgrade-icon svg { width: 16px; }
+.quote-upgrade strong,
+.quote-upgrade small { display: block; }
+.quote-upgrade strong { font-size: .78rem; }
+.quote-upgrade small { margin-top: 3px; color: var(--quote-muted); font-size: .65rem; line-height: 1.4; }
+.quote-upgrade-plus { width: 15px; color: var(--quote-gold-dark); }
+
+.quote-exclusions { margin-top: 18px; padding: 16px 18px; border: 1px solid var(--quote-line); border-radius: 12px; background: #f8f5ee; }
+.quote-exclusions strong { color: var(--quote-charcoal); font-size: .78rem; }
+.quote-exclusions p { margin: 6px 0 0; color: var(--quote-muted); font-size: .71rem; line-height: 1.55; }
+.quote-field-note { display: flex; gap: 9px; align-items: flex-start; margin: 15px 0 0; color: var(--quote-muted); font-size: .73rem; line-height: 1.55; }
+.quote-field-note svg { width: 15px; flex: 0 0 auto; margin-top: 2px; color: var(--quote-gold-dark); }
+.quote-page .quote-consent { margin-top: 20px; padding: 15px 16px; border-radius: 10px; background: #f8f5ee; color: #575249; }
+.quote-page .quote-consent input { width: 17px; height: 17px; accent-color: var(--quote-gold-dark); }
+
+.quote-review-card { max-width: 100%; margin-top: 27px; overflow: hidden; border-block: 1px solid var(--quote-line); border-radius: 0; background: #fff; box-shadow: none; }
+.quote-review-home { display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 17px 20px; border-bottom: 1px solid var(--quote-line); background: #faf8f3; }
+.quote-review-home strong,
+.quote-review-home span { display: block; }
+.quote-review-home strong { font-size: .84rem; }
+.quote-review-home span { max-width: 55ch; margin-top: 4px; color: var(--quote-muted); font-size: .7rem; }
+.quote-review-home svg { width: 20px; flex: 0 0 auto; color: var(--quote-gold-dark); }
+.quote-page .quote-review-main { padding: 34px 22px; text-align: center; background: var(--quote-black); }
+.quote-review-main > span { display: block; color: var(--quote-gold-light); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.quote-review-main strong { display: block; margin: 8px 0 4px; color: #fff; font: 550 clamp(3.2rem,8vw,5.4rem)/.95 "Fraunces", Georgia, serif; letter-spacing: -.035em; }
+.quote-review-main small { color: rgba(255,255,255,.68); font-size: .76rem; }
+.quote-review-lines { border-top: 0; }
+.quote-review-lines > div { display: flex; justify-content: space-between; gap: 20px; padding: 13px 20px; border-bottom: 1px solid var(--quote-line); font-size: .75rem; }
+.quote-review-lines > div[hidden] { display: none !important; }
+.quote-review-lines > div:last-child { border-bottom: 0; }
+.quote-review-lines span { color: var(--quote-muted); }
+.quote-review-lines strong { text-align: right; }
+.quote-review-note { max-width: 68ch; margin: 15px 0 0; color: var(--quote-muted); font-size: .75rem; line-height: 1.55; }
+.quote-disclaimer { max-width: 68ch; margin: 18px 0 0; padding: 15px 16px; border: 1px solid #decfae; border-radius: 10px; background: #fff9e9; color: #685622; font-size: .74rem; line-height: 1.6; }
+.quote-submit-reassurance { display: flex; align-items: center; gap: 7px; margin: 17px 0 0; color: var(--quote-muted); font-size: .71rem; }
+.quote-submit-reassurance svg { width: 15px; color: var(--quote-gold-dark); }
+
+.quote-page .quote-nav { align-items: center; margin-top: 28px; padding: 0; background: transparent; }
+.quote-page .quote-nav .btn { min-height: 52px; border-radius: 11px; }
+.quote-page .quote-nav .btn-brass { min-width: 190px; }
+.quote-page .quote-nav .btn:disabled { cursor: wait; opacity: .7; }
+.quote-page .quote-server-error { border: 1px solid #e8b7b0; background: #fff3f1; }
+
+.quote-page .quote-status { padding: clamp(42px, 6vw, 70px); }
+.quote-page .quote-status-icon { border: 1px solid #decfae; background: #fff9e9; }
+.quote-page .quote-status h2 { max-width: 15ch; margin-inline: auto; }
+.quote-final-price { display: flex; justify-content: center; align-items: baseline; gap: 9px; margin: 22px 0 8px; }
+.quote-final-price strong { font: 550 clamp(3rem,8vw,5.6rem)/1 "Fraunces", Georgia, serif; letter-spacing: -.035em; }
+.quote-final-price span { color: var(--quote-muted); font-weight: 700; }
+.quote-page .quote-status-note { border: 1px solid #decfae; background: #fff9e9; }
+
+@media (max-width: 1040px) {
+  .quote-conversion-grid { grid-template-columns: 1fr; }
+  .quote-page .quote-intro { position: relative; top: auto; display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px 40px; }
+  .quote-page .quote-intro .simple-kicker,
+  .quote-page .quote-intro h1,
+  .quote-page .quote-intro > p { grid-column: 1; }
+  .quote-assurances { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; }
+  .quote-help { grid-column: 1; }
+  .quote-page .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quote-page .footer-contact a { overflow-wrap: anywhere; }
+}
+
+@media (max-width: 720px) {
+  .quote-page .site-header .header-call-btn { display: none; }
+  .quote-page .quote-shell { padding-top: 14px; }
+  .quote-conversion-grid { gap: 14px; }
+  .quote-page .quote-intro { display: block; padding: 25px 22px; border-radius: 14px; }
+  .quote-page .quote-intro h1 { max-width: 14ch; font-size: clamp(2.15rem, 10.5vw, 2.8rem); }
+  .quote-page .quote-intro > p { margin-top: 15px; font-size: .82rem; }
+  .quote-assurances { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 20px; }
+  .quote-assurances li { display: grid; grid-template-columns: 1fr; gap: 7px; padding: 13px 8px; border-right: 1px solid rgba(255,255,255,.12); }
+  .quote-assurances li:last-child { border-right: 0; }
+  .quote-assurances svg { width: 16px; }
+  .quote-assurances strong { font-size: .65rem; line-height: 1.35; }
+  .quote-assurances small { display: none; }
+  .quote-help { margin-top: 17px; }
+  .quote-commercial-link { margin: 14px 4px 0; }
+  .quote-page .quote-card { border-radius: 14px; }
+  .quote-page .quote-progress { grid-template-columns: 1fr; padding: 16px 18px; }
+  .quote-progress-estimate { justify-self: start; }
+  .quote-page .quote-step { padding: 28px 19px 22px; }
+  .quote-page .quote-step h2 { font-size: clamp(2rem, 10vw, 2.75rem); }
+  .quote-page .quote-step > p { margin-bottom: 22px; font-size: .86rem; }
+  .quote-page .quote-options { grid-template-columns: 1fr; }
+  .quote-page .quote-option-content { display: grid; grid-template-columns: 42px 1fr; gap: 2px 12px; min-height: 0; padding: 16px; }
+  .quote-page .quote-option-icon { grid-row: 1 / span 2; margin: 0; }
+  .quote-page .quote-option strong { align-self: end; }
+  .quote-page .quote-option small { align-self: start; margin-top: 2px; padding-right: 22px; }
+  .quote-live-estimate { padding: 22px 18px; }
+  .quote-live-estimate > strong { font-size: clamp(2.7rem,15vw,3.8rem); }
+  .quote-form-section { padding-block: 23px 25px; }
+  .quote-page .quote-fields { grid-template-columns: 1fr; gap: 14px; }
+  .quote-page .quote-field.full { grid-column: auto; }
+  .quote-upgrades { grid-template-columns: 1fr; }
+  .quote-optional-services summary { padding: 16px; }
+  .quote-optional-services .quote-upgrade-block { padding-inline: 15px; }
+  .quote-review-lines > div { display: grid; gap: 4px; }
+  .quote-review-lines strong { text-align: left; }
+  .quote-page .quote-nav { position: sticky; bottom: 0; z-index: 5; gap: 9px; margin-inline: -19px; padding: 12px 19px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid var(--quote-line); background: rgba(255,255,255,.97); backdrop-filter: blur(12px); }
+  .quote-page .quote-nav .btn { min-width: 0; padding-inline: 14px; }
+  .quote-page .quote-nav .btn-brass { flex: 1; }
+  .quote-page .quote-status { padding: 38px 20px; }
+  .quote-page .quote-status-actions { display: grid; }
+  .quote-page .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-page .quote-step.active { animation: none; }
+  .quote-page .quote-option-content,
+  .quote-optional-services summary > svg { transition: none; }
+}

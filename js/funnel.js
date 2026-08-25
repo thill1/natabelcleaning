@@ -1,4 +1,4 @@
-/* NataBel residential instant-quote controller. */
+/* NataBel residential Instant Estimate controller. */
 (function () {
   'use strict';
   if (!window.PCC || !window.PCC.forms) return;
@@ -8,7 +8,8 @@
   const form = card.querySelector('form');
   const serviceArea = window.NataBelServiceArea;
   const requestedService = new URLSearchParams(location.search).get('service');
-  if (requestedService && !['residential', 'recurring', 'standard', 'move', 'move-in', 'move-out'].includes(requestedService)) {
+  const allowedRoutes = ['residential', 'recurring', 'standard', 'deep', 'deep-cleaning', 'move', 'move-in', 'move-out'];
+  if (requestedService && !allowedRoutes.includes(requestedService)) {
     const target = new URL('contact.html', location.href);
     target.searchParams.set('service', requestedService);
     target.searchParams.set('source', 'instant-quote');
@@ -21,28 +22,44 @@
   const progress = card.querySelector('.quote-progress-track span');
   const stepLabel = card.querySelector('[data-step-label]');
   const stepCount = card.querySelector('[data-step-count]');
-  const labels = ['Service area', 'Your cleaning', 'Your price', 'Details', 'Your quote', 'Contact'];
-  const priceCache = { weekly: null, biweekly: null, monthly: null, one_time: null };
-  const frequencyLabels = { weekly: 'Weekly', biweekly: 'Every 2 weeks', monthly: 'Every 4 weeks', one_time: 'Move-In / Move-Out' };
-  const upgradeLabels = {
-    inside_refrigerator: 'Inside refrigerator', inside_oven: 'Inside oven', interior_windows: 'Interior windows',
-    baseboard_detail: 'Baseboard detail', cabinet_interiors: 'Cabinet interiors', pet_hair: 'Pet hair treatment'
-  };
-  const focusLabels = {
-    kitchen: 'Kitchen', bathrooms: 'Bathrooms', floors: 'Floors', dusting_surfaces: 'Dust & surfaces',
-    bedrooms: 'Bedrooms', high_touch: 'High-touch areas'
+  const progressEstimate = card.querySelector('[data-progress-estimate]');
+  const labels = ['Cleaning type', 'Home size', 'Your details', 'Review'];
+  const serviceLabels = { standard: 'Standard Recurring Cleaning', deep: 'Deep Cleaning', move: 'Move-In / Move-Out Cleaning' };
+  const frequencyLabels = { weekly: 'Weekly', biweekly: 'Every 2 weeks', monthly: 'Every 4 weeks', one_time: 'One-time' };
+  const petLabels = { none: 'No pets', dog: 'Dog', cat: 'Cat', multiple: 'Multiple pets', other: 'Other' };
+  const addOnLabels = {
+    inside_refrigerator: 'Inside refrigerator', inside_oven: 'Inside oven', wall_washing: 'Wall washing',
+    carpet_cleaning: 'Carpet cleaning', exterior_windows: 'Exterior windows', garage_or_hauling: 'Garage or hauling'
   };
   let index = 0;
-  let previewRequestId = 0;
+  let submitting = false;
+  let estimateAmount = null;
+  let estimateKey = '';
+  let estimateTimer = null;
+  let estimateRequest = 0;
 
   function field(name) { return form.querySelector(`[name="${name}"]`); }
   function value(name) { return String(field(name)?.value || '').trim(); }
   function selected(name) { return form.querySelector(`[name="${name}"]:checked`)?.value || ''; }
-  function currentService() { return selected('service_type') || 'standard'; }
-  function isMove() { return currentService() === 'move'; }
-  function currentFrequency() { return isMove() ? 'one_time' : selected('frequency'); }
+  function currentService() { return selected('service_type'); }
+  function isOneTime() { return ['deep', 'move'].includes(currentService()); }
+  function currentFrequency() { return isOneTime() ? 'one_time' : value('frequency'); }
   function selectedExtras() { return Array.from(form.querySelectorAll('[name="requested_add_ons"]:checked')).map(input => input.value); }
-  function selectedFocusAreas() { return Array.from(form.querySelectorAll('[name="focus_areas"]:checked')).map(input => input.value); }
+
+  function makeSubmissionId() {
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+    return `q-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+  }
+
+  function localDate() {
+    const now = new Date();
+    const offset = now.getTimezoneOffset() * 60000;
+    return new Date(now.getTime() - offset).toISOString().slice(0, 10);
+  }
+
+  field('submission_id').value = makeSubmissionId();
+  field('form_started_at').value = String(Date.now());
+  field('requested_date').min = localDate();
 
   function markField(name, invalid) {
     const wrapper = field(name)?.closest('.quote-field');
@@ -50,301 +67,256 @@
     return !invalid;
   }
 
-  function setZipError(message) {
-    const error = field('zip')?.closest('.quote-field')?.querySelector('.quote-error');
+  function setFieldError(name, message) {
+    const error = field(name)?.closest('.quote-field')?.querySelector('.quote-error');
     if (error) error.textContent = message;
   }
 
-  function validateZip() {
-    const zip = value('zip');
-    if (!/^\d{5}$/.test(zip)) {
-      setZipError('Enter a five-digit ZIP code.');
-      return markField('zip', true);
-    }
-    if (!serviceArea || !serviceArea.isEligibleZip(zip)) {
-      setZipError('This ZIP is outside NataBel’s current Rocklin-first service zone. Call (916) 899-8811 to ask about coverage.');
-      return markField('zip', true);
-    }
-    setZipError('Enter a five-digit ZIP code.');
-    return markField('zip', false);
+  function currentEstimateKey() {
+    const sqft = Number(value('square_footage'));
+    const service = currentService();
+    return service && Number.isFinite(sqft) && sqft > 0 ? `${service}:${sqft}` : '';
   }
 
-  function quoteInput(frequency) {
-    return {
-      preview: true,
-      audience: 'residential',
-      service_type: currentService(),
-      condition: 'average',
-      frequency: isMove() ? 'one_time' : (frequency || selected('frequency')),
-      property_type: value('property_type'),
-      square_footage: Number(value('square_footage')),
-      bedrooms: value('bedrooms'),
-      bathrooms: value('bathrooms'),
-      zip: value('zip')
-    };
+  function calculatedAmount() {
+    return estimateKey === currentEstimateKey() && Number.isFinite(estimateAmount) ? estimateAmount : null;
   }
 
-  async function fetchPreview(frequency) {
+  function cadenceText() {
+    return isOneTime() ? `${serviceLabels[currentService()]} · one-time base estimate` : 'Standard Recurring Cleaning · per-visit base estimate';
+  }
+
+  function paintEstimate(message) {
+    const amount = calculatedAmount();
+    card.querySelectorAll('[data-live-estimate]').forEach(panel => {
+      const price = panel.querySelector('[data-live-price]');
+      const cadence = panel.querySelector('[data-live-cadence]');
+      if (!price || !cadence) return;
+      price.textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : message;
+      cadence.textContent = Number.isFinite(amount) ? cadenceText() : 'Choose a cleaning type and enter a positive home size.';
+    });
+    updateProgress();
+    if (index === 3) renderReview();
+  }
+
+  async function loadEstimate(key, requestId) {
     try {
       const response = await fetch('/api/quote', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(quoteInput(frequency))
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          preview: true,
+          service_type: currentService(),
+          frequency: isOneTime() ? 'one_time' : 'monthly',
+          square_footage: Number(value('square_footage')),
+          condition: 'average'
+        })
       });
       const body = await response.json().catch(() => ({}));
-      if (response.ok && body.ok && body.status === 'estimated' && Number.isFinite(Number(body.quote?.amount))) return Number(body.quote.amount);
-      return null;
-    } catch (_) { return null; }
+      if (requestId !== estimateRequest || key !== currentEstimateKey()) return;
+      if (!response.ok || !body.ok || body.status !== 'estimated' || !Number.isFinite(Number(body.quote?.amount))) {
+        throw new Error(body.error || `quote_preview_${response.status}`);
+      }
+      estimateKey = key;
+      estimateAmount = Number(body.quote.amount);
+      paintEstimate('Calculating…');
+    } catch (error) {
+      if (requestId !== estimateRequest || key !== currentEstimateKey()) return;
+      estimateKey = '';
+      estimateAmount = null;
+      console.error('[quote] preview failed', { error: String(error.message || error) });
+      paintEstimate('Estimate unavailable');
+    }
   }
 
-  function priceText(amount, cadence) {
-    if (!Number.isFinite(amount)) return 'Custom quote';
-    return cadence === 'one_time' ? `$${amount.toLocaleString()}` : `$${amount.toLocaleString()} / visit`;
+  function refreshEstimate() {
+    const key = currentEstimateKey();
+    clearTimeout(estimateTimer);
+    if (!key) {
+      estimateRequest += 1;
+      estimateKey = '';
+      estimateAmount = null;
+      paintEstimate(currentService() ? 'Enter square footage' : 'Choose a cleaning type');
+      return;
+    }
+    if (key === estimateKey && Number.isFinite(estimateAmount)) {
+      paintEstimate('Calculating…');
+      return;
+    }
+    estimateRequest += 1;
+    estimateKey = '';
+    estimateAmount = null;
+    paintEstimate('Calculating…');
+    const requestId = estimateRequest;
+    estimateTimer = setTimeout(() => loadEstimate(key, requestId), 120);
   }
 
   function syncServiceView() {
-    card.querySelectorAll('[data-recurring-only]').forEach(node => { node.hidden = isMove(); });
-    card.querySelectorAll('[data-move-only]').forEach(node => { node.hidden = !isMove(); });
-    if (isMove()) {
-      form.querySelectorAll('[name="frequency"]').forEach(input => { input.checked = false; });
-      form.querySelectorAll('[name="recent_cleaning"]').forEach(input => { input.checked = false; });
+    const frequency = field('frequency');
+    const wrapper = card.querySelector('[data-frequency-field]');
+    if (!frequency || !wrapper) return;
+    if (isOneTime()) {
+      frequency.value = 'one_time';
+      wrapper.hidden = true;
+    } else {
+      if (frequency.value === 'one_time') frequency.value = '';
+      wrapper.hidden = false;
     }
-  }
-
-  function setPriceNodeLoading(node) {
-    if (!node) return;
-    node.textContent = 'Checking…';
-    node.classList.add('is-loading');
-  }
-
-  function setManualState(visible) {
-    const manualBox = card.querySelector('[data-manual-rate]');
-    const optionsWrap = card.querySelector('[data-frequency-options]');
-    if (manualBox) manualBox.hidden = !visible;
-    if (optionsWrap) optionsWrap.hidden = visible;
-  }
-
-  async function refreshPrices() {
-    const requestId = ++previewRequestId;
-    setManualState(false);
-    syncServiceView();
-
-    if (isMove()) {
-      const node = card.querySelector('[data-price="move"]');
-      setPriceNodeLoading(node);
-      const amount = await fetchPreview('one_time');
-      if (requestId !== previewRequestId) return;
-      priceCache.one_time = amount;
-      if (node) {
-        node.classList.remove('is-loading');
-        node.textContent = priceText(amount, 'one_time');
-      }
-      setManualState(!Number.isFinite(amount));
-      return;
-    }
-
-    card.querySelectorAll('[data-price="weekly"],[data-price="biweekly"],[data-price="monthly"]').forEach(setPriceNodeLoading);
-    const frequencies = ['weekly', 'biweekly', 'monthly'];
-    const results = await Promise.all(frequencies.map(fetchPreview));
-    if (requestId !== previewRequestId) return;
-    const hasEstimatedAmount = results.some(amount => Number.isFinite(amount));
-    frequencies.forEach((frequency, i) => {
-      priceCache[frequency] = results[i];
-      const node = card.querySelector(`[data-price="${frequency}"]`);
-      if (node) {
-        node.classList.remove('is-loading');
-        node.textContent = priceText(results[i], frequency);
-      }
-    });
-    setManualState(!hasEstimatedAmount);
+    refreshEstimate();
   }
 
   function updateProgress() {
     progress.style.width = `${((index + 1) / steps.length) * 100}%`;
     stepLabel.textContent = `Step ${index + 1} · ${labels[index]}`;
     stepCount.textContent = `${index + 1} of ${steps.length}`;
+    const amount = calculatedAmount();
+    if (progressEstimate) progressEstimate.textContent = index > 1 && Number.isFinite(amount) ? `$${amount.toLocaleString()} estimate` : 'About 2 minutes';
   }
 
   function show(next, focus) {
     index = Math.max(0, Math.min(next, steps.length - 1));
-    steps.forEach((step, i) => step.classList.toggle('active', i === index));
+    steps.forEach((step, stepIndex) => step.classList.toggle('active', stepIndex === index));
     syncServiceView();
     updateProgress();
-    if (index === 2) refreshPrices();
-    if (index === 4) renderQuoteReview();
+    if (index === 3) renderReview();
     if (focus) {
       card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      const heading = steps[index].querySelector('h2:not([hidden])');
+      const heading = steps[index].querySelector('h2');
       heading?.setAttribute('tabindex', '-1');
       heading?.focus({ preventScroll: true });
     }
     if (window.lucide) window.lucide.createIcons();
   }
 
-  function validateCurrent() {
-    const step = steps[index];
-    const stepError = step.querySelector('[data-step-error]');
-    if (stepError) stepError.classList.remove('active');
+  function validateZip() {
+    const zip = value('zip');
+    if (!/^\d{5}$/.test(zip)) {
+      setFieldError('zip', 'Enter a five-digit ZIP code.');
+      return markField('zip', true);
+    }
+    if (!serviceArea || !serviceArea.isEligibleZip(zip)) {
+      setFieldError('zip', 'This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
+      return markField('zip', true);
+    }
+    return markField('zip', false);
+  }
 
-    if (index === 0) return validateZip();
+  function validateCurrent() {
+    const stepError = steps[index].querySelector('[data-step-error]');
+    stepError?.classList.remove('active');
+
+    if (index === 0) {
+      const ok = !!currentService();
+      if (!ok) stepError?.classList.add('active');
+      return ok;
+    }
     if (index === 1) {
       const sqft = Number(value('square_footage'));
-      const ok = [
-        !!selected('service_type'),
-        markField('property_type', !value('property_type')),
-        markField('square_footage', !Number.isFinite(sqft) || sqft < 200 || sqft > 30000),
-        markField('bedrooms', !value('bedrooms')),
-        markField('bathrooms', !value('bathrooms'))
-      ].every(Boolean);
-      if (!ok && stepError) stepError.classList.add('active');
+      const ok = markField('square_footage', !Number.isFinite(sqft) || sqft <= 0);
+      if (!ok) stepError?.classList.add('active');
       return ok;
     }
     if (index === 2) {
-      if (isMove()) return true;
-      const manualVisible = !card.querySelector('[data-manual-rate]')?.hidden;
-      if (manualVisible) return true;
-      const ok = !!selected('frequency');
-      if (!ok && stepError) stepError.classList.add('active');
-      return ok;
-    }
-    if (index === 3) {
-      if (isMove()) return true;
-      const ok = !!selected('recent_cleaning');
-      if (!ok && stepError) stepError.classList.add('active');
-      return ok;
-    }
-    if (index === 5) {
-      const email = value('email');
-      const phone = value('phone');
       const checks = [
         markField('name', !value('name')),
-        markField('phone', !/[0-9()+\-\s]{10,}/.test(phone)),
-        markField('email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)),
-        markField('city', !value('city')),
+        markField('phone', !/[0-9()+\-\s]{10,}/.test(value('phone'))),
+        markField('email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value('email'))),
+        markField('property_type', !value('property_type')),
         markField('service_address', !value('service_address')),
-        !!form.elements.contact_consent.checked
+        markField('city', !value('city')),
+        validateZip(),
+        markField('bedrooms', !value('bedrooms')),
+        markField('bathrooms', !value('bathrooms')),
+        markField('frequency', !currentFrequency()),
+        markField('pets', !value('pets')),
+        markField('requested_date', !value('requested_date')),
+        form.elements.contact_consent.checked
       ];
       const consent = form.elements.contact_consent.closest('.quote-consent');
-      consent.style.color = checks[5] ? '' : '#a73529';
-      return checks.every(Boolean);
+      consent.style.color = checks[12] ? '' : '#a73529';
+      const ok = checks.every(Boolean);
+      if (!ok) stepError?.classList.add('active');
+      return ok;
     }
     return true;
   }
 
-  function reviewHomeLabel() {
-    const property = ({ house: 'House', apartment: 'Apartment', condo: 'Condo', townhome: 'Townhome' })[value('property_type')] || 'Home';
-    return `${value('bedrooms')} bed · ${value('bathrooms')} bath · ${Number(value('square_footage')).toLocaleString()} sq ft · ${property}`;
-  }
-
-  function renderQuoteReview() {
-    const frequency = currentFrequency();
-    const amount = priceCache[frequency];
+  function renderReview() {
+    const amount = calculatedAmount();
     const extras = selectedExtras();
-    const focusAreas = selectedFocusAreas();
-    card.querySelector('[data-review-home]').textContent = reviewHomeLabel();
-    card.querySelector('[data-review-zip]').textContent = `ZIP ${value('zip')}`;
-    card.querySelector('[data-review-frequency]').textContent = isMove() ? 'Move-In / Move-Out Cleaning' : (frequencyLabels[frequency] || 'Recurring cleaning');
-    card.querySelector('[data-review-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : 'Custom';
-    card.querySelector('[data-review-cadence]').textContent = isMove() ? 'one-time cleaning · cleaning service only' : 'per visit · cleaning service only';
-    card.querySelector('[data-review-first-label]').textContent = isMove() ? 'Cleaning type' : 'First visit';
-    card.querySelector('[data-review-first]').textContent = isMove() ? 'Move-In / Move-Out' : (selected('recent_cleaning') === 'no' ? 'Confirm first-visit reset' : 'Standard recurring scope');
-    card.querySelector('[data-review-focus]').textContent = focusAreas.length ? focusAreas.map(key => focusLabels[key] || key).join(', ') : 'None selected';
-    card.querySelector('[data-review-extras]').textContent = extras.length ? extras.map(key => upgradeLabels[key] || key).join(', ') : 'None selected';
-    const notes = [];
-    if (!isMove() && selected('recent_cleaning') === 'no') notes.push('NataBel will confirm whether the first visit needs a separate reset price before service.');
-    if (isMove()) notes.push('The Move-In / Move-Out price includes the approved move-service premium for this square-footage tier.');
-    if (extras.length) notes.push('Fatima will call you for any additional add-on quotes.');
-    if (!notes.length) notes.push('Final scope and availability are confirmed before service.');
-    card.querySelector('[data-review-note]').textContent = notes.join(' ');
+    const property = ({ house: 'House', apartment: 'Apartment', condo: 'Condo', townhome: 'Townhome' })[value('property_type')] || 'Home';
+    card.querySelector('[data-review-home]').textContent = `${Number(value('square_footage')).toLocaleString()} sq ft · ${value('bedrooms')} bed · ${value('bathrooms')} bath · ${property}`;
+    card.querySelector('[data-review-address]').textContent = `${value('service_address')}, ${value('city')} ${value('zip')}`;
+    card.querySelector('[data-review-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : '—';
+    card.querySelector('[data-review-cadence]').textContent = isOneTime() ? 'one-time base estimate' : 'per-visit base estimate';
+    card.querySelector('[data-review-service]').textContent = serviceLabels[currentService()] || 'Cleaning';
+    card.querySelector('[data-review-frequency]').textContent = frequencyLabels[currentFrequency()] || '—';
+    card.querySelector('[data-review-date]').textContent = value('requested_date') || '—';
+    card.querySelector('[data-review-pets]').textContent = petLabels[value('pets')] || value('pets') || '—';
+    card.querySelector('[data-review-extras]').textContent = extras.length ? extras.map(item => addOnLabels[item] || item).join(', ') : 'None selected';
   }
 
   card.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => {
-    if (!validateCurrent()) return;
-    show(index + 1, true);
+    if (validateCurrent()) show(index + 1, true);
   }));
   card.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => show(index - 1, true)));
-
-  field('zip')?.addEventListener('input', () => {
-    markField('zip', false);
-    setZipError('Enter a five-digit ZIP code.');
-  });
   form.querySelectorAll('[name="service_type"]').forEach(input => input.addEventListener('change', syncServiceView));
-  form.querySelectorAll('[name="frequency"]').forEach(input => input.addEventListener('change', () => {
-    const error = steps[2].querySelector('[data-step-error]');
-    if (error) error.classList.remove('active');
-  }));
-  form.querySelectorAll('[name="recent_cleaning"]').forEach(input => input.addEventListener('change', () => {
-    const error = steps[3].querySelector('[data-step-error]');
-    if (error) error.classList.remove('active');
-  }));
+  field('square_footage').addEventListener('input', () => {
+    markField('square_footage', false);
+    refreshEstimate();
+  });
+  field('zip').addEventListener('input', () => {
+    markField('zip', false);
+    setFieldError('zip', 'Enter a five-digit ZIP code.');
+  });
 
   function payload() {
-    const data = {
-      submitted_at: new Date().toISOString(), source: location.pathname,
-      lead_source_label: form.dataset.leadSource || 'Instant Quote', quote_type: 'residential'
-    };
+    const data = { source: `${location.pathname}${location.search}`, quote_type: 'residential' };
     const extras = [];
-    const focusAreas = [];
     new FormData(form).forEach((entryValue, key) => {
-      if (key === 'website_url' || !String(entryValue).trim()) return;
+      if (!String(entryValue).trim()) return;
       if (key === 'requested_add_ons') extras.push(String(entryValue));
-      else if (key === 'focus_areas') focusAreas.push(String(entryValue));
       else data[key] = String(entryValue).trim();
     });
     data.service_type = currentService();
     data.frequency = currentFrequency();
-    if (isMove()) delete data.recent_cleaning;
+    data.square_footage = Number(value('square_footage'));
     if (extras.length) data.requested_add_ons = extras;
-    if (focusAreas.length) data.focus_areas = focusAreas;
     Object.assign(data, window.PCC.util.getUTM());
     return data;
   }
 
-  function deliveryMessage(result) {
-    if (result?.customerEmail && result?.internalEmail) return 'We emailed the quote to you and sent the request to NataBel.';
-    if (result?.delivery === 'endpoint') return 'Your quote request reached NataBel. A team member will follow up to confirm scheduling.';
-    if (result?.delivery === 'email') return 'Your email app is opening with the details filled in. Press Send so NataBel receives the request.';
-    return 'Your quote is shown here. Please call NataBel if you would like immediate scheduling help.';
-  }
-
-  function renderResult(type, data, submitted) {
+  function renderConfirmation(data, submitted) {
     steps.forEach(step => step.classList.remove('active'));
     form.hidden = true;
     card.querySelector('.quote-progress').hidden = true;
     status.classList.add('active');
-    const amount = Number(data?.quote?.amount);
-    const move = submitted.service_type === 'move';
-    status.querySelector('[data-status-title]').textContent = move ? 'Your Move-In / Move-Out quote is ready.' : 'Your recurring cleaning quote is ready.';
-    status.querySelector('[data-status-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : 'Custom';
-    status.querySelector('[data-status-cadence]').textContent = move ? 'one-time cleaning' : 'per visit';
-    const copy = status.querySelector('[data-status-copy]');
-    const note = status.querySelector('[data-status-note]');
-
-    if (type === 'estimated') {
-      copy.textContent = `${move ? 'Move-In / Move-Out' : (frequencyLabels[submitted.frequency] || 'Recurring')} cleaning. ${deliveryMessage(data.fallbackDelivery || data.delivery)}`;
-      const notes = [];
-      if (!move && submitted.recent_cleaning === 'no') notes.push('The first visit may require a separate reset price after NataBel confirms the starting condition.');
-      if (move) notes.push('Your one-time price includes the approved move-service premium.');
-      if (selectedExtras().length) notes.push('Fatima will call you for any additional add-on quotes.');
-      if (selectedFocusAreas().length) notes.push('Your selected focus areas were included with the cleaning request.');
-      if (!notes.length) notes.push('Final scope and availability are confirmed before service.');
-      note.textContent = notes.join(' ');
-      window.PCC.util.track(window.PCC.events.quoteRevealed || 'quote_revealed', { service_type: submitted.service_type, frequency: submitted.frequency, amount });
-    } else {
-      copy.textContent = `This home needs a custom quote. ${deliveryMessage(data.delivery)}`;
-      note.textContent = 'NataBel will review the home details and confirm pricing before a cleaning date is finalized.';
-    }
-
+    const amount = Number(data.quote?.amount);
+    status.querySelector('[data-status-title]').textContent = `${serviceLabels[submitted.service_type]} request received.`;
+    status.querySelector('[data-status-price]').textContent = `$${amount.toLocaleString()}`;
+    status.querySelector('[data-status-cadence]').textContent = submitted.frequency === 'one_time' ? 'one-time Instant Estimate' : 'per-visit Instant Estimate';
+    status.querySelector('[data-status-copy]').textContent = data.notificationPending
+      ? 'Your complete request is safely saved. The business email notification was delayed, and the failure was logged for follow-up.'
+      : data.delivery?.customerEmail
+        ? 'Your complete request is saved, NataBel has been notified, and a copy of the estimate was emailed to you.'
+        : 'Your complete request is saved and NataBel has been notified. Keep this estimate on screen for your records.';
+    status.querySelector('[data-status-note]').textContent = `Requested for ${submitted.requested_date}. Reference ${data.submissionId}. Final pricing and availability will be confirmed after review.`;
+    status.focus({ preventScroll: true });
     status.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.PCC.util.track(window.PCC.events.quoteRevealed || 'quote_revealed', { service_type: submitted.service_type, frequency: submitted.frequency, amount });
     if (window.lucide) window.lucide.createIcons();
   }
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (!validateCurrent()) return;
+    if (submitting || index !== 3 || !validateCurrent()) return;
+    submitting = true;
     const submit = form.querySelector('[type="submit"]');
     const error = form.querySelector('[data-submit-error]');
     const original = submit.innerHTML;
     submit.disabled = true;
-    submit.textContent = 'Saving your quote…';
+    submit.setAttribute('aria-disabled', 'true');
+    submit.textContent = 'Saving your request…';
     error.classList.remove('active');
     const data = payload();
     window.PCC.util.track(window.PCC.events.quoteContactSubmitted || 'quote_contact_submitted', { quote_type: 'residential', service_type: data.service_type, frequency: data.frequency });
@@ -354,53 +326,38 @@
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
       });
       const body = await response.json().catch(() => ({}));
-      if (response.ok && body.ok && body.status === 'estimated') {
-        if (!body.delivery?.customerEmail || !body.delivery?.internalEmail) {
-          data.estimate_amount = data.service_type === 'move' ? `$${body.quote.amount} one-time` : `$${body.quote.amount} per visit`;
-          body.fallbackDelivery = await window.PCC.forms.route(data);
-        }
-        renderResult('estimated', body, data);
+      if (response.ok && body.ok && body.status === 'estimated' && body.saved) {
+        renderConfirmation(body, data);
         return;
       }
       if (body.status === 'service_area_unavailable') {
-        show(0, true);
-        setZipError('This ZIP is outside NataBel’s current Rocklin-first service zone. Call (916) 899-8811 to ask about coverage.');
+        show(2, true);
+        setFieldError('zip', 'This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
         markField('zip', true);
-        field('zip')?.focus();
-        return;
-      }
-      if (body.status === 'manual_review_required' || body.error === 'rate_not_found') {
-        const delivery = await window.PCC.forms.route(data);
-        renderResult('manual', { delivery }, data);
+        field('zip').focus();
         return;
       }
       throw new Error(body.error || `quote_${response.status}`);
     } catch (requestError) {
-      console.warn('[quote] request failed', requestError);
-      try {
-        const delivery = await window.PCC.forms.route(data);
-        const cached = priceCache[data.frequency];
-        if (delivery?.delivery) {
-          renderResult(Number.isFinite(cached) ? 'estimated' : 'manual', {
-            quote: Number.isFinite(cached) ? { amount: cached } : null, fallbackDelivery: delivery, delivery
-          }, data);
-          return;
-        }
-      } catch (_) { /* show direct fallback below */ }
-      error.textContent = `We could not save the quote automatically. Call ${window.PCC.business.phone} or email ${window.PCC.business.email}.`;
+      console.error('[quote] save failed', { submissionId: value('submission_id'), error: String(requestError.message || requestError) });
+      error.textContent = `We could not save the request yet. Your details remain here so you can try again. You can also call ${window.PCC.business.phone}.`;
       error.classList.add('active');
+      error.focus?.();
       window.PCC.util.track(window.PCC.events.quoteDeliveryFailed || 'quote_delivery_failed', { reason: String(requestError.message || requestError) });
     } finally {
-      submit.disabled = false;
-      submit.innerHTML = original;
-      if (window.lucide) window.lucide.createIcons();
+      if (!form.hidden) {
+        submitting = false;
+        submit.disabled = false;
+        submit.removeAttribute('aria-disabled');
+        submit.innerHTML = original;
+        if (window.lucide) window.lucide.createIcons();
+      }
     }
   });
 
-  if (['move', 'move-in', 'move-out'].includes(requestedService)) {
-    const moveInput = form.querySelector('[name="service_type"][value="move"]');
-    if (moveInput) moveInput.checked = true;
-  }
-  window.PCC.util.track(window.PCC.events.quoteStarted || 'quote_started', { source: location.pathname, experience: 'residential-v3' });
+  if (['move', 'move-in', 'move-out'].includes(requestedService)) form.querySelector('[name="service_type"][value="move"]').checked = true;
+  if (['deep', 'deep-cleaning'].includes(requestedService)) form.querySelector('[name="service_type"][value="deep"]').checked = true;
+  if (['residential', 'recurring', 'standard'].includes(requestedService)) form.querySelector('[name="service_type"][value="standard"]').checked = true;
+  window.PCC.util.track(window.PCC.events.quoteStarted || 'quote_started', { source: location.pathname, experience: 'residential-v5' });
   show(0, false);
 })();
