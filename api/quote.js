@@ -92,7 +92,7 @@ const FROM_EMAIL = 'quotes@natabelpristinecleaning.com';
 const HONEYPOT_FIELD = 'website_url';
 const MAX_BODY_BYTES = 48 * 1024;
 const DISCLAIMER = 'Your instant estimate is based on your home’s square footage and selected service. Final pricing will be confirmed after we review the property’s condition, bathrooms, pets, clutter, requested services, and any add-ons.';
-const EXCLUSIONS = 'Appliance interiors, excessive debris, wall washing, carpet cleaning, exterior windows, garages, and hauling are not included in the base estimate. Optional services and unusual-condition charges are reviewed and priced separately.';
+const EXCLUSIONS = 'Appliance interiors, excessive debris, wall washing, carpet cleaning, exterior windows, garages, and hauling are not included in this estimate. Optional services and unusual-condition charges are reviewed and priced separately.';
 const ALLOWED = {
   pets: new Set(['none', 'dog', 'cat', 'multiple', 'other']),
   condition: new Set(['maintained', 'average', 'heavy']),
@@ -219,7 +219,7 @@ function internalEmailHtml(body) {
 
 function customerEmailHtml(body) {
   const service = serviceDetails(body);
-  const cadence = service.oneTime ? 'one-time base estimate' : 'per-visit base estimate';
+  const cadence = service.oneTime ? 'one-time estimate' : 'per-visit estimate';
   return `<div style="font-family:Arial,sans-serif;color:#17140f;line-height:1.6;max-width:620px;margin:auto"><p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8f6e1f">NataBel Pristine Cleaning</p><h1 style="font-family:Georgia,serif;font-weight:500">Your Instant Estimate</h1><p style="font-size:38px;font-family:Georgia,serif;margin:18px 0">$${Number(body.estimate_amount).toLocaleString()} <span style="font-size:16px">${safe(cadence)}</span></p><p><strong>${safe(service.label)}</strong> for ${safe(body.square_footage)} sq ft at ${safe(body.service_address)}, ${safe(body.city)}.</p><p style="padding:14px;background:#fff8e7;border:1px solid #decfae">${safe(DISCLAIMER)}</p><p>NataBel will review your property details, confirm final pricing and availability, and contact you about next steps. For immediate help, call (916) 899-8811.</p><p><strong>Base-estimate exclusions:</strong> ${safe(EXCLUSIONS)}</p></div>`;
 }
 

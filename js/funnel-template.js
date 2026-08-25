@@ -3,7 +3,7 @@
   'use strict';
 
   const disclaimer = 'Your instant estimate is based on your home’s square footage and selected service. Final pricing will be confirmed after we review the property’s condition, bathrooms, pets, clutter, requested services, and any add-ons.';
-  const exclusions = 'Appliance interiors, excessive debris, wall washing, carpet cleaning, exterior windows, garages, and hauling are not included in the base estimate. Optional services and unusual-condition charges are reviewed and priced separately.';
+  const exclusions = 'Appliance interiors, excessive debris, wall washing, carpet cleaning, exterior windows, garages, and hauling are not included in this estimate. Optional services and unusual-condition charges are reviewed and priced separately.';
 
   function option(name, value, icon, title, detail) {
     return `<label class="quote-option"><input type="radio" name="${name}" value="${value}" />
@@ -18,8 +18,8 @@
   function estimatePanel() {
     return `<div class="quote-live-estimate" data-live-estimate role="status" aria-live="polite" aria-atomic="true">
       <span>Instant Estimate</span>
-      <strong data-live-price>Enter square footage</strong>
-      <small data-live-cadence>Choose a cleaning type and enter a positive home size.</small>
+      <strong data-live-price>—</strong>
+      <small data-live-cadence>Your estimate is being prepared.</small>
       <p>${disclaimer}</p>
     </div>`;
   }
@@ -54,19 +54,19 @@
         <section class="quote-step" data-step="size">
           <span class="quote-step-eyebrow">Home size</span>
           <h2>What’s your home’s square footage?</h2>
-          <p>Use your best estimate. Every positive home size receives an Instant Estimate.</p>
+          <p>Enter the home’s square footage once. Your estimate will appear after you continue.</p>
           <div class="quote-single-field">
-            <div class="quote-field"><label for="squareFootage">Home square footage</label><input id="squareFootage" name="square_footage" type="number" min="1" step="1" inputmode="numeric" autocomplete="off" placeholder="e.g. 1800" aria-describedby="squareFootageHelp" /><span class="quote-error">Enter a square footage greater than zero.</span><small id="squareFootageHelp" class="quote-input-help">The estimate updates instantly as you type.</small></div>
+            <div class="quote-field"><label for="squareFootage">Home square footage</label><input id="squareFootage" name="square_footage" type="number" min="1" step="1" inputmode="numeric" autocomplete="off" placeholder="e.g. 1800" aria-describedby="squareFootageHelp" /><span class="quote-error">Enter a square footage greater than zero.</span><small id="squareFootageHelp" class="quote-input-help">Please confirm the home’s full finished square footage. It is locked for this estimate after you continue.</small></div>
           </div>
-          ${estimatePanel()}
           <div class="quote-server-error" data-step-error>Please enter a valid home size.</div>
-          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Add My Details <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Show My Estimate <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="details">
           <span class="quote-step-eyebrow">Your cleaning request</span>
-          <h2>Where and when should we clean?</h2>
-          <p>These details help NataBel confirm the property, final scope, and requested date. They do not change the Instant Estimate.</p>
+          <h2>Your estimate is ready.</h2>
+          <p>Complete the property and scheduling details so NataBel can review your request.</p>
+          ${estimatePanel()}
           <div class="quote-detail-stack">
             <fieldset class="quote-form-section"><legend><span>1</span> How we can reach you</legend><div class="quote-fields">
               <div class="quote-field"><label for="quoteName">Full name</label><input id="quoteName" name="name" autocomplete="name" maxlength="120" /><span class="quote-error">Enter your name.</span></div>
@@ -108,11 +108,11 @@
               </div>
             </div>
           </details>
-          <aside class="quote-exclusions" aria-label="Base estimate exclusions"><strong>Not included in the base estimate</strong><p>${exclusions}</p></aside>
+          <aside class="quote-exclusions" aria-label="Estimate exclusions"><strong>Not included in this estimate</strong><p>${exclusions}</p></aside>
           <p class="quote-field-note"><i data-lucide="map-pin"></i> NataBel currently serves Rocklin, Roseville, Granite Bay and surrounding Placer and Sacramento-area communities. Service area and requested date are confirmed before scheduling.</p>
           <label class="quote-consent"><input type="checkbox" name="contact_consent" value="yes" /> <span>I agree that NataBel may contact me about this estimate and requested cleaning service. This is not a marketing subscription.</span></label>
           <div class="quote-server-error" data-step-error>Please complete the required contact, property, and scheduling details.</div>
-          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Review My Estimate <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-restart><i data-lucide="rotate-ccw"></i> Start Over</button><button class="btn btn-brass" type="button" data-next>Review My Estimate <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="review">
@@ -120,7 +120,7 @@
           <h2>Your estimate is ready.</h2>
           <div class="quote-review-card">
             <div class="quote-review-home"><div><strong data-review-home>Home details</strong><span data-review-address></span></div><i data-lucide="home"></i></div>
-            <div class="quote-review-main"><span>Instant Estimate</span><strong data-review-price>—</strong><small data-review-cadence>base estimate</small></div>
+            <div class="quote-review-main"><span>Instant Estimate</span><strong data-review-price>—</strong><small data-review-cadence>estimate</small></div>
             <div class="quote-review-lines">
               <div><span>Cleaning type</span><strong data-review-service>Cleaning</strong></div>
               <div><span>Desired frequency</span><strong data-review-frequency>—</strong></div>

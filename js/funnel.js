@@ -35,13 +35,16 @@
   let submitting = false;
   let estimateAmount = null;
   let estimateKey = '';
-  let estimateTimer = null;
   let estimateRequest = 0;
+  let lockedService = '';
+  let lockedSquareFootage = null;
 
   function field(name) { return form.querySelector(`[name="${name}"]`); }
   function value(name) { return String(field(name)?.value || '').trim(); }
   function selected(name) { return form.querySelector(`[name="${name}"]:checked`)?.value || ''; }
-  function currentService() { return selected('service_type'); }
+  function enteredService() { return selected('service_type'); }
+  function currentService() { return lockedService || enteredService(); }
+  function currentSquareFootage() { return lockedSquareFootage ?? Number(value('square_footage')); }
   function isOneTime() { return ['deep', 'move'].includes(currentService()); }
   function currentFrequency() { return isOneTime() ? 'one_time' : value('frequency'); }
   function selectedExtras() { return Array.from(form.querySelectorAll('[name="requested_add_ons"]:checked')).map(input => input.value); }
@@ -57,9 +60,13 @@
     return new Date(now.getTime() - offset).toISOString().slice(0, 10);
   }
 
-  field('submission_id').value = makeSubmissionId();
-  field('form_started_at').value = String(Date.now());
-  field('requested_date').min = localDate();
+  function initializeSubmission() {
+    field('submission_id').value = makeSubmissionId();
+    field('form_started_at').value = String(Date.now());
+    field('requested_date').min = localDate();
+  }
+
+  initializeSubmission();
 
   function markField(name, invalid) {
     const wrapper = field(name)?.closest('.quote-field');
@@ -73,7 +80,7 @@
   }
 
   function currentEstimateKey() {
-    const sqft = Number(value('square_footage'));
+    const sqft = currentSquareFootage();
     const service = currentService();
     return service && Number.isFinite(sqft) && sqft > 0 ? `${service}:${sqft}` : '';
   }
@@ -83,72 +90,63 @@
   }
 
   function cadenceText() {
-    return isOneTime() ? `${serviceLabels[currentService()]} · one-time base estimate` : 'Standard Recurring Cleaning · per-visit base estimate';
+    return isOneTime() ? `${serviceLabels[currentService()]} · one-time estimate` : 'Standard Recurring Cleaning · per-visit estimate';
   }
 
-  function paintEstimate(message) {
+  function paintEstimate() {
     const amount = calculatedAmount();
     card.querySelectorAll('[data-live-estimate]').forEach(panel => {
       const price = panel.querySelector('[data-live-price]');
       const cadence = panel.querySelector('[data-live-cadence]');
       if (!price || !cadence) return;
-      price.textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : message;
-      cadence.textContent = Number.isFinite(amount) ? cadenceText() : 'Choose a cleaning type and enter a positive home size.';
+      price.textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : 'Preparing…';
+      cadence.textContent = Number.isFinite(amount) ? cadenceText() : 'Your estimate is being prepared.';
     });
     updateProgress();
     if (index === 3) renderReview();
   }
 
-  async function loadEstimate(key, requestId) {
+  async function lockAndCalculateEstimate() {
+    const service = enteredService();
+    const squareFootage = Number(value('square_footage'));
+    const key = `${service}:${squareFootage}`;
+    const requestId = ++estimateRequest;
+    lockedService = service;
+    lockedSquareFootage = squareFootage;
+    field('square_footage').readOnly = true;
+    form.querySelectorAll('[name="service_type"]').forEach(input => { input.disabled = true; });
     try {
       const response = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           preview: true,
-          service_type: currentService(),
-          frequency: isOneTime() ? 'one_time' : 'monthly',
-          square_footage: Number(value('square_footage')),
+          service_type: service,
+          frequency: ['deep', 'move'].includes(service) ? 'one_time' : 'monthly',
+          square_footage: squareFootage,
           condition: 'average'
         })
       });
       const body = await response.json().catch(() => ({}));
-      if (requestId !== estimateRequest || key !== currentEstimateKey()) return;
+      if (requestId !== estimateRequest || key !== currentEstimateKey()) return false;
       if (!response.ok || !body.ok || body.status !== 'estimated' || !Number.isFinite(Number(body.quote?.amount))) {
         throw new Error(body.error || `quote_preview_${response.status}`);
       }
       estimateKey = key;
       estimateAmount = Number(body.quote.amount);
-      paintEstimate('Calculating…');
+      paintEstimate();
+      return true;
     } catch (error) {
-      if (requestId !== estimateRequest || key !== currentEstimateKey()) return;
+      if (requestId !== estimateRequest) return false;
       estimateKey = '';
       estimateAmount = null;
+      lockedService = '';
+      lockedSquareFootage = null;
+      field('square_footage').readOnly = false;
+      form.querySelectorAll('[name="service_type"]').forEach(input => { input.disabled = false; });
       console.error('[quote] preview failed', { error: String(error.message || error) });
-      paintEstimate('Estimate unavailable');
+      return false;
     }
-  }
-
-  function refreshEstimate() {
-    const key = currentEstimateKey();
-    clearTimeout(estimateTimer);
-    if (!key) {
-      estimateRequest += 1;
-      estimateKey = '';
-      estimateAmount = null;
-      paintEstimate(currentService() ? 'Enter square footage' : 'Choose a cleaning type');
-      return;
-    }
-    if (key === estimateKey && Number.isFinite(estimateAmount)) {
-      paintEstimate('Calculating…');
-      return;
-    }
-    estimateRequest += 1;
-    estimateKey = '';
-    estimateAmount = null;
-    paintEstimate('Calculating…');
-    const requestId = estimateRequest;
-    estimateTimer = setTimeout(() => loadEstimate(key, requestId), 120);
   }
 
   function syncServiceView() {
@@ -162,7 +160,6 @@
       if (frequency.value === 'one_time') frequency.value = '';
       wrapper.hidden = false;
     }
-    refreshEstimate();
   }
 
   function updateProgress() {
@@ -178,6 +175,7 @@
     steps.forEach((step, stepIndex) => step.classList.toggle('active', stepIndex === index));
     syncServiceView();
     updateProgress();
+    if (index >= 2) paintEstimate();
     if (index === 3) renderReview();
     if (focus) {
       card.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -245,10 +243,10 @@
     const amount = calculatedAmount();
     const extras = selectedExtras();
     const property = ({ house: 'House', apartment: 'Apartment', condo: 'Condo', townhome: 'Townhome' })[value('property_type')] || 'Home';
-    card.querySelector('[data-review-home]').textContent = `${Number(value('square_footage')).toLocaleString()} sq ft · ${value('bedrooms')} bed · ${value('bathrooms')} bath · ${property}`;
+    card.querySelector('[data-review-home]').textContent = `${Number(currentSquareFootage()).toLocaleString()} sq ft · ${value('bedrooms')} bed · ${value('bathrooms')} bath · ${property}`;
     card.querySelector('[data-review-address]').textContent = `${value('service_address')}, ${value('city')} ${value('zip')}`;
     card.querySelector('[data-review-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : '—';
-    card.querySelector('[data-review-cadence]').textContent = isOneTime() ? 'one-time base estimate' : 'per-visit base estimate';
+    card.querySelector('[data-review-cadence]').textContent = isOneTime() ? 'one-time estimate' : 'per-visit estimate';
     card.querySelector('[data-review-service]').textContent = serviceLabels[currentService()] || 'Cleaning';
     card.querySelector('[data-review-frequency]').textContent = frequencyLabels[currentFrequency()] || '—';
     card.querySelector('[data-review-date]').textContent = value('requested_date') || '—';
@@ -256,19 +254,54 @@
     card.querySelector('[data-review-extras]').textContent = extras.length ? extras.map(item => addOnLabels[item] || item).join(', ') : 'None selected';
   }
 
-  card.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => {
-    if (validateCurrent()) show(index + 1, true);
+  card.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', async () => {
+    if (!validateCurrent()) return;
+    if (index !== 1) {
+      show(index + 1, true);
+      return;
+    }
+    const original = button.innerHTML;
+    const stepError = steps[index].querySelector('[data-step-error]');
+    button.disabled = true;
+    button.setAttribute('aria-disabled', 'true');
+    button.textContent = 'Preparing your estimate…';
+    const ready = await lockAndCalculateEstimate();
+    button.disabled = false;
+    button.removeAttribute('aria-disabled');
+    button.innerHTML = original;
+    if (ready) {
+      show(index + 1, true);
+    } else {
+      if (stepError) stepError.textContent = 'We could not prepare your estimate. Check your connection and try again.';
+      stepError?.classList.add('active');
+      field('square_footage').focus();
+    }
+    if (window.lucide) window.lucide.createIcons();
   }));
   card.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => show(index - 1, true)));
   form.querySelectorAll('[name="service_type"]').forEach(input => input.addEventListener('change', syncServiceView));
   field('square_footage').addEventListener('input', () => {
     markField('square_footage', false);
-    refreshEstimate();
+    const stepError = steps[1].querySelector('[data-step-error]');
+    if (stepError) stepError.textContent = 'Please enter a valid home size.';
   });
   field('zip').addEventListener('input', () => {
     markField('zip', false);
     setFieldError('zip', 'Enter a five-digit ZIP code.');
   });
+
+  card.querySelectorAll('[data-restart]').forEach(button => button.addEventListener('click', () => {
+    estimateRequest += 1;
+    estimateAmount = null;
+    estimateKey = '';
+    lockedService = '';
+    lockedSquareFootage = null;
+    form.reset();
+    field('square_footage').readOnly = false;
+    form.querySelectorAll('[name="service_type"]').forEach(input => { input.disabled = false; });
+    initializeSubmission();
+    show(0, true);
+  }));
 
   function payload() {
     const data = { source: `${location.pathname}${location.search}`, quote_type: 'residential' };
@@ -280,7 +313,7 @@
     });
     data.service_type = currentService();
     data.frequency = currentFrequency();
-    data.square_footage = Number(value('square_footage'));
+    data.square_footage = currentSquareFootage();
     if (extras.length) data.requested_add_ons = extras;
     Object.assign(data, window.PCC.util.getUTM());
     return data;
