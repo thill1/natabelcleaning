@@ -87,7 +87,8 @@ function publicQuote(quote) {
   };
 }
 
-const BUSINESS_EMAIL = 'natabelpristinecleaning@gmail.com';
+const BUSINESS_EMAILS = ['tghill@gmail.com', 'natabelpristinecleaning@gmail.com'];
+const BUSINESS_EMAIL = BUSINESS_EMAILS[1];
 const FROM_EMAIL = 'quotes@natabelpristinecleaning.com';
 const HONEYPOT_FIELD = 'website_url';
 const MAX_BODY_BYTES = 48 * 1024;
@@ -235,7 +236,12 @@ async function saveSubmission(payload) {
     let result = null;
     try { result = await response.json(); } catch (_) { /* generic webhooks may return no JSON */ }
     if (!response.ok || result?.ok === false) return { ok: false, reason: result?.error || `quote_webhook_${response.status}` };
-    return { ok: true, duplicate: result?.duplicate === true };
+    return {
+      ok: true,
+      duplicate: result?.duplicate === true,
+      notificationDelivered: result?.notificationDelivered === true,
+      customerEmailDelivered: result?.customerEmailDelivered === true
+    };
   } catch (error) {
     return { ok: false, reason: `quote_webhook_request_failed: ${error.message}` };
   }
@@ -250,7 +256,7 @@ async function sendEmail({ to, subject, html, replyTo, idempotencyKey }) {
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey },
       body: JSON.stringify({
         from: `NataBel Pristine Cleaning <${process.env.QUOTE_FROM_EMAIL || process.env.LEAD_FROM_EMAIL || FROM_EMAIL}>`,
-        to: [to], subject, html, reply_to: replyTo || BUSINESS_EMAIL
+        to: Array.isArray(to) ? to : [to], subject, html, reply_to: replyTo || BUSINESS_EMAIL
       })
     });
     if (response.ok) return { ok: true };
@@ -310,14 +316,14 @@ async function handler(req, res) {
   const service = serviceDetails(submission);
   const cadenceSuffix = service.oneTime ? '' : ' per visit';
   const [internal, customer] = await Promise.all([
-    sendEmail({
-      to: BUSINESS_EMAIL,
+    storage.notificationDelivered ? Promise.resolve({ ok: true, via: 'webhook' }) : sendEmail({
+      to: BUSINESS_EMAILS,
       subject: `New NataBel ${service.label} request — ${submission.name} — $${result.quote.amount}${cadenceSuffix}`,
       html: internalEmailHtml(submission),
       replyTo: submission.email,
       idempotencyKey: `natabel-quote-${submission.submission_id}-internal`
     }),
-    sendEmail({
+    storage.customerEmailDelivered ? Promise.resolve({ ok: true, via: 'webhook' }) : sendEmail({
       to: submission.email,
       subject: `Your NataBel Instant Estimate: $${result.quote.amount}${cadenceSuffix}`,
       html: customerEmailHtml(submission),

@@ -46,7 +46,12 @@ async function withDeliveryMocks(callback, options = {}) {
   global.fetch = async (url, init) => {
     calls.push({ url, init, body: JSON.parse(init.body) });
     if (url.includes('storage.example.test')) {
-      return options.storageFailure ? response(false, 503, { ok: false, error: 'sheet_unavailable' }) : response(true, 200, { ok: true, duplicate: !!options.duplicate });
+      return options.storageFailure ? response(false, 503, { ok: false, error: 'sheet_unavailable' }) : response(true, 200, {
+        ok: true,
+        duplicate: !!options.duplicate,
+        notificationDelivered: !!options.webhookDelivery,
+        customerEmailDelivered: !!options.webhookDelivery
+      });
     }
     return options.emailFailure ? response(false, 503, { message: 'temporary failure' }) : response(true, 200, { id: 'email_123' });
   };
@@ -103,7 +108,7 @@ test('complete quote is stored before emails and notification includes every req
     assert.equal(calls[0].body.submission_id, complete.submission_id);
     assert.equal(calls[0].init.headers['Idempotency-Key'], `natabel-quote-${complete.submission_id}`);
 
-    const businessEmail = calls.find(call => call.url.includes('resend.com') && call.body.to[0] === 'natabelpristinecleaning@gmail.com');
+    const businessEmail = calls.find(call => call.url.includes('resend.com') && call.body.to.includes('tghill@gmail.com') && call.body.to.includes('natabelpristinecleaning@gmail.com'));
     assert.ok(businessEmail);
     for (const expected of ['Ada Customer', '(916) 555-0123', 'ada@example.com', '123 Main Street', 'Standard Recurring Cleaning', 'Every 2 Weeks', '2500', 'Bedrooms', 'Bathrooms', 'dog', '2026-09-15', '$75', '$150', '$225 per visit', 'inside_oven', 'Use the side gate.', '/free-estimate.html?utm_source=test']) {
       assert.match(businessEmail.body.html, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
@@ -129,6 +134,19 @@ test('email delivery failure keeps the stored quote and clearly logs the failure
       assert.equal(logs[0][1].submissionId, 'quote-test-00000002');
     }, { emailFailure: true });
   } finally { console.error = originalError; }
+});
+
+test('Sheet webhook delivery succeeds without a separate email provider', async () => {
+  await withDeliveryMocks(async calls => {
+    delete process.env.RESEND_API_KEY;
+    const result = await request({ ...complete, submission_id: 'quote-test-00000005' });
+    assert.equal(result.statusCode, 200);
+    assert.equal(result.payload.saved, true);
+    assert.deepEqual(result.payload.delivery, { customerEmail: true, internalEmail: true });
+    assert.equal(result.payload.notificationPending, false);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].url, 'https://storage.example.test/quotes');
+  }, { webhookDelivery: true });
 });
 
 test('storage failure does not send email or claim the request was saved', async () => {
