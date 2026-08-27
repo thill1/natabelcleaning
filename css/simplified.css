@@ -273,8 +273,12 @@ html { scroll-behavior: smooth; }
 .founder-note h1 { max-width: 900px; font-size: clamp(3rem, 5.4vw, 5.2rem); }
 .founder-note-photo {
   float: right;
-  width: min(39%, 410px);
-  margin: 42px 0 32px clamp(38px, 5vw, 68px);
+  width: min(30%, 320px);
+  margin: 10px 0 26px clamp(24px, 3vw, 36px);
+}
+.founder-note-photo img {
+  aspect-ratio: 1;
+  object-position: center 18%;
 }
 .founder-note-copy { margin-top: 42px; }
 .founder-note-copy p {
@@ -429,9 +433,13 @@ html { scroll-behavior: smooth; }
   .founder-note-photo {
     float: none;
     width: 100%;
-    margin: 36px 0 32px;
+    margin: 30px 0 32px;
   }
-  .founder-note-copy { margin-top: 0; }
+  .founder-note-photo img {
+    aspect-ratio: 4 / 5;
+    object-position: center;
+  }
+  .founder-note-copy { margin-top: 34px; }
   .founder-note-copy p { line-height: 1.7; }
   .founder-note-copy p + p { margin-top: 20px; }
   .quote-shell { padding-top: 28px; }
