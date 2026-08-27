@@ -269,18 +269,25 @@ html { scroll-behavior: smooth; }
 /* Fatima's personal note — editorial copy wrapping naturally around her portrait. */
 .founder-note-section { padding-block: clamp(82px, 8vw, 124px); }
 .founder-note-grid { display: block; }
-.founder-note { max-width: 1060px; margin-inline: auto; }
+.founder-note { max-width: 1180px; margin-inline: auto; }
 .founder-note h1 { max-width: 900px; font-size: clamp(3rem, 5.4vw, 5.2rem); }
+.founder-note-copy { margin-top: 42px; }
+.founder-note-surround {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(350px, 390px) minmax(0, 1fr);
+  gap: clamp(28px, 3vw, 40px);
+  align-items: start;
+  margin-top: 24px;
+}
 .founder-note-photo {
-  float: right;
-  width: min(30%, 320px);
-  margin: 10px 0 26px clamp(24px, 3vw, 36px);
+  width: 100%;
+  max-width: 390px;
+  margin: 0;
 }
 .founder-note-photo img {
-  aspect-ratio: 1;
-  object-position: center 18%;
+  aspect-ratio: 4 / 5;
+  object-position: center;
 }
-.founder-note-copy { margin-top: 42px; }
 .founder-note-copy p {
   max-width: none;
   margin: 0;
@@ -290,12 +297,13 @@ html { scroll-behavior: smooth; }
   line-height: 1.75;
 }
 .founder-note-copy p + p { margin-top: 22px; }
-.founder-note-signoff { clear: both; margin-top: 34px; }
+.founder-note-closing { margin-top: 28px !important; }
+.founder-note-signoff { margin-top: 34px; }
 .founder-note-signoff strong,
 .founder-note-signoff span { display: block; }
 .founder-note-signoff strong { font-size: 1rem; font-weight: 700; }
 .founder-note-signoff span { margin-top: 4px; color: var(--simple-muted); font-size: .75rem; font-weight: 700; }
-.founder-note-section .simple-page-hero-media { max-width: 410px; }
+.founder-note-section .simple-page-hero-media { max-width: 390px; }
 .founder-link {
   display: inline-flex;
   align-items: center;
@@ -395,6 +403,16 @@ html { scroll-behavior: smooth; }
 }
 .footer-social a span { display: none; }
 
+@media (max-width: 1040px) {
+  .founder-note-surround {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .founder-note-photo {
+    justify-self: start;
+  }
+}
+
 @media (max-width: 900px) {
   .simple-hero-grid,
   .simple-proof-grid,
@@ -430,14 +448,10 @@ html { scroll-behavior: smooth; }
   .simple-service-list { grid-template-columns: 1fr; }
   .simple-page-hero { padding-top: 72px; }
   .founder-note-section { padding-block: 70px 78px; }
+  .founder-note-surround { margin-top: 20px; gap: 24px; }
   .founder-note-photo {
-    float: none;
     width: 100%;
-    margin: 30px 0 32px;
-  }
-  .founder-note-photo img {
-    aspect-ratio: 4 / 5;
-    object-position: center;
+    margin: 0;
   }
   .founder-note-copy { margin-top: 34px; }
   .founder-note-copy p { line-height: 1.7; }
