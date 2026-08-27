@@ -286,8 +286,8 @@ html { scroll-behavior: smooth; }
   justify-self: end;
 }
 .founder-note-photo img {
-  aspect-ratio: 4 / 5;
-  object-position: center;
+  aspect-ratio: 20 / 21;
+  object-position: center 18%;
 }
 .founder-note .founder-note-copy p {
   width: 100%;
@@ -299,8 +299,8 @@ html { scroll-behavior: smooth; }
   line-height: 1.75;
 }
 .founder-note .founder-note-copy p + p { margin-top: 22px; }
-.founder-note-ending { margin-top: 28px; }
-.founder-note-signoff { margin-top: 34px; }
+.founder-note-ending { margin-top: 20px; }
+.founder-note-signoff { margin-top: 28px; }
 .founder-note-signoff strong,
 .founder-note-signoff span { display: block; }
 .founder-note-signoff strong { font-size: 1rem; font-weight: 700; }
@@ -412,6 +412,10 @@ html { scroll-behavior: smooth; }
   }
   .founder-note-photo {
     justify-self: start;
+  }
+  .founder-note-photo img {
+    aspect-ratio: 4 / 5;
+    object-position: center;
   }
 }
 
