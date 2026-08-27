@@ -266,6 +266,117 @@ html { scroll-behavior: smooth; }
   line-height: 1.45;
 }
 
+/* Founder story — editorial, quiet, and intentionally spacious. */
+.about-page .simple-page-hero { padding-bottom: clamp(82px, 9vw, 124px); }
+.about-page .simple-page-hero p { max-width: 640px; }
+.about-story-section { padding-block: clamp(92px, 11vw, 156px); }
+.about-story-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, .78fr) minmax(0, 1.12fr);
+  gap: clamp(68px, 10vw, 148px);
+  align-items: start;
+}
+.about-story-heading { position: sticky; top: 124px; }
+.about-story-heading h2,
+.about-care-heading h2,
+.about-purpose-inner h2 {
+  margin: 0;
+  font: 450 clamp(2.7rem, 5.2vw, 4.9rem)/1.02 "Fraunces", Georgia, serif;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.about-story-heading > p,
+.about-care-heading > p {
+  max-width: 36ch;
+  margin: 26px 0 0;
+  color: var(--simple-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.about-story-copy { max-width: 660px; }
+.about-story-copy p {
+  margin: 0;
+  color: #514b42;
+  font-size: clamp(1.02rem, 1.35vw, 1.13rem);
+  line-height: 1.9;
+}
+.about-story-copy p + p { margin-top: 30px; }
+.about-story-copy .about-story-lead {
+  color: var(--simple-ink);
+  font: 450 clamp(1.45rem, 2.4vw, 2rem)/1.5 "Fraunces", Georgia, serif;
+  letter-spacing: -.015em;
+}
+.about-story-copy blockquote {
+  margin: clamp(52px, 7vw, 82px) 0 0;
+  padding: 7px 0 7px clamp(24px, 4vw, 42px);
+  border-left: 2px solid var(--simple-gold);
+  color: var(--simple-ink);
+  font: italic 430 clamp(1.65rem, 3vw, 2.55rem)/1.35 "Fraunces", Georgia, serif;
+  text-wrap: balance;
+}
+.about-care-section { padding-block: clamp(92px, 11vw, 148px); background: #f5efe3; }
+.about-care-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, .78fr) minmax(0, 1.12fr);
+  gap: clamp(68px, 10vw, 148px);
+  align-items: start;
+}
+.about-care-heading h2 em { color: var(--simple-gold-deep); font-weight: 450; }
+.about-care-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid #d9ccb2; }
+.about-care-list li {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 22px;
+  padding: 30px 0 32px;
+  border-bottom: 1px solid #d9ccb2;
+}
+.about-care-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(143,110,31,.35);
+  border-radius: 50%;
+  color: var(--simple-gold-deep);
+}
+.about-care-icon svg { width: 20px; }
+.about-care-list strong { display: block; font: 500 1.38rem/1.25 "Fraunces", Georgia, serif; }
+.about-care-list p { max-width: 52ch; margin: 10px 0 0; color: var(--simple-muted); font-size: .94rem; line-height: 1.75; }
+.about-purpose-section { padding-block: clamp(108px, 13vw, 176px); border-bottom: 1px solid rgba(227,200,120,.18); }
+.about-purpose-inner { max-width: 920px; text-align: center; }
+.about-purpose-inner .simple-kicker { justify-content: center; }
+.about-purpose-inner .simple-kicker::after { content: ""; width: 26px; height: 1px; background: currentColor; }
+.about-purpose-inner h2 { color: #fff; }
+.about-purpose-inner > p {
+  max-width: 700px;
+  margin: 34px auto 0;
+  color: rgba(255,255,255,.68);
+  font: 430 clamp(1.35rem, 2.5vw, 2rem)/1.6 "Fraunces", Georgia, serif;
+}
+.about-mantra {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 52px;
+  color: var(--simple-gold-bright);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.about-mantra svg { width: 18px; }
+.founder-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  color: var(--simple-gold-bright);
+  font-size: .8rem;
+  font-weight: 700;
+}
+.founder-link svg { width: 16px; transition: transform .2s ease; }
+.founder-link:hover svg { transform: translateX(3px); }
+
 /* Quote experience */
 .quote-shell { min-height: calc(100vh - 82px); padding: 50px 0 90px; background: var(--simple-cream); }
 .quote-page .mobile-cta-bar { display: none; }
@@ -319,7 +430,6 @@ html { scroll-behavior: smooth; }
 .quote-status h2 { margin: 0; font: 500 clamp(2rem, 5vw, 4rem)/1 "Fraunces", Georgia, serif; }
 .quote-status p { max-width: 650px; margin: 16px auto 0; color: var(--simple-muted); line-height: 1.7; }
 .quote-range { margin: 24px auto; color: var(--simple-ink); font: 550 clamp(2.8rem, 7vw, 5.8rem)/1 "Fraunces", Georgia, serif; letter-spacing: -.04em; }
-.quote-status-note { max-width: 640px; margin: 20px auto 0; padding: 14px 16px; border: 1px solid #decfae; border-radius: 12px; background: #fff9e9; color: #685622; font-size: .8rem; }
 .quote-status-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .quote-frequency-price.is-loading {
   position: relative;
@@ -360,6 +470,12 @@ html { scroll-behavior: smooth; }
   .simple-split { grid-template-columns: 1fr; }
   .simple-page-hero-grid { grid-template-columns: 1fr; }
   .simple-page-hero-media { max-width: 520px; }
+  .about-story-grid,
+  .about-care-grid { grid-template-columns: 1fr; gap: 52px; }
+  .about-story-heading { position: static; }
+  .about-story-heading > p,
+  .about-care-heading > p { max-width: 50ch; }
+  .about-story-copy { max-width: 720px; }
   .simple-hero-grid { padding: 76px 0 90px; }
   .simple-hero { min-height: auto; }
   .concierge-card { max-width: 620px; }
@@ -388,6 +504,18 @@ html { scroll-behavior: smooth; }
   .simple-founder blockquote { font-size: 1rem; }
   .simple-service-list { grid-template-columns: 1fr; }
   .simple-page-hero { padding-top: 72px; }
+  .about-page .simple-page-hero { padding-bottom: 76px; }
+  .about-story-section,
+  .about-care-section { padding-block: 80px; }
+  .about-story-grid,
+  .about-care-grid { gap: 42px; }
+  .about-story-copy p { line-height: 1.82; }
+  .about-story-copy p + p { margin-top: 24px; }
+  .about-story-copy blockquote { margin-top: 48px; padding-left: 22px; }
+  .about-care-list li { grid-template-columns: 44px 1fr; gap: 16px; padding-block: 26px; }
+  .about-care-icon { width: 42px; height: 42px; }
+  .about-purpose-section { padding-block: 92px; }
+  .about-mantra { margin-top: 42px; font-size: .7rem; letter-spacing: .12em; }
   .quote-shell { padding-top: 28px; }
   .quote-intro { display: block; }
   .quote-honesty { margin-top: 16px; }

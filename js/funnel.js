@@ -333,7 +333,6 @@
       : data.delivery?.customerEmail
         ? 'Your complete request is saved, NataBel has been notified, and a copy of the estimate was emailed to you.'
         : 'Your complete request is saved and NataBel has been notified. Keep this estimate on screen for your records.';
-    status.querySelector('[data-status-note]').textContent = `Requested for ${submitted.requested_date}. Reference ${data.submissionId}. Final pricing and availability will be confirmed after review.`;
     status.focus({ preventScroll: true });
     status.scrollIntoView({ behavior: 'smooth', block: 'start' });
     window.PCC.util.track(window.PCC.events.quoteRevealed || 'quote_revealed', { service_type: submitted.service_type, frequency: submitted.frequency, amount });

@@ -144,7 +144,6 @@
         <div class="quote-final-price"><strong data-status-price>—</strong><span data-status-cadence>Instant Estimate</span></div>
         <p data-status-copy></p>
         <p class="quote-disclaimer">${disclaimer}</p>
-        <div class="quote-status-note" data-status-note></div>
         <p class="quote-review-note"><strong>NataBel will review the property details, confirm final pricing and availability, and contact you with next steps.</strong></p>
         <div class="quote-status-actions">
           <a href="tel:+19168998811" class="btn btn-brass"><i data-lucide="phone"></i> Call NataBel</a>
