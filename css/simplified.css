@@ -289,7 +289,8 @@ html { scroll-behavior: smooth; }
   aspect-ratio: 4 / 5;
   object-position: center;
 }
-.founder-note-copy p {
+.founder-note .founder-note-copy p {
+  width: 100%;
   max-width: none;
   margin: 0;
   color: #39342d;
@@ -297,7 +298,7 @@ html { scroll-behavior: smooth; }
   font-weight: 700;
   line-height: 1.75;
 }
-.founder-note-copy p + p { margin-top: 22px; }
+.founder-note .founder-note-copy p + p { margin-top: 22px; }
 .founder-note-ending { margin-top: 28px; }
 .founder-note-signoff { margin-top: 34px; }
 .founder-note-signoff strong,
@@ -455,8 +456,8 @@ html { scroll-behavior: smooth; }
     margin: 0;
   }
   .founder-note-copy { margin-top: 34px; }
-  .founder-note-copy p { line-height: 1.7; }
-  .founder-note-copy p + p { margin-top: 20px; }
+  .founder-note .founder-note-copy p { line-height: 1.7; }
+  .founder-note .founder-note-copy p + p { margin-top: 20px; }
   .quote-shell { padding-top: 28px; }
   .quote-intro { display: block; }
   .quote-honesty { margin-top: 16px; }
