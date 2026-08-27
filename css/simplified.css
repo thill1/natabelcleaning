@@ -266,71 +266,32 @@ html { scroll-behavior: smooth; }
   line-height: 1.45;
 }
 
-/* Fatima's founder letter — one continuous, personal narrative. */
-.about-page .simple-page-hero { padding-bottom: clamp(86px, 10vw, 136px); }
-.about-page .simple-page-hero p {
-  max-width: 640px;
-  color: var(--simple-ink);
-  font: 450 clamp(1.3rem, 2.2vw, 1.75rem)/1.55 "Fraunces", Georgia, serif;
+/* Fatima's personal note — one restrained block beside her portrait. */
+.founder-note-section { padding-block: clamp(82px, 8vw, 124px); }
+.founder-note-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(300px, .62fr);
+  gap: clamp(52px, 7vw, 92px);
+  align-items: start;
 }
-.founder-letter-section { padding-block: clamp(104px, 12vw, 168px); background: #f7f2e8; }
-.founder-letter { width: min(880px, 100%); margin-inline: auto; }
-.founder-letter-header { max-width: 760px; margin-bottom: clamp(52px, 7vw, 82px); }
-.founder-letter-header h2 {
+.founder-note { max-width: 740px; }
+.founder-note h1 { max-width: 720px; font-size: clamp(3rem, 5.4vw, 5.2rem); }
+.founder-note-copy { margin-top: 42px; }
+.founder-note-copy p {
+  max-width: 68ch;
   margin: 0;
-  font: 450 clamp(2.8rem, 5.5vw, 5rem)/1.03 "Fraunces", Georgia, serif;
-  letter-spacing: -.035em;
-  text-wrap: balance;
-}
-.founder-letter-body {
-  padding-left: clamp(30px, 6vw, 72px);
-  border-left: 1px solid rgba(143,110,31,.42);
-}
-.founder-letter-body > p {
-  max-width: 66ch;
-  margin: 0;
-  color: #514b42;
-  font-size: clamp(1.02rem, 1.35vw, 1.12rem);
-  line-height: 1.95;
-}
-.founder-letter-body > p + p { margin-top: 34px; }
-.founder-letter-body .founder-letter-lead {
-  color: var(--simple-ink);
-  font: 450 clamp(1.45rem, 2.45vw, 2rem)/1.55 "Fraunces", Georgia, serif;
-  letter-spacing: -.012em;
-}
-.founder-letter-body .founder-letter-purpose {
-  margin-top: clamp(54px, 7vw, 78px);
-  color: var(--simple-ink);
-  font: italic 430 clamp(1.65rem, 3vw, 2.55rem)/1.4 "Fraunces", Georgia, serif;
-  text-wrap: balance;
-}
-.founder-letter-signoff {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  align-items: flex-end;
-  margin-top: clamp(54px, 7vw, 82px);
-  padding-top: 28px;
-  border-top: 1px solid rgba(143,110,31,.28);
-}
-.founder-letter-signoff strong,
-.founder-letter-signoff span { display: block; }
-.founder-letter-signoff strong { font: italic 500 1.65rem/1.1 "Fraunces", Georgia, serif; }
-.founder-letter-signoff span { margin-top: 7px; color: var(--simple-muted); font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.founder-letter-signoff p {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0;
-  color: var(--simple-gold-deep);
-  font-size: .72rem;
+  color: #39342d;
+  font-size: clamp(.96rem, 1.15vw, 1.05rem);
   font-weight: 700;
-  letter-spacing: .13em;
-  text-align: right;
-  text-transform: uppercase;
+  line-height: 1.75;
 }
-.founder-letter-signoff svg { width: 17px; flex: 0 0 auto; }
+.founder-note-copy p + p { margin-top: 22px; }
+.founder-note-signoff { margin-top: 34px; }
+.founder-note-signoff strong,
+.founder-note-signoff span { display: block; }
+.founder-note-signoff strong { font-size: 1rem; font-weight: 700; }
+.founder-note-signoff span { margin-top: 4px; color: var(--simple-muted); font-size: .75rem; font-weight: 700; }
+.founder-note-section .simple-page-hero-media { width: 100%; max-width: 410px; justify-self: end; }
 .founder-link {
   display: inline-flex;
   align-items: center;
@@ -435,6 +396,8 @@ html { scroll-behavior: smooth; }
   .simple-proof-grid,
   .simple-split { grid-template-columns: 1fr; }
   .simple-page-hero-grid { grid-template-columns: 1fr; }
+  .founder-note-grid { grid-template-columns: 1fr; }
+  .founder-note-section .simple-page-hero-media { justify-self: start; }
   .simple-page-hero-media { max-width: 520px; }
   .simple-hero-grid { padding: 76px 0 90px; }
   .simple-hero { min-height: auto; }
@@ -464,14 +427,11 @@ html { scroll-behavior: smooth; }
   .simple-founder blockquote { font-size: 1rem; }
   .simple-service-list { grid-template-columns: 1fr; }
   .simple-page-hero { padding-top: 72px; }
-  .about-page .simple-page-hero { padding-bottom: 76px; }
-  .founder-letter-section { padding-block: 82px; }
-  .founder-letter-header { margin-bottom: 48px; }
-  .founder-letter-body { padding-left: 20px; }
-  .founder-letter-body > p { line-height: 1.86; }
-  .founder-letter-body > p + p { margin-top: 27px; }
-  .founder-letter-signoff { display: grid; gap: 30px; align-items: start; }
-  .founder-letter-signoff p { text-align: left; }
+  .founder-note-section { padding-block: 70px 78px; }
+  .founder-note-grid { gap: 50px; }
+  .founder-note-copy { margin-top: 34px; }
+  .founder-note-copy p { line-height: 1.7; }
+  .founder-note-copy p + p { margin-top: 20px; }
   .quote-shell { padding-top: 28px; }
   .quote-intro { display: block; }
   .quote-honesty { margin-top: 16px; }
