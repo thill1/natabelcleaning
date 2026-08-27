@@ -272,17 +272,18 @@ html { scroll-behavior: smooth; }
 .founder-note { max-width: 1180px; margin-inline: auto; }
 .founder-note h1 { max-width: 900px; font-size: clamp(3rem, 5.4vw, 5.2rem); }
 .founder-note-copy { margin-top: 42px; }
-.founder-note-surround {
+.founder-note-frame {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(350px, 390px) minmax(0, 1fr);
-  gap: clamp(28px, 3vw, 40px);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 410px);
+  gap: clamp(42px, 6vw, 78px);
   align-items: start;
   margin-top: 24px;
 }
 .founder-note-photo {
   width: 100%;
-  max-width: 390px;
+  max-width: 410px;
   margin: 0;
+  justify-self: end;
 }
 .founder-note-photo img {
   aspect-ratio: 4 / 5;
@@ -297,13 +298,13 @@ html { scroll-behavior: smooth; }
   line-height: 1.75;
 }
 .founder-note-copy p + p { margin-top: 22px; }
-.founder-note-closing { margin-top: 28px !important; }
+.founder-note-ending { margin-top: 28px; }
 .founder-note-signoff { margin-top: 34px; }
 .founder-note-signoff strong,
 .founder-note-signoff span { display: block; }
 .founder-note-signoff strong { font-size: 1rem; font-weight: 700; }
 .founder-note-signoff span { margin-top: 4px; color: var(--simple-muted); font-size: .75rem; font-weight: 700; }
-.founder-note-section .simple-page-hero-media { max-width: 390px; }
+.founder-note-section .simple-page-hero-media { max-width: 410px; }
 .founder-link {
   display: inline-flex;
   align-items: center;
@@ -404,7 +405,7 @@ html { scroll-behavior: smooth; }
 .footer-social a span { display: none; }
 
 @media (max-width: 1040px) {
-  .founder-note-surround {
+  .founder-note-frame {
     grid-template-columns: 1fr;
     gap: 30px;
   }
@@ -448,7 +449,7 @@ html { scroll-behavior: smooth; }
   .simple-service-list { grid-template-columns: 1fr; }
   .simple-page-hero { padding-top: 72px; }
   .founder-note-section { padding-block: 70px 78px; }
-  .founder-note-surround { margin-top: 20px; gap: 24px; }
+  .founder-note-frame { margin-top: 20px; gap: 24px; }
   .founder-note-photo {
     width: 100%;
     margin: 0;
