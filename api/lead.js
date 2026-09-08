@@ -47,33 +47,103 @@ const BUSINESS_NAME = 'NataBel Pristine Cleaning';
 const BUSINESS_PHONE = '(916) 899-8811';
 const SITE_URL = 'https://www.natabelpristinecleaning.com';
 
+/* Every field either side of the site can submit, in the order it should read
+   in the inbox. Key order here IS the email's row order, so this doubles as
+   the layout. Anything not listed still gets delivered — buildRows() appends
+   leftovers — but it shows its raw name, so add new fields here. */
 const FIELD_LABELS = {
-  name: 'Name', phone: 'Phone', email: 'Email', message: 'Message',
-  service_type_label: 'Service', service_type: 'Service (value)',
-  frequency: 'Frequency', property_type: 'Property', bedrooms: 'Bedrooms',
-  bathrooms: 'Bathrooms', square_footage: 'Approx. square feet',
-  commercial_sqft: 'Approx. square feet', restrooms: 'Restrooms',
-  city: 'City', zip: 'ZIP', address: 'Address', subject: 'Subject',
-  preferred_date: 'Preferred date', preferred_time: 'Preferred time',
-  booking_type: 'Booking type', notes: 'Notes',
-  lead_source_label: 'Submitted from',
-
-  /* Job applications — keeps the careers fields readable instead of
-     rendering raw names like "start_availability" in Fatima's inbox. */
-  application_reference: 'Reference', application_stage: 'Stage',
-  position: 'Position', preferred_name: 'Preferred name',
+  /* --- who and how to reach them --- */
+  application_reference: 'Reference',
+  application_stage: 'Stage',
+  position: 'Position',
+  name: 'Name',
+  preferred_name: 'Preferred name',
+  phone: 'Phone',
+  email: 'Email',
   preferred_contact: 'Best way to reach them',
-  drivers_license: 'Valid driver’s license', auto_insurance: 'Current auto insurance',
-  employer_1_contact: 'Employer 1 contact', employer_2_contact: 'Employer 2 contact',
-  preferred_schedule: 'Preferred schedule', cleaning_experience: 'Cleaning experience',
-  start_availability: 'Could start', reliable_transportation: 'Reliable transportation',
-  eligibility_confirmed: '18+ and work authorized', application_language: 'Applied in',
-  days_available: 'Days available', hours_desired: 'Hours wanted per week',
-  available_start_date: 'Available start date', available_from: 'Earliest time',
-  available_until: 'Latest time', essential_duties: 'Can perform essential duties',
-  training_and_protocols: 'Will complete training', languages_spoken: 'Languages spoken',
-  cleaning_skills: 'Cleaning skills', electronic_signature: 'Electronic signature',
+  address: 'Address',
+  city: 'City',
+  zip: 'ZIP',
+
+  /* --- customer quote / booking leads --- */
+  service_type_label: 'Service',
+  service_type: 'Service (value)',
+  frequency: 'Frequency',
+  property_type: 'Property',
+  bedrooms: 'Bedrooms',
+  bathrooms: 'Bathrooms',
+  square_footage: 'Approx. square feet',
+  commercial_sqft: 'Approx. square feet',
+  restrooms: 'Restrooms',
+  subject: 'Subject',
+  preferred_date: 'Preferred date',
+  preferred_time: 'Preferred time',
+  booking_type: 'Booking type',
+
+  /* --- eligibility --- */
+  age_18_or_older: 'At least 18 years old',
+  work_authorized: 'Authorized to work in the US',
+  eligibility_confirmed: '18+ and authorized to work',
+
+  /* --- role and availability --- */
+  preferred_schedule: 'Preferred schedule',
+  cleaning_experience: 'Cleaning experience',
+  start_availability: 'Could start',
+  available_start_date: 'Available start date',
+  hours_desired: 'Hours wanted per week',
+  days_available: 'Days available',
+  available_from: 'Earliest time available',
+  available_until: 'Latest time available',
+  reliable_transportation: 'Reliable transportation',
+  drivers_license: 'Valid driver’s license',
+  auto_insurance: 'Current auto insurance',
+  essential_duties: 'Can perform essential duties',
+  training_and_protocols: 'Will complete training',
+
+  /* --- experience --- */
+  languages_spoken: 'Languages spoken',
+  cleaning_skills: 'Cleaning skills',
+
+  /* --- employment history --- */
+  employer_1_company: 'Employer 1 · Company',
+  employer_1_title: 'Employer 1 · Job title',
+  employer_1_supervisor: 'Employer 1 · Supervisor',
+  employer_1_contact: 'Employer 1 · Phone / email',
+  employer_1_start: 'Employer 1 · Started',
+  employer_1_end: 'Employer 1 · Ended',
+  employer_1_details: 'Employer 1 · Duties and reason for leaving',
+  may_contact_employer_1: 'Employer 1 · OK to contact',
+  employer_2_company: 'Employer 2 · Company',
+  employer_2_title: 'Employer 2 · Job title',
+  employer_2_supervisor: 'Employer 2 · Supervisor',
+  employer_2_contact: 'Employer 2 · Phone / email',
+  employer_2_start: 'Employer 2 · Started',
+  employer_2_end: 'Employer 2 · Ended',
+  employer_2_details: 'Employer 2 · Duties and reason for leaving',
+
+  /* --- references --- */
+  reference_1_name: 'Reference 1 · Name',
+  reference_1_contact: 'Reference 1 · Phone / email',
+  reference_1_relationship: 'Reference 1 · Relationship',
+  reference_2_name: 'Reference 2 · Name',
+  reference_2_contact: 'Reference 2 · Phone / email',
+  reference_2_relationship: 'Reference 2 · Relationship',
+
+  /* --- free text --- */
+  message: 'Message',
+  notes: 'Notes',
+
+  /* --- certification and consent --- */
+  applicant_certification: 'Applicant certification',
+  electronic_signature: 'Electronic signature',
   signature_date: 'Signed on',
+  contact_consent: 'Consent to be contacted',
+
+  /* --- provenance --- */
+  form_type: 'Form',
+  application_language: 'Applied in',
+  application_version: 'Form version',
+  lead_source_label: 'Submitted from',
 };
 
 /* Form types that get an applicant confirmation email. */
