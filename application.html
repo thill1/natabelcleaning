@@ -71,7 +71,7 @@
               <!-- ==================== STEP 1 ==================== -->
               <section class="app-step active" data-name-en="About you" data-name-es="Sobre ti">
                 <h2 data-en="About you" data-es="Sobre ti">About you</h2>
-                <p class="step-intro" data-en="Tell us how to reach you and confirm your basic work eligibility." data-es="Indícanos cómo contactarte y confirma tu elegibilidad básica para trabajar.">Tell us how to reach you and confirm your basic work eligibility.</p>
+                <p class="step-intro" data-en="Tell us how to reach you." data-es="Indícanos cómo contactarte.">Tell us how to reach you.</p>
 
                 <div class="field-row">
                   <div class="field">
@@ -232,11 +232,83 @@
                 <div class="field-row">
                   <div class="field">
                     <label for="fa-from" data-en="Earliest time you can start a job" data-es="Hora más temprana para comenzar">Earliest time you can start a job</label>
-                    <input type="time" id="fa-from" name="available_from" />
+                    <select id="fa-from" name="available_from">
+                      <option value="" data-en="Select a time" data-es="Selecciona una hora">Select a time</option>
+                      <option value="5:00 AM">5:00 AM</option>
+                      <option value="5:30 AM">5:30 AM</option>
+                      <option value="6:00 AM">6:00 AM</option>
+                      <option value="6:30 AM">6:30 AM</option>
+                      <option value="7:00 AM">7:00 AM</option>
+                      <option value="7:30 AM">7:30 AM</option>
+                      <option value="8:00 AM">8:00 AM</option>
+                      <option value="8:30 AM">8:30 AM</option>
+                      <option value="9:00 AM">9:00 AM</option>
+                      <option value="9:30 AM">9:30 AM</option>
+                      <option value="10:00 AM">10:00 AM</option>
+                      <option value="10:30 AM">10:30 AM</option>
+                      <option value="11:00 AM">11:00 AM</option>
+                      <option value="11:30 AM">11:30 AM</option>
+                      <option value="12:00 PM">12:00 PM</option>
+                      <option value="12:30 PM">12:30 PM</option>
+                      <option value="1:00 PM">1:00 PM</option>
+                      <option value="1:30 PM">1:30 PM</option>
+                      <option value="2:00 PM">2:00 PM</option>
+                      <option value="2:30 PM">2:30 PM</option>
+                      <option value="3:00 PM">3:00 PM</option>
+                      <option value="3:30 PM">3:30 PM</option>
+                      <option value="4:00 PM">4:00 PM</option>
+                      <option value="4:30 PM">4:30 PM</option>
+                      <option value="5:00 PM">5:00 PM</option>
+                      <option value="5:30 PM">5:30 PM</option>
+                      <option value="6:00 PM">6:00 PM</option>
+                      <option value="6:30 PM">6:30 PM</option>
+                      <option value="7:00 PM">7:00 PM</option>
+                      <option value="7:30 PM">7:30 PM</option>
+                      <option value="8:00 PM">8:00 PM</option>
+                      <option value="8:30 PM">8:30 PM</option>
+                      <option value="9:00 PM">9:00 PM</option>
+                      <option value="9:30 PM">9:30 PM</option>
+                    </select>
                   </div>
                   <div class="field">
                     <label for="fa-until" data-en="Latest time you can work until" data-es="Hora más tarde que puedes trabajar">Latest time you can work until</label>
-                    <input type="time" id="fa-until" name="available_until" />
+                    <select id="fa-until" name="available_until">
+                      <option value="" data-en="Select a time" data-es="Selecciona una hora">Select a time</option>
+                      <option value="5:00 AM">5:00 AM</option>
+                      <option value="5:30 AM">5:30 AM</option>
+                      <option value="6:00 AM">6:00 AM</option>
+                      <option value="6:30 AM">6:30 AM</option>
+                      <option value="7:00 AM">7:00 AM</option>
+                      <option value="7:30 AM">7:30 AM</option>
+                      <option value="8:00 AM">8:00 AM</option>
+                      <option value="8:30 AM">8:30 AM</option>
+                      <option value="9:00 AM">9:00 AM</option>
+                      <option value="9:30 AM">9:30 AM</option>
+                      <option value="10:00 AM">10:00 AM</option>
+                      <option value="10:30 AM">10:30 AM</option>
+                      <option value="11:00 AM">11:00 AM</option>
+                      <option value="11:30 AM">11:30 AM</option>
+                      <option value="12:00 PM">12:00 PM</option>
+                      <option value="12:30 PM">12:30 PM</option>
+                      <option value="1:00 PM">1:00 PM</option>
+                      <option value="1:30 PM">1:30 PM</option>
+                      <option value="2:00 PM">2:00 PM</option>
+                      <option value="2:30 PM">2:30 PM</option>
+                      <option value="3:00 PM">3:00 PM</option>
+                      <option value="3:30 PM">3:30 PM</option>
+                      <option value="4:00 PM">4:00 PM</option>
+                      <option value="4:30 PM">4:30 PM</option>
+                      <option value="5:00 PM">5:00 PM</option>
+                      <option value="5:30 PM">5:30 PM</option>
+                      <option value="6:00 PM">6:00 PM</option>
+                      <option value="6:30 PM">6:30 PM</option>
+                      <option value="7:00 PM">7:00 PM</option>
+                      <option value="7:30 PM">7:30 PM</option>
+                      <option value="8:00 PM">8:00 PM</option>
+                      <option value="8:30 PM">8:30 PM</option>
+                      <option value="9:00 PM">9:00 PM</option>
+                      <option value="9:30 PM">9:30 PM</option>
+                    </select>
                   </div>
                 </div>
 

@@ -435,6 +435,9 @@ module.exports = async function handler(req, res) {
 
   console.info('[lead] delivered', {
     email: mail.ok,
+    // Business recipients are not secret and are the first thing to check when
+    // one inbox reports nothing arriving.
+    recipients: notifyRecipients(),
     webhook: hook ? hook.ok : 'not-configured',
     applicantConfirmation: confirmation ? confirmation.ok : 'not-applicable',
   });
