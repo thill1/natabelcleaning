@@ -131,7 +131,7 @@ window.PCC = {
     method:   'POST',
     includeUTM: true,
     demoMode: false,
-    notifyEmail: 'natabelpristinecleaning@gmail.com,info@sentientpartners.ai',
+    notifyEmail: 'natabelpristinecleaning@gmail.com,hello@sentientpartners.ai',
   },
 
   /* ---------- Analytics & conversion tracking ---------- */

@@ -32,7 +32,7 @@
 
 /* Every lead notification goes to both the business inbox and Sentient
    Partners. LEAD_TO_EMAIL overrides and accepts a comma-separated list. */
-const DEFAULT_TO = ['natabelpristinecleaning@gmail.com', 'info@sentientpartners.ai'];
+const DEFAULT_TO = ['natabelpristinecleaning@gmail.com', 'hello@sentientpartners.ai'];
 
 function notifyRecipients() {
   const configured = String(process.env.LEAD_TO_EMAIL || '').trim();

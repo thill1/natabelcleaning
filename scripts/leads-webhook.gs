@@ -12,7 +12,7 @@
 
 /* Comma-separated: MailApp.sendEmail accepts a list, so every lead
    notification reaches the business inbox and Sentient Partners. */
-const NOTIFY_EMAIL = 'natabelpristinecleaning@gmail.com,info@sentientpartners.ai';
+const NOTIFY_EMAIL = 'natabelpristinecleaning@gmail.com,hello@sentientpartners.ai';
 const SHEET_NAME = 'Leads';
 
 function existingSubmission(sheet, submissionId) {
