@@ -10,7 +10,9 @@
  * 6. Redeploy this script after changes so duplicate quote IDs are ignored
  */
 
-const NOTIFY_EMAIL = 'natabelpristinecleaning@gmail.com';
+/* Comma-separated: MailApp.sendEmail accepts a list, so every lead
+   notification reaches the business inbox and Sentient Partners. */
+const NOTIFY_EMAIL = 'natabelpristinecleaning@gmail.com,info@sentientpartners.ai';
 const SHEET_NAME = 'Leads';
 
 function existingSubmission(sheet, submissionId) {
