@@ -82,8 +82,7 @@ const FIELD_LABELS = {
 
   /* --- eligibility --- */
   age_18_or_older: 'At least 18 years old',
-  work_authorized: 'Authorized to work in the US',
-  eligibility_confirmed: '18+ and authorized to work',
+  eligibility_confirmed: 'Confirmed 18 or older',
 
   /* --- role and availability --- */
   preferred_schedule: 'Preferred schedule',
