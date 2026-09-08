@@ -351,14 +351,14 @@ async function sendApplicantConfirmation(payload) {
   }
 }
 
+/* Deliberately does NOT fall back to QUOTE_WEBHOOK_URL.
+   That webhook is the Apps Script, and routing leads through it produced a
+   duplicate notification for every submission once Resend started working.
+   QUOTE_WEBHOOK_URL stays in place for api/quote.js, which treats it as
+   durable storage and returns 503 without it — do not remove that variable.
+   Set LEAD_WEBHOOK_URL only if leads need their own separate automation. */
 async function forwardToWebhook(payload) {
-  /* Falls back to QUOTE_WEBHOOK_URL so leads still have a delivery path when
-     only the quote webhook is configured. api/quote.js already does the same
-     in reverse (QUOTE_WEBHOOK_URL || LEAD_WEBHOOK_URL); this keeps the two
-     endpoints symmetric. Every payload carries form_type and
-     lead_source_label, so the receiving automation can tell a job
-     application from a quote request. */
-  const url = process.env.LEAD_WEBHOOK_URL || process.env.QUOTE_WEBHOOK_URL;
+  const url = process.env.LEAD_WEBHOOK_URL;
   if (!url) return null;
   try {
     const res = await fetch(url, {
