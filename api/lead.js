@@ -19,12 +19,23 @@
    Responds { ok: true } only when at least one delivery actually
    succeeded, so the site never tells a customer their request went
    through when it did not.
+
+   Job applications additionally get a confirmation email sent back to the
+   applicant. That send is best-effort: if it fails, the response still
+   reports success, because the application itself did reach the business.
+   NOTE: the confirmation cannot work on the default sandbox sender —
+   onboarding@resend.dev only delivers to the Resend account owner. Set
+   LEAD_FROM_EMAIL to an address on a domain verified in Resend before
+   relying on applicant confirmations.
    ========================================================================= */
 
 const DEFAULT_TO = 'natabelpristinecleaning@gmail.com';
 const DEFAULT_FROM = 'onboarding@resend.dev';
 const HONEYPOT_FIELD = 'website_url';
 const MAX_BODY_BYTES = 32 * 1024;
+const BUSINESS_NAME = 'NataBel Pristine Cleaning';
+const BUSINESS_PHONE = '(916) 899-8811';
+const SITE_URL = 'https://www.natabelpristinecleaning.com';
 
 const FIELD_LABELS = {
   name: 'Name', phone: 'Phone', email: 'Email', message: 'Message',
@@ -36,7 +47,27 @@ const FIELD_LABELS = {
   preferred_date: 'Preferred date', preferred_time: 'Preferred time',
   booking_type: 'Booking type', notes: 'Notes',
   lead_source_label: 'Submitted from',
+
+  /* Job applications — keeps the careers fields readable instead of
+     rendering raw names like "start_availability" in Fatima's inbox. */
+  application_reference: 'Reference', application_stage: 'Stage',
+  position: 'Position', preferred_name: 'Preferred name',
+  preferred_contact: 'Best way to reach them',
+  drivers_license: 'Valid driver’s license', auto_insurance: 'Current auto insurance',
+  employer_1_contact: 'Employer 1 contact', employer_2_contact: 'Employer 2 contact',
+  preferred_schedule: 'Preferred schedule', cleaning_experience: 'Cleaning experience',
+  start_availability: 'Could start', reliable_transportation: 'Reliable transportation',
+  eligibility_confirmed: '18+ and work authorized', application_language: 'Applied in',
+  days_available: 'Days available', hours_desired: 'Hours wanted per week',
+  available_start_date: 'Available start date', available_from: 'Earliest time',
+  available_until: 'Latest time', essential_duties: 'Can perform essential duties',
+  training_and_protocols: 'Will complete training', languages_spoken: 'Languages spoken',
+  cleaning_skills: 'Cleaning skills', electronic_signature: 'Electronic signature',
+  signature_date: 'Signed on',
 };
+
+/* Form types that get an applicant confirmation email. */
+const JOB_APPLICATION_TYPES = ['job_application', 'job_application_express', 'job_application_full'];
 const INTERNAL_FIELDS = ['submitted_at', 'source', 'landing_page', 'referrer', HONEYPOT_FIELD];
 
 function esc(s) {
@@ -114,6 +145,133 @@ async function sendViaResend(payload) {
   }
 }
 
+/* =========================================================================
+   Applicant confirmation
+   -------------------------------------------------------------------------
+   Sent to the address on a job application so the applicant knows it arrived
+   and what to expect. The body is fixed copy — the only value taken from the
+   submission is the first name and the reference code, both escaped and
+   length-capped, so this endpoint cannot be turned into a way to mail
+   arbitrary text to an arbitrary address.
+   ========================================================================= */
+
+/* Best-effort throttle. Serverless instances are ephemeral and there can be
+   many at once, so this bounds a hot loop on one warm instance rather than
+   providing real rate limiting. Put a proper limiter in front of the
+   function if applicant confirmations ever get abused. */
+const recentConfirmations = new Map();
+const CONFIRM_WINDOW_MS = 10 * 60 * 1000;
+
+function confirmationThrottled(email) {
+  const now = Date.now();
+  for (const [key, at] of recentConfirmations) {
+    if (now - at > CONFIRM_WINDOW_MS) recentConfirmations.delete(key);
+  }
+  const key = email.toLowerCase();
+  if (recentConfirmations.has(key)) return true;
+  recentConfirmations.set(key, now);
+  return false;
+}
+
+function buildApplicantEmail(payload) {
+  const spanish = String(payload.application_language || '').toLowerCase() === 'spanish';
+  const firstName = String(payload.name || '').trim().split(/\s+/)[0].slice(0, 40);
+  const reference = String(payload.application_reference || '').trim().slice(0, 40);
+  const isExpress = payload.form_type === 'job_application_express';
+
+  const copy = spanish ? {
+    subject: `Recibimos tu solicitud — ${BUSINESS_NAME}`,
+    greeting: firstName ? `Hola ${firstName},` : 'Hola,',
+    intro: `Gracias por postularte a ${BUSINESS_NAME}. Recibimos tu solicitud.`,
+    next: 'Fatima revisa personalmente cada solicitud, normalmente en un plazo de dos días hábiles. Si parece haber compatibilidad, te llamará o te escribirá para hablar del puesto, el horario y el pago.',
+    refLabel: 'Tu referencia',
+    ctaIntro: 'Si quieres adelantarte, puedes completar la solicitud de empleo completa ahora. Toma unos 8 minutos y se guarda mientras avanzas.',
+    ctaLabel: 'Completar la solicitud completa',
+    questions: `¿Preguntas? Llámanos al ${BUSINESS_PHONE}.`,
+    signoff: `— Fatima Patalano, Fundadora\n${BUSINESS_NAME}`,
+    disclaimer: 'Postularse no garantiza empleo.',
+  } : {
+    subject: `We received your application — ${BUSINESS_NAME}`,
+    greeting: firstName ? `Hi ${firstName},` : 'Hi,',
+    intro: `Thank you for applying to ${BUSINESS_NAME}. Your application came through.`,
+    next: 'Fatima reads every application herself, usually within two business days. If it looks like a fit, she will call or text you to talk through the role, schedule, and pay.',
+    refLabel: 'Your reference',
+    ctaIntro: 'If you would like to get ahead, you can complete the full employment application now. It takes about 8 minutes and saves as you go.',
+    ctaLabel: 'Complete the full application',
+    questions: `Questions? Call us at ${BUSINESS_PHONE}.`,
+    signoff: `— Fatima Patalano, Founder\n${BUSINESS_NAME}`,
+    disclaimer: 'Applying does not guarantee employment.',
+  };
+
+  const applyUrl = `${SITE_URL}/application.html`;
+
+  const text = [
+    copy.greeting,
+    '',
+    copy.intro,
+    '',
+    copy.next,
+    reference ? `\n${copy.refLabel}: ${reference}` : '',
+    isExpress ? `\n${copy.ctaIntro}\n${applyUrl}` : '',
+    '',
+    copy.questions,
+    '',
+    copy.signoff,
+    '',
+    copy.disclaimer,
+  ].filter(Boolean).join('\n');
+
+  const html = `<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.6;color:#17140f;max-width:560px">
+    <p style="margin:0 0 16px">${esc(copy.greeting)}</p>
+    <p style="margin:0 0 16px">${esc(copy.intro)}</p>
+    <p style="margin:0 0 16px">${esc(copy.next)}</p>
+    ${reference ? `<p style="margin:0 0 20px;padding:12px 16px;background:#fbf6ec;border:1px solid rgba(198,161,74,.38);border-radius:10px;font-size:14px">
+      ${esc(copy.refLabel)}: <strong style="letter-spacing:.03em">${esc(reference)}</strong></p>` : ''}
+    ${isExpress ? `<p style="margin:0 0 16px">${esc(copy.ctaIntro)}</p>
+      <p style="margin:0 0 24px"><a href="${applyUrl}" style="display:inline-block;padding:14px 26px;border-radius:999px;background:#e3c878;color:#17120a;font-weight:600;text-decoration:none">${esc(copy.ctaLabel)}</a></p>` : ''}
+    <p style="margin:0 0 16px">${esc(copy.questions)}</p>
+    <p style="margin:0 0 6px;white-space:pre-line">${esc(copy.signoff)}</p>
+    <p style="margin:20px 0 0;color:#6b6b6b;font-size:12px">${esc(copy.disclaimer)}</p>
+  </div>`;
+
+  return { subject: copy.subject, text, html };
+}
+
+async function sendApplicantConfirmation(payload) {
+  if (!JOB_APPLICATION_TYPES.includes(payload.form_type)) return null;
+
+  const to = String(payload.email || '').trim();
+  if (!to || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) return { ok: false, reason: 'no applicant email' };
+
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return { ok: false, reason: 'RESEND_API_KEY not set' };
+
+  if (confirmationThrottled(to)) return { ok: false, reason: 'throttled' };
+
+  const { subject, text, html } = buildApplicantEmail(payload);
+
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: `${BUSINESS_NAME} <${process.env.LEAD_FROM_EMAIL || DEFAULT_FROM}>`,
+        to: [to],
+        reply_to: process.env.LEAD_TO_EMAIL || DEFAULT_TO,
+        subject,
+        text,
+        html,
+      }),
+    });
+    if (res.ok) return { ok: true };
+    let detail = '';
+    try { detail = JSON.stringify(await res.json()); } catch (_) { /* ignore */ }
+    return { ok: false, reason: `resend ${res.status}`, detail };
+  } catch (e) {
+    return { ok: false, reason: 'confirmation request failed: ' + e.message };
+  }
+}
+
 async function forwardToWebhook(payload) {
   const url = process.env.LEAD_WEBHOOK_URL;
   if (!url) return null;
@@ -181,6 +339,26 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ ok: false, error: 'delivery_failed' });
   }
 
-  console.info('[lead] delivered', { email: mail.ok, webhook: hook ? hook.ok : 'not-configured' });
-  return res.status(200).json({ ok: true, delivery: { email: mail.ok, webhook: hook ? hook.ok : null } });
+  // Only confirm to the applicant once the application has actually reached
+  // the business. Failure here is logged but never downgrades the response:
+  // the application did arrive, and telling the applicant otherwise would
+  // push them to submit it a second time.
+  const confirmation = await sendApplicantConfirmation(payload);
+  if (confirmation && !confirmation.ok) {
+    console.warn('[lead] applicant confirmation not sent', confirmation);
+  }
+
+  console.info('[lead] delivered', {
+    email: mail.ok,
+    webhook: hook ? hook.ok : 'not-configured',
+    applicantConfirmation: confirmation ? confirmation.ok : 'not-applicable',
+  });
+  return res.status(200).json({
+    ok: true,
+    delivery: {
+      email: mail.ok,
+      webhook: hook ? hook.ok : null,
+      applicant_confirmation: confirmation ? confirmation.ok : null,
+    },
+  });
 };

@@ -74,7 +74,12 @@
     const payload = { submitted_at: new Date().toISOString(), source: window.location.pathname };
     fd.forEach((v, k) => {
       if (k === HONEYPOT_FIELD) return; // never forward the trap field
-      if (v && String(v).trim()) payload[k] = String(v).trim();
+      const value = String(v).trim();
+      if (!value) return;
+      // A repeated name (a checkbox group such as "days available") must
+      // collect every checked value. Overwriting here silently dropped all
+      // but the last one.
+      payload[k] = payload[k] ? `${payload[k]}, ${value}` : value;
     });
     if (cfg.includeUTM) Object.assign(payload, window.PCC.util.getUTM());
     payload.lead_source_label = form.dataset.leadSource || payload.form_type || 'Website';

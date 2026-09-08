@@ -1,0 +1,619 @@
+/* =========================================================================
+   NATABEL PRISTINE CLEANING — Careers experience
+   Loaded after styles.css + simplified.css on:
+     join-our-team.html · application.html · application-received.html
+
+   Two-stage hiring funnel:
+     Stage 1  Express apply  — ~45 seconds, on join-our-team.html
+     Stage 2  Full application — the legal employment application
+   Shared: big touch targets, tile choices, high contrast. Most applicants
+   for this role arrive on a phone, so every control is sized for a thumb.
+   ========================================================================= */
+
+/* ---------- Tokens local to the careers flow ---------- */
+.careers-scope {
+  --cr-tap: 54px;                 /* minimum interactive height */
+  --cr-radius: 14px;
+  --cr-gold-line: rgba(198, 161, 74, .38);
+}
+
+/* =========================================================================
+   1. Hero
+   ========================================================================= */
+.career-hero .career-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+}
+.career-hero-meta div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(255, 255, 255, .82);
+  font-size: .84rem;
+  font-weight: 600;
+}
+.career-hero-meta svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  color: var(--brass-bright);
+}
+
+/* =========================================================================
+   2. Express apply card  (stage 1)
+   ========================================================================= */
+.express-section {
+  position: relative;
+  padding: clamp(56px, 7vw, 96px) 0;
+  background: linear-gradient(180deg, var(--simple-cream, #fbfaf7), #fff);
+}
+.express-layout {
+  display: grid;
+  gap: clamp(30px, 4vw, 56px);
+  align-items: start;
+}
+@media (min-width: 1020px) {
+  .express-layout { grid-template-columns: minmax(0, .82fr) minmax(0, 1fr); gap: 68px; }
+  .express-aside { position: sticky; top: calc(var(--site-header-offset, 82px) + 28px); }
+}
+
+/* --- Left rail: why work here --- */
+.express-aside h2 { font-size: clamp(2rem, 3.6vw, 2.9rem); line-height: 1.06; margin-bottom: 16px; }
+.express-aside > p { color: var(--muted); margin-bottom: 4px; }
+
+.career-benefits { display: grid; gap: 16px; margin-top: 28px; }
+.career-benefit {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--cr-radius);
+  background: #fff;
+}
+.career-benefit svg { width: 22px; height: 22px; color: var(--brass-deep); flex: 0 0 auto; margin-top: 1px; }
+.career-benefit strong { display: block; color: var(--ink); font-size: .95rem; margin-bottom: 3px; }
+.career-benefit span { color: var(--muted); font-size: .88rem; line-height: 1.5; }
+
+/* Founder aside note */
+.career-founder-note {
+  margin-top: 28px;
+  padding: 22px 24px;
+  border: 1px solid var(--cr-gold-line);
+  border-radius: var(--cr-radius);
+  background: var(--brass-soft);
+}
+.career-founder-note p {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+.career-founder-note cite {
+  display: block;
+  color: var(--brass-deep);
+  font-size: .74rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* --- Right: the express form card --- */
+.express-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(27, 19, 5, .1);
+  overflow: hidden;
+}
+.express-card-head {
+  padding: clamp(26px, 3.4vw, 36px) clamp(22px, 3.4vw, 38px) 0;
+}
+.express-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+  border: 1px solid var(--cr-gold-line);
+  border-radius: 999px;
+  background: var(--brass-soft);
+  color: var(--brass-deep);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.express-badge svg { width: 15px; height: 15px; }
+.express-card-head h2 { font-size: clamp(1.7rem, 3vw, 2.25rem); line-height: 1.1; margin-bottom: 10px; }
+.express-card-head > p { color: var(--muted); font-size: .95rem; margin: 0; }
+.express-card-body { padding: clamp(22px, 3.4vw, 32px) clamp(22px, 3.4vw, 38px) clamp(26px, 3.4vw, 36px); }
+
+/* =========================================================================
+   3. Form controls — shared by both stages
+   ========================================================================= */
+.careers-scope .field { margin-bottom: 22px; }
+.careers-scope .field label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: .92rem;
+  line-height: 1.4;
+}
+.careers-scope .field .req { color: var(--brass-deep); }
+.careers-scope .field .hint {
+  display: block;
+  margin-top: -3px;
+  margin-bottom: 9px;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 400;
+}
+.careers-scope .field input,
+.careers-scope .field select,
+.careers-scope .field textarea {
+  width: 100%;
+  min-height: var(--cr-tap);
+  padding: 15px 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 1rem; /* 16px — stops iOS Safari zooming on focus */
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.careers-scope .field textarea { min-height: 116px; resize: vertical; line-height: 1.55; }
+.careers-scope .field input:focus,
+.careers-scope .field select:focus,
+.careers-scope .field textarea:focus {
+  outline: none;
+  border-color: var(--noir);
+  box-shadow: 0 0 0 4px rgba(10, 10, 10, .08);
+}
+.careers-scope .field-row { display: grid; gap: 18px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .careers-scope .field-row { grid-template-columns: 1fr 1fr; } }
+
+.careers-scope .field-error {
+  display: none;
+  margin-top: 8px;
+  color: #b94533;
+  font-size: .82rem;
+  font-weight: 500;
+}
+.careers-scope .field.invalid input,
+.careers-scope .field.invalid select,
+.careers-scope .field.invalid textarea { border-color: #b94533; }
+.careers-scope .field.invalid .field-error { display: block; }
+/* A field the visitor has fixed reads as resolved before they resubmit */
+.careers-scope .field.valid input,
+.careers-scope .field.valid select { border-color: rgba(143, 110, 31, .5); }
+
+/* --- Tile choices: radios and checkboxes sized for thumbs --- */
+/* minmax floors are tuned so a 375px phone still pairs options two-up
+   (and days three-up) inside the card's padding rather than stacking. */
+.choice-tiles { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); }
+.choice-tiles.tiles-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.choice-tiles.tiles-days { grid-template-columns: repeat(auto-fit, minmax(68px, 1fr)); }
+.choice-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: var(--cr-tap);
+  padding: 13px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink-2);
+  font-size: .92rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: border-color .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
+}
+.choice-tile:hover { border-color: var(--noir-line); background: var(--noir-tint); }
+.choice-tile input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.choice-tile:has(input:checked) {
+  border-color: var(--noir);
+  background: var(--noir);
+  color: var(--brass-bright);
+}
+/* Keyboard focus must stay visible even though the input itself is hidden */
+.choice-tile:has(input:focus-visible) { box-shadow: 0 0 0 4px rgba(198, 161, 74, .45); }
+.field.invalid .choice-tile { border-color: rgba(185, 69, 51, .55); }
+
+/* Stacked tiles with a description line */
+.choice-tiles.tiles-stack { grid-template-columns: 1fr; }
+.tiles-stack .choice-tile {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3px;
+  padding: 15px 18px;
+  text-align: left;
+}
+.tiles-stack .choice-tile small { font-size: .82rem; font-weight: 400; opacity: .72; }
+
+/* --- Consent rows --- */
+.careers-scope .consent {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 4px 0 22px;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.55;
+}
+.careers-scope .consent input {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  accent-color: #000;
+  cursor: pointer;
+}
+.careers-scope .consent.invalid { color: #b94533; }
+.careers-scope .consent a { color: var(--ink); text-decoration: underline; }
+
+/* --- Fine print --- */
+.careers-scope .fine-print {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: .76rem;
+  line-height: 1.6;
+  text-align: center;
+}
+.careers-scope .fine-print a { color: var(--ink-2); text-decoration: underline; }
+
+/* --- Submit + alternate route --- */
+.express-submit-row { margin-top: 4px; }
+.express-alt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .88rem;
+}
+.express-alt a { color: var(--ink); font-weight: 600; text-decoration: underline; }
+
+/* =========================================================================
+   4. Language switch
+   ========================================================================= */
+.language-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  margin-bottom: 22px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--noir-tint);
+}
+.language-switch button {
+  min-height: 40px;
+  padding: 9px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: 600 .86rem var(--font-ui);
+  cursor: pointer;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.language-switch button.active { background: #000; color: var(--brass-bright); }
+
+/* =========================================================================
+   5. "What happens next" timeline
+   ========================================================================= */
+.hiring-steps {
+  display: grid;
+  gap: 18px;
+  counter-reset: hiring;
+  margin-top: 34px;
+}
+@media (min-width: 860px) { .hiring-steps { grid-template-columns: repeat(4, 1fr); gap: 22px; } }
+.hiring-step {
+  position: relative;
+  padding: 26px 22px 24px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--cr-radius);
+  background: rgba(255, 255, 255, .04);
+}
+.hiring-step::before {
+  counter-increment: hiring;
+  content: '0' counter(hiring);
+  display: block;
+  margin-bottom: 12px;
+  color: var(--brass-bright);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+.hiring-step strong { display: block; margin-bottom: 7px; color: var(--ivory); font-size: 1.05rem; }
+.hiring-step p { margin: 0; color: rgba(255, 255, 255, .7); font-size: .9rem; line-height: 1.55; }
+
+/* =========================================================================
+   6. Full application (stage 2)
+   ========================================================================= */
+.application-shell { padding: clamp(34px, 5vw, 64px) 0 clamp(60px, 8vw, 110px); background: var(--simple-cream, #fbfaf7); }
+.application-card {
+  max-width: 860px;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(27, 19, 5, .09);
+  overflow: hidden;
+}
+.application-head {
+  padding: clamp(24px, 3.4vw, 34px) clamp(22px, 3.4vw, 40px);
+  border-bottom: 1px solid var(--line);
+  background: var(--noir-tint);
+}
+.application-head h1 { font-size: clamp(1.6rem, 3vw, 2.1rem); line-height: 1.12; margin-bottom: 8px; }
+.application-head > p { margin: 0; color: var(--muted); font-size: .93rem; }
+
+/* --- Progress --- */
+.app-progress { margin-top: 22px; }
+.app-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: .8rem;
+  color: var(--muted);
+}
+.app-progress-meta strong { color: var(--ink); font-size: .84rem; }
+.app-progress-track { height: 8px; border-radius: 99px; background: var(--noir-line); overflow: hidden; }
+/* Scaled rather than resized: animating width would relayout the bar on
+   every frame. The track's overflow:hidden supplies the rounded ends, so
+   the span needs no radius of its own. */
+.app-progress-track span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(.25);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #000, var(--brass-bright));
+  transition: transform .4s var(--ease);
+}
+
+/* --- Steps --- */
+.application-body { padding: clamp(26px, 3.4vw, 40px); }
+.app-step { display: none; }
+.app-step.active { display: block; animation: stepIn .35s var(--ease-out); }
+.app-step > h2 {
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  outline: none;
+}
+.app-step .step-intro { margin-bottom: 26px; color: var(--muted); font-size: .93rem; line-height: 1.6; }
+
+.app-fieldset {
+  margin: 0 0 24px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--cr-radius);
+  background: var(--noir-tint);
+}
+.app-fieldset legend {
+  padding: 0 10px;
+  margin-left: -10px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+.app-fieldset .field:last-of-type { margin-bottom: 0; }
+.app-fieldset .consent { margin-bottom: 0; }
+
+.app-certification {
+  padding: 20px 22px;
+  margin: 0 0 20px;
+  border: 1px solid var(--cr-gold-line);
+  border-radius: var(--cr-radius);
+  background: var(--brass-soft);
+}
+.app-certification h3 { margin-bottom: 10px; font-size: 1.05rem; }
+.app-certification p { margin: 0; color: var(--ink-2); font-size: .85rem; line-height: 1.65; }
+
+/* --- Step navigation --- */
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.app-nav .btn { min-height: var(--cr-tap); }
+.app-nav .app-next, .app-nav .app-submit { margin-left: auto; }
+@media (max-width: 559px) {
+  .app-nav { flex-direction: column-reverse; align-items: stretch; }
+  .app-nav .btn { width: 100%; }
+  .app-nav .app-next, .app-nav .app-submit { margin-left: 0; }
+}
+
+/* --- Save + resume --- */
+.app-saved-bar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  border: 1px solid var(--cr-gold-line);
+  border-radius: 12px;
+  background: var(--brass-soft);
+  color: var(--ink-2);
+  font-size: .87rem;
+  line-height: 1.5;
+}
+.app-saved-bar.show { display: flex; }
+.app-saved-bar svg { width: 20px; height: 20px; flex: 0 0 auto; color: var(--brass-deep); }
+.app-saved-bar button {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 8px 14px;
+  border: 1px solid var(--noir-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font: 600 .8rem var(--font-ui);
+  cursor: pointer;
+}
+.app-saved-bar button:hover { background: var(--noir); color: var(--ivory); border-color: var(--noir); }
+
+.app-autosave {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: .78rem;
+}
+.app-autosave svg { width: 14px; height: 14px; color: var(--brass-deep); }
+.app-autosave button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.app-autosave button:hover { color: #b94533; }
+
+/* =========================================================================
+   7. Thank-you page
+   ========================================================================= */
+.received-shell { padding: clamp(90px, 12vw, 150px) 0 clamp(60px, 8vw, 110px); background: #000; color: var(--ivory); }
+.received-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+.received-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  margin-bottom: 26px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--brass-bright), var(--brass-deep));
+  color: #17120a;
+}
+.received-mark svg { width: 40px; height: 40px; }
+.received-inner h1 {
+  color: var(--ivory);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.received-inner h1 .serif-italic { color: var(--brass-bright); }
+.received-inner > p { color: rgba(255, 255, 255, .78); font-size: 1.05rem; line-height: 1.65; margin: 0 auto 12px; max-width: 56ch; }
+.received-ref {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, .72);
+  font-size: .82rem;
+}
+.received-ref strong { color: var(--brass-bright); font-weight: 700; letter-spacing: .04em; }
+
+.received-next {
+  margin-top: 48px;
+  padding: clamp(28px, 4vw, 40px);
+  border: 1px solid var(--cr-gold-line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .04);
+  text-align: left;
+}
+.received-next h2 { color: var(--ivory); font-size: clamp(1.5rem, 2.6vw, 1.95rem); line-height: 1.15; margin-bottom: 10px; }
+.received-next > p { color: rgba(255, 255, 255, .74); margin-bottom: 22px; line-height: 1.65; }
+.received-next .btn { min-height: var(--cr-tap); }
+.received-next-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 16px;
+  color: rgba(255, 255, 255, .6);
+  font-size: .84rem;
+}
+.received-next-meta span { display: flex; align-items: center; gap: 7px; }
+.received-next-meta svg { width: 15px; height: 15px; color: var(--brass-bright); }
+
+.received-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 40px;
+}
+.received-actions .btn { min-height: var(--cr-tap); }
+
+/* =========================================================================
+   8. Inline success (used when a redirect is not possible)
+   ========================================================================= */
+.form-success { padding: 44px 16px; text-align: center; }
+.form-success svg { width: 56px; height: 56px; margin-bottom: 18px; color: var(--brass-deep); }
+.form-success h3 { font-size: 1.5rem; margin-bottom: 10px; }
+.form-success p { color: var(--muted); line-height: 1.65; margin: 0 auto; max-width: 46ch; }
+.form-success .btn { margin-top: 22px; }
+
+/* =========================================================================
+   9. Narrow phones
+   -------------------------------------------------------------------------
+   The shared site container already reserves a gutter, so the cards trim
+   their own padding here rather than doubling it up and squeezing the
+   inputs on a 375px screen.
+   ========================================================================= */
+@media (max-width: 480px) {
+  .application-head,
+  .application-body,
+  .express-card-body { padding-inline: 18px; }
+  .express-card-head { padding-inline: 18px; }
+  .app-fieldset { padding: 18px 15px; }
+  .received-next { padding: 24px 20px; }
+}
+
+/* =========================================================================
+   10. Motion
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .app-step.active { animation: none; }
+  .app-progress-track span { transition: none; }
+  .choice-tile { transition: none; }
+}
+
+/* =========================================================================
+   11. Pages without the mobile quick-action bar
+   -------------------------------------------------------------------------
+   The footer reserves room for the fixed .mobile-cta-bar on small screens.
+   The application and confirmation pages deliberately do not render that bar
+   (an applicant has no use for "Instant Quote"), so they reclaim the space.
+   ========================================================================= */
+@media (max-width: 719px) {
+  .no-mobile-cta .site-footer { padding-bottom: 36px; }
+}
