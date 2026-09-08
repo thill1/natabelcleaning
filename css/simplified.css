@@ -429,7 +429,7 @@ html { scroll-behavior: smooth; }
 /* =========================================================================
    NataBel cleaning checklist
    Room-by-room scope, used on services.html and faq.html. Collapsed by
-   default with <details> so 49 points do not bury the page; the summary row
+   default with <details> so 56 items do not bury the page; the summary row
    carries the count so the scale reads at a glance while closed.
    ========================================================================= */
 .nb-checklist {
