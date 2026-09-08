@@ -7,7 +7,8 @@
 
    Environment variables (set in the Vercel dashboard, never in git):
      RESEND_API_KEY   required to send email. From resend.com > API Keys.
-     LEAD_TO_EMAIL    where leads go.  Default: the business inbox below.
+     LEAD_TO_EMAIL    where leads go. Accepts a comma-separated list.
+                      Default: the two business inboxes below.
      LEAD_FROM_EMAIL  sender address. Must be on a domain verified in
                       Resend. Default: onboarding@resend.dev, which is
                       Resend's sandbox sender and can ONLY deliver to the
@@ -29,7 +30,16 @@
    relying on applicant confirmations.
    ========================================================================= */
 
-const DEFAULT_TO = 'natabelpristinecleaning@gmail.com';
+/* Every lead notification goes to both the business inbox and Sentient
+   Partners. LEAD_TO_EMAIL overrides and accepts a comma-separated list. */
+const DEFAULT_TO = ['natabelpristinecleaning@gmail.com', 'info@sentientipartners.ai'];
+
+function notifyRecipients() {
+  const configured = String(process.env.LEAD_TO_EMAIL || '').trim();
+  if (!configured) return DEFAULT_TO.slice();
+  const list = configured.split(',').map(s => s.trim()).filter(Boolean);
+  return list.length ? list : DEFAULT_TO.slice();
+}
 const DEFAULT_FROM = 'onboarding@resend.dev';
 const HONEYPOT_FIELD = 'website_url';
 const MAX_BODY_BYTES = 32 * 1024;
@@ -120,7 +130,7 @@ async function sendViaResend(payload) {
   const { subject, text, html } = buildEmail(payload);
   const body = {
     from: `NataBel Website <${process.env.LEAD_FROM_EMAIL || DEFAULT_FROM}>`,
-    to: [process.env.LEAD_TO_EMAIL || DEFAULT_TO],
+    to: notifyRecipients(),
     subject,
     text,
     html,
@@ -257,7 +267,7 @@ async function sendApplicantConfirmation(payload) {
       body: JSON.stringify({
         from: `${BUSINESS_NAME} <${process.env.LEAD_FROM_EMAIL || DEFAULT_FROM}>`,
         to: [to],
-        reply_to: process.env.LEAD_TO_EMAIL || DEFAULT_TO,
+        reply_to: notifyRecipients()[0],
         subject,
         text,
         html,
