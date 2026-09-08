@@ -552,7 +552,18 @@
 }
 .received-next h2 { color: var(--ivory); font-size: clamp(1.5rem, 2.6vw, 1.95rem); line-height: 1.15; margin-bottom: 10px; }
 .received-next > p { color: rgba(255, 255, 255, .74); margin-bottom: 22px; line-height: 1.65; }
-.received-next .btn { min-height: var(--cr-tap); }
+/* .btn is nowrap by default, so this long label overflowed a 375px card.
+   Allow it to wrap and fill the width instead. */
+.received-next .btn {
+  min-height: var(--cr-tap);
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+@media (max-width: 480px) {
+  .received-next .btn,
+  .received-actions .btn { width: 100%; }
+}
 .received-next-meta {
   display: flex;
   flex-wrap: wrap;
