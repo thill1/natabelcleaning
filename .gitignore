@@ -34,3 +34,6 @@ docs/
 .claude/
 .cursor/hooks/state/
 .env*
+
+# Design-hook session cache (transient, per-session ids)
+.impeccable/hook.cache.json
