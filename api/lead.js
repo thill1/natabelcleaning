@@ -283,7 +283,13 @@ async function sendApplicantConfirmation(payload) {
 }
 
 async function forwardToWebhook(payload) {
-  const url = process.env.LEAD_WEBHOOK_URL;
+  /* Falls back to QUOTE_WEBHOOK_URL so leads still have a delivery path when
+     only the quote webhook is configured. api/quote.js already does the same
+     in reverse (QUOTE_WEBHOOK_URL || LEAD_WEBHOOK_URL); this keeps the two
+     endpoints symmetric. Every payload carries form_type and
+     lead_source_label, so the receiving automation can tell a job
+     application from a quote request. */
+  const url = process.env.LEAD_WEBHOOK_URL || process.env.QUOTE_WEBHOOK_URL;
   if (!url) return null;
   try {
     const res = await fetch(url, {
