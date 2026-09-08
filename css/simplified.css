@@ -164,6 +164,8 @@ html { scroll-behavior: smooth; }
 .simple-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .simple-choice-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 420px;
   padding: clamp(30px, 5vw, 56px);
   overflow: hidden;
@@ -178,7 +180,13 @@ html { scroll-behavior: smooth; }
 .simple-choice-card.dark h3 { color: #fff; }
 .simple-choice-card p { max-width: 44ch; color: var(--simple-muted); line-height: 1.7; }
 .simple-choice-card.dark p { color: rgba(255,255,255,.58); }
-.simple-choice-card .text-link { position: absolute; left: clamp(30px, 5vw, 56px); bottom: 42px; }
+/* Sits at the bottom of the card via flex, not absolute positioning. Pinning
+   it with `position:absolute; bottom:42px` meant any condition that made the
+   paragraph taller — browser zoom, a webfont still loading, a larger default
+   font size — ran the copy straight through the link. margin-top:auto keeps
+   it at the bottom while still taking part in layout, so the card grows
+   instead of overlapping. */
+.simple-choice-card .text-link { margin-top: auto; align-self: flex-start; padding-top: 22px; }
 
 .simple-proof-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(36px, 7vw, 90px); align-items: center; }
 .simple-founder {
