@@ -277,6 +277,58 @@ html { scroll-behavior: smooth; }
   line-height: 1.45;
 }
 
+/* Fatima's personal note — editorial copy wrapping naturally around her portrait. */
+.founder-note-section { padding-block: clamp(82px, 8vw, 124px); }
+.founder-note-grid { display: block; }
+.founder-note { max-width: 1180px; margin-inline: auto; }
+.founder-note h1 { max-width: 900px; font-size: clamp(3rem, 5.4vw, 5.2rem); }
+.founder-note-copy { margin-top: 42px; }
+.founder-note-frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 410px);
+  gap: clamp(42px, 6vw, 78px);
+  align-items: start;
+  margin-top: 24px;
+}
+.founder-note-photo {
+  width: 100%;
+  max-width: 410px;
+  margin: 0;
+  justify-self: end;
+}
+.founder-note-photo img {
+  aspect-ratio: 20 / 21;
+  object-position: center 18%;
+}
+.founder-note .founder-note-copy p {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  color: #39342d;
+  font-size: clamp(.96rem, 1.15vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.75;
+}
+.founder-note .founder-note-copy p + p { margin-top: 22px; }
+.founder-note-ending { margin-top: 20px; }
+.founder-note-signoff { margin-top: 28px; }
+.founder-note-signoff strong,
+.founder-note-signoff span { display: block; }
+.founder-note-signoff strong { font-size: 1rem; font-weight: 700; }
+.founder-note-signoff span { margin-top: 4px; color: var(--simple-muted); font-size: .75rem; font-weight: 700; }
+.founder-note-section .simple-page-hero-media { max-width: 410px; }
+.founder-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  color: var(--simple-gold-bright);
+  font-size: .8rem;
+  font-weight: 700;
+}
+.founder-link svg { width: 16px; transition: transform .2s ease; }
+.founder-link:hover svg { transform: translateX(3px); }
+
 /* Quote experience */
 .quote-shell { min-height: calc(100vh - 82px); padding: 50px 0 90px; background: var(--simple-cream); }
 .quote-page .mobile-cta-bar { display: none; }
@@ -365,6 +417,20 @@ html { scroll-behavior: smooth; }
 }
 .footer-social a span { display: none; }
 
+@media (max-width: 1040px) {
+  .founder-note-frame {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .founder-note-photo {
+    justify-self: start;
+  }
+  .founder-note-photo img {
+    aspect-ratio: 4 / 5;
+    object-position: center;
+  }
+}
+
 @media (max-width: 900px) {
   .simple-hero-grid,
   .simple-proof-grid,
@@ -399,6 +465,15 @@ html { scroll-behavior: smooth; }
   .simple-founder blockquote { font-size: 1rem; }
   .simple-service-list { grid-template-columns: 1fr; }
   .simple-page-hero { padding-top: 72px; }
+  .founder-note-section { padding-block: 70px 78px; }
+  .founder-note-frame { margin-top: 20px; gap: 24px; }
+  .founder-note-photo {
+    width: 100%;
+    margin: 0;
+  }
+  .founder-note-copy { margin-top: 34px; }
+  .founder-note .founder-note-copy p { line-height: 1.7; }
+  .founder-note .founder-note-copy p + p { margin-top: 20px; }
   .quote-shell { padding-top: 28px; }
   .quote-intro { display: block; }
   .quote-honesty { margin-top: 16px; }
