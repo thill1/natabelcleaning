@@ -112,18 +112,6 @@
     });
   });
 
-  /* ---------- Phone-click tracking ---------- */
-  document.querySelectorAll('a[href^="tel:"]').forEach(a => {
-    a.addEventListener('click', () => {
-      if (window.PCC && window.PCC.util) {
-        window.PCC.util.track(window.PCC.events.phoneClick, {
-          phone: a.getAttribute('href'),
-          location: window.location.pathname,
-        });
-      }
-    });
-  });
-
   /* ---------- Smooth anchor scroll offset (sticky header) ---------- */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     const id = a.getAttribute('href');

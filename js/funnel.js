@@ -37,6 +37,9 @@
   let estimateKey = '';
   let estimateTimer = null;
   let estimateRequest = 0;
+  let homeDetailsTracked = false;
+  let contactStartedTracked = false;
+  let priceViewedTracked = false;
 
   function field(name) { return form.querySelector(`[name="${name}"]`); }
   function value(name) { return String(field(name)?.value || '').trim(); }
@@ -97,6 +100,12 @@
     });
     updateProgress();
     if (index === 3) renderReview();
+    if (index === 3 && Number.isFinite(amount) && !priceViewedTracked) {
+      priceViewedTracked = true;
+      window.PCC.util.track(window.PCC.events.quotePriceViewed, {
+        quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(), amount,
+      });
+    }
   }
 
   async function loadEstimate(key, requestId) {
@@ -174,11 +183,26 @@
   }
 
   function show(next, focus) {
+    const previous = index;
     index = Math.max(0, Math.min(next, steps.length - 1));
     steps.forEach((step, stepIndex) => step.classList.toggle('active', stepIndex === index));
     syncServiceView();
     updateProgress();
     if (index === 3) renderReview();
+    if (index === 2 && previous < 2) {
+      if (!homeDetailsTracked) {
+        homeDetailsTracked = true;
+        window.PCC.util.track(window.PCC.events.quoteHomeDetailsCompleted, {
+          quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(), square_footage: value('square_footage'),
+        });
+      }
+      if (!contactStartedTracked) {
+        contactStartedTracked = true;
+        window.PCC.util.track(window.PCC.events.quoteContactStarted, {
+          quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(),
+        });
+      }
+    }
     if (focus) {
       card.scrollIntoView({ behavior: 'smooth', block: 'start' });
       const heading = steps[index].querySelector('h2');
@@ -327,6 +351,11 @@
       });
       const body = await response.json().catch(() => ({}));
       if (response.ok && body.ok && body.status === 'estimated' && body.saved) {
+        window.PCC.util.track(window.PCC.events.quoteSubmitted, {
+          quote_type: 'residential', service_type: data.service_type, frequency: data.frequency,
+          square_footage: data.square_footage, bedrooms: data.bedrooms, bathrooms: data.bathrooms,
+          city: data.city, amount: body.quote?.amount,
+        });
         renderConfirmation(body, data);
         return;
       }
@@ -343,7 +372,7 @@
       error.textContent = `We could not save the request yet. Your details remain here so you can try again. You can also call ${window.PCC.business.phone}.`;
       error.classList.add('active');
       error.focus?.();
-      window.PCC.util.track(window.PCC.events.quoteDeliveryFailed || 'quote_delivery_failed', { reason: String(requestError.message || requestError) });
+      window.PCC.util.track(window.PCC.events.quoteDeliveryFailed || 'quote_delivery_failed', { error_code: 'quote_save_failed' });
     } finally {
       if (!form.hidden) {
         submitting = false;
@@ -358,6 +387,8 @@
   if (['move', 'move-in', 'move-out'].includes(requestedService)) form.querySelector('[name="service_type"][value="move"]').checked = true;
   if (['deep', 'deep-cleaning'].includes(requestedService)) form.querySelector('[name="service_type"][value="deep"]').checked = true;
   if (['residential', 'recurring', 'standard'].includes(requestedService)) form.querySelector('[name="service_type"][value="standard"]').checked = true;
-  window.PCC.util.track(window.PCC.events.quoteStarted || 'quote_started', { source: location.pathname, experience: 'residential-v5' });
+  window.PCC.util.track(window.PCC.events.quoteStarted || 'quote_started', {
+    quote_type: 'residential', service_type: currentService() || 'residential', experience: 'residential-v5',
+  });
   show(0, false);
 })();

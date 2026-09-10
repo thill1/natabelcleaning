@@ -136,9 +136,13 @@ window.PCC = {
 
   /* ---------- Analytics & conversion tracking ---------- */
   analytics: {
-    ga4Id: '',
-    adsId: '',
-    facebookPixelId: '',
+    // Production properties for the NataBel Pristine Cleaning website.
+    // Blank or placeholder values remain fail-closed in js/analytics.js.
+    ga4Id: 'G-6SNEG7DFXE',
+    clarityProjectId: 'yfwdvy2f9e',
+    consentRequired: true,
+    consentStorageKey: 'natabel.analytics.consent.v1',
+    pageType: 'website',
   },
 
   /* ---------- Conversion event names (single source of truth) ---------- */
@@ -152,9 +156,23 @@ window.PCC = {
     recurringQuote:           'recurring_quote_request',
     contactFormSubmit:        'contact_form_submit',
     quoteStarted:             'quote_started',
+    quoteHomeDetailsCompleted:'quote_home_details_completed',
+    quotePriceViewed:         'quote_price_viewed',
+    quoteContactStarted:      'quote_contact_started',
+    quoteSubmitted:           'quote_submitted',
     quoteContactSubmitted:    'quote_contact_submitted',
     quoteRevealed:            'quote_revealed',
     quoteDeliveryFailed:      'quote_delivery_failed',
+    pageView:                 'page_view',
+    servicePageViewed:        'service_page_viewed',
+    ctaClick:                 'cta_click',
+    emailClick:               'email_click',
+    bookingStarted:           'booking_started',
+    bookingCompleted:         'booking_completed',
+    commercialWalkthroughStarted: 'commercial_walkthrough_started',
+    commercialWalkthroughSubmitted: 'commercial_walkthrough_submitted',
+    applicationStarted:       'application_started',
+    applicationSubmitted:     'application_submitted',
     lead:                     'lead',
   },
 };
@@ -162,23 +180,101 @@ window.PCC = {
 /* ---------- Tiny helpers exposed globally ---------- */
 window.PCC.util = {
   telHref: () => window.PCC.business.phoneHref,
-  track(eventName, params = {}) {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: eventName, ...params });
-    if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
-    if (typeof window.fbq === 'function' && eventName === window.PCC.events.lead) window.fbq('track', 'Lead', params);
-    if (window.console && console.debug) console.debug('[track]', eventName, params);
-  },
+  /*
+     Attribution is first-touch + last-touch and contains only short,
+     allowlisted campaign values. It is used both by the lead payload and the
+     analytics layer, but raw URLs and form values never enter analytics.
+   */
   getUTM() {
-    const p = new URLSearchParams(window.location.search);
-    return {
-      utm_source:   p.get('utm_source')   || '',
-      utm_medium:   p.get('utm_medium')   || '',
-      utm_campaign: p.get('utm_campaign') || '',
-      utm_term:     p.get('utm_term')     || '',
-      utm_content:  p.get('utm_content')  || '',
-      landing_page: window.location.pathname,
-      referrer:     document.referrer,
+    const key = 'natabel.analytics.attribution.v1';
+    const params = new URLSearchParams(window.location.search);
+    const clean = (value, max = 120) => {
+      const text = String(value || '').trim();
+      if (!text || /@/.test(text) || /(?:\+?\d[\d\s().-]{8,}\d)/.test(text)) return '';
+      return text.replace(/[^a-z0-9._~:/+\- ]/gi, '').slice(0, max);
     };
+    const incoming = {
+      utm_source: clean(params.get('utm_source')),
+      utm_medium: clean(params.get('utm_medium')),
+      utm_campaign: clean(params.get('utm_campaign')),
+      utm_term: clean(params.get('utm_term')),
+      utm_content: clean(params.get('utm_content')),
+      landing_page: window.location.pathname.slice(0, 200) || '/',
+    };
+    let stored = {};
+    try { stored = JSON.parse(window.localStorage.getItem(key) || '{}') || {}; } catch (_) { stored = {}; }
+    const hasCampaign = Object.values(incoming).some(value => value && value !== incoming.landing_page);
+    if (hasCampaign) {
+      const now = new Date().toISOString();
+      if (!stored.first_touch) stored.first_touch = { ...incoming, captured_at: now };
+      stored.last_touch = { ...incoming, captured_at: now };
+      try { window.localStorage.setItem(key, JSON.stringify(stored)); } catch (_) { /* private mode */ }
+    }
+    const first = stored.first_touch || {};
+    const last = stored.last_touch || {};
+    let referrerHost = '';
+    try { referrerHost = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : ''; } catch (_) { referrerHost = ''; }
+    const source = last.utm_source || first.utm_source || referrerHost || 'direct';
+    return {
+      utm_source: last.utm_source || first.utm_source || '',
+      utm_medium: last.utm_medium || first.utm_medium || (referrerHost ? 'referral' : 'direct'),
+      utm_campaign: last.utm_campaign || first.utm_campaign || '',
+      utm_term: last.utm_term || first.utm_term || '',
+      utm_content: last.utm_content || first.utm_content || '',
+      traffic_source: source,
+      campaign: last.utm_campaign || first.utm_campaign || '',
+      landing_page: first.landing_page || incoming.landing_page,
+      referrer_host: referrerHost,
+    };
+  },
+  track(eventName, params = {}) {
+    const allowed = new Set([
+      'page_type', 'service_type', 'frequency', 'square_footage_band',
+      'bedrooms', 'bathrooms', 'city', 'region', 'estimated_price',
+      'lead_type', 'traffic_source', 'campaign', 'landing_page',
+      'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+      'form_id', 'form', 'booking_type', 'quote_type', 'experience', 'stage',
+      'application_stage', 'delivery_status', 'error_code', 'cta_text',
+      'cta_target', 'cta_location', 'link_location', 'square_footage', 'amount',
+    ]);
+    const safeText = value => {
+      const text = String(value || '').replace(/[\r\n]/g, ' ').trim();
+      if (/@/.test(text) || /(?:\+?\d[\d\s().-]{8,}\d)/.test(text)) return '';
+      return text.slice(0, 120);
+    };
+    const safeCategories = new Set(['standard', 'deep', 'move', 'residential', 'recurring', 'commercial', 'office', 'janitorial', 'property_management', 'weekly', 'biweekly', 'monthly', 'one_time', 'house', 'apartment', 'condo', 'townhome', 'direct', 'referral', 'website']);
+    const safeCities = new Set(['rocklin', 'roseville', 'granite bay', 'loomis', 'lincoln', 'penryn', 'newcastle', 'auburn', 'folsom', 'citrus heights', 'fair oaks', 'orangevale', 'carmichael', 'sacramento']);
+    const safe = { ...window.PCC.util.getUTM(), region: 'CA' };
+    Object.entries(params || {}).forEach(([key, value]) => {
+      if (!allowed.has(key) || value === undefined || value === null || value === '') return;
+      if (key === 'square_footage') {
+        const sqft = Number(value);
+        if (Number.isFinite(sqft) && sqft > 0) safe.square_footage_band = sqft < 1000 ? 'under_1000' : sqft < 1500 ? '1000_1499' : sqft < 2000 ? '1500_1999' : sqft < 3000 ? '2000_2999' : '3000_plus';
+        return;
+      }
+      if (key === 'amount') key = 'estimated_price';
+      if (key === 'estimated_price') {
+        const amount = Number(value);
+        if (Number.isFinite(amount) && amount >= 0) safe.estimated_price = Math.round(amount);
+        return;
+      }
+      if (key === 'city') {
+        const city = safeText(value).toLowerCase();
+        if (safeCities.has(city)) safe.city = city;
+        return;
+      }
+      if (['service_type', 'frequency', 'booking_type', 'quote_type'].includes(key)) {
+        const category = safeText(value).toLowerCase().replace(/\s+/g, '_');
+        if (safeCategories.has(category) || key === 'booking_type') safe[key] = category;
+        return;
+      }
+      safe[key] = safeText(value);
+    });
+    Object.keys(safe).forEach(key => { if (safe[key] === '') delete safe[key]; });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, ...safe });
+    if (typeof window.gtag === 'function') window.gtag('event', eventName, safe);
+    if (typeof window.clarity === 'function') window.clarity('event', eventName);
+    if (window.console && console.debug) console.debug('[track]', eventName, safe);
   },
 };

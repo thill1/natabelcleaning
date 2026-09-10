@@ -199,15 +199,39 @@
 
     // form_start tracking — fire once on first interaction
     let started = false;
+    let commercialStarted = false;
+    const commercialTypes = ['commercial', 'office', 'janitorial', 'property_management'];
+    function startEvent() {
+      if (form.id === 'bookingForm') return ev.bookingStarted;
+      if (form.id === 'contactForm' && commercialTypes.includes(form.querySelector('[name="service_type"]')?.value)) return ev.commercialWalkthroughStarted;
+      if (form.id === 'expressApplyForm' || form.id === 'fullApplicationForm') return ev.applicationStarted;
+      return eventName.replace('_submit', '_start');
+    }
     const startTracker = () => {
       if (started) return;
       started = true;
-      window.PCC.util.track(eventName.replace('_submit', '_start'), { form: form.id });
+      if (startEvent() === ev.commercialWalkthroughStarted) commercialStarted = true;
+      window.PCC.util.track(startEvent(), {
+        form_id: form.id,
+        lead_type: form.querySelector('[name="form_type"]')?.value || 'general',
+        booking_type: form.querySelector('[name="booking_type"]:checked')?.value,
+        service_type: form.querySelector('[name="service_type"]')?.value,
+      });
     };
     form.querySelectorAll('input, select, textarea').forEach(el => {
       el.addEventListener('focus', startTracker, { once: true });
       el.addEventListener('change', startTracker, { once: true });
     });
+    const serviceField = form.querySelector('[name="service_type"]');
+    if (form.id === 'contactForm' && serviceField) {
+      serviceField.addEventListener('change', () => {
+        if (commercialStarted || !commercialTypes.includes(serviceField.value)) return;
+        commercialStarted = true;
+        window.PCC.util.track(ev.commercialWalkthroughStarted, {
+          form_id: form.id, service_type: serviceField.value, lead_type: form.querySelector('[name="form_type"]')?.value || 'general',
+        });
+      });
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -237,15 +261,27 @@
 
       const result = await route(payload);
 
-      // Fire conversion event(s)
-      window.PCC.util.track(eventName, { form_id: form.id, lead_type: payload.form_type || 'general' });
-      window.PCC.util.track(ev.lead, { lead_type: payload.form_type || 'general', event: eventName });
-
       if (btn) { btn.disabled = false; btn.textContent = orig; }
 
       const phone = (window.PCC.business && window.PCC.business.phone) || '';
 
       if (result.ok) {
+        const delivered = result.delivery === 'endpoint' || result.delivery === 'demo';
+        const formType = payload.form_type || 'general';
+        const serviceType = payload.service_type || '';
+        if (delivered) {
+          window.PCC.util.track(eventName, { form_id: form.id, lead_type: formType });
+          window.PCC.util.track(ev.lead, { lead_type: formType });
+          if (form.id === 'bookingForm') {
+            window.PCC.util.track(ev.bookingCompleted, { booking_type: payload.booking_type, lead_type: formType });
+          }
+          if (form.id === 'contactForm' && commercialTypes.includes(serviceType)) {
+            window.PCC.util.track(ev.commercialWalkthroughSubmitted, { service_type: serviceType, lead_type: formType });
+          }
+          if (form.id === 'expressApplyForm' || form.id === 'fullApplicationForm') {
+            window.PCC.util.track(ev.applicationSubmitted, { stage: form.id === 'fullApplicationForm' ? 'full' : 'express', lead_type: formType });
+          }
+        }
         if (opts.onSuccess) { opts.onSuccess(payload, result); return; }
         if (result.delivery === 'email') {
           // Mail client is opening — the request is not sent until they hit Send.
