@@ -140,7 +140,8 @@ window.PCC = {
     // Blank or placeholder values remain fail-closed in js/analytics.js.
     ga4Id: 'G-6SNEG7DFXE',
     clarityProjectId: 'yfwdvy2f9e',
-    consentRequired: true,
+    defaultConsent: 'granted',
+    honorGlobalPrivacyControl: true,
     consentStorageKey: 'natabel.analytics.consent.v1',
     pageType: 'website',
   },
@@ -228,6 +229,9 @@ window.PCC.util = {
     };
   },
   track(eventName, params = {}) {
+    // Never queue or transmit behavioral events after an explicit opt-out or
+    // an honored browser privacy signal.
+    if (window.PCC.analytics?.getConsent?.() === 'denied') return;
     const allowed = new Set([
       'page_type', 'service_type', 'frequency', 'square_footage_band',
       'bedrooms', 'bathrooms', 'city', 'region', 'estimated_price',

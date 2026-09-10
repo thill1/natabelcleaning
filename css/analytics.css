@@ -32,8 +32,15 @@
   font: 700 12px/1 Plus Jakarta Sans, system-ui, sans-serif;
 }
 .analytics-consent-actions button { padding: 11px 15px; }
-.analytics-consent-decline { color: #f8f4ec; background: transparent; border: 1px solid rgba(255,255,255,.28) !important; }
-.analytics-consent-allow { color: #17120a; background: #e6c979; }
+.analytics-consent-decline,
+.analytics-consent-allow {
+  min-width: 142px;
+  color: #f8f4ec;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.38) !important;
+}
+.analytics-consent-decline:hover,
+.analytics-consent-allow:hover { background: rgba(255,255,255,.1); }
 .analytics-privacy-link {
   position: fixed;
   z-index: 9998;

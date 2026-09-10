@@ -10,7 +10,8 @@ Set the two production IDs in [`js/config.js`](js/config.js):
 analytics: {
   ga4Id: 'G-6SNEG7DFXE',
   clarityProjectId: 'yfwdvy2f9e',
-  consentRequired: true,
+  defaultConsent: 'granted',
+  honorGlobalPrivacyControl: true,
   consentStorageKey: 'natabel.analytics.consent.v1',
 }
 ```
@@ -21,11 +22,13 @@ The site is configured for direct deployment from the repository. After adding t
 
 ## Consent and privacy behavior
 
-- Optional analytics are off until the visitor chooses **Allow analytics**.
-- The choice is stored in `localStorage` under `natabel.analytics.consent.v1`.
-- A persistent **Privacy choices** control lets a visitor reopen the choice.
-- GA4 advertising features are disabled; only analytics storage is granted after opt-in.
-- Clarity loads only after opt-in and masks every input, select, and textarea before loading.
+- Optional analytics are on by default without a first-visit prompt, so normal site navigation is uninterrupted.
+- An explicit choice is stored in `localStorage` under `natabel.analytics.consent.v1`.
+- A persistent, unobtrusive **Privacy choices** control lets a visitor turn analytics off or back on in one step.
+- Supported Global Privacy Control signals are honored automatically and keep optional analytics off.
+- GA4 advertising storage, Google Signals, ad personalization, and enhanced measurement are disabled.
+- Clarity masks every input, select, and textarea before loading. The site sends Clarity an affirmative Consent V2 signal only after an explicit user choice; without one, Clarity can apply its required regional no-consent mode.
+- Opting out updates both vendors to denied, clears applicable first-party analytics cookies, and prevents the shared event layer from queuing later behavioral events.
 - The event layer allowlists non-PII fields. Names, emails, phone numbers, street addresses, notes, application answers, raw URLs, and raw referrers are excluded from GA4 and Clarity events.
 
 The public explanation lives in [`privacy.html`](privacy.html). This implementation is an engineering control, not legal advice; Troy should confirm the final notice and consent posture with NataBel’s privacy counsel.
@@ -66,12 +69,13 @@ No customer identity is sent to the analytics vendors. Identity remains in the e
 
 1. Serve the repository as a static site and open `/` or `/free-estimate.html`.
 2. With blank IDs, confirm there are no requests to `googletagmanager.com` or `clarity.ms`.
-3. Temporarily use test IDs in a local-only copy of `js/config.js`, choose **Allow analytics**, and confirm `window.PCC.analytics.loaded` reports the configured vendor(s).
+3. With configured IDs and no stored choice, confirm both vendors load by default, no first-visit prompt appears, and the persistent **Privacy choices** control is available.
 4. Inspect `window.dataLayer` and confirm event objects contain only the documented non-PII fields.
 5. Use the quote funnel through each step and verify the quote milestone events; use a test endpoint or mocked request for submission.
 6. Verify application and booking start/submit events without entering real personal information.
-7. In GA4 DebugView and Clarity after production deployment, confirm events arrive only after consent and that form fields are masked.
+7. Opt out and confirm later behavioral events stop, applicable first-party analytics cookies are cleared, and the choice persists across navigation.
+8. In GA4 DebugView and Clarity after production deployment, confirm default-on events arrive and that form fields remain masked.
 
 Remaining governance action:
 
-- Have privacy counsel confirm that the opt-in wording and privacy notice meet NataBel’s final California requirements. The current implementation deliberately uses prior opt-in and can be revised without changing the event contracts.
+- Have privacy counsel confirm that the prompt-free default-on analytics posture, vendor contracts, retention settings, and privacy policy meet NataBel’s final California, federal, and visitor-jurisdiction requirements. The event contracts do not depend on the consent presentation and can be revised later.

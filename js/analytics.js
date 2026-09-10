@@ -1,8 +1,10 @@
 /* =========================================================================
    NATABEL PRISTINE CLEANING — Privacy-aware analytics loader
 
-   Direct GA4 and Microsoft Clarity are loaded only after the visitor opts in
-   to optional analytics. Production IDs live in js/config.js.
+   Direct GA4 and Microsoft Clarity use a disclosed, default-on analytics
+   setting with no first-visit prompt and a one-click opt-out available from
+   Privacy choices. Advertising storage stays denied, Global Privacy Control
+   is honored, and production IDs live in js/config.js.
 
    The event layer in config.js is the only application-facing API. This file
    owns consent, vendor loading, page-level events, CTA events, and Clarity
@@ -14,19 +16,30 @@
 
   const analytics = window.PCC.analytics;
   const consentKey = analytics.consentStorageKey || 'natabel.analytics.consent.v1';
+  const configuredDefault = analytics.defaultConsent === 'denied' ? 'denied' : 'granted';
   const isReal = (value, prefix) => {
     const normalized = String(value || '').trim();
     return !!normalized && !/^(YOUR|TODO|XXX)/i.test(normalized)
       && (!prefix || normalized.indexOf(prefix) === 0);
   };
 
-  function readConsent() {
+  function hasGlobalPrivacyControl() {
+    return analytics.honorGlobalPrivacyControl !== false && navigator.globalPrivacyControl === true;
+  }
+
+  function readStoredConsent() {
     try {
       const value = window.localStorage.getItem(consentKey);
       return value === 'granted' || value === 'denied' ? value : 'unknown';
     } catch (_) {
       return 'unknown';
     }
+  }
+
+  function readConsent() {
+    if (hasGlobalPrivacyControl()) return 'denied';
+    const stored = readStoredConsent();
+    return stored === 'unknown' ? configuredDefault : stored;
   }
 
   function writeConsent(value) {
@@ -37,7 +50,7 @@
     if (document.querySelector('link[data-analytics-styles]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'css/analytics.css?v=20260909-analytics';
+    link.href = 'css/analytics.css?v=20260910-default-on';
     link.dataset.analyticsStyles = 'true';
     document.head.appendChild(link);
   }
@@ -48,17 +61,42 @@
     });
   }
 
+  function consentPayload(analyticsStorage) {
+    return {
+      analytics_storage: analyticsStorage,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    };
+  }
+
+  function clearAnalyticsCookies() {
+    const names = document.cookie.split(';').map(part => part.split('=')[0].trim())
+      .filter(name => /^(_ga|_gid|_gat|_clck|_clsk)/i.test(name));
+    const rootDomain = window.location.hostname.replace(/^www\./, '');
+    const domains = ['', window.location.hostname, rootDomain, '.' + rootDomain];
+    names.forEach(name => {
+      domains.forEach(domain => {
+        document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax${domain ? `; domain=${domain}` : ''}`;
+      });
+    });
+  }
+
+  function updateLoadedVendorConsent(value) {
+    const state = value === 'granted' ? 'granted' : 'denied';
+    if (typeof window.gtag === 'function') window.gtag('consent', 'update', consentPayload(state));
+    if (typeof window.clarity === 'function') {
+      window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: state });
+      if (state === 'denied') window.clarity('consent', false);
+    }
+  }
+
   function loadGa4() {
     const id = String(analytics.ga4Id || '').trim();
     if (!isReal(id, 'G-') || analytics.loaded?.ga4) return false;
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
-    window.gtag('consent', 'update', {
-      analytics_storage: 'granted',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-    });
+    window.gtag('consent', 'default', consentPayload('granted'));
     window.gtag('js', new Date());
     // page_view is emitted by the shared event layer so it has the same
     // attribution context as funnel and conversion events.
@@ -77,9 +115,12 @@
     if (!isReal(id) || !/^[a-z0-9]{6,}$/i.test(id) || analytics.loaded?.clarity) return false;
     maskClarityFields();
     window.clarity = window.clarity || function () { (window.clarity.q = window.clarity.q || []).push(arguments); };
-    // Consent V2 is queued before the vendor script so Clarity starts in the
-    // visitor's chosen state. Advertising storage remains denied.
-    window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+    // Only send Clarity an affirmative consent signal after an explicit user
+    // choice. With no choice, Clarity applies its own regional no-consent mode
+    // where required instead of receiving a false consent signal.
+    if (readStoredConsent() === 'granted') {
+      window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+    }
     const script = document.createElement('script');
     script.async = true;
     script.src = 'https://www.clarity.ms/tag/' + encodeURIComponent(id);
@@ -92,9 +133,10 @@
   function loadConfiguredVendors() {
     if (readConsent() !== 'granted') return;
     sanitizeUrlForVendors();
+    updateLoadedVendorConsent('granted');
     const ga4Loaded = loadGa4();
     const clarityLoaded = loadClarity();
-    if ((ga4Loaded || clarityLoaded) && window.PCC.util) {
+    if ((ga4Loaded || clarityLoaded || analytics.loaded?.ga4 || analytics.loaded?.clarity) && window.PCC.util) {
       window.PCC.util.track('page_view', { page_type: analytics.pageType || 'website' });
     }
   }
@@ -141,14 +183,29 @@
     banner.dataset.analyticsConsent = 'true';
     banner.setAttribute('role', 'dialog');
     banner.setAttribute('aria-label', 'Privacy choices');
+    const gpc = hasGlobalPrivacyControl();
+    const analyticsActive = readConsent() === 'granted';
+    if (gpc) {
+      banner.innerHTML = `
+        <div class="analytics-consent-copy">
+          <strong>Privacy preference honored</strong>
+          <p>Your browser privacy signal is active, so optional analytics is off. NataBel does not sell or share analytics data for cross-context behavioral advertising. <a href="privacy.html">Learn more</a></p>
+        </div>
+        <div class="analytics-consent-actions">
+          <button type="button" class="analytics-consent-decline" data-analytics-close>Close</button>
+        </div>`;
+      document.body.appendChild(banner);
+      banner.querySelector('[data-analytics-close]').addEventListener('click', removeConsentUi);
+      return;
+    }
     banner.innerHTML = `
       <div class="analytics-consent-copy">
-        <strong>Privacy choices</strong>
-        <p>NataBel uses optional Google Analytics and Microsoft Clarity to understand site visits and improve the quote and application experiences. These tools stay off unless you allow them. We do not send names, emails, phone numbers, or addresses to them. <a href="privacy.html">Learn more</a></p>
+        <strong>Analytics choices</strong>
+        <p>Optional Google Analytics and Microsoft Clarity are currently ${analyticsActive ? 'on' : 'off'}. They help NataBel improve the quote and application experiences. Form fields are masked, advertising features are off, and names, emails, phone numbers, and street addresses are not sent in analytics events. <a href="privacy.html">Learn more</a></p>
       </div>
       <div class="analytics-consent-actions">
-        <button type="button" class="analytics-consent-decline" data-analytics-decline>Decline</button>
-        <button type="button" class="analytics-consent-allow" data-analytics-allow>Allow analytics</button>
+        <button type="button" class="analytics-consent-decline" data-analytics-decline>${analyticsActive ? 'Turn off analytics' : 'Keep analytics off'}</button>
+        <button type="button" class="analytics-consent-allow" data-analytics-allow>${analyticsActive ? 'Keep analytics on' : 'Turn analytics on'}</button>
       </div>`;
     document.body.appendChild(banner);
     banner.querySelector('[data-analytics-allow]').addEventListener('click', () => {
@@ -162,7 +219,6 @@
   }
 
   function showPrivacyChoices() {
-    writeConsent('unknown');
     showConsentUi();
   }
 
@@ -202,7 +258,7 @@
       link.addEventListener('click', () => util.track('phone_click', { link_location: path }));
     });
     document.querySelectorAll('a, button').forEach(control => {
-      if (control.matches('[data-analytics-open], [data-analytics-allow], [data-analytics-decline]')) return;
+      if (control.matches('[data-analytics-open], [data-analytics-allow], [data-analytics-decline], [data-analytics-close]')) return;
       const label = String(control.getAttribute('aria-label') || control.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80);
       if (!label || !/quote|estimate|walkthrough|apply|application|book|schedule|contact|start|learn more|request/i.test(label)) return;
       control.addEventListener('click', () => {
@@ -217,16 +273,12 @@
   analytics.getConsent = readConsent;
   analytics.setConsent = value => {
     if (value !== 'granted' && value !== 'denied') return readConsent();
+    if (value === 'granted' && hasGlobalPrivacyControl()) return 'denied';
     writeConsent(value);
     if (value === 'granted') loadConfiguredVendors();
     else {
-      if (typeof window.gtag === 'function') window.gtag('consent', 'update', {
-        analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
-      });
-      if (typeof window.clarity === 'function') {
-        window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'denied' });
-        window.clarity('consent', false);
-      }
+      updateLoadedVendorConsent('denied');
+      clearAnalyticsCookies();
       removeConsentUi();
     }
     return value;
@@ -239,9 +291,7 @@
     // navigation into a quote or application, even before an analytics choice.
     // This does not contact GA4 or Clarity.
     if (window.PCC.util?.getUTM) window.PCC.util.getUTM();
-    const consent = readConsent();
-    if (consent === 'granted') loadConfiguredVendors();
-    else if (hasConfiguredVendors() && analytics.consentRequired !== false) showConsentUi();
+    if (readConsent() === 'granted') loadConfiguredVendors();
     if (hasConfiguredVendors()) addPrivacyChoicesLink();
     trackPageInteractions();
   }
