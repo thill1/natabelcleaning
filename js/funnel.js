@@ -23,7 +23,7 @@
   const stepLabel = card.querySelector('[data-step-label]');
   const stepCount = card.querySelector('[data-step-count]');
   const progressEstimate = card.querySelector('[data-progress-estimate]');
-  const labels = ['Cleaning type', 'Home size', 'Your details', 'Review'];
+  const labels = ['Cleaning type', 'Home size', 'Your estimate', 'Your details', 'Review'];
   const serviceLabels = { standard: 'Standard Recurring Cleaning', deep: 'Deep Cleaning', move: 'Move-In / Move-Out Cleaning' };
   const frequencyLabels = { weekly: 'Weekly', biweekly: 'Every 2 weeks', monthly: 'Every 4 weeks', one_time: 'One-time' };
   const petLabels = { none: 'No pets', dog: 'Dog', cat: 'Cat', multiple: 'Multiple pets', other: 'Other' };
@@ -33,18 +33,18 @@
   };
   let index = 0;
   let submitting = false;
-  let estimateAmount = null;
-  let estimateKey = '';
-  let estimateTimer = null;
-  let estimateRequest = 0;
+  let estimateLoading = false;
+  let lockedEstimate = null;
   let homeDetailsTracked = false;
   let contactStartedTracked = false;
   let priceViewedTracked = false;
+  const estimateLockKey = 'natabel.quote.lock.v1';
+  const estimateLockMaxAge = 30 * 60 * 1000;
 
   function field(name) { return form.querySelector(`[name="${name}"]`); }
   function value(name) { return String(field(name)?.value || '').trim(); }
   function selected(name) { return form.querySelector(`[name="${name}"]:checked`)?.value || ''; }
-  function currentService() { return selected('service_type'); }
+  function currentService() { return lockedEstimate?.service_type || selected('service_type'); }
   function isOneTime() { return ['deep', 'move'].includes(currentService()); }
   function currentFrequency() { return isOneTime() ? 'one_time' : value('frequency'); }
   function selectedExtras() { return Array.from(form.querySelectorAll('[name="requested_add_ons"]:checked')).map(input => input.value); }
@@ -60,7 +60,33 @@
     return new Date(now.getTime() - offset).toISOString().slice(0, 10);
   }
 
-  field('submission_id').value = makeSubmissionId();
+  function readEstimateLock() {
+    try {
+      const saved = JSON.parse(window.sessionStorage.getItem(estimateLockKey) || 'null');
+      const valid = saved && /^[A-Za-z0-9._:-]{8,127}$/.test(String(saved.submission_id || ''))
+        && ['standard', 'deep', 'move'].includes(saved.service_type)
+        && Number.isFinite(Number(saved.square_footage)) && Number(saved.square_footage) > 0
+        && Number.isFinite(Number(saved.amount)) && Number(saved.amount) >= 0
+        && Date.now() - Number(saved.locked_at) < estimateLockMaxAge;
+      if (valid) return {
+        submission_id: String(saved.submission_id),
+        service_type: saved.service_type,
+        square_footage: Number(saved.square_footage),
+        amount: Number(saved.amount),
+        locked_at: Number(saved.locked_at),
+        price_viewed: saved.price_viewed === true
+      };
+      window.sessionStorage.removeItem(estimateLockKey);
+    } catch (_) { /* private mode */ }
+    return null;
+  }
+
+  function saveEstimateLock(lock) {
+    try { window.sessionStorage.setItem(estimateLockKey, JSON.stringify(lock)); } catch (_) { /* private mode */ }
+  }
+
+  lockedEstimate = readEstimateLock();
+  field('submission_id').value = lockedEstimate?.submission_id || makeSubmissionId();
   field('form_started_at').value = String(Date.now());
   field('requested_date').min = localDate();
 
@@ -75,14 +101,8 @@
     if (error) error.textContent = message;
   }
 
-  function currentEstimateKey() {
-    const sqft = Number(value('square_footage'));
-    const service = currentService();
-    return service && Number.isFinite(sqft) && sqft > 0 ? `${service}:${sqft}` : '';
-  }
-
   function calculatedAmount() {
-    return estimateKey === currentEstimateKey() && Number.isFinite(estimateAmount) ? estimateAmount : null;
+    return Number.isFinite(lockedEstimate?.amount) ? lockedEstimate.amount : null;
   }
 
   function cadenceText() {
@@ -99,65 +119,76 @@
       cadence.textContent = Number.isFinite(amount) ? cadenceText() : 'Choose a cleaning type and enter a positive home size.';
     });
     updateProgress();
-    if (index === 3) renderReview();
-    if (index === 3 && Number.isFinite(amount) && !priceViewedTracked) {
+    if (index === 4) renderReview();
+    if (index === 2 && Number.isFinite(amount) && !priceViewedTracked) {
       priceViewedTracked = true;
+      lockedEstimate.price_viewed = true;
+      saveEstimateLock(lockedEstimate);
       window.PCC.util.track(window.PCC.events.quotePriceViewed, {
-        quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(), amount,
+        quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(),
+        square_footage: lockedEstimate.square_footage, amount,
       });
     }
   }
 
-  async function loadEstimate(key, requestId) {
+  async function lockEstimate() {
+    if (estimateLoading || lockedEstimate || !validateCurrent()) return;
+    const button = card.querySelector('[data-lock-estimate]');
+    const error = card.querySelector('[data-estimate-error]');
+    const serviceType = selected('service_type');
+    const squareFootage = Number(value('square_footage'));
+    const original = button.innerHTML;
+    estimateLoading = true;
+    button.disabled = true;
+    button.textContent = 'Calculating…';
+    error.classList.remove('active');
     try {
       const response = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           preview: true,
-          service_type: currentService(),
-          frequency: isOneTime() ? 'one_time' : 'monthly',
-          square_footage: Number(value('square_footage')),
+          service_type: serviceType,
+          frequency: ['deep', 'move'].includes(serviceType) ? 'one_time' : 'monthly',
+          square_footage: squareFootage,
           condition: 'average'
         })
       });
       const body = await response.json().catch(() => ({}));
-      if (requestId !== estimateRequest || key !== currentEstimateKey()) return;
       if (!response.ok || !body.ok || body.status !== 'estimated' || !Number.isFinite(Number(body.quote?.amount))) {
         throw new Error(body.error || `quote_preview_${response.status}`);
       }
-      estimateKey = key;
-      estimateAmount = Number(body.quote.amount);
-      paintEstimate('Calculating…');
-    } catch (error) {
-      if (requestId !== estimateRequest || key !== currentEstimateKey()) return;
-      estimateKey = '';
-      estimateAmount = null;
-      console.error('[quote] preview failed', { error: String(error.message || error) });
-      paintEstimate('Estimate unavailable');
+      lockedEstimate = {
+        submission_id: value('submission_id'),
+        service_type: serviceType,
+        square_footage: squareFootage,
+        amount: Number(body.quote.amount),
+        locked_at: Date.now(),
+        price_viewed: false
+      };
+      saveEstimateLock(lockedEstimate);
+      form.querySelectorAll('[name="service_type"]').forEach(input => { input.disabled = true; });
+      field('square_footage').readOnly = true;
+      if (!homeDetailsTracked) {
+        homeDetailsTracked = true;
+        window.PCC.util.track(window.PCC.events.quoteHomeDetailsCompleted, {
+          quote_type: 'residential', service_type: serviceType, square_footage: squareFootage,
+        });
+      }
+      show(2, true);
+    } catch (requestError) {
+      console.error('[quote] preview failed', { error: String(requestError.message || requestError) });
+      error.textContent = 'We could not calculate the estimate yet. Your home size is unchanged, so please try again.';
+      error.classList.add('active');
+      error.focus?.();
+    } finally {
+      estimateLoading = false;
+      if (!lockedEstimate) {
+        button.disabled = false;
+        button.innerHTML = original;
+        if (window.lucide) window.lucide.createIcons();
+      }
     }
-  }
-
-  function refreshEstimate() {
-    const key = currentEstimateKey();
-    clearTimeout(estimateTimer);
-    if (!key) {
-      estimateRequest += 1;
-      estimateKey = '';
-      estimateAmount = null;
-      paintEstimate(currentService() ? 'Enter square footage' : 'Choose a cleaning type');
-      return;
-    }
-    if (key === estimateKey && Number.isFinite(estimateAmount)) {
-      paintEstimate('Calculating…');
-      return;
-    }
-    estimateRequest += 1;
-    estimateKey = '';
-    estimateAmount = null;
-    paintEstimate('Calculating…');
-    const requestId = estimateRequest;
-    estimateTimer = setTimeout(() => loadEstimate(key, requestId), 120);
   }
 
   function syncServiceView() {
@@ -171,7 +202,6 @@
       if (frequency.value === 'one_time') frequency.value = '';
       wrapper.hidden = false;
     }
-    refreshEstimate();
   }
 
   function updateProgress() {
@@ -179,23 +209,22 @@
     stepLabel.textContent = `Step ${index + 1} · ${labels[index]}`;
     stepCount.textContent = `${index + 1} of ${steps.length}`;
     const amount = calculatedAmount();
-    if (progressEstimate) progressEstimate.textContent = index > 1 && Number.isFinite(amount) ? `$${amount.toLocaleString()} estimate` : 'About 2 minutes';
+    if (progressEstimate) progressEstimate.textContent = index > 1 && Number.isFinite(amount) ? `$${amount.toLocaleString()} locked estimate` : 'About 2 minutes';
   }
 
   function show(next, focus) {
     const previous = index;
-    index = Math.max(0, Math.min(next, steps.length - 1));
+    const guardedNext = lockedEstimate && next < 2 ? 2 : next;
+    index = Math.max(0, Math.min(guardedNext, steps.length - 1));
     steps.forEach((step, stepIndex) => step.classList.toggle('active', stepIndex === index));
     syncServiceView();
     updateProgress();
-    if (index === 3) renderReview();
-    if (index === 2 && previous < 2) {
-      if (!homeDetailsTracked) {
-        homeDetailsTracked = true;
-        window.PCC.util.track(window.PCC.events.quoteHomeDetailsCompleted, {
-          quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(), square_footage: value('square_footage'),
-        });
-      }
+    if (index === 2 && lockedEstimate) {
+      card.querySelector('[data-locked-summary]').textContent = `${serviceLabels[currentService()]} · ${lockedEstimate.square_footage.toLocaleString()} sq ft. This estimate will not recalculate.`;
+      paintEstimate('Estimate unavailable');
+    }
+    if (index === 4) renderReview();
+    if (index === 3 && previous < 3) {
       if (!contactStartedTracked) {
         contactStartedTracked = true;
         window.PCC.util.track(window.PCC.events.quoteContactStarted, {
@@ -240,7 +269,7 @@
       if (!ok) stepError?.classList.add('active');
       return ok;
     }
-    if (index === 2) {
+    if (index === 3) {
       const checks = [
         markField('name', !value('name')),
         markField('phone', !/[0-9()+\-\s]{10,}/.test(value('phone'))),
@@ -269,7 +298,7 @@
     const amount = calculatedAmount();
     const extras = selectedExtras();
     const property = ({ house: 'House', apartment: 'Apartment', condo: 'Condo', townhome: 'Townhome' })[value('property_type')] || 'Home';
-    card.querySelector('[data-review-home]').textContent = `${Number(value('square_footage')).toLocaleString()} sq ft · ${value('bedrooms')} bed · ${value('bathrooms')} bath · ${property}`;
+    card.querySelector('[data-review-home]').textContent = `${lockedEstimate.square_footage.toLocaleString()} sq ft · ${value('bedrooms')} bed · ${value('bathrooms')} bath · ${property}`;
     card.querySelector('[data-review-address]').textContent = `${value('service_address')}, ${value('city')} ${value('zip')}`;
     card.querySelector('[data-review-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : '—';
     card.querySelector('[data-review-cadence]').textContent = isOneTime() ? 'one-time base estimate' : 'per-visit base estimate';
@@ -283,11 +312,11 @@
   card.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => {
     if (validateCurrent()) show(index + 1, true);
   }));
+  card.querySelector('[data-lock-estimate]').addEventListener('click', lockEstimate);
   card.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => show(index - 1, true)));
   form.querySelectorAll('[name="service_type"]').forEach(input => input.addEventListener('change', syncServiceView));
   field('square_footage').addEventListener('input', () => {
     markField('square_footage', false);
-    refreshEstimate();
   });
   field('zip').addEventListener('input', () => {
     markField('zip', false);
@@ -304,7 +333,8 @@
     });
     data.service_type = currentService();
     data.frequency = currentFrequency();
-    data.square_footage = Number(value('square_footage'));
+    data.square_footage = lockedEstimate.square_footage;
+    data.preview_estimate_amount = lockedEstimate.amount;
     if (extras.length) data.requested_add_ons = extras;
     Object.assign(data, window.PCC.util.getUTM());
     return data;
@@ -333,7 +363,7 @@
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (submitting || index !== 3 || !validateCurrent()) return;
+    if (submitting || index !== 4 || !lockedEstimate || !validateCurrent()) return;
     submitting = true;
     const submit = form.querySelector('[type="submit"]');
     const error = form.querySelector('[data-submit-error]');
@@ -360,10 +390,16 @@
         return;
       }
       if (body.status === 'service_area_unavailable') {
-        show(2, true);
+        show(3, true);
         setFieldError('zip', 'This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
         markField('zip', true);
         field('zip').focus();
+        return;
+      }
+      if (body.status === 'estimate_changed') {
+        error.textContent = `Pricing changed before the request was saved. Your displayed estimate remains locked; please call ${window.PCC.business.phone} so NataBel can honor and review it.`;
+        error.classList.add('active');
+        error.focus?.();
         return;
       }
       throw new Error(body.error || `quote_${response.status}`);
@@ -384,11 +420,20 @@
     }
   });
 
-  if (['move', 'move-in', 'move-out'].includes(requestedService)) form.querySelector('[name="service_type"][value="move"]').checked = true;
-  if (['deep', 'deep-cleaning'].includes(requestedService)) form.querySelector('[name="service_type"][value="deep"]').checked = true;
-  if (['residential', 'recurring', 'standard'].includes(requestedService)) form.querySelector('[name="service_type"][value="standard"]').checked = true;
+  if (lockedEstimate) {
+    form.querySelector(`[name="service_type"][value="${lockedEstimate.service_type}"]`).checked = true;
+    form.querySelectorAll('[name="service_type"]').forEach(input => { input.disabled = true; });
+    field('square_footage').value = String(lockedEstimate.square_footage);
+    field('square_footage').readOnly = true;
+    homeDetailsTracked = true;
+    priceViewedTracked = lockedEstimate.price_viewed === true;
+  } else {
+    if (['move', 'move-in', 'move-out'].includes(requestedService)) form.querySelector('[name="service_type"][value="move"]').checked = true;
+    if (['deep', 'deep-cleaning'].includes(requestedService)) form.querySelector('[name="service_type"][value="deep"]').checked = true;
+    if (['residential', 'recurring', 'standard'].includes(requestedService)) form.querySelector('[name="service_type"][value="standard"]').checked = true;
+  }
   window.PCC.util.track(window.PCC.events.quoteStarted || 'quote_started', {
-    quote_type: 'residential', service_type: currentService() || 'residential', experience: 'residential-v5',
+    quote_type: 'residential', service_type: currentService() || 'residential', experience: 'residential-v6-locked',
   });
-  show(0, false);
+  show(lockedEstimate ? 2 : 0, false);
 })();

@@ -24,6 +24,7 @@ const preview = {
 
 const complete = {
   service_type: 'standard', frequency: 'biweekly', square_footage: 2500,
+  preview_estimate_amount: 225,
   submission_id: 'quote-test-00000001', form_started_at: Date.now() - 5000,
   name: 'Ada Customer', phone: '(916) 555-0123', email: 'ada@example.com',
   service_address: '123 Main Street', city: 'Rocklin', zip: '95765', property_type: 'house',
@@ -86,6 +87,13 @@ test('final submission requires the complete server-validated property details',
   const result = await request({ ...preview, preview: false });
   assert.equal(result.statusCode, 400);
   assert.equal(result.payload.error, 'missing_required_details');
+});
+
+test('final submission must match the estimate displayed before contact details', async () => {
+  const result = await request({ ...complete, preview_estimate_amount: 224 });
+  assert.equal(result.statusCode, 409);
+  assert.equal(result.payload.status, 'estimate_changed');
+  assert.equal(result.payload.error, 'locked_estimate_mismatch');
 });
 
 test('complete quote is stored before emails and notification includes every required field', async () => {

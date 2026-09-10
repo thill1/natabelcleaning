@@ -1,4 +1,4 @@
-/* Four-step residential Instant Estimate markup for NataBel. */
+/* Five-stage residential Instant Estimate markup for NataBel. */
 (function () {
   'use strict';
 
@@ -27,7 +27,7 @@
   function estimateFunnelCard(source) {
     return `<div class="quote-card quote-card-v2" data-funnel>
       <div class="quote-progress" aria-label="Quote progress">
-        <div><div class="quote-progress-meta"><span data-step-label>Step 1 · Cleaning type</span><span data-step-count>1 of 4</span></div><div class="quote-progress-track"><span></span></div></div>
+        <div><div class="quote-progress-meta"><span data-step-label>Step 1 · Cleaning type</span><span data-step-count>1 of 5</span></div><div class="quote-progress-track"><span></span></div></div>
         <span class="quote-progress-estimate" data-progress-estimate>About 2 minutes</span>
       </div>
 
@@ -54,13 +54,27 @@
         <section class="quote-step" data-step="size">
           <span class="quote-step-eyebrow">Home size</span>
           <h2>What’s your home’s square footage?</h2>
-          <p>Use your best estimate. Every positive home size receives an Instant Estimate.</p>
+          <p>Use your best estimate and review it before continuing. Your first estimate will be locked to this home size.</p>
           <div class="quote-single-field">
-            <div class="quote-field"><label for="squareFootage">Home square footage</label><input id="squareFootage" name="square_footage" type="number" min="1" step="1" inputmode="numeric" autocomplete="off" placeholder="e.g. 1800" aria-describedby="squareFootageHelp" /><span class="quote-error">Enter a square footage greater than zero.</span><small id="squareFootageHelp" class="quote-input-help">The estimate updates instantly as you type.</small></div>
+            <div class="quote-field"><label for="squareFootage">Home square footage</label><input id="squareFootage" name="square_footage" type="number" min="1" step="1" inputmode="numeric" autocomplete="off" placeholder="e.g. 1800" aria-describedby="squareFootageHelp" /><span class="quote-error">Enter a square footage greater than zero.</span><small id="squareFootageHelp" class="quote-input-help">Nothing recalculates while you type. Confirm the size once to reveal your estimate.</small></div>
           </div>
-          ${estimatePanel()}
           <div class="quote-server-error" data-step-error>Please enter a valid home size.</div>
-          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Add My Details <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-server-error" data-estimate-error role="alert"></div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-lock-estimate>Show My Estimate <i data-lucide="arrow-right"></i></button></div>
+        </section>
+
+        <section class="quote-step" data-step="estimate">
+          <span class="quote-step-eyebrow">Your price</span>
+          <h2>Your estimate is ready.</h2>
+          <p class="quote-locked-summary"><i data-lucide="lock-keyhole"></i> <span data-locked-summary>Your estimate is locked to the home details you confirmed.</span></p>
+          ${estimatePanel()}
+          <div class="quote-value-points" aria-label="NataBel service benefits">
+            <span><i data-lucide="clipboard-check"></i> Pristine Checklist</span>
+            <span><i data-lucide="shield-check"></i> Licensed &amp; insured</span>
+            <span><i data-lucide="sparkles"></i> 24-hour guarantee</span>
+          </div>
+          <p class="quote-correction-note">Need to correct the home size? Call <a href="tel:+19168998811">(916) 899-8811</a> and we’ll help without changing your locked estimate.</p>
+          <div class="quote-nav quote-nav-forward"><span></span><button class="btn btn-brass" type="button" data-next>Save My Estimate &amp; Continue <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="details">
@@ -112,12 +126,12 @@
           <p class="quote-field-note"><i data-lucide="map-pin"></i> NataBel currently serves Rocklin, Roseville, Granite Bay and surrounding Placer and Sacramento-area communities. Service area and requested date are confirmed before scheduling.</p>
           <label class="quote-consent"><input type="checkbox" name="contact_consent" value="yes" /> <span>I agree that NataBel may contact me about this estimate and requested cleaning service. This is not a marketing subscription.</span></label>
           <div class="quote-server-error" data-step-error>Please complete the required contact, property, and scheduling details.</div>
-          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Review My Estimate <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Review My Request <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="review">
           <span class="quote-step-eyebrow">Instant Estimate</span>
-          <h2>Your estimate is ready.</h2>
+          <h2>Review your cleaning request.</h2>
           <div class="quote-review-card">
             <div class="quote-review-home"><div><strong data-review-home>Home details</strong><span data-review-address></span></div><i data-lucide="home"></i></div>
             <div class="quote-review-main"><span>Instant Estimate</span><strong data-review-price>—</strong><small data-review-cadence>base estimate</small></div>
@@ -149,7 +163,6 @@
         <div class="quote-status-actions">
           <a href="tel:+19168998811" class="btn btn-brass"><i data-lucide="phone"></i> Call NataBel</a>
           <a href="index.html" class="btn btn-outline"><i data-lucide="home"></i> Back to Home</a>
-          <a href="free-estimate.html" class="btn btn-outline">Start Another Estimate</a>
         </div>
       </section>
     </div>`;

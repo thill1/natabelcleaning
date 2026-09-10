@@ -293,6 +293,16 @@ async function handler(req, res) {
   if (!serviceArea.isEligibleZip(text(body.zip, 10))) {
     return res.status(200).json({ ok: false, status: 'service_area_unavailable', error: 'zip_not_served', serviceAreaVersion: serviceArea.version });
   }
+  const previewAmount = Number(body.preview_estimate_amount);
+  // New quote clients send the displayed amount so a request cannot silently
+  // change after the customer sees it. Older cached clients remain compatible.
+  if (Number.isFinite(previewAmount) && previewAmount !== result.quote.amount) {
+    return res.status(409).json({
+      ok: false,
+      status: 'estimate_changed',
+      error: 'locked_estimate_mismatch'
+    });
+  }
 
   const startedAt = Number(body.form_started_at);
   if (Number.isFinite(startedAt) && Date.now() - startedAt < 1500) {

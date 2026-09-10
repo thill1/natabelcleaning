@@ -47,6 +47,8 @@ Implemented event names include:
 
 Quote events include safe dimensions when available: `service_type`, `frequency`, `square_footage_band`, `bedrooms`, `bathrooms`, approved service-area `city`, `region`, and `estimated_price`. Lead/application events include `lead_type` and stage metadata only.
 
+The residential quote sequence is intentionally fixed: `quote_started` fires on entry, `quote_home_details_completed` when the customer commits the service and square footage, `quote_price_viewed` when the one-time locked estimate is revealed, and `quote_contact_started` only after the customer chooses **Save My Estimate & Continue**. The locked service, square footage, and displayed amount stay in first-party `sessionStorage` for 30 minutes so refreshing the page does not create an editable estimate or a duplicate price-view event. No identity fields are stored in that lock.
+
 ## UTM attribution and OfficePro readiness
 
 When a URL contains UTM parameters, the site immediately stores a sanitized first-touch and last-touch record in `localStorage` under `natabel.analytics.attribution.v1`, independently of optional vendor consent. This first-party capture does not contact GA4 or Clarity and lets attribution survive navigation into the quote or application funnel. The lead payload continues to include `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `traffic_source`, `campaign`, and `landing_page`, so the future OfficePro bridge can map attribution to a lead without changing the form contracts.
