@@ -2,8 +2,7 @@
    NATABEL PRISTINE CLEANING — Privacy-aware analytics loader
 
    Direct GA4 and Microsoft Clarity are loaded only after the visitor opts in
-   to optional analytics. IDs live in js/config.js and are intentionally blank
-   until the real production values are supplied.
+   to optional analytics. Production IDs live in js/config.js.
 
    The event layer in config.js is the only application-facing API. This file
    owns consent, vendor loading, page-level events, CTA events, and Clarity
@@ -236,6 +235,10 @@
   analytics.loaded = analytics.loaded || { ga4: false, clarity: false };
 
   function init() {
+    // Capture first-party campaign attribution immediately so it survives
+    // navigation into a quote or application, even before an analytics choice.
+    // This does not contact GA4 or Clarity.
+    if (window.PCC.util?.getUTM) window.PCC.util.getUTM();
     const consent = readConsent();
     if (consent === 'granted') loadConfiguredVendors();
     else if (hasConfiguredVendors() && analytics.consentRequired !== false) showConsentUi();

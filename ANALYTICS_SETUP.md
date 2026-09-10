@@ -46,7 +46,7 @@ Quote events include safe dimensions when available: `service_type`, `frequency`
 
 ## UTM attribution and OfficePro readiness
 
-When a URL contains UTM parameters, the site stores a sanitized first-touch and last-touch record in `localStorage` under `natabel.analytics.attribution.v1`. The lead payload continues to include `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `traffic_source`, `campaign`, and `landing_page`, so the future OfficePro bridge can map attribution to a lead without changing the form contracts.
+When a URL contains UTM parameters, the site immediately stores a sanitized first-touch and last-touch record in `localStorage` under `natabel.analytics.attribution.v1`, independently of optional vendor consent. This first-party capture does not contact GA4 or Clarity and lets attribution survive navigation into the quote or application funnel. The lead payload continues to include `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `traffic_source`, `campaign`, and `landing_page`, so the future OfficePro bridge can map attribution to a lead without changing the form contracts.
 
 Recommended OfficePro mapping:
 
