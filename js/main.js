@@ -9,7 +9,7 @@
   if (!document.querySelector('link[data-qa-final-fixes]')) {
     const finalFixes = document.createElement('link');
     finalFixes.rel = 'stylesheet';
-    finalFixes.href = 'css/qa-final-fixes.css?v=20260820-audit';
+    finalFixes.href = 'css/qa-final-fixes.css?v=20260916-mobile-footer-fix';
     finalFixes.dataset.qaFinalFixes = 'true';
     document.head.appendChild(finalFixes);
   }
@@ -18,7 +18,7 @@
      computed background is actually black / near-black. */
   if (!document.querySelector('script[data-dark-bubbles]')) {
     const darkBubbles = document.createElement('script');
-    darkBubbles.src = 'js/dark-bubbles.js?v=20260820-audit';
+    darkBubbles.src = 'js/dark-bubbles.js?v=20260916-mobile-footer-fix';
     darkBubbles.dataset.darkBubbles = 'true';
     document.head.appendChild(darkBubbles);
   }

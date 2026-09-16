@@ -163,6 +163,7 @@
     targets.forEach(selector => {
       document.querySelectorAll(selector).forEach(element => {
         if (seen.has(element) || element.matches('.simple-hero') || !isDarkSurface(element)) return;
+        if (element.matches('.site-footer') && window.matchMedia('(max-width: 719px)').matches) return;
         const rect = element.getBoundingClientRect();
         if (rect.width < 160 || rect.height < 56) return;
         seen.add(element);

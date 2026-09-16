@@ -50,7 +50,7 @@
     if (document.querySelector('link[data-analytics-styles]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'css/analytics.css?v=20260916-mobile-privacy';
+    link.href = 'css/analytics.css?v=20260916-mobile-footer-fix';
     link.dataset.analyticsStyles = 'true';
     document.head.appendChild(link);
   }
@@ -231,7 +231,8 @@
     link.dataset.analyticsOpen = 'true';
     link.textContent = 'Privacy choices';
     link.addEventListener('click', showPrivacyChoices);
-    document.body.appendChild(link);
+    const footerBottom = document.querySelector('.site-footer .footer-bottom');
+    (footerBottom || document.body).appendChild(link);
   }
 
   function trackPageInteractions() {

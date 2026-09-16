@@ -74,4 +74,14 @@
     bottom: calc(100px + env(safe-area-inset-bottom));
     transform: translateX(-50%);
   }
+  .site-footer .analytics-privacy-link {
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+    justify-self: center;
+    margin: 6px auto 0;
+    transform: none !important;
+    color: rgba(255,255,255,.78);
+    background: rgba(255,255,255,.08);
+  }
 }
