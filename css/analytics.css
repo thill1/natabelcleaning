@@ -53,7 +53,25 @@
   font-size: 11px;
 }
 .analytics-consent + .analytics-privacy-link { display: none; }
-@media (max-width: 700px) {
-  .analytics-consent { display: block; left: 12px; right: 12px; bottom: 12px; padding: 16px; }
+@media (max-width: 719px) {
+  .analytics-consent {
+    display: block;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    padding: 16px;
+  }
   .analytics-consent-actions { margin-top: 14px; justify-content: flex-end; }
+  .analytics-privacy-link {
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    white-space: nowrap;
+  }
+  .simple-site:not(.quote-page):not(.careers-scope):not(.no-mobile-cta) .analytics-consent {
+    bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+  .simple-site:not(.quote-page):not(.careers-scope):not(.no-mobile-cta) .analytics-privacy-link {
+    left: 50%;
+    bottom: calc(100px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+  }
 }

@@ -50,7 +50,7 @@
     if (document.querySelector('link[data-analytics-styles]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'css/analytics.css?v=20260910-default-on';
+    link.href = 'css/analytics.css?v=20260916-mobile-privacy';
     link.dataset.analyticsStyles = 'true';
     document.head.appendChild(link);
   }
