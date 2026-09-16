@@ -11,7 +11,6 @@
     '.simple-founder',
     '.simple-cta',
     '.simple-photo-note',
-    '.site-footer',
     '.page-hero',
     '.cta-banner',
     '.side-cta',

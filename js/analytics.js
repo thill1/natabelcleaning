@@ -50,7 +50,7 @@
     if (document.querySelector('link[data-analytics-styles]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'css/analytics.css?v=20260916-mobile-footer-fix';
+    link.href = 'css/analytics.css?v=20260916-mobile-footer-v2';
     link.dataset.analyticsStyles = 'true';
     document.head.appendChild(link);
   }

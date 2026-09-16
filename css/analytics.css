@@ -53,6 +53,15 @@
   font-size: 11px;
 }
 .analytics-consent + .analytics-privacy-link { display: none; }
+.site-footer .analytics-privacy-link {
+  position: static !important;
+  left: auto !important;
+  bottom: auto !important;
+  margin: 0 0 0 auto;
+  transform: none !important;
+  color: rgba(255,255,255,.78);
+  background: rgba(255,255,255,.08);
+}
 @media (max-width: 719px) {
   .analytics-consent {
     display: block;
@@ -75,13 +84,7 @@
     transform: translateX(-50%);
   }
   .site-footer .analytics-privacy-link {
-    position: static !important;
-    left: auto !important;
-    bottom: auto !important;
     justify-self: center;
     margin: 6px auto 0;
-    transform: none !important;
-    color: rgba(255,255,255,.78);
-    background: rgba(255,255,255,.08);
   }
 }

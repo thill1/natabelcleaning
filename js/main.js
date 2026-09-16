@@ -9,7 +9,7 @@
   if (!document.querySelector('link[data-qa-final-fixes]')) {
     const finalFixes = document.createElement('link');
     finalFixes.rel = 'stylesheet';
-    finalFixes.href = 'css/qa-final-fixes.css?v=20260916-mobile-footer-fix';
+    finalFixes.href = 'css/qa-final-fixes.css?v=20260916-mobile-footer-v2';
     finalFixes.dataset.qaFinalFixes = 'true';
     document.head.appendChild(finalFixes);
   }
@@ -18,10 +18,28 @@
      computed background is actually black / near-black. */
   if (!document.querySelector('script[data-dark-bubbles]')) {
     const darkBubbles = document.createElement('script');
-    darkBubbles.src = 'js/dark-bubbles.js?v=20260916-mobile-footer-fix';
+    darkBubbles.src = 'js/dark-bubbles.js?v=20260916-mobile-footer-v2';
     darkBubbles.dataset.darkBubbles = 'true';
     document.head.appendChild(darkBubbles);
   }
+
+  /* Keep the legal control in document flow and the contact copy unobstructed.
+     Run again after DOMContentLoaded and page restoration because iOS Messages
+     can restore the page before late-loaded analytics UI has been inserted. */
+  function normalizeFooter() {
+    const footer = document.querySelector('.site-footer');
+    if (!footer) return;
+    footer.querySelectorAll('.natabel-bubble-canvas').forEach(canvas => canvas.remove());
+    const footerBottom = footer.querySelector('.footer-bottom');
+    const privacyLink = document.querySelector('[data-analytics-open]');
+    if (footerBottom && privacyLink && privacyLink.parentElement !== footerBottom) {
+      footerBottom.appendChild(privacyLink);
+    }
+  }
+  normalizeFooter();
+  document.addEventListener('DOMContentLoaded', normalizeFooter, { once: true });
+  window.addEventListener('pageshow', normalizeFooter, { passive: true });
+  window.setTimeout(normalizeFooter, 500);
 
   /* Careers hero hierarchy: the hiring label belongs directly beneath the
      primary headline so the eye reads Join our team today → Now Hiring. */
