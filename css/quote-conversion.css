@@ -407,6 +407,18 @@
   .quote-page .footer-grid { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 640px) {
+  .quote-page .quote-nav:not(.quote-nav-forward) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .quote-page .quote-nav:not(.quote-nav-forward) .btn {
+    width: 100%;
+    white-space: normal;
+    line-height: 1.25;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .quote-page .quote-step.active { animation: none; }
   .quote-page .quote-option-content,
