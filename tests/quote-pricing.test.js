@@ -20,7 +20,7 @@ test('standard recurring cleaning is 75 dollars plus six cents per square foot',
   assert.equal(result.quote.baseCharge, 75);
   assert.equal(result.quote.squareFootageCharge, 150);
   assert.equal(result.quote.ratePerSquareFoot, 0.06);
-  assert.equal(result.quote.rateBookVersion, 'natabel-base-plus-square-footage-2026-08-25');
+  assert.equal(result.quote.rateBookVersion, 'natabel-base-plus-square-footage-2026-09-19');
   assert.equal(result.quote.cadence, 'per_visit');
 });
 
@@ -37,7 +37,7 @@ test('standard pricing is the same for every recurring schedule', () => {
   }
 });
 
-test('deep cleaning is 75 dollars plus twelve cents per square foot', () => {
+test('deep cleaning is 75 dollars plus seventeen cents per square foot', () => {
   const result = calculateResidential({
     ...input,
     service_type: 'deep',
@@ -45,11 +45,12 @@ test('deep cleaning is 75 dollars plus twelve cents per square foot', () => {
     square_footage: 1801
   }, priceBook);
   assert.equal(result.status, 'estimated');
-  assert.equal(result.quote.amount, 292);
+  assert.equal(result.quote.amount, 382);
+  assert.equal(result.quote.ratePerSquareFoot, 0.17);
   assert.equal(result.quote.cadence, 'one_time');
 });
 
-test('move-in and move-out cleaning is 75 dollars plus twenty-five cents per square foot', () => {
+test('move-in and move-out cleaning is 75 dollars plus thirty cents per square foot', () => {
   const result = calculateResidential({
     ...input,
     service_type: 'move',
@@ -57,7 +58,8 @@ test('move-in and move-out cleaning is 75 dollars plus twenty-five cents per squ
     square_footage: 1801
   }, priceBook);
   assert.equal(result.status, 'estimated');
-  assert.equal(result.quote.amount, 526);
+  assert.equal(result.quote.amount, 616);
+  assert.equal(result.quote.ratePerSquareFoot, 0.30);
   assert.equal(result.quote.cadence, 'one_time');
 });
 
@@ -66,8 +68,8 @@ test('all formula estimates round up to the nearest whole dollar', () => {
   const deep = calculateResidential({ ...input, service_type: 'deep', frequency: 'one_time', square_footage: 2101 }, priceBook);
   const move = calculateResidential({ ...input, service_type: 'move', frequency: 'one_time', square_footage: 2101 }, priceBook);
   assert.equal(standard.quote.amount, 202);
-  assert.equal(deep.quote.amount, 328);
-  assert.equal(move.quote.amount, 601);
+  assert.equal(deep.quote.amount, 433);
+  assert.equal(move.quote.amount, 706);
 });
 
 test('optional services are never included in the base estimate', () => {
@@ -91,9 +93,9 @@ test('all three services quote very small and very large homes', () => {
     ['standard', 'biweekly', 1, 125],
     ['standard', 'biweekly', 100000, 6075],
     ['deep', 'one_time', 1, 76],
-    ['deep', 'one_time', 100000, 12075],
+    ['deep', 'one_time', 100000, 17075],
     ['move', 'one_time', 1, 76],
-    ['move', 'one_time', 100000, 25075]
+    ['move', 'one_time', 100000, 30075]
   ];
   for (const [service_type, frequency, square_footage, expected] of cases) {
     const result = calculateResidential({ ...input, service_type, frequency, square_footage }, priceBook);

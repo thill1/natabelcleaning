@@ -71,8 +71,8 @@ test('preview API returns the final estimate without exposing the rate calculati
 test('preview API quotes deep and move services for large homes', async () => {
   const deep = await request({ ...preview, service_type: 'deep', frequency: 'one_time', square_footage: 100000 });
   const move = await request({ ...preview, service_type: 'move', frequency: 'one_time', square_footage: 100000 });
-  assert.equal(deep.payload.quote.amount, 12075);
-  assert.equal(move.payload.quote.amount, 25075);
+  assert.equal(deep.payload.quote.amount, 17075);
+  assert.equal(move.payload.quote.amount, 30075);
 });
 
 test('preview rejects zero square footage and accepts a one-square-foot home', async () => {

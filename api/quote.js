@@ -2,10 +2,10 @@ const serviceArea = require('../lib/service-area');
 
 // Server-only price book. Keep pricing details out of customer-facing assets.
 const priceBook = {
-  version: 'natabel-base-plus-square-footage-2026-08-25',
+  version: 'natabel-base-plus-square-footage-2026-09-19',
   enabled: true,
   baseCharge: 75,
-  rates: { standard: 0.06, deep: 0.12, move: 0.25 },
+  rates: { standard: 0.06, deep: 0.17, move: 0.30 },
   minimums: { standard: 125 }
 };
 
