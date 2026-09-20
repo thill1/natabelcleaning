@@ -9,7 +9,7 @@
   if (!document.querySelector('link[data-qa-final-fixes]')) {
     const finalFixes = document.createElement('link');
     finalFixes.rel = 'stylesheet';
-    finalFixes.href = 'css/qa-final-fixes.css?v=20260916-mobile-footer-v2';
+    finalFixes.href = 'css/qa-final-fixes.css?v=20260920-scroll-unlock';
     finalFixes.dataset.qaFinalFixes = 'true';
     document.head.appendChild(finalFixes);
   }
@@ -73,12 +73,16 @@
   const overlay = document.querySelector('.mobile-menu-overlay');
   const toggle = document.querySelector('.menu-toggle');
   const closeBtn = document.querySelector('.mobile-menu .mm-close');
+  let bodyOverflowBeforeMenu = '';
 
   function setMenu(open) {
     if (!menu) return;
+    if (open && !menu.classList.contains('open')) {
+      bodyOverflowBeforeMenu = document.body.style.overflow;
+    }
     menu.classList.toggle('open', open);
     if (overlay) overlay.classList.toggle('open', open);
-    document.body.style.overflow = open ? 'hidden' : '';
+    document.body.style.overflow = open ? 'hidden' : bodyOverflowBeforeMenu;
     if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
   if (toggle) toggle.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
@@ -86,6 +90,10 @@
   if (closeBtn) closeBtn.addEventListener('click', () => setMenu(false));
   if (menu) menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  window.addEventListener('pageshow', () => setMenu(false), { passive: true });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1020 && menu?.classList.contains('open')) setMenu(false);
+  }, { passive: true });
 
   /* ---------- Reveal on scroll (IntersectionObserver — fallback only) ---------- */
   // GSAP ScrollTrigger handles all reveals when available.

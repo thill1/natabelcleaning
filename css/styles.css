@@ -84,14 +84,12 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  overscroll-behavior-y: none;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
 body {
   margin: 0;
-  overscroll-behavior-y: none;
   font-family: var(--font-ui);
   color: var(--text);
   background: var(--bg);

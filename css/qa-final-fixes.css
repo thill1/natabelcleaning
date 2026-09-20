@@ -47,6 +47,11 @@
   background: var(--noir-deep) !important;
 }
 
+/* The simplified header sits at z-index 100. Keep the open navigation above it
+   so its visible Close control can always release the page scroll lock. */
+.mobile-menu-overlay { z-index: 110; }
+.mobile-menu { z-index: 120; }
+
 /* Hero-matched branded bubbles on every intentional black / near-black surface.
    These rules are deliberately global so legacy interior pages and the careers
    page receive the same treatment as the simplified pages. */
