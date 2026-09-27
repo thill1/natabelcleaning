@@ -3,6 +3,8 @@ name: Codex Task Runner
 on:
   issues:
     types: [opened, edited]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
@@ -11,7 +13,9 @@ permissions:
 
 jobs:
   codex:
-    if: startsWith(github.event.issue.title, '[codex]')
+    if: >
+      startsWith(github.event.issue.title, '[codex]') &&
+      (github.event_name == 'issues' || startsWith(github.event.comment.body, '/codex run'))
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
@@ -90,13 +94,13 @@ Issue: {title}
 URL: {url}
 Working branch: {branch}
 
-Read the repository instructions and all referenced specification files before making changes.
+Read repository instructions and every referenced specification file before making changes.
 Implement the issue completely and conservatively.
 Preserve unrelated behavior.
-Run the relevant test suite and any available checks before finishing.
+Run the relevant test suite and available checks before finishing.
 Do not merge anything.
 Do not modify repository secrets, workflow permissions, or deployment credentials.
-If a requested change conflicts with the repository's documented constraints, preserve safety and explain it in your final message.
+If a requested change conflicts with documented repository constraints, preserve safety and explain it in the final message.
 
 Issue body:
 ---
