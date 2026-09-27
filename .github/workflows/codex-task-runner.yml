@@ -1,0 +1,195 @@
+name: Codex Task Runner
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  codex:
+    if: startsWith(github.event.issue.title, '[codex]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Resolve task branch
+        id: task
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, re
+          body = os.environ.get("ISSUE_BODY", "")
+          number = os.environ["ISSUE_NUMBER"]
+
+          patterns = [
+              r'(?im)^\s*branch\s*:\s*`?([A-Za-z0-9._/-]+)`?\s*$',
+              r'(?i)\bon branch\s+`([A-Za-z0-9._/-]+)`',
+          ]
+          branch = None
+          for pattern in patterns:
+              m = re.search(pattern, body)
+              if m:
+                  branch = m.group(1)
+                  break
+
+          if not branch:
+              branch = f"codex/issue-{number}"
+
+          if not re.fullmatch(r"[A-Za-z0-9._/-]+", branch):
+              raise SystemExit("Unsafe branch name")
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"branch={branch}\n")
+          PY
+
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ github.token }}
+
+      - name: Prepare task branch
+        env:
+          TASK_BRANCH: ${{ steps.task.outputs.branch }}
+        shell: bash
+        run: |
+          git fetch origin --prune
+          if git show-ref --verify --quiet "refs/remotes/origin/${TASK_BRANCH}"; then
+            git switch -C "${TASK_BRANCH}" "origin/${TASK_BRANCH}"
+          else
+            git switch -c "${TASK_BRANCH}"
+          fi
+
+      - name: Build Codex prompt
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          TASK_BRANCH: ${{ steps.task.outputs.branch }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          title = os.environ["ISSUE_TITLE"]
+          body = os.environ.get("ISSUE_BODY", "")
+          number = os.environ["ISSUE_NUMBER"]
+          url = os.environ["ISSUE_URL"]
+          branch = os.environ["TASK_BRANCH"]
+
+          prompt = f"""You are implementing GitHub issue #{number} in this repository.
+
+Issue: {title}
+URL: {url}
+Working branch: {branch}
+
+Read the repository instructions and all referenced specification files before making changes.
+Implement the issue completely and conservatively.
+Preserve unrelated behavior.
+Run the relevant test suite and any available checks before finishing.
+Do not merge anything.
+Do not modify repository secrets, workflow permissions, or deployment credentials.
+If a requested change conflicts with the repository's documented constraints, preserve safety and explain it in your final message.
+
+Issue body:
+---
+{body}
+---
+
+At the end, summarize:
+1. files changed
+2. implementation completed
+3. tests/checks run and results
+4. assumptions
+5. remaining risks or follow-up items
+"""
+          with open("/tmp/codex-task.md", "w") as f:
+              f.write(prompt)
+          PY
+
+      - name: Run Codex
+        id: codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ":workspace"
+          prompt-file: /tmp/codex-task.md
+          effort: high
+
+      - name: Commit and push Codex changes
+        id: commit
+        env:
+          TASK_BRANCH: ${{ steps.task.outputs.branch }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        shell: bash
+        run: |
+          if git diff --quiet && git diff --cached --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git config user.name "Codex Task Runner"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: implement issue #${ISSUE_NUMBER} with Codex"
+          git push --set-upstream origin "${TASK_BRANCH}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Open or find pull request
+        if: steps.commit.outputs.changed == 'true'
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TASK_BRANCH: ${{ steps.task.outputs.branch }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        shell: bash
+        run: |
+          existing="$(gh pr list --state open --head "${TASK_BRANCH}" --json url --jq '.[0].url // empty')"
+          if [ -n "${existing}" ]; then
+            echo "url=${existing}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          clean_title="${ISSUE_TITLE#\[codex\] }"
+          url="$(gh pr create             --base main             --head "${TASK_BRANCH}"             --title "${clean_title}"             --body "Automated Codex implementation for #${ISSUE_NUMBER}. Review before merging.")"
+          echo "url=${url}" >> "$GITHUB_OUTPUT"
+
+      - name: Report result on issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          FINAL_MESSAGE: ${{ steps.codex.outputs.final-message }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+          CHANGED: ${{ steps.commit.outputs.changed }}
+          JOB_STATUS: ${{ job.status }}
+        shell: bash
+        run: |
+          {
+            echo "### Codex task result"
+            echo
+            echo "**Status:** ${JOB_STATUS}"
+            if [ -n "${PR_URL}" ]; then
+              echo
+              echo "**Pull request:** ${PR_URL}"
+            elif [ "${CHANGED}" = "false" ]; then
+              echo
+              echo "No repository changes were produced."
+            fi
+            if [ -n "${FINAL_MESSAGE}" ]; then
+              echo
+              echo "#### Codex summary"
+              echo
+              printf '%s\n' "${FINAL_MESSAGE}"
+            fi
+          } > /tmp/codex-result.md
+
+          gh issue comment "${ISSUE_NUMBER}" --body-file /tmp/codex-result.md
