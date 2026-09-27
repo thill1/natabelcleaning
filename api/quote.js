@@ -2,15 +2,23 @@ const serviceArea = require('../lib/service-area');
 
 // Server-only price book. Keep pricing details out of customer-facing assets.
 const priceBook = {
-  version: 'natabel-base-plus-square-footage-2026-09-19',
+  version: 'natabel-pristine-tiers-2026-09',
   enabled: true,
   baseCharge: 75,
-  rates: { standard: 0.06, deep: 0.17, move: 0.30 },
-  minimums: { standard: 125 }
+  recurring: {
+    care: { weekly: 0.06, biweekly: 0.07, monthly: 0.08, minimum: 165 },
+    signature: { weekly: 0.09, biweekly: 0.10, monthly: 0.11, minimum: 210 },
+    concierge: { weekly: 0.12, biweekly: 0.13, monthly: 0.14, minimum: 255 }
+  },
+  oneTime: {
+    deep: { rate: 0.17, minimum: 325 },
+    move: { rate: 0.30, minimum: 425 }
+  }
 };
 
 const QUOTE_ALLOWED = {
   service_type: new Set(['standard', 'deep', 'move']),
+  tier: new Set(['care', 'signature', 'concierge']),
   frequency: new Set(['one_time', 'weekly', 'biweekly', 'monthly']),
   property_type: new Set(['house', 'apartment', 'condo', 'townhome']),
   condition: new Set(['maintained', 'average', 'heavy'])
@@ -19,6 +27,7 @@ const QUOTE_ALLOWED = {
 function normalizeQuoteInput(input) {
   const value = {
     service_type: String(input.service_type || ''),
+    tier: String(input.tier || ''),
     frequency: String(input.frequency || ''),
     property_type: String(input.property_type || ''),
     condition: String(input.condition || 'average'),
@@ -33,6 +42,8 @@ function normalizeQuoteInput(input) {
   if (!QUOTE_ALLOWED.condition.has(value.condition)) throw new Error('invalid_condition');
   if (value.service_type === 'standard' && value.frequency === 'one_time') throw new Error('invalid_frequency');
   if (value.service_type !== 'standard' && value.frequency !== 'one_time') throw new Error('invalid_frequency');
+  if (value.service_type === 'standard' && !QUOTE_ALLOWED.tier.has(value.tier)) throw new Error('invalid_tier');
+  if (value.service_type !== 'standard' && value.tier) throw new Error('invalid_tier');
   if (!Number.isFinite(value.square_footage) || value.square_footage <= 0) throw new Error('invalid_square_footage');
   if (value.zip && !/^\d{5}$/.test(value.zip)) throw new Error('invalid_zip');
   return value;
@@ -46,13 +57,18 @@ function exactRange(total) {
 function calculateResidential(rawInput, book) {
   const input = normalizeQuoteInput(rawInput);
   if (!book || !book.enabled) return { status: 'manual_review_required', reason: 'pricing_not_configured' };
-  const rate = Number(book.rates?.[input.service_type]);
+  const pricing = input.service_type === 'standard'
+    ? book.recurring?.[input.tier]
+    : book.oneTime?.[input.service_type];
+  const rate = Number(input.service_type === 'standard' ? pricing?.[input.frequency] : pricing?.rate);
   if (!Number.isFinite(rate) || rate <= 0) return { status: 'manual_review_required', reason: 'rate_not_found' };
-  const configuredMinimum = Number(book.minimums?.[input.service_type]);
+  const configuredMinimum = Number(pricing?.minimum);
   const minimum = Number.isFinite(configuredMinimum) && configuredMinimum > 0 ? configuredMinimum : 0;
   const configuredBaseCharge = Number(book.baseCharge);
   const baseCharge = Number.isFinite(configuredBaseCharge) && configuredBaseCharge >= 0 ? configuredBaseCharge : 0;
-  const squareFootageCharge = input.square_footage * rate;
+  // Calculate in cents so exact whole-dollar totals are not pushed up by
+  // binary floating-point residue before the approved Math.ceil step.
+  const squareFootageCharge = (input.square_footage * Math.round(rate * 100)) / 100;
   const formulaAmount = baseCharge + squareFootageCharge;
   const amount = Math.ceil(Math.max(formulaAmount, minimum));
   return {
@@ -64,12 +80,14 @@ function calculateResidential(rawInput, book) {
       cadence: input.frequency === 'one_time' ? 'one_time' : 'per_visit',
       cadenceLabel: input.frequency === 'one_time' ? 'for this one-time clean' : 'per visit',
       frequency: input.frequency,
+      tier: input.service_type === 'standard' ? input.tier : null,
       serviceType: input.service_type,
       rateBookVersion: book.version,
       ratePerSquareFoot: rate,
       squareFootage: input.square_footage,
       baseCharge,
       squareFootageCharge,
+      minimum,
       minimumApplied: minimum > 0 && formulaAmount < minimum,
       optionalServicesIncluded: false
     }
@@ -83,6 +101,7 @@ function publicQuote(quote) {
     cadence: quote.cadence,
     cadenceLabel: quote.cadenceLabel,
     frequency: quote.frequency,
+    tier: quote.tier,
     serviceType: quote.serviceType
   };
 }
@@ -91,7 +110,7 @@ const BUSINESS_EMAIL = 'natabelpristinecleaning@gmail.com';
 const FROM_EMAIL = 'quotes@natabelpristinecleaning.com';
 const HONEYPOT_FIELD = 'website_url';
 const MAX_BODY_BYTES = 48 * 1024;
-const DISCLAIMER = 'Your instant estimate is based on your home’s square footage and selected service. Final pricing will be confirmed after we review the property’s condition, bathrooms, pets, clutter, requested services, and any add-ons.';
+const DISCLAIMER = 'Your instant estimate is based on your home’s square footage, selected level of care, and cleaning frequency. Final pricing will be confirmed after we review the property’s condition, bathrooms, pets, clutter, requested services, and any add-ons.';
 const EXCLUSIONS = 'Appliance interiors, excessive debris, wall washing, carpet cleaning, exterior windows, garages, and hauling are not included in the base estimate. Optional services and unusual-condition charges are reviewed and priced separately.';
 const ALLOWED = {
   pets: new Set(['none', 'dog', 'cat', 'multiple', 'other']),
@@ -116,10 +135,14 @@ function frequencyLabel(value) {
   return ({ weekly: 'Weekly', biweekly: 'Every 2 Weeks', monthly: 'Every 4 Weeks', one_time: 'One-Time' })[value] || value;
 }
 
+function tierLabel(value) {
+  return ({ care: 'Pristine Care', signature: 'Pristine Signature', concierge: 'Pristine Concierge' })[value] || value;
+}
+
 function serviceDetails(body) {
-  if (body.service_type === 'deep') return { label: 'Deep Cleaning', cadence: 'one-time cleaning', oneTime: true };
-  if (body.service_type === 'move') return { label: 'Move-In / Move-Out Cleaning', cadence: 'one-time cleaning', oneTime: true };
-  return { label: 'Standard Recurring Cleaning', cadence: 'per visit', oneTime: false };
+  if (body.service_type === 'deep') return { label: 'Pristine Reset', cadence: 'one-time cleaning', oneTime: true };
+  if (body.service_type === 'move') return { label: 'Pristine Move', cadence: 'one-time cleaning', oneTime: true };
+  return { label: 'Recurring Cleaning', cadence: 'per visit', oneTime: false };
 }
 
 function normalizeSubmission(body, quote) {
@@ -139,6 +162,8 @@ function normalizeSubmission(body, quote) {
     property_type: text(body.property_type, 30),
     service_type: text(body.service_type, 30),
     service_type_label: serviceDetails(body).label,
+    tier: text(body.tier, 30),
+    tier_label: tierLabel(body.tier),
     frequency: text(body.frequency, 30),
     frequency_label: frequencyLabel(body.frequency),
     square_footage: Number(body.square_footage),
@@ -158,6 +183,8 @@ function normalizeSubmission(body, quote) {
     base_price: quote.baseCharge,
     square_footage_charge: quote.squareFootageCharge,
     standard_minimum_applied: quote.minimumApplied,
+    minimum_applied: quote.minimumApplied,
+    minimum_amount: quote.minimum,
     rate_book_version: quote.rateBookVersion,
     utm_source: text(body.utm_source, 100),
     utm_medium: text(body.utm_medium, 100),
@@ -192,6 +219,7 @@ function emailRows(body) {
     ['Email', body.email],
     ['Service address', `${body.service_address}, ${body.city}, ${body.zip}`],
     ['Cleaning type', body.service_type_label],
+    ['Pristine level', body.tier_label || 'Not applicable'],
     ['Frequency', body.frequency_label],
     ['Square footage', body.square_footage],
     ['Bedrooms', body.bedrooms],
@@ -202,7 +230,7 @@ function emailRows(body) {
     ['Clutter', body.clutter],
     ['Base price', `$${Number(body.base_price).toLocaleString()}`],
     ['Square-footage charge', `$${Number(body.square_footage_charge).toLocaleString(undefined, { minimumFractionDigits: Number.isInteger(body.square_footage_charge) ? 0 : 2, maximumFractionDigits: 2 })}`],
-    ['Standard minimum applied', body.standard_minimum_applied ? 'Yes — $125 minimum' : 'No'],
+    ['Minimum applied', body.minimum_applied ? `Yes — $${Number(body.minimum_amount).toLocaleString()} minimum` : 'No'],
     ['Calculated estimate', `$${Number(body.estimate_amount).toLocaleString()} ${body.estimate_cadence === 'one_time' ? 'one-time' : 'per visit'}`],
     ['Requested add-ons', body.requested_add_ons.join(', ') || 'None'],
     ['Focus areas', body.focus_areas.join(', ') || 'None'],
@@ -220,7 +248,8 @@ function internalEmailHtml(body) {
 function customerEmailHtml(body) {
   const service = serviceDetails(body);
   const cadence = service.oneTime ? 'one-time base estimate' : 'per-visit base estimate';
-  return `<div style="font-family:Arial,sans-serif;color:#17140f;line-height:1.6;max-width:620px;margin:auto"><p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8f6e1f">NataBel Pristine Cleaning</p><h1 style="font-family:Georgia,serif;font-weight:500">Your Instant Estimate</h1><p style="font-size:38px;font-family:Georgia,serif;margin:18px 0">$${Number(body.estimate_amount).toLocaleString()} <span style="font-size:16px">${safe(cadence)}</span></p><p><strong>${safe(service.label)}</strong> for ${safe(body.square_footage)} sq ft at ${safe(body.service_address)}, ${safe(body.city)}.</p><p style="padding:14px;background:#fff8e7;border:1px solid #decfae">${safe(DISCLAIMER)}</p><p>NataBel will review your property details, confirm final pricing and availability, and contact you about next steps. For immediate help, call (916) 899-8811.</p><p><strong>Base-estimate exclusions:</strong> ${safe(EXCLUSIONS)}</p></div>`;
+  const tier = body.tier_label ? ` · ${safe(body.tier_label)}` : '';
+  return `<div style="font-family:Arial,sans-serif;color:#17140f;line-height:1.6;max-width:620px;margin:auto"><p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8f6e1f">NataBel Pristine Cleaning</p><h1 style="font-family:Georgia,serif;font-weight:500">Your Instant Estimate</h1><p style="font-size:38px;font-family:Georgia,serif;margin:18px 0">$${Number(body.estimate_amount).toLocaleString()} <span style="font-size:16px">${safe(cadence)}</span></p><p><strong>${safe(service.label)}${tier}</strong> for ${safe(body.square_footage)} sq ft at ${safe(body.service_address)}, ${safe(body.city)}.</p><p style="padding:14px;background:#fff8e7;border:1px solid #decfae">${safe(DISCLAIMER)}</p><p>NataBel will review your property details, confirm final pricing and availability, and contact you about next steps. For immediate help, call (916) 899-8811.</p><p><strong>Base-estimate exclusions:</strong> ${safe(EXCLUSIONS)}</p></div>`;
 }
 
 async function saveSubmission(payload) {
@@ -318,18 +347,19 @@ async function handler(req, res) {
   }
 
   const service = serviceDetails(submission);
+  const offeringLabel = submission.tier_label || service.label;
   const cadenceSuffix = service.oneTime ? '' : ' per visit';
   const [internal, customer] = await Promise.all([
     sendEmail({
       to: BUSINESS_EMAIL,
-      subject: `New NataBel ${service.label} request — ${submission.name} — $${result.quote.amount}${cadenceSuffix}`,
+      subject: `New NataBel ${offeringLabel} request — ${submission.name} — $${result.quote.amount}${cadenceSuffix}`,
       html: internalEmailHtml(submission),
       replyTo: submission.email,
       idempotencyKey: `natabel-quote-${submission.submission_id}-internal`
     }),
     sendEmail({
       to: submission.email,
-      subject: `Your NataBel Instant Estimate: $${result.quote.amount}${cadenceSuffix}`,
+      subject: `Your NataBel ${offeringLabel} Estimate: $${result.quote.amount}${cadenceSuffix}`,
       html: customerEmailHtml(submission),
       idempotencyKey: `natabel-quote-${submission.submission_id}-customer`
     })

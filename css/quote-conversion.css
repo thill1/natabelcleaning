@@ -197,6 +197,40 @@
 .quote-page .quote-option small { margin-top: 7px; color: var(--quote-muted); font-size: .72rem; line-height: 1.48; }
 .quote-service-options { margin-bottom: 2px; }
 
+.quote-tier-option .quote-option-content { padding-top: 24px; }
+.quote-tier-signature .quote-option-content {
+  border-color: var(--quote-gold-light);
+  background: var(--quote-black);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(0,0,0,.18);
+}
+.quote-tier-signature .quote-option-icon { background: rgba(227,200,120,.14); color: var(--quote-gold-light); }
+.quote-tier-signature .quote-option-content small { color: rgba(255,255,255,.68); }
+.quote-tier-signature input:checked + .quote-option-content {
+  border-color: var(--quote-gold-light);
+  background: var(--quote-black);
+  box-shadow: 0 0 0 2px var(--quote-gold-light), 0 20px 48px rgba(0,0,0,.2);
+}
+.quote-tier-signature .quote-option-content::after { border-color: rgba(227,200,120,.62); }
+.quote-tier-signature input:checked + .quote-option-content::after { border-color: var(--quote-gold-light); background: var(--quote-gold-light); color: var(--quote-black); }
+.quote-tier-concierge .quote-option-content { border-color: rgba(198,161,74,.44); background: #fbf5e9; }
+.quote-tier-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+  padding: 6px 12px;
+  border-radius: 0 0 8px 8px;
+  background: var(--quote-gold-light);
+  color: var(--quote-black);
+  font-size: .58rem;
+  font-weight: 850;
+  letter-spacing: .11em;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.quote-frequency-options .quote-option-content { min-height: 155px; }
+
 .quote-single-field { max-width: 540px; }
 .quote-single-field .quote-field input { min-height: 66px; font-size: 1.22rem; font-weight: 700; letter-spacing: .02em; }
 .quote-input-help { color: var(--quote-muted); font-size: .7rem; line-height: 1.45; }
@@ -311,6 +345,21 @@
 .quote-exclusions p { margin: 6px 0 0; color: var(--quote-muted); font-size: .71rem; line-height: 1.55; }
 .quote-field-note { display: flex; gap: 9px; align-items: flex-start; margin: 15px 0 0; color: var(--quote-muted); font-size: .73rem; line-height: 1.55; }
 .quote-field-note svg { width: 15px; flex: 0 0 auto; margin-top: 2px; color: var(--quote-gold-dark); }
+.quote-condition-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 0 0 20px;
+  padding: 15px 17px;
+  border: 1px solid #decfae;
+  border-radius: 11px;
+  background: #fff9e9;
+  color: #685622;
+  font-size: .75rem;
+  line-height: 1.55;
+}
+.quote-condition-note[hidden] { display: none; }
+.quote-condition-note svg { width: 17px; flex: 0 0 auto; margin-top: 2px; }
 .quote-page .quote-consent { margin-top: 20px; padding: 15px 16px; border-radius: 10px; background: #f8f5ee; color: #575249; }
 .quote-page .quote-consent input { width: 17px; height: 17px; accent-color: var(--quote-gold-dark); }
 
@@ -384,7 +433,12 @@
   .quote-page .quote-step h2 { font-size: clamp(2rem, 10vw, 2.75rem); }
   .quote-page .quote-step > p { margin-bottom: 22px; font-size: .86rem; }
   .quote-page .quote-options { grid-template-columns: 1fr; }
+  .quote-tier-signature { order: 1; }
+  .quote-tier-care { order: 2; }
+  .quote-tier-concierge { order: 3; }
   .quote-page .quote-option-content { display: grid; grid-template-columns: 42px 1fr; gap: 2px 12px; min-height: 0; padding: 16px; }
+  .quote-tier-signature .quote-option-content { padding-top: 25px; }
+  .quote-tier-badge { left: auto; right: 14px; transform: none; }
   .quote-page .quote-option-icon { grid-row: 1 / span 2; margin: 0; }
   .quote-page .quote-option strong { align-self: end; }
   .quote-page .quote-option small { align-self: start; margin-top: 2px; padding-right: 22px; }
