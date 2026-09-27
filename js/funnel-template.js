@@ -1,13 +1,18 @@
-/* Five-stage residential Instant Estimate markup for NataBel. */
+/* Conditional residential Instant Estimate markup for NataBel. */
 (function () {
   'use strict';
 
-  const disclaimer = 'Your instant estimate is based on your home’s square footage and selected service. Final pricing will be confirmed after we review the property’s condition, bathrooms, pets, clutter, requested services, and any add-ons.';
+  const disclaimer = 'Your instant estimate is based on your home’s square footage, selected level of care, and cleaning frequency. Final pricing will be confirmed after we review the property’s condition, bathrooms, pets, clutter, requested services, and any add-ons.';
   const exclusions = 'Appliance interiors, excessive debris, wall washing, carpet cleaning, exterior windows, garages, and hauling are not included in the base estimate. Optional services and unusual-condition charges are reviewed and priced separately.';
 
   function option(name, value, icon, title, detail) {
     return `<label class="quote-option"><input type="radio" name="${name}" value="${value}" />
       <span class="quote-option-content"><span class="quote-option-icon"><i data-lucide="${icon}"></i></span><strong>${title}</strong><small>${detail}</small></span></label>`;
+  }
+
+  function tierOption(value, icon, title, tagline, badge = '') {
+    return `<label class="quote-option quote-tier-option quote-tier-${value}"><input type="radio" name="tier" value="${value}" />
+      <span class="quote-option-content">${badge ? `<span class="quote-tier-badge">${badge}</span>` : ''}<span class="quote-option-icon"><i data-lucide="${icon}"></i></span><strong>${title}</strong><small>${tagline}</small></span></label>`;
   }
 
   function selectable(name, value, icon, title, detail) {
@@ -54,13 +59,40 @@
           <h2>Which cleaning fits your home?</h2>
           <p class="quote-locked-summary"><i data-lucide="lock-keyhole"></i> <span data-locked-size-summary>Your home size is locked for this session.</span></p>
           <div class="quote-options quote-service-options">
-            ${option('service_type', 'standard', 'house', 'Standard Recurring', 'Ongoing maintenance cleaning on a weekly, every-two-weeks, or monthly schedule.')}
-            ${option('service_type', 'deep', 'spray-can', 'Deep Clean', 'A detailed one-time cleaning for homes that need extra attention.')}
-            ${option('service_type', 'move', 'package-open', 'Move-In / Move-Out', 'A one-time cleaning for an empty or transitioning home.')}
+            ${option('service_type', 'standard', 'house', 'Recurring Cleaning', 'Ongoing professional care on a dependable schedule.')}
+            ${option('service_type', 'deep', 'spray-can', 'Pristine Reset', 'Detailed one-time cleaning for homes that need extra attention.')}
+            ${option('service_type', 'move', 'package-open', 'Pristine Move', 'Detailed cleaning for an empty or transitioning home.')}
           </div>
           <div class="quote-server-error" data-step-error>Please choose a cleaning type.</div>
           <div class="quote-server-error" data-estimate-error role="alert"></div>
-          <div class="quote-nav quote-nav-forward"><span></span><button class="btn btn-brass" type="button" data-show-estimate>Show My Estimate <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-nav quote-nav-forward"><span></span><button class="btn btn-brass" type="button" data-continue-service>Continue <i data-lucide="arrow-right"></i></button></div>
+        </section>
+
+        <section class="quote-step" data-step="tier">
+          <span class="quote-step-eyebrow">Pristine level</span>
+          <h2>Choose your Pristine experience.</h2>
+          <p>How much detail would you like handled at every recurring visit?</p>
+          <div class="quote-options quote-tier-options">
+            ${tierOption('care', 'heart-handshake', 'Pristine Care', 'Beautifully maintained.')}
+            ${tierOption('signature', 'badge-check', 'Pristine Signature', 'The complete NataBel experience.', 'MOST CHOSEN')}
+            ${tierOption('concierge', 'gem', 'Pristine Concierge', 'Personalized care, elevated.')}
+          </div>
+          <div class="quote-server-error" data-step-error>Please choose a Pristine level.</div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-next>Choose Frequency <i data-lucide="arrow-right"></i></button></div>
+        </section>
+
+        <section class="quote-step" data-step="frequency">
+          <span class="quote-step-eyebrow">Cleaning frequency</span>
+          <h2>How often would you like your home cared for?</h2>
+          <p>More frequent care means better value and a more consistently Pristine home.</p>
+          <div class="quote-options quote-frequency-options">
+            ${option('frequency', 'weekly', 'calendar-check', 'Weekly', 'Ideal for active households, pets, entertaining, and continuous care.')}
+            ${option('frequency', 'biweekly', 'calendar-days', 'Every 2 weeks', 'Our most popular rhythm for consistency, value, and detail.')}
+            ${option('frequency', 'monthly', 'calendar-range', 'Every 4 weeks', 'A deeper scheduled refresh for homes needing less frequent care.')}
+          </div>
+          <div class="quote-server-error" data-step-error>Please choose a cleaning frequency.</div>
+          <div class="quote-server-error" data-estimate-error role="alert"></div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Back</button><button class="btn btn-brass" type="button" data-show-estimate>Show My Estimate <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="estimate">
@@ -74,7 +106,7 @@
             <span><i data-lucide="sparkles"></i> 24-hour guarantee</span>
           </div>
           <p class="quote-correction-note">You can change the cleaning type and every remaining detail. Only the square footage stays fixed during this 30-minute session.</p>
-          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Change Cleaning Type</button><button class="btn btn-brass" type="button" data-next>Continue to My Details <i data-lucide="arrow-right"></i></button></div>
+          <div class="quote-nav"><button class="btn btn-outline" type="button" data-back><i data-lucide="arrow-left"></i> Change My Choices</button><button class="btn btn-brass" type="button" data-next>Continue to My Details <i data-lucide="arrow-right"></i></button></div>
         </section>
 
         <section class="quote-step" data-step="details">
@@ -99,13 +131,13 @@
             </div></fieldset>
 
             <fieldset class="quote-form-section"><legend><span>3</span> Timing and preparation</legend><div class="quote-fields">
-              <div class="quote-field" data-frequency-field><label for="quoteFrequency">Desired frequency</label><select id="quoteFrequency" name="frequency"><option value="">Choose</option><option value="weekly">Weekly</option><option value="biweekly">Every 2 weeks</option><option value="monthly">Every 4 weeks</option><option value="one_time">One-time</option></select><span class="quote-error">Choose a frequency.</span></div>
               <div class="quote-field"><label for="requestedDate">Requested date</label><input id="requestedDate" name="requested_date" type="date" /><span class="quote-error">Choose a requested date.</span></div>
               <div class="quote-field"><label for="homeCondition">Home condition</label><select id="homeCondition" name="condition"><option value="maintained">Well maintained</option><option value="average" selected>Average lived-in condition</option><option value="heavy">Needs extra attention</option></select></div>
               <div class="quote-field"><label for="homeClutter">Clutter level</label><select id="homeClutter" name="clutter"><option value="light">Light</option><option value="average" selected>Average</option><option value="heavy">Heavy</option></select></div>
               <div class="quote-field full"><label for="quoteNotes">Additional notes <span class="quote-optional">(optional)</span></label><textarea id="quoteNotes" name="notes" maxlength="2000" placeholder="Access notes, special surfaces, timing, or anything else we should know."></textarea></div>
             </div></fieldset>
           </div>
+          <p class="quote-condition-note" data-condition-note hidden><i data-lucide="info"></i><span>This home may require a Pristine Reset before recurring service begins. Fatima will review the details before confirming your appointment.</span></p>
 
           <details class="quote-optional-services">
             <summary><span><strong>Add optional services</strong><small>Appliance interiors, windows, walls, carpets, garages, or hauling.</small></span><i data-lucide="chevron-down"></i></summary>
@@ -137,6 +169,7 @@
             <div class="quote-review-main"><span>Instant Estimate</span><strong data-review-price>—</strong><small data-review-cadence>base estimate</small></div>
             <div class="quote-review-lines">
               <div><span>Cleaning type</span><strong data-review-service>Cleaning</strong></div>
+              <div data-review-tier-row><span>Pristine level</span><strong data-review-tier>—</strong></div>
               <div><span>Desired frequency</span><strong data-review-frequency>—</strong></div>
               <div><span>Requested date</span><strong data-review-date>—</strong></div>
               <div><span>Pets</span><strong data-review-pets>—</strong></div>

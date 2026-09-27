@@ -607,3 +607,328 @@ html { scroll-behavior: smooth; }
 .simple-cta > *,
 .simple-service-list > *,
 .nb-split-col > * { min-width: 0; }
+
+/* =========================================================================
+   Pristine residential pricing tiers
+   ========================================================================= */
+.pristine-pricing-page .pristine-page-hero {
+  border-bottom: 1px solid var(--simple-line);
+  background: var(--simple-paper);
+}
+.pristine-pricing-page .pristine-page-hero h1 { max-width: 980px; }
+.pristine-section-intro { max-width: 790px; margin-inline: auto; }
+.pristine-section-intro p {
+  max-width: 720px;
+  margin: 18px auto 0;
+  color: var(--simple-muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+.pristine-section-intro > strong {
+  display: block;
+  margin-top: 16px;
+  color: var(--simple-gold-deep);
+  font-size: .8rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.pristine-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 28px);
+  align-items: stretch;
+  margin-top: 54px;
+}
+.pristine-plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(27px, 3vw, 38px);
+  border: 1px solid var(--simple-line);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 22px 56px rgba(27, 19, 5, .07);
+}
+.pristine-plan-care { border-top: 3px solid #b99a54; }
+.pristine-plan-concierge {
+  border-color: rgba(198, 161, 74, .42);
+  background: #fbf5e9;
+}
+.pristine-plan-signature {
+  z-index: 1;
+  margin-block: -14px;
+  padding-block: clamp(41px, 4vw, 52px);
+  border: 1px solid var(--simple-gold-bright);
+  background: var(--simple-black);
+  color: #fff;
+  box-shadow: 0 34px 82px rgba(0, 0, 0, .25);
+}
+.pristine-plan-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 8px 18px;
+  border-radius: 0 0 10px 10px;
+  background: var(--simple-gold-bright);
+  color: #17140f;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.pristine-plan-number {
+  display: block;
+  margin-bottom: 25px;
+  color: var(--simple-gold-deep);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+.pristine-plan-signature .pristine-plan-number { color: var(--simple-gold-bright); }
+.pristine-plan h3 {
+  margin: 0;
+  font: 500 clamp(1.9rem, 2.8vw, 2.6rem)/1.05 "Fraunces", Georgia, serif;
+  letter-spacing: -.025em;
+}
+.pristine-plan-signature h3 { color: #fff; }
+.pristine-plan-tagline {
+  margin: 9px 0 15px;
+  color: var(--simple-gold-deep);
+  font-weight: 750;
+}
+.pristine-plan-signature .pristine-plan-tagline { color: var(--simple-gold-bright); }
+.pristine-plan-head > p:last-child {
+  margin: 0;
+  color: var(--simple-muted);
+  font-size: .88rem;
+  line-height: 1.68;
+}
+.pristine-plan-signature .pristine-plan-head > p:last-child { color: rgba(255,255,255,.68); }
+.pristine-plan-scope {
+  margin: 26px 0 0;
+  padding-top: 23px;
+  border-top: 1px solid var(--simple-line);
+}
+.pristine-plan-signature .pristine-plan-scope { border-color: rgba(255,255,255,.14); }
+.pristine-plan-scope h4 {
+  margin: 0 0 14px;
+  color: inherit;
+  font-size: .72rem;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.pristine-plan-scope ul { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.pristine-plan-scope li {
+  position: relative;
+  padding-left: 19px;
+  color: var(--simple-muted);
+  font-size: .78rem;
+  line-height: 1.48;
+}
+.pristine-plan-signature .pristine-plan-scope li { color: rgba(255,255,255,.76); }
+.pristine-plan-scope li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--simple-gold-deep);
+  font-weight: 800;
+}
+.pristine-plan-signature .pristine-plan-scope li::before { color: var(--simple-gold-bright); }
+.pristine-plan-best {
+  margin: auto 0 24px;
+  padding-top: 28px;
+  color: var(--simple-muted);
+  font-size: .78rem;
+  line-height: 1.55;
+}
+.pristine-plan-best span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--simple-ink);
+  font-size: .64rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.pristine-plan-signature .pristine-plan-best { color: rgba(255,255,255,.68); }
+.pristine-plan-signature .pristine-plan-best span { color: var(--simple-gold-bright); }
+.pristine-plan > .btn { width: 100%; min-height: 52px; }
+.pristine-plan-signature > .btn { border-color: var(--simple-gold-bright); }
+
+.pristine-comparison {
+  overflow: hidden;
+  margin-top: 38px;
+  border: 1px solid var(--simple-line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--simple-shadow);
+}
+.pristine-comparison-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) repeat(3, minmax(120px, 1fr));
+  border-top: 1px solid var(--simple-line);
+}
+.pristine-comparison-row:first-child { border-top: 0; }
+.pristine-comparison-row > * {
+  padding: 17px 20px;
+  border-left: 1px solid var(--simple-line);
+  font-size: .8rem;
+}
+.pristine-comparison-row > *:first-child { border-left: 0; }
+.pristine-comparison-row > span:first-child { color: var(--simple-ink); font-weight: 700; }
+.pristine-comparison-row > span:not(:first-child) { color: var(--simple-muted); text-align: center; }
+.pristine-comparison-head { background: var(--simple-black); color: #fff; }
+.pristine-comparison-head > strong { border-color: rgba(255,255,255,.13); text-align: center; }
+.pristine-comparison-head > strong:first-child { text-align: left; }
+.pristine-comparison-head > strong:nth-child(3) { color: var(--simple-gold-bright); }
+
+.pristine-frequency-grid,
+.pristine-one-time-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 38px;
+}
+.pristine-frequency-grid article {
+  padding: 30px;
+  border: 1px solid var(--simple-line);
+  border-radius: 18px;
+  background: #fff;
+}
+.pristine-frequency-grid article.is-popular { border-color: var(--simple-gold); box-shadow: 0 20px 48px rgba(143,110,31,.11); }
+.pristine-frequency-grid article > span,
+.pristine-service-label {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--simple-gold-deep);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.pristine-frequency-grid h3,
+.pristine-one-time-grid h3 { margin: 0; font: 500 1.55rem/1.12 "Fraunces", Georgia, serif; }
+.pristine-frequency-grid p,
+.pristine-one-time-grid p { margin: 12px 0 0; color: var(--simple-muted); font-size: .86rem; line-height: 1.65; }
+
+.pristine-one-time-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pristine-one-time-grid article {
+  display: flex;
+  flex-direction: column;
+  min-height: 410px;
+  padding: clamp(30px, 4vw, 48px);
+  border: 1px solid var(--simple-line);
+  border-radius: 22px;
+  background: #fff;
+}
+.pristine-one-time-grid article > small {
+  margin: -8px 0 24px;
+  color: var(--simple-muted);
+  font-size: .72rem;
+  font-weight: 700;
+}
+.pristine-one-time-grid article > strong {
+  display: block;
+  margin: auto 0 20px;
+  padding-top: 28px;
+  color: var(--simple-ink);
+  font: 500 1.5rem/1 "Fraunces", Georgia, serif;
+}
+.pristine-one-time-grid .btn { align-self: flex-start; }
+.pristine-one-time-grid .pristine-one-time-dark {
+  border-color: var(--simple-gold-bright);
+  background: var(--simple-black);
+  color: #fff;
+}
+.pristine-one-time-dark h3,
+.pristine-one-time-dark > strong { color: #fff !important; }
+.pristine-one-time-dark p,
+.pristine-one-time-dark > small { color: rgba(255,255,255,.68) !important; }
+.pristine-one-time-dark .pristine-service-label { color: var(--simple-gold-bright); }
+
+.pristine-price-points { display: grid; gap: 12px; }
+.pristine-specialty-intro { margin: 25px 0 10px; color: var(--simple-ink); font-size: .78rem; }
+.pristine-specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pristine-specialties li {
+  padding: 7px 10px;
+  border: 1px solid var(--simple-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--simple-muted);
+  font-size: .67rem;
+}
+.pristine-price-points > span {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 2px 14px;
+  align-items: center;
+  padding: 19px;
+  border: 1px solid var(--simple-line);
+  border-radius: 14px;
+  background: #fff;
+}
+.pristine-price-points svg { grid-row: 1 / span 2; width: 21px; color: var(--simple-gold-deep); }
+.pristine-price-points strong { font-size: .84rem; }
+.pristine-price-points small { color: var(--simple-muted); font-size: .72rem; line-height: 1.45; }
+.pristine-guarantee { max-width: 780px; text-align: center; }
+.pristine-guarantee .simple-kicker { justify-content: center; }
+.pristine-guarantee h2 { max-width: 650px; margin-inline: auto; }
+.pristine-guarantee p { max-width: 680px; margin: 20px auto 0; color: var(--simple-muted); line-height: 1.75; }
+.pristine-final-cta { align-items: center; }
+.pristine-final-cta > div { max-width: 770px; }
+.pristine-final-cta .simple-kicker { margin-bottom: 12px; }
+.pristine-final-cta p { max-width: 700px; line-height: 1.65; }
+
+@media (max-width: 960px) {
+  .pristine-plan-grid { grid-template-columns: 1fr; max-width: 720px; margin-inline: auto; }
+  .pristine-plan-signature { order: 1; margin: 0; }
+  .pristine-plan-care { order: 2; }
+  .pristine-plan-concierge { order: 3; }
+  .pristine-plan { padding: 34px; }
+  .pristine-plan-signature { padding-top: 48px; }
+}
+
+@media (max-width: 720px) {
+  .pristine-pricing-page .pristine-page-hero h1 { font-size: clamp(2.75rem, 13vw, 4rem); }
+  .pristine-plan-grid { margin-top: 38px; }
+  .pristine-plan { padding: 27px 23px; border-radius: 18px; }
+  .pristine-plan-signature { padding-top: 47px; }
+  .pristine-comparison-head { display: none; }
+  .pristine-comparison-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 17px;
+  }
+  .pristine-comparison-row > * { padding: 8px 6px; border: 0; font-size: .72rem; }
+  .pristine-comparison-row > span:first-child {
+    grid-column: 1 / -1;
+    padding-bottom: 13px;
+    font-size: .79rem;
+  }
+  .pristine-comparison-row > span:not(:first-child) { display: grid; gap: 4px; }
+  .pristine-comparison-row > span:nth-child(2)::before { content: "Care"; }
+  .pristine-comparison-row > span:nth-child(3)::before { content: "Signature"; }
+  .pristine-comparison-row > span:nth-child(4)::before { content: "Concierge"; }
+  .pristine-comparison-row > span:not(:first-child)::before {
+    color: var(--simple-gold-deep);
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  .pristine-frequency-grid,
+  .pristine-one-time-grid { grid-template-columns: 1fr; }
+  .pristine-frequency-grid article { padding: 24px; }
+  .pristine-one-time-grid article { min-height: 0; padding: 30px 24px; }
+  .pristine-one-time-grid article > strong { margin-top: 12px; }
+  .pristine-one-time-grid .btn { width: 100%; }
+}

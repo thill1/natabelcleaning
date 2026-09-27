@@ -17,21 +17,26 @@
     return;
   }
 
-  const steps = Array.from(card.querySelectorAll('.quote-step'));
+  const stepElements = new Map(Array.from(card.querySelectorAll('.quote-step')).map(step => [step.dataset.step, step]));
   const status = card.querySelector('[data-quote-status]');
   const progress = card.querySelector('.quote-progress-track span');
   const stepLabel = card.querySelector('[data-step-label]');
   const stepCount = card.querySelector('[data-step-count]');
   const progressEstimate = card.querySelector('[data-progress-estimate]');
-  const labels = ['Home size', 'Cleaning type', 'Your estimate', 'Your details', 'Review'];
-  const serviceLabels = { standard: 'Standard Recurring Cleaning', deep: 'Deep Cleaning', move: 'Move-In / Move-Out Cleaning' };
+  const labels = {
+    size: 'Home size', service: 'Cleaning type', tier: 'Pristine level', frequency: 'Frequency',
+    estimate: 'Your estimate', details: 'Your details', review: 'Review'
+  };
+  const serviceLabels = { standard: 'Recurring Cleaning', deep: 'Pristine Reset', move: 'Pristine Move' };
+  const tierLabels = { care: 'Pristine Care', signature: 'Pristine Signature', concierge: 'Pristine Concierge' };
   const frequencyLabels = { weekly: 'Weekly', biweekly: 'Every 2 weeks', monthly: 'Every 4 weeks', one_time: 'One-time' };
   const petLabels = { none: 'No pets', dog: 'Dog', cat: 'Cat', multiple: 'Multiple pets', other: 'Other' };
   const addOnLabels = {
     inside_refrigerator: 'Inside refrigerator', inside_oven: 'Inside oven', wall_washing: 'Wall washing',
     carpet_cleaning: 'Carpet cleaning', exterior_windows: 'Exterior windows', garage_or_hauling: 'Garage or hauling'
   };
-  let index = 0;
+
+  let currentStep = 'size';
   let submitting = false;
   let estimateLoading = false;
   let squareFootageLock = null;
@@ -46,9 +51,21 @@
   function value(name) { return String(field(name)?.value || '').trim(); }
   function selected(name) { return form.querySelector(`[name="${name}"]:checked`)?.value || ''; }
   function currentService() { return selected('service_type'); }
+  function isRecurring() { return currentService() === 'standard'; }
   function isOneTime() { return ['deep', 'move'].includes(currentService()); }
-  function currentFrequency() { return isOneTime() ? 'one_time' : value('frequency'); }
+  function currentTier() { return isRecurring() ? selected('tier') : ''; }
+  function currentFrequency() { return isOneTime() ? 'one_time' : selected('frequency'); }
   function selectedExtras() { return Array.from(form.querySelectorAll('[name="requested_add_ons"]:checked')).map(input => input.value); }
+  function routeSteps() {
+    return isRecurring()
+      ? ['size', 'service', 'tier', 'frequency', 'estimate', 'details', 'review']
+      : ['size', 'service', 'estimate', 'details', 'review'];
+  }
+  function analyticsContext(extra = {}) {
+    const context = { quote_type: 'residential', service_type: currentService() || 'not_selected', frequency: currentFrequency() || 'not_selected', ...extra };
+    if (isRecurring() && currentTier()) context.tier = currentTier();
+    return context;
+  }
 
   function makeSubmissionId() {
     if (window.crypto?.randomUUID) return window.crypto.randomUUID();
@@ -102,7 +119,8 @@
   }
 
   function cadenceText() {
-    return isOneTime() ? `${serviceLabels[currentService()]} · one-time base estimate` : 'Standard Recurring Cleaning · per-visit base estimate';
+    if (isOneTime()) return `${serviceLabels[currentService()]} · one-time estimate`;
+    return `${tierLabels[currentTier()]} · ${frequencyLabels[currentFrequency()]} · per visit`;
   }
 
   function paintEstimate(message) {
@@ -112,17 +130,16 @@
       const cadence = panel.querySelector('[data-live-cadence]');
       if (!price || !cadence) return;
       price.textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : message;
-      cadence.textContent = Number.isFinite(amount) ? cadenceText() : 'Choose a cleaning type to calculate your estimate.';
+      cadence.textContent = Number.isFinite(amount) ? cadenceText() : 'Complete your choices to calculate your estimate.';
     });
     updateProgress();
-    if (index === 4) renderReview();
-    const viewedKey = `${currentService()}:${amount}`;
-    if (index === 2 && Number.isFinite(amount) && priceViewedKey !== viewedKey) {
+    if (currentStep === 'review') renderReview();
+    const viewedKey = `${currentService()}:${currentTier()}:${currentFrequency()}:${amount}`;
+    if (currentStep === 'estimate' && Number.isFinite(amount) && priceViewedKey !== viewedKey) {
       priceViewedKey = viewedKey;
-      window.PCC.util.track(window.PCC.events.quotePriceViewed, {
-        quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(),
-        square_footage: squareFootageLock.square_footage, amount,
-      });
+      window.PCC.util.track(window.PCC.events.quotePriceViewed, analyticsContext({
+        square_footage: squareFootageLock.square_footage, amount
+      }));
     }
   }
 
@@ -130,19 +147,15 @@
     if (squareFootageLock || !validateCurrent()) return;
     const squareFootage = Number(value('square_footage'));
     squareFootageLock = {
-      submission_id: value('submission_id'),
-      square_footage: squareFootage,
-      locked_at: Date.now()
+      submission_id: value('submission_id'), square_footage: squareFootage, locked_at: Date.now()
     };
     saveSquareFootageLock(squareFootageLock);
     field('square_footage').readOnly = true;
     if (!homeDetailsTracked) {
       homeDetailsTracked = true;
-      window.PCC.util.track(window.PCC.events.quoteHomeDetailsCompleted, {
-        quote_type: 'residential', service_type: currentService() || 'not_selected', square_footage: squareFootage,
-      });
+      window.PCC.util.track(window.PCC.events.quoteHomeDetailsCompleted, analyticsContext({ square_footage: squareFootage }));
     }
-    show(1, true);
+    show('service', true);
   }
 
   function hasActiveSquareFootageLock() {
@@ -152,49 +165,50 @@
     quotePreview = null;
     field('square_footage').readOnly = false;
     field('square_footage').value = '';
-    show(0, true);
-    const error = steps[0].querySelector('[data-step-error]');
+    show('size', true);
+    const error = stepElements.get('size').querySelector('[data-step-error]');
     error.textContent = 'Your 30-minute session expired. Enter your square footage to start a new estimate.';
     error.classList.add('active');
     return false;
   }
 
-  async function showEstimate() {
+  async function calculateAndShowEstimate() {
     if (estimateLoading || !squareFootageLock || !hasActiveSquareFootageLock() || !validateCurrent()) return;
-    const button = card.querySelector('[data-show-estimate]');
-    const error = card.querySelector('[data-estimate-error]');
-    const serviceType = selected('service_type');
+    const section = stepElements.get(currentStep);
+    const button = section.querySelector('[data-show-estimate], [data-continue-service]');
+    const error = section.querySelector('[data-estimate-error]');
     const original = button.innerHTML;
     estimateLoading = true;
     button.disabled = true;
     button.textContent = 'Calculating…';
-    error.classList.remove('active');
+    error?.classList.remove('active');
+    const requestBody = {
+      preview: true,
+      service_type: currentService(),
+      frequency: currentFrequency(),
+      square_footage: squareFootageLock.square_footage,
+      condition: 'average'
+    };
+    if (isRecurring()) requestBody.tier = currentTier();
     try {
       const response = await fetch('/api/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          preview: true,
-          service_type: serviceType,
-          frequency: ['deep', 'move'].includes(serviceType) ? 'one_time' : 'monthly',
-          square_footage: squareFootageLock.square_footage,
-          condition: 'average'
-        })
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody)
       });
       const body = await response.json().catch(() => ({}));
       if (!response.ok || !body.ok || body.status !== 'estimated' || !Number.isFinite(Number(body.quote?.amount))) {
         throw new Error(body.error || `quote_preview_${response.status}`);
       }
       quotePreview = {
-        service_type: serviceType,
-        amount: Number(body.quote.amount)
+        service_type: currentService(), tier: currentTier(), frequency: currentFrequency(), amount: Number(body.quote.amount)
       };
-      show(2, true);
+      show('estimate', true);
     } catch (requestError) {
       console.error('[quote] preview failed', { error: String(requestError.message || requestError) });
-      error.textContent = 'We could not calculate this cleaning type yet. Your home size is still locked, so please try again.';
-      error.classList.add('active');
-      error.focus?.();
+      if (error) {
+        error.textContent = 'We could not calculate this selection yet. Your home size is still locked, so please try again.';
+        error.classList.add('active');
+        error.focus?.();
+      }
     } finally {
       estimateLoading = false;
       button.disabled = false;
@@ -203,57 +217,52 @@
     }
   }
 
-  function syncServiceView() {
-    const frequency = field('frequency');
-    const wrapper = card.querySelector('[data-frequency-field]');
-    if (!frequency || !wrapper) return;
-    if (isOneTime()) {
-      frequency.value = 'one_time';
-      wrapper.hidden = true;
-    } else {
-      if (frequency.value === 'one_time') frequency.value = '';
-      wrapper.hidden = false;
-    }
-  }
-
   function updateProgress() {
-    progress.style.width = `${((index + 1) / steps.length) * 100}%`;
-    stepLabel.textContent = `Step ${index + 1} · ${labels[index]}`;
-    stepCount.textContent = `${index + 1} of ${steps.length}`;
+    const route = routeSteps();
+    const position = Math.max(0, route.indexOf(currentStep));
+    progress.style.width = `${((position + 1) / route.length) * 100}%`;
+    stepLabel.textContent = `Step ${position + 1} · ${labels[currentStep]}`;
+    stepCount.textContent = `${position + 1} of ${route.length}`;
     const amount = calculatedAmount();
-    if (progressEstimate) progressEstimate.textContent = index > 1 && Number.isFinite(amount) ? `$${amount.toLocaleString()} current estimate` : 'About 2 minutes';
+    if (progressEstimate) progressEstimate.textContent = position >= route.indexOf('estimate') && Number.isFinite(amount)
+      ? `$${amount.toLocaleString()} current estimate`
+      : 'About 2 minutes';
   }
 
   function show(next, focus) {
-    const previous = index;
-    const guardedNext = squareFootageLock && next < 1 ? 1 : next;
-    index = Math.max(0, Math.min(guardedNext, steps.length - 1));
-    steps.forEach((step, stepIndex) => step.classList.toggle('active', stepIndex === index));
-    syncServiceView();
+    const previous = currentStep;
+    const guarded = squareFootageLock && next === 'size' ? 'service' : next;
+    currentStep = stepElements.has(guarded) ? guarded : 'service';
+    stepElements.forEach((step, key) => step.classList.toggle('active', key === currentStep));
     updateProgress();
-    if (index === 1 && squareFootageLock) {
-      card.querySelector('[data-locked-size-summary]').textContent = `${squareFootageLock.square_footage.toLocaleString()} sq ft is locked for this 30-minute session. Your cleaning type can be changed.`;
+    if (currentStep === 'service' && squareFootageLock) {
+      card.querySelector('[data-locked-size-summary]').textContent = `${squareFootageLock.square_footage.toLocaleString()} sq ft is locked for this 30-minute session. Your cleaning choices can still be changed.`;
     }
-    if (index === 2 && quotePreview) {
-      card.querySelector('[data-locked-summary]').textContent = `${squareFootageLock.square_footage.toLocaleString()} sq ft is locked. You can go back to compare another cleaning type.`;
+    if (currentStep === 'estimate' && quotePreview) {
+      card.querySelector('[data-locked-summary]').textContent = `${squareFootageLock.square_footage.toLocaleString()} sq ft is locked. You can go back to compare another service, level, or frequency.`;
       paintEstimate('Estimate unavailable');
     }
-    if (index === 4) renderReview();
-    if (index === 3 && previous < 3) {
+    if (currentStep === 'review') renderReview();
+    if (currentStep === 'details' && previous !== 'details') {
       if (!contactStartedTracked) {
         contactStartedTracked = true;
-        window.PCC.util.track(window.PCC.events.quoteContactStarted, {
-          quote_type: 'residential', service_type: currentService(), frequency: currentFrequency(),
-        });
+        window.PCC.util.track(window.PCC.events.quoteContactStarted, analyticsContext());
       }
+      updateConditionNote();
     }
     if (focus) {
       card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      const heading = steps[index].querySelector('h2');
+      const heading = stepElements.get(currentStep).querySelector('h2');
       heading?.setAttribute('tabindex', '-1');
       heading?.focus({ preventScroll: true });
     }
     if (window.lucide) window.lucide.createIcons();
+  }
+
+  function routeMove(offset) {
+    const route = routeSteps();
+    const position = route.indexOf(currentStep);
+    if (position >= 0) show(route[Math.max(0, Math.min(route.length - 1, position + offset))], true);
   }
 
   function validateZip() {
@@ -270,21 +279,31 @@
   }
 
   function validateCurrent() {
-    const stepError = steps[index].querySelector('[data-step-error]');
+    const step = stepElements.get(currentStep);
+    const stepError = step?.querySelector('[data-step-error]');
     stepError?.classList.remove('active');
-
-    if (index === 0) {
+    if (currentStep === 'size') {
       const sqft = Number(value('square_footage'));
       const ok = markField('square_footage', !Number.isFinite(sqft) || sqft <= 0);
       if (!ok) stepError?.classList.add('active');
       return ok;
     }
-    if (index === 1) {
+    if (currentStep === 'service') {
       const ok = !!currentService();
       if (!ok) stepError?.classList.add('active');
       return ok;
     }
-    if (index === 3) {
+    if (currentStep === 'tier') {
+      const ok = !!currentTier();
+      if (!ok) stepError?.classList.add('active');
+      return ok;
+    }
+    if (currentStep === 'frequency') {
+      const ok = !!currentFrequency();
+      if (!ok) stepError?.classList.add('active');
+      return ok;
+    }
+    if (currentStep === 'details') {
       const checks = [
         markField('name', !value('name')),
         markField('phone', !/[0-9()+\-\s]{10,}/.test(value('phone'))),
@@ -295,18 +314,22 @@
         validateZip(),
         markField('bedrooms', !value('bedrooms')),
         markField('bathrooms', !value('bathrooms')),
-        markField('frequency', !currentFrequency()),
         markField('pets', !value('pets')),
         markField('requested_date', !value('requested_date')),
         form.elements.contact_consent.checked
       ];
       const consent = form.elements.contact_consent.closest('.quote-consent');
-      consent.style.color = checks[12] ? '' : '#a73529';
+      consent.style.color = checks[11] ? '' : '#a73529';
       const ok = checks.every(Boolean);
       if (!ok) stepError?.classList.add('active');
       return ok;
     }
     return true;
+  }
+
+  function updateConditionNote() {
+    const note = card.querySelector('[data-condition-note]');
+    note.hidden = !(isRecurring() && (value('condition') === 'heavy' || value('clutter') === 'heavy'));
   }
 
   function renderReview() {
@@ -316,31 +339,42 @@
     card.querySelector('[data-review-home]').textContent = `${squareFootageLock.square_footage.toLocaleString()} sq ft · ${value('bedrooms')} bed · ${value('bathrooms')} bath · ${property}`;
     card.querySelector('[data-review-address]').textContent = `${value('service_address')}, ${value('city')} ${value('zip')}`;
     card.querySelector('[data-review-price]').textContent = Number.isFinite(amount) ? `$${amount.toLocaleString()}` : '—';
-    card.querySelector('[data-review-cadence]').textContent = isOneTime() ? 'one-time base estimate' : 'per-visit base estimate';
+    card.querySelector('[data-review-cadence]').textContent = isOneTime() ? 'one-time estimate' : 'per visit';
     card.querySelector('[data-review-service]').textContent = serviceLabels[currentService()] || 'Cleaning';
+    const tierRow = card.querySelector('[data-review-tier-row]');
+    tierRow.hidden = !isRecurring();
+    card.querySelector('[data-review-tier]').textContent = tierLabels[currentTier()] || '—';
     card.querySelector('[data-review-frequency]').textContent = frequencyLabels[currentFrequency()] || '—';
     card.querySelector('[data-review-date]').textContent = value('requested_date') || '—';
     card.querySelector('[data-review-pets]').textContent = petLabels[value('pets')] || value('pets') || '—';
     card.querySelector('[data-review-extras]').textContent = extras.length ? extras.map(item => addOnLabels[item] || item).join(', ') : 'None selected';
   }
 
-  card.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => {
-    if (validateCurrent()) show(index + 1, true);
-  }));
-  card.querySelector('[data-lock-size]').addEventListener('click', lockSquareFootage);
-  card.querySelector('[data-show-estimate]').addEventListener('click', showEstimate);
-  card.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => show(index - 1, true)));
-  form.querySelectorAll('[name="service_type"]').forEach(input => input.addEventListener('change', () => {
+  function resetPreview() {
     quotePreview = null;
-    syncServiceView();
-  }));
-  field('square_footage').addEventListener('input', () => {
-    markField('square_footage', false);
+    priceViewedKey = '';
+    updateProgress();
+  }
+
+  card.querySelector('[data-lock-size]').addEventListener('click', lockSquareFootage);
+  card.querySelector('[data-continue-service]').addEventListener('click', () => {
+    if (!validateCurrent()) return;
+    if (isRecurring()) show('tier', true);
+    else calculateAndShowEstimate();
   });
+  card.querySelector('[data-show-estimate]').addEventListener('click', calculateAndShowEstimate);
+  card.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => {
+    if (validateCurrent()) routeMove(1);
+  }));
+  card.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => routeMove(-1)));
+  form.querySelectorAll('[name="service_type"], [name="tier"], [name="frequency"]').forEach(input => input.addEventListener('change', resetPreview));
+  field('square_footage').addEventListener('input', () => markField('square_footage', false));
   field('zip').addEventListener('input', () => {
     markField('zip', false);
     setFieldError('zip', 'Enter a five-digit ZIP code.');
   });
+  field('condition').addEventListener('change', updateConditionNote);
+  field('clutter').addEventListener('change', updateConditionNote);
 
   function payload() {
     const data = { source: `${location.pathname}${location.search}`, quote_type: 'residential' };
@@ -352,6 +386,8 @@
     });
     data.service_type = currentService();
     data.frequency = currentFrequency();
+    if (isRecurring()) data.tier = currentTier();
+    else delete data.tier;
     data.square_footage = squareFootageLock.square_footage;
     data.preview_estimate_amount = quotePreview.amount;
     if (extras.length) data.requested_add_ons = extras;
@@ -360,7 +396,7 @@
   }
 
   function renderConfirmation(data, submitted) {
-    steps.forEach(step => step.classList.remove('active'));
+    stepElements.forEach(step => step.classList.remove('active'));
     form.hidden = true;
     card.querySelector('.quote-progress').hidden = true;
     status.classList.add('active');
@@ -376,13 +412,15 @@
     status.querySelector('[data-status-note]').textContent = `Requested for ${submitted.requested_date}. Reference ${data.submissionId}. Final pricing and availability will be confirmed after review.`;
     status.focus({ preventScroll: true });
     status.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.PCC.util.track(window.PCC.events.quoteRevealed || 'quote_revealed', { service_type: submitted.service_type, frequency: submitted.frequency, amount });
+    const event = { service_type: submitted.service_type, frequency: submitted.frequency, amount };
+    if (submitted.tier) event.tier = submitted.tier;
+    window.PCC.util.track(window.PCC.events.quoteRevealed || 'quote_revealed', event);
     if (window.lucide) window.lucide.createIcons();
   }
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (submitting || index !== 4 || !quotePreview || !hasActiveSquareFootageLock() || !validateCurrent()) return;
+    if (submitting || currentStep !== 'review' || !quotePreview || !hasActiveSquareFootageLock() || !validateCurrent()) return;
     submitting = true;
     const submit = form.querySelector('[type="submit"]');
     const error = form.querySelector('[data-submit-error]');
@@ -392,7 +430,9 @@
     submit.textContent = 'Saving your request…';
     error.classList.remove('active');
     const data = payload();
-    window.PCC.util.track(window.PCC.events.quoteContactSubmitted || 'quote_contact_submitted', { quote_type: 'residential', service_type: data.service_type, frequency: data.frequency });
+    const submittedContext = { quote_type: 'residential', service_type: data.service_type, frequency: data.frequency };
+    if (data.tier) submittedContext.tier = data.tier;
+    window.PCC.util.track(window.PCC.events.quoteContactSubmitted || 'quote_contact_submitted', submittedContext);
 
     try {
       const response = await fetch('/api/quote', {
@@ -400,23 +440,25 @@
       });
       const body = await response.json().catch(() => ({}));
       if (response.ok && body.ok && body.status === 'estimated' && body.saved) {
-        window.PCC.util.track(window.PCC.events.quoteSubmitted, {
+        const eventData = {
           quote_type: 'residential', service_type: data.service_type, frequency: data.frequency,
           square_footage: data.square_footage, bedrooms: data.bedrooms, bathrooms: data.bathrooms,
-          city: data.city, amount: body.quote?.amount,
-        });
+          city: data.city, amount: body.quote?.amount
+        };
+        if (data.tier) eventData.tier = data.tier;
+        window.PCC.util.track(window.PCC.events.quoteSubmitted, eventData);
         renderConfirmation(body, data);
         return;
       }
       if (body.status === 'service_area_unavailable') {
-        show(3, true);
+        show('details', true);
         setFieldError('zip', 'This ZIP is outside NataBel’s current Sacramento-area service zone. Call (916) 899-8811 to ask about coverage.');
         markField('zip', true);
         field('zip').focus();
         return;
       }
       if (body.status === 'estimate_changed') {
-        error.textContent = `Pricing changed since this estimate was calculated. Your square footage is still locked; go back to Cleaning type and select Show My Estimate again, or call ${window.PCC.business.phone}.`;
+        error.textContent = `Pricing changed since this estimate was calculated. Your square footage is still locked; go back and select Show My Estimate again, or call ${window.PCC.business.phone}.`;
         error.classList.add('active');
         error.focus?.();
         return;
@@ -448,7 +490,7 @@
     homeDetailsTracked = true;
   }
   window.PCC.util.track(window.PCC.events.quoteStarted || 'quote_started', {
-    quote_type: 'residential', service_type: currentService() || 'residential', experience: 'residential-v7-square-footage-lock',
+    quote_type: 'residential', service_type: currentService() || 'residential', experience: 'residential-v8-pristine-tiers'
   });
-  show(squareFootageLock ? 1 : 0, false);
+  show(squareFootageLock ? 'service' : 'size', false);
 })();

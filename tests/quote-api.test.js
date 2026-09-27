@@ -18,13 +18,14 @@ function request(body) {
 const preview = {
   preview: true,
   service_type: 'standard',
+  tier: 'care',
   frequency: 'monthly',
   square_footage: 1800
 };
 
 const complete = {
-  service_type: 'standard', frequency: 'biweekly', square_footage: 2500,
-  preview_estimate_amount: 225,
+  service_type: 'standard', tier: 'signature', frequency: 'biweekly', square_footage: 2500,
+  preview_estimate_amount: 325,
   submission_id: 'quote-test-00000001', form_started_at: Date.now() - 5000,
   name: 'Ada Customer', phone: '(916) 555-0123', email: 'ada@example.com',
   service_address: '123 Main Street', city: 'Rocklin', zip: '95765', property_type: 'house',
@@ -63,14 +64,15 @@ test('preview API returns the final estimate without exposing the rate calculati
   const result = await request(preview);
   assert.equal(result.statusCode, 200);
   assert.equal(result.payload.ok, true);
-  assert.equal(result.payload.quote.amount, 183);
+  assert.equal(result.payload.quote.amount, 219);
+  assert.equal(result.payload.quote.tier, 'care');
   assert.equal(result.payload.quote.baseCharge, undefined);
   assert.equal(result.payload.quote.ratePerSquareFoot, undefined);
 });
 
 test('preview API quotes deep and move services for large homes', async () => {
-  const deep = await request({ ...preview, service_type: 'deep', frequency: 'one_time', square_footage: 100000 });
-  const move = await request({ ...preview, service_type: 'move', frequency: 'one_time', square_footage: 100000 });
+  const deep = await request({ ...preview, service_type: 'deep', tier: '', frequency: 'one_time', square_footage: 100000 });
+  const move = await request({ ...preview, service_type: 'move', tier: '', frequency: 'one_time', square_footage: 100000 });
   assert.equal(deep.payload.quote.amount, 17075);
   assert.equal(move.payload.quote.amount, 30075);
 });
@@ -80,7 +82,18 @@ test('preview rejects zero square footage and accepts a one-square-foot home', a
   const small = await request({ ...preview, square_footage: 1 });
   assert.equal(zero.statusCode, 400);
   assert.equal(zero.payload.error, 'invalid_square_footage');
-  assert.equal(small.payload.quote.amount, 125);
+  assert.equal(small.payload.quote.amount, 165);
+});
+
+test('preview API enforces tier and frequency compatibility', async () => {
+  const missingTier = await request({ ...preview, tier: '' });
+  const invalidTier = await request({ ...preview, tier: 'premium' });
+  const tierOnMove = await request({ ...preview, service_type: 'move', frequency: 'one_time' });
+  const recurringFrequencyOnDeep = await request({ ...preview, service_type: 'deep', tier: '', frequency: 'weekly' });
+  assert.equal(missingTier.payload.error, 'invalid_tier');
+  assert.equal(invalidTier.payload.error, 'invalid_tier');
+  assert.equal(tierOnMove.payload.error, 'invalid_tier');
+  assert.equal(recurringFrequencyOnDeep.payload.error, 'invalid_frequency');
 });
 
 test('final submission requires the complete server-validated property details', async () => {
@@ -90,7 +103,7 @@ test('final submission requires the complete server-validated property details',
 });
 
 test('final submission must match the estimate displayed before contact details', async () => {
-  const result = await request({ ...complete, preview_estimate_amount: 224 });
+  const result = await request({ ...complete, preview_estimate_amount: 324 });
   assert.equal(result.statusCode, 409);
   assert.equal(result.payload.status, 'estimate_changed');
   assert.equal(result.payload.error, 'locked_estimate_mismatch');
@@ -102,22 +115,29 @@ test('complete quote is stored before emails and notification includes every req
     assert.equal(result.statusCode, 200);
     assert.equal(result.payload.ok, true);
     assert.equal(result.payload.saved, true);
-    assert.equal(result.payload.quote.amount, 225);
+    assert.equal(result.payload.quote.amount, 325);
+    assert.equal(result.payload.quote.tier, 'signature');
     assert.equal(calls.length, 3);
     assert.equal(calls[0].url, 'https://storage.example.test/quotes');
-    assert.equal(calls[0].body.estimate_amount, 225);
+    assert.equal(calls[0].body.estimate_amount, 325);
     assert.equal(calls[0].body.base_price, 75);
-    assert.equal(calls[0].body.square_footage_charge, 150);
+    assert.equal(calls[0].body.square_footage_charge, 250);
+    assert.equal(calls[0].body.tier, 'signature');
+    assert.equal(calls[0].body.tier_label, 'Pristine Signature');
     assert.equal(calls[0].body.submission_id, complete.submission_id);
     assert.equal(calls[0].init.headers['Idempotency-Key'], `natabel-quote-${complete.submission_id}`);
 
     const businessEmail = calls.find(call => call.url.includes('resend.com') && call.body.to[0] === 'natabelpristinecleaning@gmail.com');
     assert.ok(businessEmail);
-    for (const expected of ['Ada Customer', '(916) 555-0123', 'ada@example.com', '123 Main Street', 'Standard Recurring Cleaning', 'Every 2 Weeks', '2500', 'Bedrooms', 'Bathrooms', 'dog', '2026-09-15', '$75', '$150', '$225 per visit', 'inside_oven', 'Use the side gate.', '/free-estimate.html?utm_source=test']) {
+    assert.match(businessEmail.body.subject, /Pristine Signature/);
+    for (const expected of ['Ada Customer', '(916) 555-0123', 'ada@example.com', '123 Main Street', 'Recurring Cleaning', 'Pristine Signature', 'Every 2 Weeks', '2500', 'Bedrooms', 'Bathrooms', 'dog', '2026-09-15', '$75', '$250', '$325 per visit', 'inside_oven', 'Use the side gate.', '/free-estimate.html?utm_source=test']) {
       assert.match(businessEmail.body.html, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     }
     assert.match(businessEmail.body.html, /Submission date and time/);
     assert.equal(businessEmail.init.headers['Idempotency-Key'], `natabel-quote-${complete.submission_id}-internal`);
+    const customerEmail = calls.find(call => call.url.includes('resend.com') && call.body.to[0] === complete.email);
+    assert.match(customerEmail.body.subject, /Pristine Signature/);
+    assert.match(customerEmail.body.html, /Pristine Signature/);
   });
 });
 
